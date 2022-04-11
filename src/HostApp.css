@@ -1,0 +1,28 @@
+.Host {
+    text-align: center;
+    display: flex;
+}
+
+.Host-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .Host-logo {
+        animation: Host-logo-float infinite 3s ease-in-out;
+    }
+}
+
+.Host-header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+}
+
+.Host-link {
+    color: rgb(112, 76, 182);
+}
