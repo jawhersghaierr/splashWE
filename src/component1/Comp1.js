@@ -14,7 +14,7 @@ import styles from './Comp1.module.css'
 import {store} from "../store";
 import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
-import {changeAppNameAction} from "../../../roc/src/reducer";
+// import {changeAppNameAction} from "../../../roc/src/reducer";
 
 
 
