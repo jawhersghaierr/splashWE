@@ -10,6 +10,7 @@ import IconPeople from '@mui/icons-material/People'
 import IconBarChart from '@mui/icons-material/BarChart'
 import IconLibraryBooks from '@mui/icons-material/LibraryBooks'
 
+import {drawerWidth} from '../utils/consts'
 import HostMenuItem from './HostMenuItem'
 
 const hostMenuItems = [
@@ -68,8 +69,6 @@ const HostMenu = () => {
         </List>
     )
 }
-
-const drawerWidth = 240
 
 const useStyles = makeStyles(theme =>
     createStyles({
