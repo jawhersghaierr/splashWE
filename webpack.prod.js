@@ -19,18 +19,8 @@ module.exports = {
         minimize: false,
     },
 
-    // Spin up a server for quick development
-    devServer: {
-        historyApiFallback: true,
-        static: paths.build,
-        open: true,
-        compress: true,
-        hot: true,
-        port: 3001,
-    },
-
     output: {
-        publicPath: 'http://localhost:3001/',
+        path: paths.build,
     },
     // output: {
     //     publicPath: 'auto',
