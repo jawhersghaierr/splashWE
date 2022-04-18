@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+
+  host-ui-dev:
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    container_name: host-ui
+    ports:
+      - "8030:8080"
+
+
+
