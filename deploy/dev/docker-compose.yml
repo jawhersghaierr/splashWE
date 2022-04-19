@@ -5,8 +5,6 @@ services:
   host-ui-dev:
     image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
     container_name: host-ui
+    restart: unless-stopped
     ports:
       - "8030:8080"
-
-
-

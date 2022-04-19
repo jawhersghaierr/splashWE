@@ -92,6 +92,5 @@ services:
   <<: *docker_over_ssh_for_deploy
   when: manual
   script:
-    - env
     - docker-compose -p ${COMPOSE_NAME} -f ./deploy/${ENV}/docker-compose.yml pull host-ui-${ENV}
     - docker-compose -p ${COMPOSE_NAME} -f ./deploy/${ENV}/docker-compose.yml up -d host-ui-${ENV}
