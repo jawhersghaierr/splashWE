@@ -2,13 +2,13 @@
 #    REUSABLE COMPONENTS    #
 #############################
 
-.on_develop: &on_develop
+.build_on_develop: &build_on_develop
   only:
     - develop
   variables:
-    VERSION_BUILD: ${VERSION_SNAPSHOT}
+    VERSION_BUILD: $VERSION_SNAPSHOT
 
-.on_dev: &on_dev
+.deploy_on_dev: &deploy_on_dev
   only:
     - develop
   variables:
@@ -16,7 +16,6 @@
     SERVER_USER: $SERVER_USER_DEV
     SERVER_IP: $SERVER_IP_DEV
     ENV: "dev"
-    VERSION_BUILD: $VERSION_SNAPSHOT
 
 ########################
 #    SNAPSHOT STEPS    #
@@ -26,13 +25,13 @@ snapshot-npm-dev:
   extends: .build
   stage: snapshot
   when: on_success
-  <<: *on_develop
+  <<: *build_on_develop
 
 snapshot-docker-dev:
   extends: .publish
   stage: snapshot2
   when: on_success
-  <<: *on_develop
+  <<: *build_on_develop
 
 #####################
 #    DEPLOY DEV     #
@@ -42,4 +41,4 @@ deploy-ui-dev:
   extends: .deploy-ui-dev-int
   stage: deploy-dev
   when: on_success
-  <<: *on_dev
+  <<: *deploy_on_dev
