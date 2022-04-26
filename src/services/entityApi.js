@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const entityApi = createApi({
     reducerPath: 'entityApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8080/api/entities'
+        baseUrl: 'http://10.241.25.10:8031:8080/api/entities'
     }),
     endpoints: (builder) => ({
         getUsers: builder.query({
