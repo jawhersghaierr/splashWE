@@ -3,6 +3,7 @@ const paths = require("./paths");
 const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
 
@@ -61,6 +62,20 @@ module.exports = {
                 //     requiredVersion: require('../shared-library/package.json').version,
                 // },
             },
+        }),
+        new WebpackShellPluginNext(
+            {
+
+                onBuildStart: {
+                    scripts: ['echo "Webpack Start"'],
+                    blocking: true,
+                    parallel: false
+                },
+                onBuildEnd: {
+                    scripts: ['node configure-script'],
+                    blocking: false,
+                    parallel: true
+                }
         }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
