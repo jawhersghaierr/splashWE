@@ -14,11 +14,11 @@ module.exports = {
             url: 'http://10.241.25.10',
             port: 8031,
         },
-        {
-            title: 'libsUrl',
-            fileName: 'libsUrl.js',
-            url: 'http://10.241.25.10',
-            port: 8033,
-        }
+        // {
+        //     title: 'libsUrl',
+        //     fileName: 'libsUrl.js',
+        //     url: 'http://10.241.25.10',
+        //     port: 8033,
+        // }
     ],
 }
