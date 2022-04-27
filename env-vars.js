@@ -12,7 +12,7 @@ module.exports = {
             title: 'hospi_ui',
             fileName: 'remoteEntry.js',
             url: 'http://10.241.25.10',
-            port: 8032,
+            port: 8031,
         },
         {
             title: 'libsUrl',
