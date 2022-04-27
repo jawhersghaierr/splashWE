@@ -38,7 +38,7 @@ module.exports = {
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
-                roc: 'roc@http://10.241.25.10:8031:3002/remoteEntry.js',
+                hospi_ui: 'hospi_ui@http://10.241.25.10:8031:3002/remoteEntry.js',
             },
             shared: {
                 ...deps,

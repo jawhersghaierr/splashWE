@@ -20,8 +20,8 @@ const hostMenuItems = [
         Icon: IconDashboard,
     },
     {
-        name: 'ROC App',
-        link: '/Roc',
+        name: 'Hospi App',
+        link: '/Hospi',
         Icon: AccountBalance,
     },
     {

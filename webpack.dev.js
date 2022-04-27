@@ -32,7 +32,7 @@ module.exports = merge(common, {
     },
 
     output: {
-        publicPath: 'http://10.241.25.10:8031:3001/',
+        publicPath: 'http://10.241.25.10:8031/',
     },
     // output: {
     //     publicPath: 'auto',
@@ -48,7 +48,7 @@ module.exports = merge(common, {
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
-                roc: 'roc@http://10.241.25.10:8031:3002/remoteEntry.js',
+                hospi_ui: 'hospi_ui@http://10.241.25.10:8031/remoteEntry.js',
             },
             shared: {
                 ...deps,
