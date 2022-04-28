@@ -71,7 +71,7 @@ module.exports = {
                     blocking: true,
                     parallel: false
                 },
-                onBuildEnd: {
+                onBuildExit: {
                     scripts: ['node configure-script'],
                     blocking: true,
                     parallel: false

@@ -18,7 +18,7 @@ fs.readFile('./public/index.html', 'utf8', (err, data) =>
     err ? console.log("ERROR" + err)
         : fs.writeFile(
             './dist/index.html',
-            data.replace(`<!-- %%%_MODULES_FOR_LOADING_%%% -->`, modulesForLoading),
+            data.replace(`<head>`, `<head>${modulesForLoading}`),
             'utf8',
             (err) =>
                 err ? console.log("ERROR" + err)
