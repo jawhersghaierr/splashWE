@@ -14,7 +14,7 @@ modul.remotes.map(el=> {
 const fs = require('fs');
 
 
-fs.readFile('./public/index.html', 'utf8', (err, data) =>
+fs.readFile('./dist/index.html', 'utf8', (err, data) =>
     err ? console.log("ERROR" + err)
         : fs.writeFile(
             './dist/index.html',
