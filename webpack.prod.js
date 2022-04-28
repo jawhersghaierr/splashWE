@@ -73,8 +73,8 @@ module.exports = {
                 },
                 onBuildEnd: {
                     scripts: ['node configure-script'],
-                    blocking: false,
-                    parallel: true
+                    blocking: true,
+                    parallel: false
                 }
         }),
         new webpack.HotModuleReplacementPlugin(),
