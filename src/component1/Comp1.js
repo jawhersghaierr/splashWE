@@ -14,7 +14,7 @@ import styles from './Comp1.module.css'
 import {store} from "../store";
 import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
-import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
+// import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
 import {Parcours} from "../components/referentiel/Parcours";
 
@@ -36,18 +36,19 @@ export function Comp1() {
         <div className="wrapper">
             <Parcours/>
 
-            {/*<Box component="span" sx={{*/}
-            {/*        p: 2,*/}
-            {/*        m: 2,*/}
-            {/*        border: '1px dashed grey',*/}
-            {/*        width: 300,*/}
-            {/*        height: 300,*/}
-            {/*        '&:hover': {*/}
-            {/*            opacity: [0.9, 0.8, 0.7],*/}
-            {/*        },*/}
-            {/*    }}>*/}
-            {/*    <Button>Hospi App</Button>*/}
-            {/*</Box>*/}
+        {/*<Box component="span" sx={{*/}
+        {/*        p: 2,*/}
+        {/*        m: 2,*/}
+        {/*        border: '1px dashed grey',*/}
+        {/*        width: 30,*/}
+        {/*        height: 20,*/}
+        {/*        '&:hover': {*/}
+        {/*            opacity: [0.9, 0.8, 0.7],*/}
+        {/*        },*/}
+        {/*    }}>*/}
+        {/*</Box>*/}
+            <Button>Parcours</Button>
+            <Parcours/>
 
             <Card sx={{ minWidth: 275, flex: 1, margin: '10px' }} className="aside">
                 <CardContent>
