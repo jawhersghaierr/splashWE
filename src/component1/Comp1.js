@@ -1,5 +1,4 @@
-
-import React, {useState, useEffect, useCallback} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
     decrement,
@@ -9,6 +8,9 @@ import {
     selectCount,
 } from './comp1Slice';
 
+import {useGetUsersQuery} from '../services/entityApi'
+
+import styles from './Comp1.module.css'
 import {store} from "../store";
 import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
@@ -16,17 +18,18 @@ import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
 import {Parcours} from "../components/referentiel/Parcours";
 
-import * as styles from './comp1.scss'
 
 export function Comp1() {
     const count = useSelector(selectCount);
     const dispatch = useDispatch()
     const remote = useSelector((state) => state.remoteApp && state.remoteApp.appName)
     const [incrementAmount, setIncrementAmount] = useState('2');
+    const {data} = useGetUsersQuery();
 
     useEffect(() => {
-        incrementAmount && console.log('incrementAmount >>', incrementAmount);
-    }, [incrementAmount]);
+        data && console.log('received >>', JSON.parse(data))
+    }, [data]);
+
 
 
     return (
