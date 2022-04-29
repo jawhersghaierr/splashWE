@@ -15,7 +15,7 @@ import {store} from "../store";
 import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 // import {changeAppNameAction} from "../../../roc/src/reducer";
-
+import {Parcours} from "../components/referentiel/Parcours";
 
 
 export function Comp1() {
@@ -34,18 +34,20 @@ export function Comp1() {
     return (
         <div style={{ margin: '10px', padding:'10px', background: '#fcfcfc'}}>
 
-        <Box component="span" sx={{
-                p: 2,
-                m: 2,
-                border: '1px dashed grey',
-                width: 300,
-                height: 300,
-                '&:hover': {
-                    opacity: [0.9, 0.8, 0.7],
-                },
-            }}>
-                <Button>Roc App</Button>
-            </Box>
+        {/*<Box component="span" sx={{*/}
+        {/*        p: 2,*/}
+        {/*        m: 2,*/}
+        {/*        border: '1px dashed grey',*/}
+        {/*        width: 30,*/}
+        {/*        height: 20,*/}
+        {/*        '&:hover': {*/}
+        {/*            opacity: [0.9, 0.8, 0.7],*/}
+        {/*        },*/}
+        {/*    }}>*/}
+        {/*</Box>*/}
+            <Button>Parcours</Button>
+            <Parcours/>
+
             <Card sx={{ minWidth: 275, width: 275, margin: '10px' }}>
                 <CardContent>
                     <Typography variant="h5" component="div">
