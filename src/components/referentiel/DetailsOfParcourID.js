@@ -19,9 +19,9 @@ export const DetailsOfParcourID = ({id}) => {
         content = (<div style={{padding: '10px', margin: '10px', }}>
 
             <Box component="span" sx={{
-                    p: 2,
-                    m: 2,
-                }}>
+                p: 2,
+                m: 2,
+            }}>
                 <pre style={{wordBreak: 'break-word'}}>{JSON.stringify(data)}</pre>
             </Box>
             <article className="data">

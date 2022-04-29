@@ -22,16 +22,16 @@ export const Parcours = () => {
 
 
     return <div className="wrapper">
-            {data && <div style={{height: 400}}>
-                <DataGrid
-                    rows={data}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[2]}
-                    onCellClick={getDetails}
-                    // checkboxSelection
-                />
-            </div>}
-            {(openDetailsId !== null) && <DetailsOfParcourID id={openDetailsId} /> }
-        </div>
+        {data && <div style={{height: 400}}>
+            <DataGrid
+                rows={data}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[2]}
+                onCellClick={getDetails}
+                // checkboxSelection
+            />
+        </div>}
+        {(openDetailsId !== null) && <DetailsOfParcourID id={openDetailsId} /> }
+    </div>
 }
