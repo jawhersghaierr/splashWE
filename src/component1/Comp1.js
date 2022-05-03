@@ -34,7 +34,6 @@ export function Comp1() {
 
     return (
         <div className="wrapper">
-            <Parcours/>
 
         {/*<Box component="span" sx={{*/}
         {/*        p: 2,*/}
