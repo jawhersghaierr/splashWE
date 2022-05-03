@@ -17,6 +17,9 @@ import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/m
 // import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
 import {Parcours} from "../components/referentiel/Parcours";
+import {Clients} from "../components/referentiel/Clients";
+import {Environments} from "../components/referentiel/Environments";
+import {Natures} from "../components/referentiel/Natures";
 
 
 export function Comp1() {
@@ -48,6 +51,15 @@ export function Comp1() {
         {/*</Box>*/}
             <Button>Parcours</Button>
             <Parcours/>
+
+            <Button>Clients</Button>
+            <Clients/>
+
+            <Button>Environments</Button>
+            <Environments/>
+
+            <Button>Natures</Button>
+            <Natures/>
 
             <Card sx={{ minWidth: 275, flex: 1, margin: '10px' }} className="aside">
                 <CardContent>
