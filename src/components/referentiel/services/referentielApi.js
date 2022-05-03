@@ -51,9 +51,60 @@ export const referentielApi = createApi({
                 }
             }),
         }),
+        getClients: builder.query({
+            query: () => ({
+                url: 'clients',
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }}),
+        }),
+        getClientsById: builder.query({
+            query: (id) => ({
+                url: `clients/${id}`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+        }),
+        getEnvironments: builder.query({
+            query: () => ({
+                url: 'environments',
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }}),
+        }),
+        getEnvironmentsById: builder.query({
+            query: (id) => ({
+                url: `environments/${id}`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+        }),
+        getNatures: builder.query({
+            query: () => ({
+                url: 'natures',
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }}),
+        }),
+        getNaturesById: builder.query({
+            query: (id) => ({
+                url: `natures/${id}`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+        }),
     }),
 })
 export const {
     useGetParcoursQuery,
-    useGetParcoursByIdQuery
+    useGetParcoursByIdQuery,
+    useGetClientsQuery,
+    getClientsByIdQuery,
+    useGetEnvironmentsQuery,
+    useGetEnvironmentsByIdQuery,
+    useGetNaturesQuery,
+    useGetNaturesByIdQuery,
 } = referentielApi
