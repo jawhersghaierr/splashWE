@@ -102,7 +102,7 @@ export const {
     useGetParcoursQuery,
     useGetParcoursByIdQuery,
     useGetClientsQuery,
-    getClientsByIdQuery,
+    useGetClientsByIdQuery,
     useGetEnvironmentsQuery,
     useGetEnvironmentsByIdQuery,
     useGetNaturesQuery,
