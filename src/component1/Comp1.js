@@ -16,7 +16,7 @@ import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
 // import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
-import {Parcours} from "../components/referentiel/Parcours";
+import {Parcours} from '@viamedis/shared-lib-ui';
 import {Clients} from "../components/referentiel/Clients";
 import {Environments} from "../components/referentiel/Environments";
 import {Natures} from "../components/referentiel/Natures";
