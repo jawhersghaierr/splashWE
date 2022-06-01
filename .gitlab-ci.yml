@@ -2,95 +2,14 @@ variables:
   PROJECT_NAME: host-ui
   PROJECT_LABEL: Host UI
   PROGECT_GROUP: COMMON
-  COMPOSE_NAME: "HOST-UI"
-  # The release build is done with this version
+  COMPOSE_NAME: HOST-UI
+  DOCKER_IMAGE_NAME_FE: common/host-ui
+  DOCKER_SERVICE_NAME_FE: host-ui
+  DOCKER_DOCKERFILE_FE: Dockerfile
   VERSION: 0.1.0
-  # This version is used for dev/snapshot builds
   VERSION_SNAPSHOT: 0.1.0-SNAPSHOT
 
-
 include:
-  - '/deploy/dev/.gitlab-ci.yml'
-
-stages:
-  - qualimetry
-  - snapshot
-  - snapshot2
-  - deploy-dev
-  - env-misc-dev
-  - release
-  - release2
-  - deploy-int
-  - env-misc-int
-  - init-env
-  - deploy
-  - env-misc
-
-services:
-  - name: registry-pull.viamedis.fr/docker:20.10.11-dind
-    alias: docker
-
-#######################
-#    REUSABLE JOBS    #
-#######################
-
-.docker_for_build: &docker_for_build
-  image: registry-pull.viamedis.fr/docker:20.10.11
-  before_script:
-    - docker login --username ${DOCKER_REGISTRY_LOGIN} --password ${DOCKER_REGISTRY_PASSWORD} registry-pull.viamedis.fr
-    - docker login --username ${DOCKER_REGISTRY_LOGIN} --password ${DOCKER_REGISTRY_PASSWORD} registry-push.viamedis.fr
-
-.docker_over_ssh_for_deploy: &docker_over_ssh_for_deploy
-  image: registry-pull.viamedis.fr/dev/docker-w-compose:19.03.13
-  before_script:
-    - eval $(ssh-agent -s)
-    - echo "$ID_RSA" | tr -d '\r' | ssh-add -
-    - ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP
-    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_IP"
-    - docker login -u $DOCKER_REGISTRY_LOGIN -p $DOCKER_REGISTRY_PASSWORD registry-pull.viamedis.fr
-
-.npm_for_build: &npm_for_build
-  image: registry-pull.viamedis.fr/node:12.13.1
-  before_script:
-    - NPM_LOGIN=`echo -n "${DOCKER_REGISTRY_LOGIN}:${DOCKER_REGISTRY_PASSWORD}" | base64`
-    - echo "registry=https://repository.viamedis.fr/repository/npm-group" >> ~/.npmrc
-    - echo "@viamedis:registry=https://repository.viamedis.fr/repository/npm-releases" >> ~/.npmrc
-    - echo "_auth=$NPM_LOGIN" >> ~/.npmrc
-
-# build jobs
-
-.build:
-  tags:
-    - docker
-  artifacts:
-    paths:
-      - dist.tar.gz
-    expire_in: 1 day
-  <<: *npm_for_build
-  when: manual
-  script:
-    - npm install
-    - CI=false
-    - SKIP_PREFLIGHT_CHECK=true
-    - npm version $VERSION_BUILD --no-git-tag-version --allow-same-version && npm run build
-    - tar czvf dist.tar.gz dist
-
-.publish:
-  tags:
-    - docker
-  <<: *docker_for_build
-  when: manual
-  script:
-    - tar xzvf dist.tar.gz -C .
-    - docker build -t registry-push.viamedis.fr/common/host-ui:${VERSION_BUILD} . | grep 'tagged' | awk '{print $3}' | xargs docker push
-
-# deploy jobs dev/int
-
-.deploy-ui-dev-int:
-  tags:
-    - docker
-  <<: *docker_over_ssh_for_deploy
-  when: manual
-  script:
-    - docker-compose -p ${COMPOSE_NAME} -f ./deploy/${ENV}/docker-compose.yml pull host-ui-${ENV}
-    - docker-compose -p ${COMPOSE_NAME} -f ./deploy/${ENV}/docker-compose.yml up -d host-ui-${ENV}
+  - project: 'groupe-vdhm/infra/infrastructure'
+    ref: gitlab-reusable-pipelines
+    file: '/deployable-frontend/.gitlab-ci-deployable-fe-v1.yml'
