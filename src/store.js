@@ -1,8 +1,10 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from "redux-thunk";
 import thunkMiddleware from 'redux-thunk';
+//TODO need automation - import object/array index files from slice folders
 import { entityApi } from './services/entityApi';
 import comp1Reducer from './component1/comp1Slice';
+import { referentielApi } from './components/referentiel/services/referentielApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 function logger({ getState }) {
@@ -73,6 +75,8 @@ export default function configureStore(initialState) {
 function createReducer(asyncReducers) {
   return combineReducers({
     [entityApi.reducerPath]: entityApi.reducer,
+    [referentielApi.reducerPath]: referentielApi.reducer,
+    //TODO need automation - received object/array with reducers by index files from slice folders
     comp1: comp1Reducer,
     ...staticReducers,
     ...asyncReducers,

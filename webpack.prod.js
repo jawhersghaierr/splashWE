@@ -3,6 +3,7 @@ const paths = require("./paths");
 const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
 
@@ -37,7 +38,7 @@ module.exports = {
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
-                roc: 'roc@http://localhost:3002/remoteEntry.js',
+                hospi_ui: 'hospi_ui@http://10.241.25.10:8031/remoteEntry.js',
             },
             shared: {
                 ...deps,
@@ -61,6 +62,20 @@ module.exports = {
                 //     requiredVersion: require('../shared-library/package.json').version,
                 // },
             },
+        }),
+        new WebpackShellPluginNext(
+            {
+
+                onBuildStart: {
+                    scripts: ['echo "Webpack Start"'],
+                    blocking: true,
+                    parallel: false
+                },
+                onBuildExit: {
+                    scripts: ['node configure-script'],
+                    blocking: true,
+                    parallel: false
+                }
         }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

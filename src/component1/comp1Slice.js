@@ -22,7 +22,7 @@ export const incrementAsync = createAsyncThunk(
 );
 
 export const comp1Slice = createSlice({
-    name: 'comp1',
+    name: 'Comp1',
     initialState,
     reducers: {
         increment: (state) => {

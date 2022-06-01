@@ -14,8 +14,12 @@ import styles from './Comp1.module.css'
 import {store} from "../store";
 import Button from '@mui/material/Button';
 import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/material";
-// import {changeAppNameAction} from "../../../roc/src/reducer";
+// import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
+import {Parcours} from '@viamedis/shared-lib-ui';
+import {Clients} from "../components/referentiel/Clients";
+import {Environments} from "../components/referentiel/Environments";
+import {Natures} from "../components/referentiel/Natures";
 
 
 export function Comp1() {
@@ -32,23 +36,34 @@ export function Comp1() {
 
 
     return (
-        <div style={{ margin: '10px', padding:'10px', background: '#fcfcfc'}}>
+        <div className="wrapper">
 
-        <Box component="span" sx={{
-                p: 2,
-                m: 2,
-                border: '1px dashed grey',
-                width: 300,
-                height: 300,
-                '&:hover': {
-                    opacity: [0.9, 0.8, 0.7],
-                },
-            }}>
-                <Button>Roc App</Button>
-            </Box>
-            <Card sx={{ minWidth: 275, width: 275, margin: '10px' }}>
+        {/*<Box component="span" sx={{*/}
+        {/*        p: 2,*/}
+        {/*        m: 2,*/}
+        {/*        border: '1px dashed grey',*/}
+        {/*        width: 30,*/}
+        {/*        height: 20,*/}
+        {/*        '&:hover': {*/}
+        {/*            opacity: [0.9, 0.8, 0.7],*/}
+        {/*        },*/}
+        {/*    }}>*/}
+        {/*</Box>*/}
+            <Button>Parcours</Button>
+            <Parcours/>
+
+            <Button>Clients</Button>
+            <Clients/>
+
+            <Button>Environments</Button>
+            <Environments/>
+
+            <Button>Natures</Button>
+            <Natures/>
+
+            <Card sx={{ minWidth: 275, flex: 1, margin: '10px' }} className="aside">
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="span">
                         Small example
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -56,15 +71,15 @@ export function Comp1() {
                     </Typography>
                     {remote && <Typography variant="body2">
                         RemoteApp's name from <br/>the redux store :
-                        <Typography variant="h5">
+                        <Typography variant="h5" component="span">
                             {remote}
                         </Typography>
                         <br/>
                     </Typography>}
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="span">
                         Remote Count:
                     </Typography>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="span">
                         <span>{count}</span>
                     </Typography>
                 </CardContent>
@@ -88,9 +103,9 @@ export function Comp1() {
                 </CardActions>
             </Card>
 
-            <Card sx={{ minWidth: 275, width: 275, margin: '10px' }}>
+            <Card sx={{ minWidth: 275, width: 275, margin: '10px' }}  className="aside">
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="span">
                         Asynchronous
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -104,20 +119,20 @@ export function Comp1() {
                 <CardActions>
 
 
-                <Button
-                    variant="outlined"
-                    onClick={() =>
-                        dispatch(incrementByAmount(Number(incrementAmount) || 0))
-                    }
-                >
-                    Add Amount
-                </Button>
-                <Button
-                    variant="outlined"
-                    onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
-                >
-                    Add Async
-                </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() =>
+                            dispatch(incrementByAmount(Number(incrementAmount) || 0))
+                        }
+                    >
+                        Add Amount
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
+                    >
+                        Add Async
+                    </Button>
                 </CardActions>
 
             </Card>
