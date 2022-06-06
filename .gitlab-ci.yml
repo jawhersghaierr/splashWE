@@ -12,4 +12,4 @@ variables:
 include:
   - project: 'groupe-vdhm/infra/infrastructure'
     ref: gitlab-reusable-pipelines
-    file: '/deployable-frontend/.gitlab-ci-deployable-fe-v1.yml'
+    file: '/frontend/.gitlab-ci-v1.yml'
