@@ -27,11 +27,11 @@ export function Comp1() {
     const dispatch = useDispatch()
     const remote = useSelector((state) => state.remoteApp && state.remoteApp.appName)
     const [incrementAmount, setIncrementAmount] = useState('2');
-    const {data} = useGetUsersQuery();
+    // const {data} = useGetUsersQuery();
 
-    useEffect(() => {
-        data && console.log('received >>', JSON.parse(data))
-    }, [data]);
+    // useEffect(() => {
+    //     data && console.log('received >>', JSON.parse(data))
+    // }, [data]);
 
 
 
