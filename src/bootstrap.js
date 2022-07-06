@@ -25,6 +25,8 @@ import Drawer from "./utils/Drawer"
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
 
+import './theme.scss'
+
 const dynamicFederation = async (scope, module) => {
   const container = window[scope]; // or get the container somewhere else
   // Initialize the container, it may provide shared modules
