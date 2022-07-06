@@ -36,14 +36,12 @@ const HostMenuItem = props => {
 
     const MenuItemRoot = (
         <HostMenuItemComponent className={classes.menuItem} link={link} onClick={handleClick}>
-            {/* Display an icon if any */}
             {!!Icon && (
                 <ListItemIcon className={classes.menuItemIcon}>
                     <Icon />
                 </ListItemIcon>
             )}
             <ListItemText primary={name} inset={!Icon} />
-            {/* Display the expand menu if the item has children */}
             {isExpandable && !open && <IconExpandMore />}
             {isExpandable && open && <IconExpandLess />}
         </HostMenuItemComponent>

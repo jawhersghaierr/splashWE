@@ -1,0 +1,71 @@
+.MuiSlider-root {
+  color: #20b2aa;
+}
+
+.MuiSlider-root:hover {
+  color: #2e8b57;
+}
+
+.MuiSlider-root .MuiSlider-thumb {
+  border-radius: 1px;
+}
+
+.MuiPaper-rounded {
+  border: 0;
+  border-radius: 26px;
+}
+
+.RoundedEl {
+  & .MuiOutlinedInput-root, .MuiButton-root, .MuiInputBase-input{
+    border: 0;
+    border-radius: 20px;
+    //padding: 5px 10px;
+  }
+  //MuiOutlinedInput-input MuiInputBase-input
+  border: 0;
+  border-radius: 20px;
+  margin: 0;
+  padding: 0;
+  &.MuiButton-root {
+    padding: 5px 15px;
+    background: #003154;
+    text-transform: none;
+    color: #E4EBF7;
+  }
+  &.Mui-disabled {
+    color: #4C6F87;
+  }
+
+  //MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled RoundedEl css-sghohy-MuiButtonBase-root-MuiButton-root
+}
+
+//input:-webkit-autofill{
+//  -webkit-text-fill-color: yellow !important;
+//}
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+}
+//.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
+.MuiPopover-paper {
+  max-height: 300px;
+}
+.verticalTxt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MuiBox-root {
+  padding: 0;
+  background: #F6F8FC;
+  margin-bottom: 35px;
+}
+.MuiCardActions-root>:not(:first-of-type) {
+  margin-left: 0;
+}
+.MuiDrawer-paperAnchorLeft {
+  border: none!important;
+  background: #1A4565;
+  color: #fff;
+}
+

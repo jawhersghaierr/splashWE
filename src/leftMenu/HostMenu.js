@@ -9,6 +9,7 @@ import AccountBalance from '@mui/icons-material/AccountBalance'
 import IconPeople from '@mui/icons-material/People'
 import IconBarChart from '@mui/icons-material/BarChart'
 import IconLibraryBooks from '@mui/icons-material/LibraryBooks'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 import {drawerWidth} from '../utils/consts'
 import HostMenuItem from './HostMenuItem'
@@ -18,11 +19,6 @@ const hostMenuItems = [
         name: 'Dashboard',
         link: '/',
         Icon: IconDashboard,
-    },
-    {
-        name: 'Hospi App',
-        link: '/Hospi',
-        Icon: AccountBalance,
     },
     {
         name: 'PS App',
@@ -35,24 +31,9 @@ const hostMenuItems = [
         Icon: IconBarChart,
     },
     {
-        name: 'Nested Links',
-        Icon: IconLibraryBooks,
-        items: [
-            {
-                name: 'Level 2',
-            },
-            {
-                name: 'Level 2',
-                items: [
-                    {
-                        name: 'Level 3',
-                    },
-                    {
-                        name: 'Level 3',
-                    },
-                ],
-            },
-        ],
+        name: 'Hospi App',
+        link: '/Hospi',
+        Icon: AccountBalance,
     },
 ]
 
