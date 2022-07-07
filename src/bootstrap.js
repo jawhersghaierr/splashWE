@@ -39,10 +39,12 @@ const dynamicFederation = async (scope, module) => {
 
 
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
+const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
 
 const PageDashboard = () => <Typography variant="h3" component="h1">Dashboard Page</Typography>
 const Hospi = () => <Comp1/>
-const PS = () => <Typography variant="h3" component="h1">PS App</Typography>
+// const PS = () => <Typography variant="h3" component="h1">PS App</Typography>
+const PS = () => <RemotePsApp  store={store} />
 const Beneficiary = () => <RemoteApp store={store} />
 
 
