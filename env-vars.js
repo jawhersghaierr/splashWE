@@ -14,6 +14,12 @@ module.exports = {
             url: 'http://10.241.25.10',
             port: 8031,
         },
+        {
+            title: 'ps_ui',
+            fileName: 'remotePsEntry.js',
+            url: 'http://10.241.25.10',
+            port: 8034,
+        },
         // {
         //     title: 'libsUrl',
         //     fileName: 'libsUrl.js',
