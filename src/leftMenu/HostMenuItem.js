@@ -28,7 +28,7 @@ const HostMenuItem = props => {
     const { name, link, Icon, items = [] } = props
     const classes = useStyles()
     const isExpandable = items && items.length > 0
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = React.useState(true)
 
     function handleClick() {
         setOpen(!open)
@@ -38,7 +38,7 @@ const HostMenuItem = props => {
         <HostMenuItemComponent className={classes.menuItem} link={link} onClick={handleClick}>
             {!!Icon && (
                 <ListItemIcon className={classes.menuItemIcon}>
-                    <Icon />
+                    <Icon/>
                 </ListItemIcon>
             )}
             <ListItemText primary={name} inset={!Icon} />

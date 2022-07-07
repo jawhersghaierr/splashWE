@@ -51,7 +51,7 @@ const Beneficiary = () => <RemoteApp store={store} />
 const App = () => {
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawer = () => {
     setOpen(!open);
@@ -67,7 +67,7 @@ const App = () => {
               <CssBaseline />
               <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
-                  <IconButton onClick={handleDrawer}>
+                  <IconButton onClick={handleDrawer} style={{color: '#fff'}}>
                     {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                   </IconButton>
                 </DrawerHeader>
