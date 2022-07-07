@@ -88,7 +88,7 @@ module.exports = {
         rules: [
 
             {
-                test: /\.(js|jsx)$/,
+                test: /\.js|jsx/,
                 exclude: /node_modules/,
                 loader: require.resolve('babel-loader'),
                 options: {

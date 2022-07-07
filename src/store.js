@@ -6,6 +6,8 @@ import { entityApi } from './services/entityApi';
 import comp1Reducer from './component1/comp1Slice';
 import { referentielApi } from './components/referentiel/services/referentielApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import {psApi} from "./components/ps/services/psApi";
+import psReducer from './components/ps/psSlice'
 
 function logger({ getState }) {
   return next => action => {
@@ -78,6 +80,8 @@ function createReducer(asyncReducers) {
     [referentielApi.reducerPath]: referentielApi.reducer,
     //TODO need automation - received object/array with reducers by index files from slice folders
     comp1: comp1Reducer,
+    [psApi.reducerPath]: psApi.reducer,
+    ps: psReducer,
     ...staticReducers,
     ...asyncReducers,
   });

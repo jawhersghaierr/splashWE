@@ -1,14 +1,12 @@
 const paths = require("./paths");
 
 const webpack = require("webpack");
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
 
-module.exports = merge(common, {
+module.exports = {
     // Set the mode to development or production
     mode: "development",
 
@@ -28,11 +26,11 @@ module.exports = merge(common, {
         open: true,
         compress: true,
         hot: true,
-        port: 3001,
+        port: 8031,
     },
 
     output: {
-        publicPath: 'http://10.241.25.10:8031/',
+        publicPath: 'http://localhost:8031/',
     },
     // output: {
     //     publicPath: 'auto',
@@ -49,7 +47,7 @@ module.exports = merge(common, {
             filename: 'remoteEntry.js',
             remotes: {
                 hospi_ui: 'hospi_ui@http://10.241.25.10:8031/remoteEntry.js',
-                ps_ui: 'ps_ui@http://10.241.25.10:8034/remotePsEntry.js',
+                ps_ui: 'ps_ui@http://localhost:8034/remotePsEntry.js',
             },
             shared: {
                 ...deps,
@@ -68,10 +66,10 @@ module.exports = merge(common, {
                     strictVersion: true,
                     requiredVersion: '5.5.2'
                 },
-                '@viamedis-boilerPlate/shared-library': {
-                    import: '@viamedis-boilerPlate/shared-library',
-                    requiredVersion: require('../shared-library/package.json').version,
-                },
+                // '@viamedis-boilerPlate/shared-library': {
+                //     import: '@viamedis-boilerPlate/shared-library',
+                //     requiredVersion: require('../shared-library/package.json').version,
+                // },
             },
         }),
         new webpack.HotModuleReplacementPlugin(),
@@ -79,4 +77,42 @@ module.exports = merge(common, {
             template: './public/index.html',
         }),
     ],
-});
+    module: {
+        rules: [
+
+            {
+                test: /\.js|jsx/,
+                exclude: /node_modules/,
+                loader: require.resolve('babel-loader'),
+                options: {
+                    presets: [
+                        ["@babel/preset-env"],
+                        ['@babel/preset-react']
+                    ],
+                    plugins: [
+                        ["@babel/plugin-transform-runtime"],
+                    ]
+                },
+            },
+
+            // Styles: Inject CSS into the head with source maps
+            {
+                test: /\.(scss|css)$/,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: { sourceMap: true, importLoaders: 1 },
+                    },
+                    { loader: "sass-loader", options: { sourceMap: true } },
+                ],
+            },
+
+            // Images: Copy image files to build folder
+            // { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: "asset/resource" },
+
+            // Fonts and SVGs: Inline files
+            // { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
+        ],
+    },
+};

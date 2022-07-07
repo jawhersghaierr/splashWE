@@ -96,6 +96,14 @@ export const referentielApi = createApi({
                 }
             }),
         }),
+        getDisciplines: builder.query({
+            query: () => ({
+                url: `disciplines`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+        }),
     }),
 })
 export const {
@@ -107,4 +115,5 @@ export const {
     useGetEnvironmentsByIdQuery,
     useGetNaturesQuery,
     useGetNaturesByIdQuery,
+    useGetDisciplinesQuery
 } = referentielApi

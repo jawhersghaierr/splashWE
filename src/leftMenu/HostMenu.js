@@ -26,6 +26,11 @@ const hostMenuItems = [
         Icon: IconPeople,
     },
     {
+        name: 'PS Remote',
+        link: '/PSremote',
+        Icon: IconPeople,
+    },
+    {
         name: 'Beneficiary App',
         link: '/Beneficiary',
         Icon: IconBarChart,

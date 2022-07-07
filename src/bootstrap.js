@@ -22,6 +22,7 @@ import HostMenu from "./leftMenu/HostMenu";
 import AppBar from "./utils/AppBar";
 import DrawerHeader from "./utils/DrawerHeader";
 import Drawer from "./utils/Drawer"
+import {Ps} from './components/ps/PS'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
 
@@ -29,7 +30,7 @@ import './theme.scss'
 
 const dynamicFederation = async (scope, module) => {
   const container = window[scope]; // or get the container somewhere else
-  // Initialize the container, it may provide shared modules
+
   await container.init(__webpack_share_scopes__.default);
   return container.get(module).then(factory => {
     const Module = factory();
@@ -41,10 +42,9 @@ const dynamicFederation = async (scope, module) => {
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
 const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
 
-const PageDashboard = () => <Typography variant="h3" component="h1">Dashboard Page</Typography>
+const PageDashboard = () => <Typography variant="h3" component="div">Dashboard Page</Typography>
 const Hospi = () => <Comp1/>
-// const PS = () => <Typography variant="h3" component="h1">PS App</Typography>
-const PS = () => <RemotePsApp  store={store} />
+const PSremote = () => <RemotePsApp  store={store} />
 const Beneficiary = () => <RemoteApp store={store} />
 
 
@@ -57,9 +57,6 @@ const App = () => {
     setOpen(!open);
   };
 
-
-  // const remoteAppScope = 'remoteApp';
-  // const state = useSelector(state => state);
   return (
     <Provider store={store}>
 
@@ -82,7 +79,8 @@ const App = () => {
                 <Switch>
                   <Route path="/" exact component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
-                  <Route path="/PS" component={PS} />
+                  <Route path="/PS" component={Ps} />
+                  <Route path="/PSremote" component={PSremote} />
                   <Route path="/Beneficiary" component={Beneficiary}/> />
                 </Switch>
 
