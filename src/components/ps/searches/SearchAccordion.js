@@ -153,7 +153,7 @@ export default function SearchAccordion(props) {
                                         <TextField
                                             id="NumPartenaire"
                                             variant={'standard'}
-                                            sx={{width: 360}}
+                                            sx={{width: '100%'}}
                                             error={meta.invalid}
                                             {...input}
                                             placeholder={'Nº de partenaire'}
@@ -177,7 +177,7 @@ export default function SearchAccordion(props) {
                                         {...input}
                                         placeholder={'Raison sociale'}
                                         // sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1 }}
-                                        sx={{width: 360}}
+                                        sx={{width: '100%'}}
                                         className="RoundedEl"
                                         InputProps={{  disableUnderline: true }}
                                     />
