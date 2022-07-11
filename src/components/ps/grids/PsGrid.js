@@ -47,14 +47,14 @@ export const PsGrid = ({handleGetById}) => {
     //TODO split in const file!
     const columns = [
         // { field: 'id', headerName: 'ID', width: 150 },
-        { field: 'numPartenaire', headerName: 'numPartenaire', width: 150 },
-        { field: 'raisonSociale', headerName: 'raisonSociale', width: 300 },
-        { field: 'disciplines', headerName: 'disciplines', width: 150 },
-        { field: 'codePostal', headerName: 'codePostal', width: 150 },
-        { field: 'ville', headerName: 'ville', width: 300, renderCell: (params) => (
+        { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
+        { field: 'raisonSociale', headerName: 'Raison Sociale', width: 300 },
+        { field: 'disciplines', headerName: 'Discipline(s)', width: 150 },
+        { field: 'codePostal', headerName: 'Code postal', width: 150 },
+        { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
             <Button>{params.formattedValue}</Button>
         ),},
-        { field: 'statutRibs', headerName: 'statutRibs', width: 350, renderCell: (params) => (
+        { field: 'statutRibs', headerName: 'Statut Rib', width: 350, renderCell: (params) => (
             <div>{JSON.stringify(params.formattedValue)}</div>
         )},
     ];

@@ -186,7 +186,7 @@ export default function SearchAccordion(props) {
                                     <Badge color="secondary" variant="dot" invisible={false}><AddCircleIcon/></Badge>
                                 </IconButton>}
                                 {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                <Typography component="div" className='verticalTxt'><b>{(panelExpanded)? 'Criteries' : 'Effaser'} </b>{numCriterias}</Typography>
+                                <Typography component="div" className='verticalTxt'><b>Criteries</b></Typography>
                             </div>
                             <Button variant="contained" type="submit" size="medium" className='RoundedEl' disabled={submitting || pristine} >
                                 <SearchIcon/>Rechercher
@@ -338,7 +338,7 @@ export default function SearchAccordion(props) {
                                     className="RoundedEl"
                                     disabled={submitting || pristine}
                                 >
-                                    Reset
+                                    Effacer
                                 </Button>
                             </div>
                         </CardActions>
