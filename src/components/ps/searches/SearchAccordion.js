@@ -152,19 +152,21 @@ export default function SearchAccordion(props) {
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
                                             id="NumPartenaire"
-                                            variant="standard"
+                                            variant={'standard'}
+                                            sx={{width: 360}}
                                             error={meta.invalid}
                                             {...input}
                                             placeholder={'Nº de partenaire'}
-                                            sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1}}
+                                            // sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1}}
                                             InputProps={{  disableUnderline: true }}
+                                            className="RoundedEl"
                                         />
-                                        {meta.error && meta.touched && <span>{meta.error}</span>}
+                                        {meta.error && meta.touched && <span style={{display: 'block', fontSize: 'medium'}}>{meta.error}</span>}
                                     </div>
                                 )}
                             </Field>
 
-                            <Field name="raisonSociale" >
+                            <Field name="raisonSociale" validate={composeValidators(minValue(3), maxValue(60))}>
 
                             {({ input, meta }) => (
                                 <div style={{flex: 2}}>
@@ -174,19 +176,21 @@ export default function SearchAccordion(props) {
                                         error={meta.invalid}
                                         {...input}
                                         placeholder={'Raison sociale'}
-                                        sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1 }}
+                                        // sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1 }}
+                                        sx={{width: 360}}
+                                        className="RoundedEl"
                                         InputProps={{  disableUnderline: true }}
                                     />
-                                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                                    {meta.error && meta.touched && <span style={{fontSize: 'medium'}}>{meta.error}</span>}
                                 </div>
                             )}
                             </Field>
-                            <div style={{width: 150, display: 'flex'}}>
-                                {!panelExpanded && <IconButton onClick={handleAccordionPanel()}>
+                            <div style={{width: 150, height: '40px', display: 'flex'}}>
+                                {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
                                     <Badge color="secondary" variant="dot" invisible={false}><AddCircleIcon/></Badge>
                                 </IconButton>}
                                 {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                <Typography component="div" className='verticalTxt'><b>Criteries</b></Typography>
+                                <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
                             </div>
                             <Button variant="contained" type="submit" size="medium" className='RoundedEl' disabled={submitting || pristine} >
                                 <SearchIcon/>Rechercher
@@ -213,6 +217,7 @@ export default function SearchAccordion(props) {
                                                     labelId="Disciplines-label"
                                                     multiple
                                                     sx={{width: 360}}
+                                                    className="RoundedEl"
                                                     {...input}
                                                     input={<OutlinedInput className="RoundedEl" label="Disciplines"/>}
                                                     MenuProps={{autoFocus: false}}
@@ -246,7 +251,7 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex'}}>
 
-                                    <Field name="codePostal" >
+                                    <Field name="codePostal" validate={composeValidators(mustBeNumber, minValue(3), maxValue(6))}>
                                         {({ input, meta }) => (
                                             <div>
                                                 <TextField
@@ -259,7 +264,7 @@ export default function SearchAccordion(props) {
                                                     {...input}
                                                     className="RoundedEl"
                                                 />
-                                                {meta.error && meta.touched && <span>{meta.error}</span>}
+                                                {meta.error && meta.touched && <span style={{display: 'block'}}>{meta.error}</span>}
                                             </div>
                                         )}
                                     </Field>
@@ -355,7 +360,9 @@ export default function SearchAccordion(props) {
 
 
 const composeValidators = (...validators) => value => {
-    let result = validators.reduce((error, validator) => error || validator(value), undefined)
+    let result = validators.reduce((error, validator) => {
+        return error || validator(value)
+    }, undefined)
     return result;
 }
 
@@ -368,11 +375,11 @@ const mustBeNumber = value => {
 }
 
 const minValue = min => value => {
-    let result = isNaN(value) || value.toString().length >= min ? undefined : `Should be greater than ${min} symbols`
+    let result = (value === undefined || value.toString().length >= min) ? undefined : `Should be greater than ${min} symbols`
     return result;
 }
 
 const maxValue = max => value => {
-    let result = isNaN(value) || value.toString().length < max ? undefined : `Should be less than ${max} symbols`
+    let result = (value === undefined || value.toString().length < max) ? undefined : `Should be less than ${max} symbols`
     return result;
 }

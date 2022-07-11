@@ -7,14 +7,23 @@ import {useGetEtsQuery} from "../services/psApi";
 import Button from "@mui/material/Button";
 import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
-
+import Chip from '@mui/material/Chip';
+import { purple, red } from '@mui/material/colors';
 
 import {
     selectNumCriterias,
     selectCriterias
 } from '../psSlice'
 
-import './psGrid.scss'
+import './psGrid.scss';
+
+const statuses = {
+    NA: 'Inactif (gray)',
+    ATT: 'En attente (orange)',
+    ACT: 'Validé (green)',
+    REF: 'Refusé (red)',
+    MIS: 'Manquant (blue)'
+}
 
 export const PsGrid = ({handleGetById}) => {
 
@@ -48,15 +57,32 @@ export const PsGrid = ({handleGetById}) => {
     const columns = [
         // { field: 'id', headerName: 'ID', width: 150 },
         { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
+        { field: 'statutRibs', headerName: 'Statut Rib', width: 95, renderCell: (params) => {
+                console.log('statutRibs > ', params.formattedValue[0]?.statutRib, ': ', params.formattedValue[0]?.count)
+                let chipLabel = params.formattedValue[0]?.count || null;
+                let RibLabel = params.formattedValue[0]?.statutRib || null;
+                console.log('chipLabel > ', chipLabel)
+                return (
+                    <div>{chipLabel && <Chip label={chipLabel} color='secondary'/>} {RibLabel && RibLabel} </div>
+                )
+        }},
         { field: 'raisonSociale', headerName: 'Raison Sociale', width: 300 },
-        { field: 'disciplines', headerName: 'Discipline(s)', width: 150 },
+        { field: 'disciplines', headerName: 'Discipline(s)', width: 175, renderCell: (params) => {
+                // const discipl = params.formattedValue.split(',') || null;
+                const discipl = params.formattedValue || null;
+                console.log('disciplines >>', discipl)
+
+                let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
+                // return params.formattedValue
+                return (
+                    <div>{(discipl && (discipl.length > 1)) && <Chip label={discipl.length}/>} {RibLabel && RibLabel} </div>
+                )
+        }},
         { field: 'codePostal', headerName: 'Code postal', width: 150 },
         { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
-            <Button>{params.formattedValue}</Button>
+            // <Button>{params.formattedValue}</Button>
+            params.formattedValue
         ),},
-        { field: 'statutRibs', headerName: 'Statut Rib', width: 350, renderCell: (params) => (
-            <div>{JSON.stringify(params.formattedValue)}</div>
-        )},
     ];
 
 
@@ -75,6 +101,13 @@ export const PsGrid = ({handleGetById}) => {
                 onCellClick={(params, event) => {
                     event.defaultMuiPrevented = true;
                     handleGetById(params)
+                }}
+                components={{
+                    NoRowsOverlay: () => (
+                        <Stack height="75px" alignItems="center" justifyContent="center">
+                            <b>Aucun résultat pour ces critères de recherche</b>
+                        </Stack>
+                    )
                 }}
                 getRowClassName={(params) =>
                     params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'

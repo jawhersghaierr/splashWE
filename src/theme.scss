@@ -16,21 +16,35 @@
 }
 
 .RoundedEl {
-  & .MuiOutlinedInput-root, .MuiButton-root, .MuiInputBase-input{
+  border-radius: 20px;
+  padding: 0;
+  margin: 0;
+  & .MuiButton-root, .MuiOutlinedInput-root, .MuiInputBase-root, .MuiInputBase-input{
     border: 0;
     border-radius: 20px;
-    //padding: 5px 10px;
+    background: #FFF;
+    padding: 0 10px;
+    height: 40px;
   }
-  //MuiOutlinedInput-input MuiInputBase-input
-  border: 0;
-  border-radius: 20px;
-  margin: 0;
-  padding: 0;
+  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
+  & .MuiInputLabel-formControl{
+      top: -6px;
+  }
+  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
+  & .MuiInputLabel-formControl, .MuiFormLabel-root{
+      top: -6px;
+  }
+  //MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl RoundedEl css-1uqjlm1-MuiInputBase-root-MuiOutlinedInput-root
+  //MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input
+  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
+
+  //border: 0;
   &.MuiButton-root {
     padding: 5px 15px;
     background: #003154;
     text-transform: none;
     color: #E4EBF7;
+    height: 40px;
   }
   &.Mui-disabled {
     color: #4C6F87;
