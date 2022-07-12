@@ -60,19 +60,19 @@ export const PsGrid = ({handleGetById}) => {
         { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
         { field: 'statutRibs', headerName: 'Statut Rib', width: 95, renderCell: (params) => {
                 let chipLabel = params.formattedValue[0]?.count || null;
-                let RibLabel = params.formattedValue[0]?.statutRib || null;
-                let txt = `${JSON.stringify(params.formattedValue)}`
+                let RibLabel = params.formattedValue[0]?.statutRib || '';
+                let txt = `${JSON.stringify(params.formattedValue)}` || ''
                 return (
                     <Tooltip
                         title={<div style={{ whiteSpace: 'pre-line' }}> {txt}</div>}
                         placement="top"
                         arrow>
-                            {chipLabel && <div>
-                                <Chip label={chipLabel}
-                                 sx={{ bgcolor: '#FF5D5D', color: 'white' }}
-                                /> &nbsp;
+                            <div>
+                                {chipLabel && <Chip label={chipLabel}
+                                       sx={{bgcolor: '#FF5D5D', color: 'white'}}
+                                />} &nbsp;
                                 {RibLabel && RibLabel}
-                            </div>}
+                            </div>
                     </Tooltip>
                 )
         }},
@@ -82,7 +82,7 @@ export const PsGrid = ({handleGetById}) => {
                 const discipl = params.formattedValue || null;
 
                 let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
-                let txt = discipl.join(' \n')
+                let txt = discipl.join(' \n') || ''
                 return (
                     <div>{(discipl && (discipl.length > 1)) &&
                     <Tooltip
