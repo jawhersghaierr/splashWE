@@ -6,7 +6,12 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 
 import {Typography, CssBaseline} from "@mui/material";
-import {useTheme, StyledEngineProvider } from '@mui/material/styles';
+import {
+  useTheme,
+  StyledEngineProvider,
+  ThemeProvider,
+  createTheme
+} from "@mui/material/styles";
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
@@ -25,8 +30,34 @@ import Drawer from "./utils/Drawer"
 import {Ps} from './components/ps/PS'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
-
+import { purple } from '@mui/material/colors';
 import './theme.scss'
+
+const defaultTheme = createTheme();
+const theme1 = createTheme({
+  palette: {
+    // augmentColor is a step that Material-UI automatically does for the standard palette colors.
+    badg1: {
+      main: '#FF5D5D',
+      light: '#90a4ae',
+      dark: '#37474f',
+      contrastText: '#ffffff',
+    },
+    badg2: {
+      main: '#C7F99F',
+      light: '#90a4ae',
+      dark: '#37474f',
+      contrastText: '#ffffff',
+    },
+    badg3: {
+      main: '#FFD4AD',
+      light: '#90a4ae',
+      dark: '#37474f',
+      contrastText: '#ffffff',
+    },
+  }
+});
+
 
 const dynamicFederation = async (scope, module) => {
   const container = window[scope]; // or get the container somewhere else
@@ -59,7 +90,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-
+      {/*<StyledEngineProvider injectFirst>*/}
+      {/*<ThemeProvider theme={theme1}>*/}
         <Suspense fallback="Loading...">
           <BrowserRouter>
             {/*<div className={clsx('Host', classes.root)}>*/}
@@ -75,7 +107,7 @@ const App = () => {
                 <HostMenu />
               </Drawer>
 
-              <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+              <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
                   <Route path="/" exact component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
@@ -89,7 +121,8 @@ const App = () => {
 
           </BrowserRouter>
         </Suspense>
-
+      {/*</ThemeProvider>*/}
+      {/*</StyledEngineProvider>*/}
     </Provider>
   );
 };

@@ -9,6 +9,7 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
 import { purple, red } from '@mui/material/colors';
+import Tooltip from '@mui/material/Tooltip';
 
 import {
     selectNumCriterias,
@@ -58,24 +59,40 @@ export const PsGrid = ({handleGetById}) => {
         // { field: 'id', headerName: 'ID', width: 150 },
         { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
         { field: 'statutRibs', headerName: 'Statut Rib', width: 95, renderCell: (params) => {
-                console.log('statutRibs > ', params.formattedValue[0]?.statutRib, ': ', params.formattedValue[0]?.count)
                 let chipLabel = params.formattedValue[0]?.count || null;
                 let RibLabel = params.formattedValue[0]?.statutRib || null;
-                console.log('chipLabel > ', chipLabel)
+                let txt = `${JSON.stringify(params.formattedValue)}`
                 return (
-                    <div>{chipLabel && <Chip label={chipLabel} color='secondary'/>} {RibLabel && RibLabel} </div>
+                    <Tooltip
+                        title={<div style={{ whiteSpace: 'pre-line' }}> {txt}</div>}
+                        placement="top"
+                        arrow>
+                            {chipLabel && <div>
+                                <Chip label={chipLabel}
+                                 sx={{ bgcolor: '#FF5D5D', color: 'white' }}
+                                /> &nbsp;
+                                {RibLabel && RibLabel}
+                            </div>}
+                    </Tooltip>
                 )
         }},
-        { field: 'raisonSociale', headerName: 'Raison Sociale', width: 300 },
+        { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
         { field: 'disciplines', headerName: 'Discipline(s)', width: 175, renderCell: (params) => {
                 // const discipl = params.formattedValue.split(',') || null;
                 const discipl = params.formattedValue || null;
-                console.log('disciplines >>', discipl)
 
                 let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
-                // return params.formattedValue
+                let txt = discipl.join(' \n')
                 return (
-                    <div>{(discipl && (discipl.length > 1)) && <Chip label={discipl.length}/>} {RibLabel && RibLabel} </div>
+                    <div>{(discipl && (discipl.length > 1)) &&
+                    <Tooltip
+                        title={<div style={{ whiteSpace: 'pre-line' }}> {txt}</div>}
+                        placement="top"
+                        arrow>
+                            <Chip label={discipl.length}/>
+                    </Tooltip>
+                    } {RibLabel && RibLabel}
+                    </div>
                 )
         }},
         { field: 'codePostal', headerName: 'Code postal', width: 150 },
@@ -102,6 +119,7 @@ export const PsGrid = ({handleGetById}) => {
                     event.defaultMuiPrevented = true;
                     handleGetById(params)
                 }}
+                disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (
                         <Stack height="75px" alignItems="center" justifyContent="center">

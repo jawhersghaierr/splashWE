@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import {Chip} from "@material-ui/core";
+import Chip from '@mui/material/Chip';
 import {useGetEtsByIdQuery} from "./services/psApi";
 
 export default function PsDetailsById(id) {
@@ -23,7 +23,7 @@ export default function PsDetailsById(id) {
             >
                 <Tab label="Information generales" />
                 <Tab label={<div>RIB&nbsp;
-                    <Chip label="1 en attante" color="secondary"/>
+                    <Chip label="1 en attante" sx={{ bgcolor: '#FF5D5D', color: 'white' }} color={'primary'}/>
                 </div>} value="/messages" />
                 <Tab label="Droits" />
                 <Tab label="Historiques" />
