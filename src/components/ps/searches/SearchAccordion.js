@@ -161,7 +161,7 @@ export default function SearchAccordion(props) {
                                             InputProps={{  disableUnderline: true }}
                                             className="RoundedEl"
                                         />
-                                        {meta.error && meta.touched && <span style={{display: 'block', fontSize: 'medium'}}>{meta.error}</span>}
+                                        {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                     </div>
                                 )}
                             </Field>
@@ -181,7 +181,7 @@ export default function SearchAccordion(props) {
                                         className="RoundedEl"
                                         InputProps={{  disableUnderline: true }}
                                     />
-                                    {meta.error && meta.touched && <span style={{fontSize: 'medium'}}>{meta.error}</span>}
+                                    {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                 </div>
                             )}
                             </Field>
@@ -210,14 +210,13 @@ export default function SearchAccordion(props) {
                                     {disciplines && <Field name="disciplines" format={value => value || []}>
 
                                         {({input, meta}) => (
-                                            <FormControl sx={{ m: 1, width: 300 }}>
+                                            <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
                                                 <InputLabel id="Disciplines-label">Discipline</InputLabel>
                                                 <Select
                                                     id="Disciplines"
                                                     labelId="Disciplines-label"
                                                     multiple
                                                     sx={{width: 360}}
-                                                    className="RoundedEl"
                                                     {...input}
                                                     input={<OutlinedInput className="RoundedEl" label="Disciplines"/>}
                                                     MenuProps={{autoFocus: false}}
@@ -264,7 +263,7 @@ export default function SearchAccordion(props) {
                                                     {...input}
                                                     className="RoundedEl"
                                                 />
-                                                {meta.error && meta.touched && <span style={{display: 'block'}}>{meta.error}</span>}
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </div>
                                         )}
                                     </Field>
@@ -281,7 +280,7 @@ export default function SearchAccordion(props) {
                                                     {...input}
                                                     className="RoundedEl"
                                                 />
-                                                {meta.error && meta.touched && <span>{meta.error}</span>}
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </div>
                                         )}
                                     </Field>
@@ -297,7 +296,7 @@ export default function SearchAccordion(props) {
                                     <Field name="statutRibs" format={value => value || []}>
 
                                         {({ input, meta }) => (
-                                            <FormControl sx={{ m: 1, width: 300 }}>
+                                            <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
                                                 <InputLabel id="StatutRib-label">StatutRib</InputLabel>
                                                 <Select
                                                     id="StatutRibs"

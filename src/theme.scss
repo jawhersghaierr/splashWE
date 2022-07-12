@@ -23,20 +23,14 @@
     border: 0;
     border-radius: 20px;
     background: #FFF;
-    padding: 0 10px;
-    height: 40px;
+    padding: 5px 10px;
   }
-  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
   & .MuiInputLabel-formControl{
       top: -6px;
   }
-  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
-  & .MuiInputLabel-formControl, .MuiFormLabel-root{
-      top: -6px;
+  & .MuiFormControl-root > label {
+      top: -12px!important;
   }
-  //MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl RoundedEl css-1uqjlm1-MuiInputBase-root-MuiOutlinedInput-root
-  //MuiOutlinedInput-input MuiInputBase-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input
-  //MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root
 
   //border: 0;
   &.MuiButton-root {
@@ -50,7 +44,6 @@
     color: #4C6F87;
   }
 
-  //MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled RoundedEl css-sghohy-MuiButtonBase-root-MuiButton-root
 }
 
 //input:-webkit-autofill{
