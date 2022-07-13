@@ -9,7 +9,8 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
 import { purple, red } from '@mui/material/colors';
-import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 
 import {
     selectNumCriterias,
@@ -18,15 +19,55 @@ import {
 
 import './psGrid.scss';
 
+
+const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: theme.palette.common.white,
+        color: 'rgba(0, 0, 0, 0.87)',
+        boxShadow: theme.shadows[5],
+        fontSize: 14,
+        // minWidth: 225,
+    },
+    [`& .${tooltipClasses.arrow}`]: {
+        color: theme.palette.common.white,
+    },
+}));
+
 const statuses = {
-    NA: 'Inactif (gray)',
-    ATT: 'En attente (orange)',
-    ACT: 'Validé (green)',
-    REF: 'Refusé (red)',
-    MIS: 'Manquant (blue)'
+    ATT: {label: 'En attente', color: '#FFD4AD'},
+    REF: {label: 'Refusé', color: '#FFA3A3'},
+    MIS: {label: 'Manquant', color: '#B3EFF8'},
+    NA: {label: 'Inactif', color: '#99ACBB'},
+    ACT: {label: 'Validé', color: '#C7F99F'}
 }
 
-export const PsGrid = ({handleGetById}) => {
+const statusRow = (formattedValue) => {
+
+    let res = {}
+    formattedValue.forEach((stat, i) => {
+        res[stat.statutRib] = {}
+        res[stat.statutRib] = {...stat, ...statuses[stat.statutRib]};
+    })
+    /*
+        Ако има поне 1 ПС чийто риб е en attente - показваме En attente
+        Aко има поне 1 ПС чийто риб е refused - показваме Refusé
+        Ако ПС-ите нямат риб или той е деактивиран - показваме Manquant
+        Ако ПС-ите нямат активна конвенция - тогава показваме Inactif
+        Ако всичките рибове на ПС са валидирани - показваме Validé
+    */
+
+    if (res.ATT?.count > 0) return {...res, ATT: {...res.ATT, shown: true}};
+    if (res.REF?.count > 0) return {...res, REF: {...res.REF, shown: true}};
+    if (res.MIS?.count > 0) return {...res, MIS: {...res.MIS, shown: true}};
+    if (res.NA?.count > 0) return {...res, NA: {...res.NA, shown: true}};
+    if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
+
+    return res;
+}
+
+export const PsGrid = ({handleGetById, disciplines}) => {
 
     const criterias = useSelector(selectCriterias);
     const numCriterias = useSelector(selectNumCriterias);
@@ -52,28 +93,38 @@ export const PsGrid = ({handleGetById}) => {
     }, [criterias, currentPage]);
 
 
+    console.log('disciplines > ', disciplines)
 
-
+    // if (disciplines) debugger
     //TODO split in const file!
+
+
+    const popOverRibs = (ribs) => {
+        return (<div style={{display: 'flex', flexDirection: 'column'}}>
+                <h3 style={{margin: '5px'}}><b>Statut RIB</b></h3>
+                {Object.keys(ribs).map((rib, index) => (
+                    <Chip label={`${ribs[rib]?.count} ${ribs[rib]?.label}`} key={`fistChip${index}`}
+                          sx={{bgcolor: ribs[rib]?.color, color: 'black', margin: '5px', padding: 0}}
+                    />
+                ))}
+        </div>
+        )
+    }
+
+
     const columns = [
         // { field: 'id', headerName: 'ID', width: 150 },
         { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
-        { field: 'statutRibs', headerName: 'Statut Rib', width: 95, renderCell: (params) => {
-                let chipLabel = params.formattedValue[0]?.count || null;
-                let RibLabel = params.formattedValue[0]?.statutRib || '';
-                let txt = `${JSON.stringify(params.formattedValue)}` || ''
+        { field: 'statutRibs', headerName: 'Statut Rib', width: 125, renderCell: (params) => {
+                const statRow = statusRow(params.formattedValue)
+                const shown = Object.keys(statRow).find(key => statRow[key].shown);
                 return (
-                    <Tooltip
-                        title={<div style={{ whiteSpace: 'pre-line' }}> {txt}</div>}
-                        placement="top"
-                        arrow>
-                            <div>
-                                {chipLabel && <Chip label={chipLabel}
-                                       sx={{bgcolor: '#FF5D5D', color: 'white'}}
-                                />} &nbsp;
-                                {RibLabel && RibLabel}
-                            </div>
-                    </Tooltip>
+                    <LightTooltip
+                        title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>}
+                        placement="top" arrow>
+                            <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}`}
+                                   sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>
+                    </LightTooltip>
                 )
         }},
         { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
@@ -82,24 +133,31 @@ export const PsGrid = ({handleGetById}) => {
                 const discipl = params.formattedValue || null;
 
                 let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
-                let txt = discipl.join(' \n') || ''
+
+                let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e.libelle).join(' \n') || ''
+
                 return (
                     <div>{(discipl && (discipl.length > 1)) &&
-                    <Tooltip
-                        title={<div style={{ whiteSpace: 'pre-line' }}> {txt}</div>}
+                    <LightTooltip
+                        title={<div style={{ whiteSpace: 'pre-line' }}>
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <h3 style={{margin: '5px'}}><b>Disciplines</b></h3>
+                                <div style={{minWidth: '225px', paddingLeft: '5px'}}> {txt} </div>
+                            </div>
+                        </div>}
                         placement="top"
                         arrow>
                             <Chip label={discipl.length}/>
-                    </Tooltip>
+                    </LightTooltip>
                     } {RibLabel && RibLabel}
                     </div>
                 )
         }},
-        { field: 'codePostal', headerName: 'Code postal', width: 150 },
         { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
-            // <Button>{params.formattedValue}</Button>
-            params.formattedValue
-        ),},
+                // <Button>{params.formattedValue}</Button>
+                params.formattedValue
+        )},
+        { field: 'codePostal', headerName: 'Code postal', width: 150 },
     ];
 
 

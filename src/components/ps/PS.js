@@ -54,7 +54,7 @@ export const Ps = () => {
             className="searchContainer"
             disciplinesIsSuccess={disciplinesIsSuccess}/>
 
-        <PsGrid handleGetById={handleClickOpen}/>
+        <PsGrid handleGetById={handleClickOpen} disciplines={disciplines}/>
 
         {modalContent && <Dialog open={open} onClose={handleClose}
             // fullScreen
