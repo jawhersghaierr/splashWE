@@ -11,6 +11,7 @@ import Chip from '@mui/material/Chip';
 import { purple, red } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
+import {statusesRIB} from '../utils/utils'
 
 import {
     selectNumCriterias,
@@ -35,20 +36,13 @@ const LightTooltip = styled(({ className, ...props }) => (
     },
 }));
 
-const statuses = {
-    ATT: {label: 'En attente', color: '#FFD4AD'},
-    REF: {label: 'Refusé', color: '#FFA3A3'},
-    MIS: {label: 'Manquant', color: '#B3EFF8'},
-    NA: {label: 'Inactif', color: '#99ACBB'},
-    ACT: {label: 'Validé', color: '#C7F99F'}
-}
 
 const statusRow = (formattedValue) => {
 
     let res = {}
     formattedValue.forEach((stat, i) => {
         res[stat.statutRib] = {}
-        res[stat.statutRib] = {...stat, ...statuses[stat.statutRib]};
+        res[stat.statutRib] = {...stat, ...statusesRIB[stat.statutRib]};
     })
     /*
         Ако има поне 1 ПС чийто риб е en attente - показваме En attente
@@ -92,10 +86,6 @@ export const PsGrid = ({handleGetById, disciplines}) => {
         }
     }, [criterias, currentPage]);
 
-
-    console.log('disciplines > ', disciplines)
-
-    // if (disciplines) debugger
     //TODO split in const file!
 
 
@@ -129,7 +119,6 @@ export const PsGrid = ({handleGetById, disciplines}) => {
         }},
         { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
         { field: 'disciplines', headerName: 'Discipline(s)', width: 175, renderCell: (params) => {
-                // const discipl = params.formattedValue.split(',') || null;
                 const discipl = params.formattedValue || null;
 
                 let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
@@ -154,7 +143,6 @@ export const PsGrid = ({handleGetById, disciplines}) => {
                 )
         }},
         { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
-                // <Button>{params.formattedValue}</Button>
                 params.formattedValue
         )},
         { field: 'codePostal', headerName: 'Code postal', width: 150 },

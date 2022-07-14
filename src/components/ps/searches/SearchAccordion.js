@@ -27,6 +27,9 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 
+import {statusesRIB, validators} from '../utils/utils'
+
+
 import {
     setCriterias,
     selectCriterias,
@@ -95,6 +98,7 @@ export default function SearchAccordion(props) {
         panel5: false,
         panel6: false,
     });
+    const [dotShow, setDotShow] = useState(false);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -105,14 +109,6 @@ export default function SearchAccordion(props) {
     const handleAccordionPanel = () => (event) => {
         setPanelExpanded(!panelExpanded);
     };
-
-    const statusesRIB = [
-        {libelle: 'ATT', code: 'ATT'},
-        {libelle: 'ACT', code: 'ACT'},
-        {libelle: 'REF', code: 'REF'},
-        {libelle: 'MIS', code: 'MIS'},
-        {libelle: 'NA', code: 'NA'}
-    ];
 
 
     return (
@@ -131,10 +127,10 @@ export default function SearchAccordion(props) {
                         if (_value?.disciplines?.includes('all')) _value = {..._value, disciplines: disciplines?.map(({code})=>code)}
 
                         if (_value?.statutRibs?.length === 0 ||
-                            (_value?.statutRibs?.includes('all') && _value?.statutRibs?.length > statusesRIB?.length)
+                            (_value?.statutRibs?.includes('all') && _value?.statutRibs?.length > Object.keys(statusesRIB).length)
                         ) _value = {..._value, statutRibs: undefined}
 
-                        if (_value?.statutRibs?.includes('all')) _value = {..._value, statutRibs: statusesRIB?.map(({code})=>code)}
+                        if (_value?.statutRibs?.includes('all')) _value = {..._value, statutRibs: Object.keys(statusesRIB).map((code)=>code)}
 
                         return _value
 
@@ -148,7 +144,7 @@ export default function SearchAccordion(props) {
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Field name="numPartenaire" validate={composeValidators(mustBeNumber, minValue(3), maxValue(10))}>
+                            <Field name="numPartenaire" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(10))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
@@ -167,7 +163,7 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="raisonSociale" validate={composeValidators(minValue(3), maxValue(60))}>
+                            <Field name="raisonSociale" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(61))}>
 
                             {({ input, meta }) => (
                                 <div style={{flex: 2}}>
@@ -188,7 +184,7 @@ export default function SearchAccordion(props) {
                             </Field>
                             <div style={{width: 150, height: '40px', display: 'flex'}}>
                                 {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
-                                    <Badge color="secondary" variant="dot" invisible={false}><AddCircleIcon/></Badge>
+                                    <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
                                 </IconButton>}
                                 {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
                                 <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
@@ -231,7 +227,7 @@ export default function SearchAccordion(props) {
 
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText
-                                                            primary={(values?.disciplines?.length == disciplines.length) ? "Déselectionner tout" : "Sélectionner tout"}/>
+                                                            primary={(values?.disciplines?.length == disciplines.length) ? <b>Déselectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
                                                     {disciplines.map(({code, libelle}) => (
                                                         <MenuItem key={code} value={code}>
@@ -251,7 +247,7 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex'}}>
 
-                                    <Field name="codePostal" validate={composeValidators(mustBeNumber, minValue(3), maxValue(6))}>
+                                    <Field name="codePostal" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
                                         {({ input, meta }) => (
                                             <div>
                                                 <TextField
@@ -268,7 +264,7 @@ export default function SearchAccordion(props) {
                                             </div>
                                         )}
                                     </Field>
-                                    <Field name="ville">
+                                    <Field name="ville"  validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                         {({ input, meta }) => (
                                             <div>
                                                 <TextField
@@ -311,16 +307,16 @@ export default function SearchAccordion(props) {
                                                         if (selected.length > 1) {
                                                             return `${selected.length} statuts séléctionnées`
                                                         }
-                                                        return statusesRIB.find(item => item.code.toString() === selected.toString())?.libelle || '';
+                                                        return statusesRIB[selected[0]].label || '';
                                                     }}
                                                 >
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText sx={{fontWeight: 400}}
-                                                            primary={(values?.statutRibs?.length == statusesRIB.length) ? "Déselectionner tout" : "Sélectionner tout"}/>
+                                                                      primary={(values?.statutRibs?.length == Object.keys(statusesRIB).length) ? <b>Déselectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
-                                                    {statusesRIB.map(({code, libelle}) => (
+                                                    {Object.keys(statusesRIB).map(code => (
                                                         <MenuItem key={code} value={code} >
-                                                            {libelle}
+                                                            {statusesRIB[code].label}
                                                         </MenuItem>
                                                     ))}
                                                 </Select>
@@ -351,35 +347,15 @@ export default function SearchAccordion(props) {
                 </StyledCard>
                {<FormSpy onChange={(values)=>{
                    form.mutators.setValue(values)
+                   const {disciplines, statutRibs, codePostal, ville} = values?.values;
+                    if(disciplines || statutRibs || codePostal || ville) {
+                        setDotShow(true)
+                    } else {
+                        setDotShow(false)
+                    }
                }}/>}
             </form>)}/>
         </div>
     );
 }
 
-
-
-const composeValidators = (...validators) => value => {
-    let result = validators.reduce((error, validator) => {
-        return error || validator(value)
-    }, undefined)
-    return result;
-}
-
-const required = value => (value ? undefined : 'Required')
-
-const mustBeNumber = value => {
-    let result = value;
-    if (value) result = isNaN(value) ? 'Must be a number' : undefined
-    return result;
-}
-
-const minValue = min => value => {
-    let result = (value === undefined || value.toString().length >= min) ? undefined : `Should be greater than ${min} symbols`
-    return result;
-}
-
-const maxValue = max => value => {
-    let result = (value === undefined || value.toString().length < max) ? undefined : `Should be less than ${max} symbols`
-    return result;
-}
