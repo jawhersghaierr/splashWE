@@ -112,6 +112,8 @@ const App = () => {
                   <Route path="/" exact component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
                   <Route path="/PS" component={Ps} />
+                  {/*<Route exact path="/PS/:id?" component={Ps}/>} />*/}
+                  <Route path="/PS/:id?" element={<Ps psFact={'psFact'} />}/>
                   <Route path="/PSremote" component={PSremote} />
                   <Route path="/Beneficiary" component={Beneficiary}/> />
                 </Switch>

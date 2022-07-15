@@ -21,8 +21,15 @@ import {
 } from './psSlice'
 
 import './ps.scss'
+import {matchPath} from "react-router-dom";
 
-export const Ps = () => {
+export const Ps = (props) => {
+
+    const match = matchPath(props?.location?.pathname, {
+        path: "/PS/:id",
+        exact: true,
+        strict: false
+    });
 
     const criterias = useSelector(selectCriterias);
     const pagination = useSelector(selectPagination);
@@ -40,14 +47,14 @@ export const Ps = () => {
         setModalContent(null);
     };
 
-    useEffect(() => {
-        criterias && console.log('criterias received >>', criterias)
-    }, [criterias]);
 
     const {data: disciplines, isFetching: disciplinesIsFetching, isSuccess: disciplinesIsSuccess} = useGetDisciplinesQuery();
 
     return <div style={{padding: '0', margin: 0}}>
-        <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}><b>Professionnel de santé</b></Typography>
+        <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
+            <b>Professionnel de santé</b> &nbsp;
+            {match?.params?.id}
+        </Typography>
         <SearchAccordion
             disciplines={disciplines}
             disciplinesIsFetching={disciplinesIsFetching}
@@ -70,7 +77,7 @@ export const Ps = () => {
                     ROC. Viamedis
                 </DialogContentText>
 
-                <PsDetailsById id={modalContent.id}/>
+                <PsDetailsById content={modalContent.row}/>
 
                 <pre style={{
                     whiteSpace: 'pre-wrap',

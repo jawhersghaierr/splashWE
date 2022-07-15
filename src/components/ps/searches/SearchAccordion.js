@@ -247,9 +247,10 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex'}}>
 
-                                    <Field name="codePostal" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
+                                    <Field name="codePostal"
+                                           validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
                                         {({ input, meta }) => (
-                                            <div>
+                                            <div style={{marginRight: '15px'}}>
                                                 <TextField
                                                     id="CodePostal"
                                                     sx={{width: 360}}
@@ -327,20 +328,25 @@ export default function SearchAccordion(props) {
                                 </AccordionDetails>
                             </Accordion>
 
-                            <div style={{ margin: '10px', padding:'10px'}}>
+                            <div style={{ margin: '10px', textAlign: 'right'}}>
 
-                                <Button variant="contained" type="submit" size="medium" disabled={submitting || pristine} className="RoundedEl">
-                                    <SearchIcon/>Rechercher
-                                </Button>
                                 <Button
                                     variant="contained"
                                     type="button"
                                     onClick={form.reset}
                                     className="RoundedEl"
                                     disabled={submitting || pristine}
+                                    style={{marginRight: '15px'}}
                                 >
                                     Effacer
                                 </Button>
+                                <Button variant="contained"
+                                        type="submit" size="medium"
+                                        disabled={submitting || pristine}
+                                        className="RoundedEl">
+                                    <SearchIcon/>Rechercher
+                                </Button>
+
                             </div>
                         </CardActions>
                     </Collapse>
