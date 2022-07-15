@@ -85,7 +85,7 @@ export const psApi = createApi({
         }),
 
         getEtsById: builder.query({
-            query: ({id}) => {
+            query: (id) => {
                 let url = `ets/${id}`;
                 return ({
                     url,

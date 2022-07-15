@@ -77,7 +77,7 @@ export const Ps = (props) => {
                     ROC. Viamedis
                 </DialogContentText>
 
-                <PsDetailsById content={modalContent.row}/>
+                <PsDetailsById content={modalContent.row} disciplines={disciplines}/>
 
                 <pre style={{
                     whiteSpace: 'pre-wrap',

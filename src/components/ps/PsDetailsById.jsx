@@ -7,27 +7,34 @@ import {useGetEtsByIdQuery} from "./services/psApi";
 import {statusRow} from "./utils/utils";
 import {useEffect} from "react";
 
-export default function PsDetailsById({content: {id, statutRibs}}) {
+
+export default function PsDetailsById({disciplines: disciplinesList, content: {id, statutRibs, disciplines}}) {
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    // const {id = null, statutRibs: ribs} = content;
 
-    const {data} = (id && id !== undefined)? useGetEtsByIdQuery(id) : null;
-    console.log(id, ' : ', statutRibs);
-    // debugger
+    let {data = null} = useGetEtsByIdQuery(id);
+
     const statRow = statutRibs && statusRow(statutRibs) || null
     const shown = statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
 
     useEffect(() => {
 
-        console.log(statRow);
+        console.log(disciplinesList);
         console.log('^^^^^^^^^^^^^^^^^^^^');
-    }, [statRow]);
+    }, [statRow, disciplinesList]);
+
+    const reShapeDiscipline = (_discipline) => disciplinesList.find(item => item.code.toString() === _discipline)?.libelle || ''
 
     return (
-        <Box sx={{ bgcolor: 'background.paper' }}>
+
+        <Box sx={{ bgcolor: 'background.paper'}}>
+            <div>
+                {disciplines && disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '15px'}} key={`chip_${i}`}/>)}
+                {data && <div sx={{display: 'block', padding: '15px', margin: '15px'}}>Numero partenaire <b>{data.numPartenaire}</b> Finess Juridique: <b>{data.finessJuridique}</b></div>}
+            </div>
             <Tabs
                 TabIndicatorProps={{sx: {top: 0}}}
                 value={value}
@@ -39,7 +46,6 @@ export default function PsDetailsById({content: {id, statutRibs}}) {
             >
                 <Tab label="Information generales" />
                 <Tab label={<div>RIB&nbsp;
-                    {/*<Chip label="1 en attante" sx={{ bgcolor: '#FF5D5D', color: 'white' }} color={'primary'}/>*/}
                     {statutRibs && <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}`}
                            sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>}
                 </div>} value="/messages" />
