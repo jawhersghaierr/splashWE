@@ -3,13 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {useGetDisciplinesQuery} from "../referentiel/services/referentielApi";
 
 import {Typography} from "@mui/material";
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
 
 import SearchAccordion from "../ps/searches/SearchAccordion";
 import {PsGrid} from "./grids/PsGrid";
@@ -42,10 +35,6 @@ export const Ps = (props) => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-        setModalContent(null);
-    };
 
 
     const {data: disciplines, isFetching: disciplinesIsFetching, isSuccess: disciplinesIsSuccess} = useGetDisciplinesQuery();
@@ -62,32 +51,6 @@ export const Ps = (props) => {
             disciplinesIsSuccess={disciplinesIsSuccess}/>
 
         <PsGrid handleGetById={handleClickOpen} disciplines={disciplines}/>
-
-        {modalContent && <Dialog open={open} onClose={handleClose}
-            // fullScreen
-                 fullWidth={true}
-                 maxWidth={'xl'}
-                 onClose={(event, reason) => {
-                     console.log(reason)
-                 }}
-        >
-            <DialogTitle>{modalContent?.row?.raisonSociale}</DialogTitle>
-            <DialogContent sx={{bgcolor: 'background.paper'}}>
-                <DialogContentText>
-                    ROC. Viamedis
-                </DialogContentText>
-
-                <PsDetailsById content={modalContent.row} disciplines={disciplines}/>
-
-                <pre style={{
-                    whiteSpace: 'pre-wrap',
-                    overflowWrap: 'break-word',
-                }}>{JSON.stringify(modalContent)}</pre>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Close</Button>
-            </DialogActions>
-        </Dialog>}
 
     </div>
 }

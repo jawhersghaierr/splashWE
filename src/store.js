@@ -47,7 +47,7 @@ const staticReducers = {
  */
 export default function configureStore(initialState) {
 
-  const middleware = applyMiddleware(...[thunk, thunkMiddleware, logger]);
+  const middleware = applyMiddleware(psApi.middleware, referentielApi.middleware, ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
           ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({

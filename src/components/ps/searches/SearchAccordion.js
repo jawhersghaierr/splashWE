@@ -219,7 +219,7 @@ export default function SearchAccordion(props) {
                                                     MenuProps={{autoFocus: false}}
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
-                                                            return `${selected.length} disciplines séléctionnés`
+                                                            return `${selected.length} disciplines séléctionnéеs`
                                                         }
                                                         return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
                                                     }}
@@ -295,7 +295,7 @@ export default function SearchAccordion(props) {
 
                                         {({ input, meta }) => (
                                             <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
-                                                <InputLabel id="StatutRib-label">StatutRib</InputLabel>
+                                                <InputLabel id="StatutRib-label">Statut RIB</InputLabel>
                                                 <Select
                                                     id="StatutRibs"
                                                     labelId="StatutRib-label"
@@ -306,7 +306,7 @@ export default function SearchAccordion(props) {
                                                     className="RoundedEl"
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
-                                                            return `${selected.length} statuts séléctionnées`
+                                                            return `${selected.length} statuts séléctionnés`
                                                         }
                                                         return statusesRIB[selected[0]].label || '';
                                                     }}

@@ -32,6 +32,7 @@ import {Ps} from './components/ps/PS'
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
 import { purple } from '@mui/material/colors';
 import './theme.scss'
+import PsDetailsById from "./components/ps/PsDetailsById";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -109,11 +110,11 @@ const App = () => {
 
               <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
-                  <Route path="/" exact component={PageDashboard} />
+                  <Route exact path="/" component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
-                  <Route path="/PS" component={Ps} />
+                  <Route exact={true} path="/PS" component={Ps} />
                   {/*<Route exact path="/PS/:id?" component={Ps}/>} />*/}
-                  <Route path="/PS/:id?" element={<Ps psFact={'psFact'} />}/>
+                  <Route path="/PS/:id?" component={PsDetailsById}/>
                   <Route path="/PSremote" component={PSremote} />
                   <Route path="/Beneficiary" component={Beneficiary}/> />
                 </Switch>

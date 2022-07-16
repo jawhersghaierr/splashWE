@@ -50,7 +50,7 @@ export const psApi = createApi({
             }}),
         }),
         getEts: builder.query({
-            query: ({currentPage, criterias}) => {
+            query: ({currentPage, criterias, sortProperties}) => {
                 const {
                     numPartenaire,
                     raisonSociale,
@@ -58,14 +58,18 @@ export const psApi = createApi({
                     codePostal,
                     ville,
                     statutRibs,
-                    sortDirection = 'ASC',
-                    sortPropert,
                 } = criterias;
 
-                const size = 10;
-                let url = `ets?page=${currentPage}&size=${size}&sortDirection=${sortDirection}`;
+                const {
+                    sortDirection,
+                    sortProperty,
+                } = sortProperties;
 
-                if (sortPropert) url += `&sortPropert=${sortPropert}`;
+                const size = 10;
+                let url = `ets?page=${currentPage}&size=${size}`;
+
+                if (sortDirection) url += `&sortDirection=${sortDirection}`;
+                if (sortProperty) url += `&sortProperty=${sortProperty}`;
                 if (numPartenaire) url += `&numPartenaire=${numPartenaire}`;
                 if (raisonSociale) url += `&raisonSociale=${raisonSociale}`;
                 if (disciplines) url += `&disciplines=${disciplines}`;
