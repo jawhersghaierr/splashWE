@@ -82,6 +82,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: paths.public + "/index.html", // template file
             filename: "index.html", // output file
+            publicPath: "/"
         }),
     ],
     module: {
