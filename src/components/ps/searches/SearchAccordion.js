@@ -219,7 +219,7 @@ export default function SearchAccordion(props) {
                                                     MenuProps={{autoFocus: false}}
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
-                                                            return `${selected.length} disciplines séléctionnéеs`
+                                                            return `${selected.length} disciplines sélectionnéеs`
                                                         }
                                                         return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
                                                     }}
@@ -227,7 +227,7 @@ export default function SearchAccordion(props) {
 
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText
-                                                            primary={(values?.disciplines?.length == disciplines.length) ? <b>Déselectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                            primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
                                                     {disciplines.map(({code, libelle}) => (
                                                         <MenuItem key={code} value={code}>
@@ -306,14 +306,14 @@ export default function SearchAccordion(props) {
                                                     className="RoundedEl"
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
-                                                            return `${selected.length} statuts séléctionnés`
+                                                            return `${selected.length} statuts sélectionnés`
                                                         }
                                                         return statusesRIB[selected[0]].label || '';
                                                     }}
                                                 >
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText sx={{fontWeight: 400}}
-                                                                      primary={(values?.statutRibs?.length == Object.keys(statusesRIB).length) ? <b>Déselectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                      primary={(values?.statutRibs?.length == Object.keys(statusesRIB).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
                                                     {Object.keys(statusesRIB).map(code => (
                                                         <MenuItem key={code} value={code} >
