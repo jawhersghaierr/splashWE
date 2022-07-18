@@ -35,7 +35,7 @@ const popOverRibs = (ribs) => {
 
 export const columns = disciplines => [
     { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
-    { field: 'statutRibs', headerName: 'Statut Rib', width: 125, renderCell: (params) => {
+    { field: 'statutRibs', headerName: 'Statut Rib', width: 125, sortable: false, renderCell: (params) => {
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (
@@ -48,7 +48,7 @@ export const columns = disciplines => [
             )
         }},
     { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
-    { field: 'disciplines', headerName: 'Discipline(s)', width: 175, renderCell: (params) => {
+    { field: 'disciplines', headerName: 'Discipline(s)', width: 175, sortable: false, renderCell: (params) => {
             const discipl = params.formattedValue || null;
 
             let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
@@ -76,7 +76,7 @@ export const columns = disciplines => [
             params.formattedValue
         )},
     { field: 'codePostal', headerName: 'Code postal', width: 150 },
-    { field: 'id', headerName: '', width: 15, renderCell: (params) => {
+    { field: 'id', headerName: '', width: 15, sortable: false, renderCell: (params) => {
             return <Link to={`/PS/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

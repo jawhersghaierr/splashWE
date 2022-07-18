@@ -182,7 +182,7 @@ export default function SearchAccordion(props) {
                                 </div>
                             )}
                             </Field>
-                            <div style={{width: 150, height: '40px', display: 'flex'}}>
+                            <div style={{width: 150, display: 'flex'}}>
                                 {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
                                     <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
                                 </IconButton>}
