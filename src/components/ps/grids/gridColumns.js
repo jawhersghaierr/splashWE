@@ -53,7 +53,7 @@ export const columns = disciplines => [
 
             let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
 
-            let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e.libelle).join(' \n') || ''
+            let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e?.libelle).join(' \n') || ''
 
             return (
                 <div>{(discipl && (discipl.length > 1)) &&
