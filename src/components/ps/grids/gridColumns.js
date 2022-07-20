@@ -35,7 +35,7 @@ const popOverRibs = (ribs) => {
 
 export const columns = disciplines => [
     { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
-    { field: 'statutRibs', headerName: 'Statut Rib', width: 125, sortable: false, renderCell: (params) => {
+    { field: 'statutRibs', headerName: 'Statut RIB', width: 125, sortable: false, renderCell: (params) => {
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (

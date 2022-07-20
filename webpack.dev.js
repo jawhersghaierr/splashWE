@@ -5,6 +5,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
+const env_dev = require('./env-vars').env_dev;
 
 module.exports = {
     // Set the mode to development or production
@@ -46,8 +47,8 @@ module.exports = {
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
-                hospi_ui: 'hospi_ui@http://10.241.25.10:8031/remoteEntry.js',
-                ps_ui: 'ps_ui@http://localhost:8034/remotePsEntry.js',
+                hospi_ui: `hospi_ui@http://${env_dev}:8031/remoteEntry.js`,
+                ps_ui: `ps_ui@http://${env_dev}:8034/remotePsEntry.js`,
             },
             shared: {
                 ...deps,

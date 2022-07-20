@@ -10,12 +10,12 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        numPartenaire: null,
-        raisonSociale: null,
-        disciplines: null,
-        codePostal: null,
-        ville: null,
-        statutRibs: null,
+        numPartenaire: undefined,
+        raisonSociale: undefined,
+        disciplines: undefined,
+        codePostal: undefined,
+        ville: undefined,
+        statutRibs: undefined,
     }
     // isLoading: null,
     // isError: null,
@@ -26,14 +26,6 @@ export const psSlice = createSlice({
     name: 'PS',
     initialState,
     reducers: {
-        // incPage: (state) => {
-        //     state.page += 1
-        // },
-        //
-        // decPage: (state, action) => {
-        //     console.log(state, ' * ', action)
-        //     state.page -= 1
-        // },
 
         setSort: (state, action) => {
             state.sortPropert = action?.payload?.sortPropert || null
@@ -74,28 +66,27 @@ export const psSlice = createSlice({
             state.pagination = initialState.pagination;
             state.numCriterias = 0;
 
-            if (ville) {
-                state.criterias.ville = ville;
-                state.numCriterias++;
-            }
-            if (codePostal) {
-                state.criterias.codePostal = codePostal;
-                state.numCriterias++;
-            }
-            if (statutRibs) {
-                state.criterias.statutRibs = statutRibs;
-                state.numCriterias++;
-            }
-            if (disciplines) {
-                state.criterias.disciplines = disciplines;
-                state.numCriterias++;
-            }
-            if (numPartenaire) {
-                state.criterias.numPartenaire = numPartenaire;
-                state.numCriterias++;
-            }
+            state.criterias.raisonSociale = raisonSociale;
             if (raisonSociale) {
-                state.criterias.raisonSociale = raisonSociale;
+                state.numCriterias++;
+            }
+            state.criterias.ville = ville;
+            if (ville) {
+            }
+            state.criterias.codePostal = codePostal;
+            if (codePostal) {
+                state.numCriterias++;
+            }
+            state.criterias.statutRibs = statutRibs;
+            if (statutRibs) {
+                state.numCriterias++;
+            }
+            state.criterias.disciplines = disciplines;
+            if (disciplines) {
+                state.numCriterias++;
+            }
+            state.criterias.numPartenaire = numPartenaire;
+            if (numPartenaire) {
                 state.numCriterias++;
             }
         },
@@ -104,8 +95,6 @@ export const psSlice = createSlice({
 })
 
 export const {
-    incPage,
-    decPage,
     setSort,
     setPagination,
     setCriterias

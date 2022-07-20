@@ -81,7 +81,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
-    const numCriterias = useSelector(selectNumCriterias);
+    const criterias = useSelector(selectCriterias);
     const {disciplines, disciplinesIsFetching, disciplinesIsSuccess} = props;
 
     const onSubmit = async (values) => {
@@ -114,6 +114,7 @@ export default function SearchAccordion(props) {
     return (
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
+            // initialValues={{ ...criterias }} initialValuesEqual={() => true}
             mutators={{
                 ...arrayMutators,
                 setValue: ([field, value], state, utils) => {

@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {env_dev, env_int} from '../../../../env-vars'
 
 export const psApi = createApi({
     // get disciplines for dropdown from http://10.241.25.10:8004/api/v1/disciplines
     reducerPath: 'psApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://10.241.25.10:8002/api/v1',
+        baseUrl: `http://${env_dev}:8002/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -115,7 +116,7 @@ export const localReferentielApi = createApi({
 
     reducerPath: 'referentielApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://10.241.25.10:8004/api/v1',
+        baseUrl: `http://${env_dev}:8004/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {env_dev, env_int} from '../../../../env-vars'
 
 
 /*
@@ -24,7 +25,7 @@ export const referentielApi = createApi({
 
     reducerPath: 'referentielApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://10.241.25.10:8004/api/v1',
+        baseUrl: `http://${env_dev}:8004/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

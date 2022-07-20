@@ -52,13 +52,13 @@ export default function PsDetailsById(props) {
                 {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}
                 {data &&
                     <div style={{display: 'flex', alignItems: 'center', padding: '15px 0', margin: '15px 0', height: '50px'}}>
-                        Nº de partenaire : <b style={{color: '#00C9E9'}}>{data.numPartenaire}</b> &nbsp;
+                        Nº de partenaire&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.numPartenaire}</b> &nbsp;
                         <Tooltip
                             title={'Finess Géographique'}
                             placement="top" arrow>
                             <InfoOutlinedIcon/>
                         </Tooltip>
-                        <span style={{marginLeft: '50px'}}>Finess Juridique : <b style={{color: '#00C9E9'}}>{data.finessJuridique}</b></span>
+                        <span style={{marginLeft: '50px'}}>Finess Juridique&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.finessJuridique}</b></span>
                     </div>}
             </div>
             <Tabs
