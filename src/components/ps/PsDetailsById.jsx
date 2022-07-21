@@ -32,8 +32,8 @@ export default function PsDetailsById(props) {
 
     useEffect(() => {
 
-        console.log(resultData);
-        console.log('^^^^^^^^^^^^^^^^^^^^');
+        // console.log(resultData);
+        // console.log('^^^^^^^^^^^^^^^^^^^^');
     }, [resultData]);
 
     const reShapeDiscipline = (_discipline) => resultData.find(item => item.code.toString() === _discipline)?.libelle || ''
@@ -67,7 +67,7 @@ export default function PsDetailsById(props) {
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
-                aria-label="scrollable auto tabs example"
+                // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Information generales" />

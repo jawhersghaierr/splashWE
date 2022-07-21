@@ -51,6 +51,9 @@ export const psSlice = createSlice({
             if (sortDirection) state.pagination.sortDirection = sortDirection;
         },
 
+        initCriterias: (state, action) => {
+            state.criterias = {...initialState.criterias};
+        },
         setCriterias: (state, action) => {
 
             const {
@@ -62,7 +65,7 @@ export const psSlice = createSlice({
                 raisonSociale
             } = action?.payload
 
-            state.criterias = {};
+            state.criterias = {...initialState.criterias};
             state.pagination = initialState.pagination;
             state.numCriterias = 0;
 
@@ -97,7 +100,8 @@ export const psSlice = createSlice({
 export const {
     setSort,
     setPagination,
-    setCriterias
+    setCriterias,
+    initCriterias
 } = psSlice.actions;
 
 export const selectPagination = (state) => ({...state?.ps?.pagination});

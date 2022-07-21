@@ -27,16 +27,17 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 
-import {statusesRIB, validators} from '../utils/utils'
-
-
+import {statusesRIB, validators, checker, checkInsidePanels} from '../utils/utils'
 import {
     setCriterias,
+    initCriterias,
     selectCriterias,
     selectNumCriterias,
 } from '../psSlice'
 
 import './searchAccordion.scss'
+
+
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -91,12 +92,9 @@ export default function SearchAccordion(props) {
     };
 
     const [expanded, setExpanded] = useState({
-        panel1: true,
-        panel2: false,
-        panel3: false,
-        panel4: false,
-        panel5: false,
-        panel6: false,
+        panelDisciplines: true,
+        panelAdresse: false,
+        panelStatutRibs: false,
     });
     const [dotShow, setDotShow] = useState(false);
 
@@ -107,6 +105,9 @@ export default function SearchAccordion(props) {
     };
 
     const handleAccordionPanel = () => (event) => {
+        if (!panelExpanded) {
+            setExpanded(checkInsidePanels(criterias))
+        }
         setPanelExpanded(!panelExpanded);
     };
 
@@ -114,7 +115,7 @@ export default function SearchAccordion(props) {
     return (
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
-            // initialValues={{ ...criterias }} initialValuesEqual={() => true}
+            initialValues={{ ...criterias }}
             mutators={{
                 ...arrayMutators,
                 setValue: ([field, value], state, utils) => {
@@ -200,8 +201,8 @@ export default function SearchAccordion(props) {
                     <Collapse in={panelExpanded} timeout="auto">
                         <CardActions sx={{ display: 'block'}} >
 
-                            <Accordion expanded={expanded.panel1} onChange={handleChange('panel1')}>
-                                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                            <Accordion expanded={expanded.panelDisciplines} onChange={handleChange('panelDisciplines')}>
+                                <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
                                     <Typography>Disciplines</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -242,8 +243,8 @@ export default function SearchAccordion(props) {
                                 </AccordionDetails>
                             </Accordion>
 
-                            <Accordion expanded={expanded.panel2} onChange={handleChange('panel2')}>
-                                <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+                            <Accordion expanded={expanded.panelAdresse} onChange={handleChange('panelAdresse')}>
+                                <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                     <Typography>Adresse</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex'}}>
@@ -286,8 +287,8 @@ export default function SearchAccordion(props) {
                                 </AccordionDetails>
                             </Accordion>
 
-                            <Accordion expanded={expanded.panel3} onChange={handleChange('panel3')}>
-                                <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+                            <Accordion expanded={expanded.panelStatutRibs} onChange={handleChange('panelStatutRibs')}>
+                                <AccordionSummary aria-controls="panelStatutRibs-content" id="panelStatutRibs-header">
                                     <Typography>Statut du RIB</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
@@ -334,9 +335,12 @@ export default function SearchAccordion(props) {
                                 <Button
                                     variant="contained"
                                     type="button"
-                                    onClick={form.reset}
+                                    onClick={()=> {
+                                        dispatch(initCriterias());
+                                        form.reset()
+                                    }}
                                     className="RoundedEl"
-                                    disabled={submitting || pristine}
+                                    disabled={!checker(values)}
                                     style={{marginRight: '15px'}}
                                 >
                                     Effacer
@@ -352,7 +356,7 @@ export default function SearchAccordion(props) {
                         </CardActions>
                     </Collapse>
                 </StyledCard>
-               {<FormSpy onChange={(values)=>{
+               {<FormSpy onChange={(values) => {
                    form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;
                     if(disciplines || statutRibs || codePostal || ville) {
@@ -365,4 +369,5 @@ export default function SearchAccordion(props) {
         </div>
     );
 }
+
 

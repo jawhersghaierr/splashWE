@@ -15,8 +15,10 @@ import {
 import {columns} from "./gridColumns";
 import './psGrid.scss';
 
+import {checker} from '../utils/utils'
+import mainPS from "../../../../assets/PS.png";
 
-export const PsGrid = ({handleGetById, disciplines}) => {
+export const PsGrid = ({disciplines}) => {
 
     const criterias = useSelector(selectCriterias);
     const numCriterias = useSelector(selectNumCriterias);
@@ -27,7 +29,8 @@ export const PsGrid = ({handleGetById, disciplines}) => {
         sortDirection: null,
         sortProperty: null
     });
-    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: fistSkip});
+
+    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -41,20 +44,19 @@ export const PsGrid = ({handleGetById, disciplines}) => {
 
     useEffect(() => {
 
-        if (numCriterias > 0 ) {
             if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
                 setFirstSkip(true);
                 setCurrentPage(0)
             } else {
                 setFirstSkip(false)
             }
-        }
+
     }, [criterias, currentPage]);
 
 
     return <div className="gridContent">
 
-        {data && <div>
+        {(data && disciplines) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*10 : 10)} sur {data.totElements} résultats
@@ -66,10 +68,6 @@ export const PsGrid = ({handleGetById, disciplines}) => {
                 pageSize={10}
                 autoHeight
                 hideFooter={true}
-                // onCellClick={(params, event) => {
-                //     event.defaultMuiPrevented = true;
-                //     handleGetById(params)
-                // }}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (
@@ -90,6 +88,8 @@ export const PsGrid = ({handleGetById, disciplines}) => {
 
             />
         </div>}
+
+        {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
