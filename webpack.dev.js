@@ -110,7 +110,7 @@ module.exports = {
             },
 
             {
-                test: /\.png/,
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
                 type: 'asset/inline'
             },
 

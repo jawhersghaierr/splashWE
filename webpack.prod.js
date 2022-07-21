@@ -117,6 +117,12 @@ module.exports = {
                 ],
             },
 
+            {
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                type: 'asset/inline'
+            },
+
+
             // Images: Copy image files to build folder
             // { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: "asset/resource" },
 
