@@ -51,7 +51,7 @@ export const columns = disciplines => [
     { field: 'disciplines', headerName: 'Discipline(s)', width: 175, sortable: false, renderCell: (params) => {
             const discipl = params.formattedValue || null;
 
-            let RibLabel = (discipl && discipl.length > 0)? 'Multi-disciplines' : discipl[0];
+            let RibLabel = (discipl && discipl.length > 1)? 'Multi-disciplines' : discipl[0];
 
             let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e?.libelle).join(' \n') || ''
 

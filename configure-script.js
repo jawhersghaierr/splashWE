@@ -8,7 +8,7 @@ if (modul._this) {
         modulesForLoading = `<script src="${modul._this.url}:${modul._this.port}/${modul._this.fileName}"></script>`
 }
 modul.remotes.map(el=> {
-        modulesForLoading += `<script src="${env_IP}:${el.port}/${el.fileName}"></script>\n`
+        modulesForLoading += `<script src="http://${env_IP}:${el.port}/${el.fileName}"></script>\n`
 
 })
 

@@ -7,22 +7,17 @@ import {useGetEtsQuery} from "../services/psApi";
 import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
-import {
-    selectNumCriterias,
-    selectCriterias
-} from '../psSlice'
+import { selectCriterias } from '../psSlice'
 
 import {columns} from "./gridColumns";
 import './psGrid.scss';
 
-import {checker} from '../utils/utils'
+import {checker, usePrevious} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
 export const PsGrid = ({disciplines}) => {
 
     const criterias = useSelector(selectCriterias);
-    const numCriterias = useSelector(selectNumCriterias);
-    const [fistSkip, setFirstSkip] = useState(true);
     const prevCriterias = usePrevious(criterias)
     const [currentPage, setCurrentPage] = useState( 0);
     const [sortProperties, setSortProperties] = useState({
@@ -45,10 +40,7 @@ export const PsGrid = ({disciplines}) => {
     useEffect(() => {
 
             if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-                setFirstSkip(true);
                 setCurrentPage(0)
-            } else {
-                setFirstSkip(false)
             }
 
     }, [criterias, currentPage]);
@@ -102,11 +94,3 @@ export const PsGrid = ({disciplines}) => {
     </div>
 }
 
-function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    },[value]);
-    return ref.current;
-}
-export default usePrevious;

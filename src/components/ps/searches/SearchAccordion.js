@@ -32,7 +32,6 @@ import {
     setCriterias,
     initCriterias,
     selectCriterias,
-    selectNumCriterias,
 } from '../psSlice'
 
 import './searchAccordion.scss'
