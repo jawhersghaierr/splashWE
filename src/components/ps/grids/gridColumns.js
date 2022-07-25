@@ -23,7 +23,7 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 const popOverRibs = (ribs) => {
     return (<div style={{display: 'flex', flexDirection: 'column'}}>
-            <h3 style={{margin: '5px'}}><b>Statut RIB</b></h3>
+            <h3 style={{margin: '5px'}}><b>Statut(s) RIB</b></h3>
             {Object.keys(ribs).map((rib, index) => (
                 <Chip label={`${ribs[rib]?.count} ${ribs[rib]?.label}`} key={`fistChip${index}`}
                       sx={{bgcolor: ribs[rib]?.color, color: 'black', margin: '5px', padding: 0}}
@@ -33,9 +33,17 @@ const popOverRibs = (ribs) => {
     )
 }
 
+const ribLabel = (discipl, disciplines) => {
+    if (discipl && discipl.length > 1) {
+        return 'Multi-disciplines'
+    } else {
+        return (<p style={{paddingLeft: '35px'}}>{disciplines.find(e => e.code == discipl[0])?.libelle}</p>)
+    }
+}
+
 export const columns = disciplines => [
     { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
-    { field: 'statutRibs', headerName: 'Statut RIB', width: 125, sortable: false, renderCell: (params) => {
+    { field: 'statutRibs', headerName: 'Statut(s) RIB', width: 125, sortable: false, renderCell: (params) => {
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (
@@ -51,7 +59,8 @@ export const columns = disciplines => [
     { field: 'disciplines', headerName: 'Discipline(s)', width: 175, sortable: false, renderCell: (params) => {
             const discipl = params.formattedValue || null;
 
-            let RibLabel = (discipl && discipl.length > 1)? 'Multi-disciplines' : discipl[0];
+            // let RibLabel = (discipl && discipl.length > 1)? 'Multi-disciplines' : disciplines.find(e=>e.code==discipl[0])?.libelle;
+            let _RibLabel = ribLabel(discipl, disciplines);
 
             let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e?.libelle).join(' \n') || ''
 
@@ -68,7 +77,7 @@ export const columns = disciplines => [
                     arrow>
                     <Chip label={discipl.length}/>
                 </LightTooltip>
-                } {RibLabel && RibLabel}
+                } {_RibLabel && _RibLabel}
                 </div>
             )
         }},

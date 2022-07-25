@@ -46,7 +46,7 @@ export default function PsDetailsById(props) {
                 <b>{data?.raisonSociale}</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                ROC . Viamedis
+                ROC
             </Typography>
             <div>
                 {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}
@@ -70,9 +70,9 @@ export default function PsDetailsById(props) {
                 // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
-                <Tab label="Information generales" />
+                <Tab label="Informations generales" />
                 <Tab label={<div>RIB&nbsp;
-                    {data?.statutRibs && <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}`}
+                    {data?.statutRibs && <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
                            sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>}
                 </div>} value="/messages" />
                 <Tab label="Droits" />
