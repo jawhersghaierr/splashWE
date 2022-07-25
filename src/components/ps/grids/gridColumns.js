@@ -25,8 +25,10 @@ const popOverRibs = (ribs) => {
     return (<div style={{display: 'flex', flexDirection: 'column'}}>
             <h3 style={{margin: '5px'}}><b>Statut(s) RIB</b></h3>
             {Object.keys(ribs).map((rib, index) => (
-                <Chip label={`${ribs[rib]?.count} ${ribs[rib]?.label}`} key={`fistChip${index}`}
-                      sx={{bgcolor: ribs[rib]?.color, color: 'black', margin: '5px', padding: 0}}
+                <Chip
+                    label={`${ribs[rib]?.count} ${ribs[rib]?.label}${(ribs[rib]?.count > 1)? 's' : ''}`}
+                    key={`fistChip${index}`}
+                    sx={{bgcolor: ribs[rib]?.color, color: 'black', margin: '5px', padding: 0}}
                 />
             ))}
         </div>
@@ -50,7 +52,7 @@ export const columns = disciplines => [
                 <LightTooltip
                     title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>}
                     placement="top" arrow>
-                    <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}`}
+                    <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
                           sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>
                 </LightTooltip>
             )
