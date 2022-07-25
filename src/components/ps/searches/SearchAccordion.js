@@ -91,7 +91,7 @@ export default function SearchAccordion(props) {
     };
 
     const [expanded, setExpanded] = useState({
-        panelDisciplines: true,
+        panelDisciplines: false,
         panelAdresse: false,
         panelStatutRibs: false,
     });
