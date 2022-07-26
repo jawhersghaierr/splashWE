@@ -86,7 +86,9 @@ export default function PsDetailsById(props) {
                     background: 'white',
                     margin: 0,
                     padding: 0
-                }}>{JSON.stringify(data)}</pre>}
+                }}>
+                    {/*{JSON.stringify(data)}*/}
+                </pre>}
             </div>
         </Box>
     );

@@ -202,7 +202,7 @@ export default function SearchAccordion(props) {
 
                             <Accordion expanded={expanded.panelDisciplines} onChange={handleChange('panelDisciplines')}>
                                 <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
-                                    <Typography>Disciplines</Typography>
+                                    <Typography>Discipline(s)</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     {disciplines && <Field name="disciplines" format={value => value || []}>
@@ -288,7 +288,7 @@ export default function SearchAccordion(props) {
 
                             <Accordion expanded={expanded.panelStatutRibs} onChange={handleChange('panelStatutRibs')}>
                                 <AccordionSummary aria-controls="panelStatutRibs-content" id="panelStatutRibs-header">
-                                    <Typography>Statut du RIB</Typography>
+                                    <Typography>Statut(s) RIB</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
 
