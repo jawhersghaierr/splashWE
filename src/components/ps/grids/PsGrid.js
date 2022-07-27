@@ -81,7 +81,12 @@ export const PsGrid = ({disciplines}) => {
             />
         </div>}
 
-        {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
+        {!data && <div>
+            <img  src={mainPS} alt="mainPS" className={'imgContext'}/>
+            <h2 style={{color: '#003154', position: 'relative', width: '400px', left: '605px', bottom: '545px'}}>
+                Vous y trouverez toutes les informations pertinentes pour les professionnels de la santé du système.
+            </h2>
+        </div>}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
