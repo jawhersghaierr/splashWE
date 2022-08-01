@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Box} from "@material-ui/core";
-import { useGetEnvironmentsByIdQuery} from './services/referentielApi'
+import { useGetEnvironmentsByIdQuery} from '../../services/referentielApi'
 
 export const DetailsOfEnvironmentsID = ({id}) => {
 

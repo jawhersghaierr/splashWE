@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP} from '../../../../env-vars'
 
-export const psApi = createApi({
-    reducerPath: 'psApi',
+export const beneficiaireApi = createApi({
+    // get disciplines for dropdown from http://10.241.25.10:8004/api/v1/disciplines
+    reducerPath: 'beneficiaireApi',
     baseQuery: fetchBaseQuery({
         baseUrl: `http://${env_IP}:8002/api/v1`,
         prepareHeaders: (headers, { getState }) => {
@@ -103,10 +104,9 @@ export const psApi = createApi({
     }),
 })
 export const {
-    useGetEtsrocQuery,
-    useGetBankaccountpsQuery,
-    useGetEtsQuery,
-    useGetEtsByIdQuery
-} = psApi
-
+    // useGetEtsrocQuery,
+    // useGetBankaccountpsQuery,
+    // useGetEtsQuery,
+    // useGetEtsByIdQuery
+} = beneficiaireApi
 

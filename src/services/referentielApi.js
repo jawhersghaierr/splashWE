@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
+import {env_IP} from '../../env-vars'
 
 
 /*
@@ -104,6 +104,7 @@ export const referentielApi = createApi({
                     return JSON.parse(response);
                 }
             }),
+            structuralSharing: false,
         }),
     }),
 })

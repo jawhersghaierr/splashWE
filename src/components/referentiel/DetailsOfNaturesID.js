@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Box} from "@material-ui/core";
-import { useGetNaturesByIdQuery} from './services/referentielApi'
+import { useGetNaturesByIdQuery} from '../../services/referentielApi'
 
 export const DetailsOfNaturesID = ({id}) => {
 

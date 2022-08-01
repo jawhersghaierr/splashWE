@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useGetNaturesQuery} from "./services/referentielApi";
+import {useGetNaturesQuery} from "../../services/referentielApi";
 import {DataGrid} from "@mui/x-data-grid";
 import {DetailsOfNaturesID} from "./DetailsOfNaturesID";
 

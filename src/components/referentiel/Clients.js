@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useGetClientsQuery} from "./services/referentielApi";
+import {useGetClientsQuery} from "../../services/referentielApi";
 import {DataGrid} from "@mui/x-data-grid";
 import {DetailsOfClientID} from "./DetailsOfClientID";
 

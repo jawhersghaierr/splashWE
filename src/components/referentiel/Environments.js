@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useGetEnvironmentsQuery} from "./services/referentielApi";
+import {useGetEnvironmentsQuery} from "../../services/referentielApi";
 import {DataGrid} from "@mui/x-data-grid";
 import {DetailsOfEnvironmentsID} from "./DetailsOfEnvironmentsID";
 

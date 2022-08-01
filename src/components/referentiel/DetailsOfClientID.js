@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Box} from "@material-ui/core";
-import { useGetClientsByIdQuery} from './services/referentielApi'
+import { useGetClientsByIdQuery} from '../../services/referentielApi'
 
 export const DetailsOfClientID = ({id}) => {
 

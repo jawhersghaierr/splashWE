@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {Box} from "@material-ui/core";
-import { useGetParcoursByIdQuery} from './services/referentielApi'
+import { useGetParcoursByIdQuery} from '../../services/referentielApi'
 
 export const DetailsOfParcourID = ({id}) => {
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {useGetParcoursQuery} from "./services/referentielApi";
+import {useGetParcoursQuery} from "../../services/referentielApi";
 import {DataGrid} from "@mui/x-data-grid";
 import {DetailsOfParcourID} from "./DetailsOfParcourID";
 

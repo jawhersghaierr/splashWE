@@ -3,49 +3,16 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {useGetEtsByIdQuery} from "./services/psApi";
+import {useGetEtsByIdQuery} from "./services/beneficiaireApi";
 import {statusRow} from "./utils/utils";
 import {useEffect} from "react";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
+import {useGetDisciplinesQuery} from "../referentiel/services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 
-
-
-function TabPanel(props) {
-    const { children, value, index, data, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-            style={{minHeight: '300px', background: 'white', padding: '15px'}}>
-            {data && <pre style={{
-                whiteSpace: 'pre-wrap',
-                overflowWrap: 'break-word',
-                background: 'white',
-                margin: 0,
-                padding: 0
-            }}>
-                {value === index && children}
-                {/*{JSON.stringify(data)}*/}
-            </pre>}
-        </div>
-    );
-}
-
-function a11yProps(index) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
-}
-export default function PsDetailsById(props) {
+export default function BeneficiaireDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
         path: "/PS/:id",
@@ -63,9 +30,11 @@ export default function PsDetailsById(props) {
 
     const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
 
-    // useEffect(() => {
-    //     console.log(resultData);
-    // }, [resultData]);
+    useEffect(() => {
+
+        // console.log(resultData);
+        // console.log('^^^^^^^^^^^^^^^^^^^^');
+    }, [resultData]);
 
     const reShapeDiscipline = (_discipline) => resultData.find(item => item.code.toString() === _discipline)?.libelle || ''
 
@@ -101,42 +70,26 @@ export default function PsDetailsById(props) {
                 // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
-                <Tab label="Informations generales"  {...a11yProps(0)}/>
+                <Tab label="Informations generales" />
                 <Tab label={<div>RIB&nbsp;
                     {data?.statutRibs && <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
                            sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>}
-                </div>}  {...a11yProps(1)} />
-                <Tab label="Droits"  {...a11yProps(2)}/>
-                <Tab label="Historique" {...a11yProps(3)} />
+                </div>} value="/messages" />
+                <Tab label="Droits" />
+                <Tab label="Historique" />
 
             </Tabs>
-            <TabPanel value={value} index={0} data={data}>
-                <h3><b>Coordonnes</b></h3>
-                {data && <div>
-                    <p>{`adresse: ${data.adresse1}`}</p>
-                    {data?.adresse2 && <p>{`adresse2: ${data.adresse2}`}</p>}
-                    {data?.codePostal || data?.ville &&
-                        <p>
-                            {data?.codePostal && <span>
-                                {`Code Postal: ${data.codePostal}`}
-                            </span>}
-                            {data?.ville && <span>
-                                {`Ville: ${data.ville}`}
-                            </span>}
-                        </p>
-                    }
-                </div>}
-            </TabPanel>
-            <TabPanel value={value} index={1} data={data}>
-                {/*<div>Item two</div>*/}
-            </TabPanel>
-            <TabPanel value={value} index={2} data={data}>
-                {/*<div>Item tree</div>*/}
-            </TabPanel>
-            <TabPanel value={value} index={3} data={data}>
-                {/*<div>Item four</div>*/}
-            </TabPanel>
-
+            <div style={{minHeight: '300px', background: 'white', padding: '15px'}}>
+                {data && <pre style={{
+                    whiteSpace: 'pre-wrap',
+                    overflowWrap: 'break-word',
+                    background: 'white',
+                    margin: 0,
+                    padding: 0
+                }}>
+                    {/*{JSON.stringify(data)}*/}
+                </pre>}
+            </div>
         </Box>
     );
 }

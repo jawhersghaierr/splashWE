@@ -28,6 +28,7 @@ import AppBar from "./utils/AppBar";
 import DrawerHeader from "./utils/DrawerHeader";
 import Drawer from "./utils/Drawer"
 import {Ps} from './components/ps/PS'
+import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
 import { purple } from '@mui/material/colors';
@@ -77,7 +78,7 @@ const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp')
 const PageDashboard = () => <Typography variant="h3" component="div">Dashboard Page</Typography>
 const Hospi = () => <Comp1/>
 const PSremote = () => <RemotePsApp  store={store} />
-const Beneficiary = () => <RemoteApp store={store} />
+const RemoteTest = () => <RemoteApp store={store} />
 
 
 const App = () => {
@@ -113,10 +114,11 @@ const App = () => {
                   <Route exact path="/" component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
                   <Route exact={true} path="/PS" component={Ps} />
-                  {/*<Route exact path="/PS/:id?" component={Ps}/>} />*/}
+                  {/*<Route exact path="/PS/:id?" component={Facturation}/>} />*/}
                   <Route path="/PS/:id?" component={PsDetailsById}/>
                   <Route path="/PSremote" component={PSremote} />
-                  <Route path="/Beneficiary" component={Beneficiary}/> />
+                  <Route path="/beneficiaire" component={Beneficiaire}/> />
+                  <Route path="/test" component={RemoteTest}/> />
                 </Switch>
 
               </Box>
