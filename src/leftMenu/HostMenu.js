@@ -31,8 +31,13 @@ const hostMenuItems = [
     //     Icon: IconPeople,
     // },
     {
-        name: 'Beneficiary App',
-        link: '/Beneficiary',
+        name: 'Beneficiaire App',
+        link: '/beneficiaire',
+        Icon: IconBarChart,
+    },
+    {
+        name: 'Remote test App',
+        link: '/test',
         Icon: IconBarChart,
     },
     {
