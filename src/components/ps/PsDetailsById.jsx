@@ -113,18 +113,10 @@ export default function PsDetailsById(props) {
             <TabPanel value={value} index={0} data={data}>
                 <h3><b>Coordonnes</b></h3>
                 {data && <div>
-                    <p>{`adresse: ${data.adresse1}`}</p>
+                    {data?.adresse1 && <p>{`adresse: ${data.adresse1}`}</p>}
                     {data?.adresse2 && <p>{`adresse2: ${data.adresse2}`}</p>}
-                    {data?.codePostal || data?.ville &&
-                        <p>
-                            {data?.codePostal && <span>
-                                {`Code Postal: ${data.codePostal}`}
-                            </span>}
-                            {data?.ville && <span>
-                                {`Ville: ${data.ville}`}
-                            </span>}
-                        </p>
-                    }
+                    {data?.codePostal && <p>{`Code Postal: ${data.codePostal}`}</p>}
+                    {data?.ville && <p>{`Ville: ${data.ville}`}</p>}
                 </div>}
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
