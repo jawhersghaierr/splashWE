@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetEtsQuery} from "../services/beneficiaireApi";
+import {useGetBenefQuery} from "../services/beneficiaireApi";
 import {Typography} from "@mui/material";
-import {DataGrid} from '@mui/x-data-grid';
+import {DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { selectCriterias } from '../beneficiaireSlice'
 
@@ -15,7 +15,7 @@ import './beneficiaireGrid.scss';
 import {checker, usePrevious} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
-export const BeneficiaireGrid = ({disciplines}) => {
+export const BeneficiaireGrid = ({enviroments}) => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -25,7 +25,7 @@ export const BeneficiaireGrid = ({disciplines}) => {
         sortProperty: null
     });
 
-    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -38,7 +38,7 @@ export const BeneficiaireGrid = ({disciplines}) => {
     };
 
     useEffect(() => {
-
+console.log(data)
             if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
                 setCurrentPage(0)
             }
@@ -48,15 +48,15 @@ export const BeneficiaireGrid = ({disciplines}) => {
 
     return <div className="gridContent">
 
-        {(data && disciplines) && <div>
+        {(data && enviroments) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*10 : 10)} sur {data.totElements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data.data || []}
-                columns={columns(disciplines)}
+                rows={data?.result || []}
+                columns={columns(enviroments)}
                 pageSize={10}
                 autoHeight
                 hideFooter={true}
@@ -77,7 +77,15 @@ export const BeneficiaireGrid = ({disciplines}) => {
 
                 sortingMode="server"
                 onSortModelChange={handleOrdering}
+                sx={{
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        textOverflow: "clip",
+                        whiteSpace: "break-spaces",
+                        lineHeight: 1
+                    },
 
+                }}
+                rowHeight={85}
             />
         </div>}
 

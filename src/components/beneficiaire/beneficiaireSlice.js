@@ -10,14 +10,15 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
+        birdDate: null,
         prenom: undefined,
         nom: undefined,
         numAdherentIndividuel: undefined,
-        date1: undefined,
+        dateDeNaissance: null,
         numAdherentFamillial: undefined,
         enviroment: undefined,
-        secondDate: undefined,
-        thirdDate: undefined
+        dateDebutSoins: null,
+        dateFinSoins: null
     }
     // isLoading: null,
     // isError: null,
@@ -59,7 +60,7 @@ export const beneficiaireSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                prenom, nom, numAdherentIndividuel, date1, numAdherentFamillial, enviroment, secondDate, thirdDate
+                birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins
             } = action?.payload
 
             state.criterias = {...initialState.criterias};
@@ -69,11 +70,12 @@ export const beneficiaireSlice = createSlice({
             state.criterias.prenom = prenom;
             state.criterias.nom = nom;
             state.criterias.numAdherentIndividuel = numAdherentIndividuel;
-            state.criterias.date1 = date1;
+            state.criterias.birdDate = birdDate;
+            state.criterias.dateDeNaissance = dateDeNaissance;
             state.criterias.numAdherentFamillial = numAdherentFamillial;
             state.criterias.enviroment = enviroment;
-            state.criterias.secondDate = secondDate;
-            state.criterias.thirdDate = thirdDate;
+            state.criterias.dateDebutSoins = dateDebutSoins;
+            state.criterias.dateFinSoins = dateFinSoins;
 
         },
     },

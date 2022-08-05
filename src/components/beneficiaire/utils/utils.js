@@ -70,8 +70,8 @@ export const statusRow = (formattedValue) => {
 }
 
 export const checker = (values) => {
-    const {prenom, nom, numAdherentIndividuel, date1, numAdherentFamillial, enviroment, secondDate, thirdDate} = values || {};
-    if(prenom || nom || numAdherentIndividuel || date1 || numAdherentFamillial || enviroment || secondDate || thirdDate) {
+    const {birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins} = values || {};
+    if(birdDate || prenom || nom || numAdherentIndividuel || dateDeNaissance || numAdherentFamillial || enviroment || dateDebutSoins || dateFinSoins) {
         return true
     } else {
         return false
@@ -80,11 +80,11 @@ export const checker = (values) => {
 
 export const checkInsidePanels = (values) => {
 
-    const {prenom, nom, numAdherentIndividuel, date1, numAdherentFamillial, enviroment, secondDate, thirdDate} = values || {};
-    console.log(values)
+    const {birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins} = values || {};
+    console.log('checkInsidePanels > ', values)
     let result =  {
-        panelBeneficiaires: (date1)? true: false,
-        panelInfoOMC: (numAdherentFamillial || enviroment || secondDate || thirdDate)? true: false,
+        panelBeneficiaires: (dateDeNaissance || birdDate)? true: false,
+        panelInfoOMC: (numAdherentFamillial || enviroment || dateDebutSoins || dateFinSoins)? true: false,
     }
     console.log(result)
     return result
@@ -96,4 +96,14 @@ export const usePrevious = (value) => {
         ref.current = value;
     },[value]);
     return ref.current;
+}
+
+export const isValidDate = (d) => {
+    try {
+        d.toISOString();
+        return true;
+    }
+    catch(ex) {
+        return false;
+    }
 }

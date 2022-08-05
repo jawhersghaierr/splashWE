@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
@@ -29,10 +29,14 @@ import {ListItemText} from "@material-ui/core";
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import {validators, checker, checkInsidePanels} from '../utils/utils';
+import {
+    validators,
+    checker,
+    checkInsidePanels,
+    isValidDate
+} from '../utils/utils';
 
 import {
     setCriterias,
@@ -41,7 +45,8 @@ import {
 } from '../beneficiaireSlice'
 
 import './searchAccordion.scss'
-
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import InputAdornment from '@mui/material/InputAdornment';
 
 
 const Accordion = styled((props) => (
@@ -83,12 +88,12 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-
 export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
     const {enviroments, enviromentsIsFetching, enviromentsIsSuccess} = props;
+    const formRef= useRef(null);
 
     const onSubmit = async (values) => {
 
@@ -110,11 +115,12 @@ export default function SearchAccordion(props) {
 
     const handleAccordionPanel = () => (event) => {
         if (!panelExpanded) {
-            setExpanded(checkInsidePanels(criterias))
+            let {values} = formRef.current?.getState()
+            console.log(values);
+            setExpanded(checkInsidePanels(values))
         }
         setPanelExpanded(!panelExpanded);
     };
-
 
     return (
         <div className={'formContent'}>
@@ -123,9 +129,10 @@ export default function SearchAccordion(props) {
             mutators={{
                 ...arrayMutators,
                 setValue: ([field, value], state, utils) => {
-                    utils.changeValue(state, field, (value) => {
 
+                    utils.changeValue(state, field, (value) => {
                         let _value = value;
+                        if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
                         if (_value?.enviroment?.length === 0 ||
                             (_value?.enviroment?.includes('all') && _value?.enviroment?.length > enviroments?.length)
@@ -140,6 +147,7 @@ export default function SearchAccordion(props) {
             }}
 
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
+                formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <StyledCard sx={{ display: 'block', minWidth: 775 }} id="BeneficiareSearchForm" variant="outlined">
@@ -182,25 +190,25 @@ export default function SearchAccordion(props) {
                             )}
                             </Field>
 
-                            <Field name="numAdherentIndividuel" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(61))}>
+                            <Field name="numAdherentIndividuel">
 
-                            {({ input, meta }) => (
-                                <div style={{flex: 2}}>
-                                    <TextField
-                                        id="AdherentIndividuel"
-                                        variant="standard"
-                                        error={meta.invalid}
-                                        {...input}
-                                        placeholder={'Nº Adherent Individuel'}
-                                        // sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1 }}
-                                        sx={{width: '100%'}}
-                                        className="RoundedEl"
-                                        InputProps={{  disableUnderline: true }}
-                                    />
-                                    {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                </div>
-                            )}
+                                {({ input, meta }) => (
+                                    <div style={{flex: 2}}>
+                                        <TextField
+                                            id="AdherentIndividuel"
+                                            variant="standard"
+                                            error={meta.invalid}
+                                            {...input}
+                                            placeholder={'Nº Adherent Individuel'}
+                                            sx={{width: '100%'}}
+                                            className="RoundedEl"
+                                            InputProps={{  disableUnderline: true }}
+                                        />
+                                        {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                    </div>
+                                )}
                             </Field>
+
                             <div style={{width: 150, display: 'flex'}}>
                                 {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
                                     <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
@@ -208,7 +216,11 @@ export default function SearchAccordion(props) {
                                 {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
                                 <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
                             </div>
-                            <Button variant="contained" type="submit" size="medium" className='RoundedEl' disabled={submitting || pristine} >
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                size="medium" className='RoundedEl'
+                                disabled={!checker(values)} >
                                 <SearchIcon/>Rechercher
                             </Button>
                         </div>}
@@ -226,21 +238,63 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails>
 
-                                    <Field name="date1"
-                                           validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
-                                        {({ input, meta }) => (
+                                    <Field name="dateDeNaissance">
+                                        {({ input: {onChange, value, ...rest}, meta }) => (
                                             <div className={"RoundDate"}>
-                                                <DesktopDatePicker
-                                                    label="Date&Time picker"
-                                                    value={'12/12/2022'}
-                                                    inputFormat={"MM/dd/yyyy"}
+                                                <DatePicker
+
+                                                    error={false}
                                                     sx={{borderRadius: '20px'}}
-                                                    onChange={()=>{}}
-                                                    renderInput={(params) => <TextField {...params} />}
+                                                    onChange={(newDate) => {
+                                                        if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
+                                                            form.getFieldState('birdDate').change(newDate)
+                                                            onChange(newDate)
+                                                        }
+                                                    }}
+
+                                                    value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
+
+                                                    renderInput={({ inputRef, inputProps, InputProps }) => {
+
+                                                        const {
+                                                            disabled,
+                                                            onChange,
+                                                            placeholder,
+                                                            readOnly,
+                                                            type,
+                                                            value
+                                                        } = inputProps
+
+                                                        return <>
+                                                            <TextField
+                                                                label="Date de naissance"
+                                                                ref={inputRef}
+                                                                disabled={disabled}
+                                                                onChange={(event)=> {
+                                                                    form.getFieldState('birdDate').change(event.target.value)
+                                                                    onChange(event)
+                                                                }}
+                                                                placeholder={placeholder}
+                                                                readOnly={readOnly}
+                                                                type={type}
+                                                                value={value}
+                                                                className="RoundDate"
+                                                                InputProps={{
+                                                                    endAdornment: (
+                                                                        <InputAdornment position="end">
+                                                                            {InputProps?.endAdornment}
+                                                                        </InputAdornment>)
+                                                                }}/>
+                                                        </>
+                                                    }}
                                                 />
                                             </div>
                                         )}
                                     </Field>
+                                    <Field name="birdDate">
+                                        {({input}) => ( <input {...input} type="hidden" name="birdDate"/> )}
+                                    </Field>
+
                                 </AccordionDetails>
                             </Accordion>
 
@@ -249,25 +303,6 @@ export default function SearchAccordion(props) {
                                     <Typography style={{marginLeft: '5px'}}><b>Informations OMC</b></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-
-                                    <Field name="numAdherentFamillial"
-                                           validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
-                                        {({ input, meta }) => (
-                                            <div style={{flex: 2, marginRight: '20px'}}>
-                                                <TextField
-                                                    id="NumAdherentFamillial"
-                                                    sx={{width: 360}}
-
-                                                    error={meta.invalid}
-                                                    label="N d'adherent famillial"
-                                                    variant="outlined"
-                                                    {...input}
-                                                    className="RoundedEl"
-                                                />
-                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                            </div>
-                                        )}
-                                    </Field>
 
                                     {enviroments && <Field name="enviroment" format={value => value || []}>
 
@@ -287,52 +322,61 @@ export default function SearchAccordion(props) {
                                                             return `${selected.length} enviroments sélectionnéеs`
                                                         }
                                                         return enviroments.find(item => item.code.toString() === selected.toString())?.libelle || '';
-                                                    }}
-                                                >
+                                                    }}>
 
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText
                                                             primary={(values?.enviroments?.length == enviroments.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
+
                                                     {enviroments.map(({code, libelle}) => (
                                                         <MenuItem key={code} value={code}>
                                                             {libelle}
                                                         </MenuItem>
                                                     ))}
-                                                </Select></FormControl>
+
+                                                </Select>
+                                            </FormControl>
                                         )}
                                     </Field>}
 
-                                    <Field name="secondDate">
-                                        {({ input, meta }) => (
-                                            <div className={"RoundDate"}>
-                                                <DesktopDatePicker
-                                                    label="Date de reference du"
-                                                    inputFormat="MM/dd/yyyy"
-                                                    value={'12/12/2022'}
+                                    <Field name="dateDebutSoins">
+                                        {({ input:{onChange, value}, meta }) => (
+                                            // <div className={"RoundDate"}>
+                                                <FormControl className="RoundDate">
+                                                    <DatePicker
+                                                        label="Date de reference du"
+                                                        inputFormat="dd/MM/yyyy"
+                                                        onChange={(newDate) => {
 
-                                                    onChange={(_txt)=>console.log(_txt)}
-                                                    renderInput={(params) => <TextField {...params} style={{flex: 2, marginRight: '20px'}}/>}
-                                                />
-                                            </div>
+                                                            if (isValidDate(newDate)) {
+                                                                onChange(newDate)
+                                                            } else {
+                                                                onChange('null')
+                                                            }
+                                                        }}
+                                                        value={(value === '' || value == undefined)? null: value}
+                                                        renderInput={(params) =>
+                                                            <TextField {...params} style={{flex: 2, marginRight: '20px'}}/>}
+                                                    />
+                                                </FormControl>
                                         )}
                                     </Field>
 
-                                    <Field name="thirdDate">
+                                    <Field name="dateFinSoins">
                                         {({ input, meta }) => (
-                                            <div className={"RoundDate"}>
-                                                <DesktopDatePicker
+                                            <FormControl className="RoundDate">
+                                                <DatePicker
                                                     label="au"
-                                                    inputFormat="MM/dd/yyyy"
-                                                    value={'12/12/2022'}
-
-                                                    onChange={(_txt)=>console.log(_txt)}
+                                                    inputFormat="dd/MM/yyyy"
+                                                    // value={'12/12/2022'}
+                                                    value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                    onChange={input?.onChange || null}
                                                     renderInput={(params) => <TextField {...params} style={{flex: 2}}/>}
                                                 />
-                                            </div>
+                                            </FormControl>
                                         )}
                                     </Field>
-
 
                                 </AccordionDetails>
                             </Accordion>
@@ -355,7 +399,7 @@ export default function SearchAccordion(props) {
                                 </Button>
                                 <Button variant="contained"
                                         type="submit" size="medium"
-                                        disabled={submitting || pristine}
+                                        disabled={!checker(values)}
                                         className="RoundedEl">
                                     <SearchIcon/>Rechercher
                                 </Button>
@@ -366,8 +410,20 @@ export default function SearchAccordion(props) {
                 </StyledCard>
                {<FormSpy onChange={(values) => {
                    form.mutators.setValue(values)
-                   const {enviroment, date1, numAdherentFamillial, secondDate, thirdDate} = values?.values;
-                    if(enviroment || date1 || numAdherentFamillial || secondDate || thirdDate) {
+                    console.log(values)
+                   const {
+                       prenom,
+                       nom,
+                       numAdherentIndividuel,
+                       birdDate,
+                       enviroment,
+                       dateDeNaissance,
+                       numAdherentFamillial,
+                       dateDebutSoins,
+                       dateFinSoins
+                   } = values?.values;
+
+                    if(birdDate || enviroment || dateDeNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
                         setDotShow(true)
                     } else {
                         setDotShow(false)
@@ -377,5 +433,7 @@ export default function SearchAccordion(props) {
         </div>
     );
 }
+
+
 
 

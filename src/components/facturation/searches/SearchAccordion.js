@@ -301,7 +301,7 @@ export default function SearchAccordion(props) {
                                         )}
                                     </Field>}
 
-                                    <Field name="secondDate">
+                                    <Field name="dateDebutSoins">
                                         {({ input, meta }) => (
                                             <DesktopDatePicker
                                                 label="Date desktop"
@@ -314,7 +314,7 @@ export default function SearchAccordion(props) {
                                         )}
                                     </Field>
 
-                                    <Field name="thirdDate">
+                                    <Field name="dateFinSoins">
                                         {({ input, meta }) => (
                                             <DesktopDatePicker
                                                 label="Date desktop"

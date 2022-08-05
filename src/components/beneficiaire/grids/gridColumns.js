@@ -43,51 +43,46 @@ const ribLabel = (discipl, disciplines) => {
     }
 }
 
-export const columns = disciplines => [
-    { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
-    { field: 'statutRibs', headerName: 'Statut(s) RIB', width: 125, sortable: false, renderCell: (params) => {
-            const statRow = statusRow(params.formattedValue)
-            const shown = Object.keys(statRow).find(key => statRow[key].shown);
-            return (
-                <LightTooltip
-                    title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>}
-                    placement="top" arrow>
-                    <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
-                          sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>
-                </LightTooltip>
-            )
+export const columns = enviroments => [
+    { field: 'numeroAdherentFamilial', headerName: '№ Adherent Familial', width: 100 },
+    { field: 'numeroAdherentIndividuel', headerName: '№ Adherent Individuel', width: 100 },
+    { field: 'ayantDroit', headerName: 'Nom beneficiaire et lien Famillial', width: 155, sortable: false,
+        renderCell: (params) => {
+            return (<div>
+                <b>{params.row.prenom}</b> {params.row.nom}
+                <Chip label={params.row.lienFamillialLabel} sx={{display: 'block', margin: '5px'}}/>
+            </div>)
+    }},
+    { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', width: 125, sortable: false,
+        renderCell: (params) => {
+        console.log(params)
+            return (<>
+                <Chip label={params.row.rangNaissance}/>&nbsp; {params.row.dateNaissance}
+            </>)
+    }},
+    { field: 'environmentCode', headerName: 'OMC', renderCell: (params) => {
+            return (<>
+                {params.row.environmentCode}
+            </>)
         }},
-    { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
-    { field: 'disciplines', headerName: 'Discipline(s)', width: 175, sortable: false, renderCell: (params) => {
-            const discipl = params.formattedValue || null;
-
-            let _RibLabel = ribLabel(discipl, disciplines);
-
-            let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e?.libelle).join(' \n') || ''
-
-            return (
-                <div>{(discipl && (discipl.length > 1)) &&
-                <LightTooltip
-                    title={<div style={{ whiteSpace: 'pre-line' }}>
-                        <div style={{display: 'flex', flexDirection: 'column'}}>
-                            <h3 style={{margin: '5px'}}><b>Disciplines</b></h3>
-                            <div style={{minWidth: '225px', paddingLeft: '5px'}}> {txt} </div>
-                        </div>
-                    </div>}
-                    placement="top"
-                    arrow>
-                    <Chip label={discipl.length}/>
-                </LightTooltip>
-                } {_RibLabel && _RibLabel}
-                </div>
-            )
+    { field: 'dateMiseaJour', headerName: 'Date de Mise a jour', width: 150, renderCell: (params) => {
+            return (<>
+                {params.row.dateMiseaJour}
+            </>)
         }},
-    { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
-            params.formattedValue
-        )},
-    { field: 'codePostal', headerName: 'Code postal', width: 150 },
+    { field: 'dateOuvertureDroits', headerName: 'Date de Mise a jour', width: 150, renderCell: (params) => {
+            return (<>
+                {params.row.dateMiseaJour}<br/>
+                {params.row.dateNaissance}
+            </>)
+        }},
+    { field: 'status', headerName: 'Statut', width: 100, renderCell: (params) => {
+            return (<>
+                {params.row.status}
+            </>)
+        }},
     { field: 'id', headerName: '', width: 15, sortable: false, renderCell: (params) => {
-            return <Link to={`/PS/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
+            return <Link to={`/beneficiaire/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];
 

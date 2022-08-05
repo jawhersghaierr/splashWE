@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP} from '../../../../env-vars'
 
+// http://10.241.25.10:8007/v1/droitsBeneficiaires/
+
 export const beneficiaireApi = createApi({
-    // get disciplines for dropdown from http://10.241.25.10:8004/api/v1/disciplines
     reducerPath: 'beneficiaireApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8002/api/v1`,
+        baseUrl: `http://${env_IP}:8007/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -17,48 +18,18 @@ export const beneficiaireApi = createApi({
 
     }),
     endpoints: (builder) => ({
-        getEtsroc: builder.query({
-            query: (
-                page = 0,
-                size = 10,
-                sortDirection = 'ASC',
-                sortProperty,
-                finessGeo,
-                finessJur,
-                referenceDate
-            ) => ({
-                url: `etsroc?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
-                    return JSON.parse(response);
-            }}),
-        }),
-        getBankaccountps: builder.query({
-            query: (
-                page = 0,
-                size = 10,
-                sortDirection = 'ASC',
-                sortProperty,
-                finessGeo,
-                finessJur,
-                discipline,
-                codeCanal,
-                codeReseau,
-                codeTypePrestation
-            ) => ({
-                url: `bankaccountps?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
-                    return JSON.parse(response);
-            }}),
-        }),
-        getEts: builder.query({
+
+        getBenef: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
                 const {
-                    numPartenaire,
-                    raisonSociale,
-                    disciplines,
-                    codePostal,
-                    ville,
-                    statutRibs,
+                    prenom,
+                    nom,
+                    numAdherentIndividuel,
+                    dateDeNaissance,
+                    numAdherentFamillial,
+                    enviroment,
+                    dateDebutSoins,
+                    dateFinSoins
                 } = criterias;
 
                 const {
@@ -67,16 +38,18 @@ export const beneficiaireApi = createApi({
                 } = sortProperties;
 
                 const size = 10;
-                let url = `ets?page=${currentPage}&size=${size}`;
+                let url = `droitsBeneficiaires?page=${currentPage}&size=${size}`;
 
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
-                if (numPartenaire) url += `&numPartenaire=${numPartenaire}`;
-                if (raisonSociale) url += `&raisonSociale=${raisonSociale}`;
-                if (disciplines) url += `&disciplines=${disciplines}`;
-                if (codePostal) url += `&codePostal=${codePostal}`;
-                if (ville) url += `&ville=${ville}`;
-                if (statutRibs) url += `&statutRibs=${statutRibs}`;
+                if (prenom) url += `&prenom=${prenom}`;
+                if (nom) url += `&nom=${nom}`;
+                if (numAdherentIndividuel) url += `&numAdherentIndividuel=${numAdherentIndividuel}`;
+                if (dateDeNaissance) url += `&dateDeNaissance=${dateDeNaissance}`;
+                if (numAdherentFamillial) url += `&numAdherentFamillial=${numAdherentFamillial}`;
+                if (enviroment) url += `&enviroment=${enviroment}`;
+                if (dateDebutSoins) url += `&dateDebutSoins=${dateDebutSoins}`;
+                if (dateFinSoins) url += `&dateFinSoins=${dateFinSoins}`;
 
                 console.log('params to be send > ', url);
 
@@ -89,9 +62,9 @@ export const beneficiaireApi = createApi({
             },
         }),
 
-        getEtsById: builder.query({
+        getBenefById: builder.query({
             query: (id) => {
-                let url = `ets/${id}`;
+                let url = `droitsBeneficiaires/${id}`;
                 return ({
                     url,
                     transformResponse: (response, meta, arg) => {
@@ -104,9 +77,7 @@ export const beneficiaireApi = createApi({
     }),
 })
 export const {
-    // useGetEtsrocQuery,
-    // useGetBankaccountpsQuery,
-    // useGetEtsQuery,
-    // useGetEtsByIdQuery
+    useGetBenefQuery,
+    useGetBenefByIdQuery,
 } = beneficiaireApi
 

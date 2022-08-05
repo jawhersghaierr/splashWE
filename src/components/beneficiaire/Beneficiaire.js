@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "../beneficiaire/searches/SearchAccordion";
-// import {FacturationGrid} from "./grids/FacturationGrid";
 import {useGetEnvironmentsQuery} from "../../services/referentielApi";
-import mainPS from '../../../assets/PS.png'
+import {BeneficiaireGrid} from './grids/BeneficiaireGrid'
 
 import './beneficiaire.scss'
 import {matchPath} from "react-router-dom";
@@ -32,7 +31,7 @@ export const Beneficiaire = (props) => {
 
         {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
-        {/*<FacturationGrid enviroments={enviroments}/>*/}
+        <BeneficiaireGrid enviroments={enviroments}/>
 
     </div>
 }
