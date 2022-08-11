@@ -21,10 +21,11 @@ export const beneficiaireApi = createApi({
 
         getBenef: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-                const {
+                let {
                     prenom,
                     nom,
                     numAdherentIndividuel,
+                    birdDate,
                     dateDeNaissance,
                     numAdherentFamillial,
                     enviroment,
@@ -36,6 +37,23 @@ export const beneficiaireApi = createApi({
                     sortDirection,
                     sortProperty,
                 } = sortProperties;
+
+                if (dateDebutSoins && dateDebutSoins != '' && dateDebutSoins != undefined) {
+                    dateDebutSoins = new Date(dateDebutSoins).toLocaleDateString('sv');
+                }
+                if (dateFinSoins && dateFinSoins != '' && dateFinSoins != undefined) {
+                    dateFinSoins = new Date(dateFinSoins).toLocaleDateString('sv');
+                }
+
+                if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
+                    dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+                }
+
+                if (birdDate && birdDate != '' && birdDate != undefined) {
+                    if (birdDate instanceof Date && !isNaN(birdDate)){
+                        dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+                    } else dateDeNaissance = birdDate.split('/').reverse().join('');
+                }
 
                 const size = 10;
                 let url = `droitsBeneficiaires?page=${currentPage}&size=${size}`;
@@ -64,7 +82,7 @@ export const beneficiaireApi = createApi({
 
         getBenefById: builder.query({
             query: (id) => {
-                let url = `droitsBeneficiaires/${id}`;
+                let url = `droitsBeneficiaires/${id}?fields=ADRESSE,GAR,RES_SOINS,AYANT_DROITS,OUVRANT_DROITS`;
                 return ({
                     url,
                     transformResponse: (response, meta, arg) => {

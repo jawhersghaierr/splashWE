@@ -1,0 +1,47 @@
+import React from 'react'
+
+import Stack from '@mui/material/Stack'
+import {DataGrid, gridClasses } from '@mui/x-data-grid';
+
+import './beneficiaireGrid.scss';
+import {simpleGarantieColumns, complexGarantieColumns} from "./gridGarantiesColumns";
+
+export const GarantiesGrid = ({garanties, simple = true}) => {
+console.log('garanties ', garanties)
+    return <div className="gridContent">
+
+        {(garanties) &&
+            <DataGrid
+                rows={garanties || []}
+                columns={simple ? simpleGarantieColumns(): complexGarantieColumns()}
+                pageSize={10}
+                autoHeight
+                hideFooter={true}
+                disableColumnResize={false}
+                components={{
+                    NoRowsOverlay: () => (
+                        <Stack height="75px" alignItems="center" justifyContent="center">
+                            <b>Aucun résultat pour ces critères de recherche</b>
+                        </Stack>
+                    )
+                }}
+                getRowClassName={(params) =>
+                    params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+                }
+                // sortingMode="server"
+                // onSortModelChange={handleOrdering}
+                sx={{
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        textOverflow: "clip",
+                        whiteSpace: "break-spaces",
+                        lineHeight: 1
+                    },
+
+                }}
+                rowHeight={85}
+            />}
+
+
+    </div>
+}
+

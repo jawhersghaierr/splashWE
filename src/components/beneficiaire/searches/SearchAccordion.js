@@ -252,6 +252,8 @@ export default function SearchAccordion(props) {
                                                         }
                                                     }}
 
+                                                    inputFormat="dd/MM/yyyy"
+
                                                     value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
 
                                                     renderInput={({ inputRef, inputProps, InputProps }) => {
