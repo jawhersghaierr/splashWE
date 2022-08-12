@@ -106,6 +106,42 @@ export const referentielApi = createApi({
             }),
             structuralSharing: false,
         }),
+        getGaranties: builder.query({
+            query: () => ({
+                url: `garanties`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+            structuralSharing: false,
+        }),
+        getSousGaranties: builder.query({
+            query: () => ({
+                url: `sousGaranties`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+            structuralSharing: false,
+        }),
+        getReseaux: builder.query({
+            query: () => ({
+                url: `reseaux`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+            structuralSharing: false,
+        }),
+        getDcs: builder.query({
+            query: () => ({
+                url: `dcs`,
+                transformResponse: (response, meta, arg) => {
+                    return JSON.parse(response);
+                }
+            }),
+            structuralSharing: false,
+        }),
     }),
 })
 export const {
@@ -117,5 +153,9 @@ export const {
     useGetEnvironmentsByIdQuery,
     useGetNaturesQuery,
     useGetNaturesByIdQuery,
-    useGetDisciplinesQuery
+    useGetDisciplinesQuery,
+    useGetGarantiesQuery,
+    useGetSousGarantiesQuery,
+    useGetReseauxQuery,
+    useGetDcsQuery,
 } = referentielApi

@@ -1,22 +1,23 @@
 import React from "react";
 import {styled} from "@mui/material/styles";
 
-export const simpleGarantieColumns = enviroments => [
-    { field: 'garantie', headerName: 'Garantie', width: 100 },
-    { field: 'sousGarantie', headerName: 'Sous Garantie', width: 100 },
-    { field: 'formula', headerName: 'Formule', width: 100 },
+export const simpleGarantieColumns = nom => [
+    { field: 'garantie', headerName: 'Garantie', minWidth: 100, flex: 1, renderCell: params => nom?.GARANTIE[params.row.garantie] },
+    { field: 'sousGarantie', headerName: 'Sous Garantie', minWidth: 100, flex: 1, renderCell: params => nom?.SOUS_GARANTIE[params.row.sousGarantie] },
+    { field: 'formula', headerName: 'Formule', minWidth: 100, flex: 1  },
 ];
 
-export const complexGarantieColumns = enviroments => [
-    { field: 'garantie', headerName: 'Garantie', width: 100 },
-    { field: 'sousGarantie', headerName: 'Sous Garantie', width: 100 },
-    { field: 'dcsFormulas', headerName: 'DCS', width: 100, renderCell: (params) => {
+export const complexGarantieColumns = nom => [
+    { field: 'garantie', headerName: 'Garantie', minWidth: 100, flex: 1, renderCell: params => nom?.GARANTIE[params.row.garantie] },
+    { field: 'sousGarantie', headerName: 'Sous Garantie', minWidth: 100, flex: 1, renderCell: params => nom?.SOUS_GARANTIE[params.row.sousGarantie] },
+    { field: 'dcsFormulas', headerName: 'DCS', minWidth: 100, flex: 1, renderCell: (params) => {
+        console.log(params)
             return (<>
                 {/*{params.row.status}*/}
                 some params
             </>)
         }},
-    { field: 'formula', headerName: 'Formule', width: 100 },
+    { field: 'formula', headerName: 'Formule', minWidth: 100, flex: 1 },
     // { field: 'garantie', headerName: '№ Adherent Familial', width: 100 },
 ];
 

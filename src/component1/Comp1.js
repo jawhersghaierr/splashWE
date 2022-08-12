@@ -8,7 +8,7 @@ import {
     selectCount,
 } from './comp1Slice';
 
-import {useGetUsersQuery} from '../services/entityApi'
+// import {useGetUsersQuery} from '../services/entityApi'
 
 import styles from './Comp1.module.css'
 import {store} from "../store";

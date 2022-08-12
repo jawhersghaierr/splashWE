@@ -2,9 +2,10 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from "redux-thunk";
 import thunkMiddleware from 'redux-thunk';
 //TODO need automation - import object/array index files from slice folders
-import { entityApi } from './services/entityApi';
+// import { entityApi } from './services/entityApi';
 import comp1Reducer from './component1/comp1Slice';
 import { referentielApi } from './services/referentielApi';
+import { refsApi } from './services/refsApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import {psApi} from "./components/ps/services/psApi";
 import {beneficiaireApi} from "./components/beneficiaire/services/beneficiaireApi";
@@ -49,7 +50,12 @@ const staticReducers = {
  */
 export default function configureStore(initialState) {
 
-  const middleware = applyMiddleware(psApi.middleware, referentielApi.middleware, beneficiaireApi.middleware, ...[thunk, thunkMiddleware, logger]);
+  const middleware = applyMiddleware(
+      refsApi.middleware,
+      referentielApi.middleware,
+      psApi.middleware,
+      beneficiaireApi.middleware,
+      ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
           ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
@@ -78,7 +84,8 @@ export default function configureStore(initialState) {
 
 function createReducer(asyncReducers) {
   return combineReducers({
-    [entityApi.reducerPath]: entityApi.reducer,
+    // [entityApi.reducerPath]: entityApi.reducer,
+    [refsApi.reducerPath]: refsApi.reducer,
     [referentielApi.reducerPath]: referentielApi.reducer,
     //TODO need automation - received object/array with reducers by index files from slice folders
     comp1: comp1Reducer,

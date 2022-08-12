@@ -6,14 +6,14 @@ import {DataGrid, gridClasses } from '@mui/x-data-grid';
 import './beneficiaireGrid.scss';
 import {simpleGarantieColumns, complexGarantieColumns} from "./gridGarantiesColumns";
 
-export const GarantiesGrid = ({garanties, simple = true}) => {
-console.log('garanties ', garanties)
+export const GarantiesGrid = ({garanties, nom, simple = true}) => {
+
     return <div className="gridContent">
 
-        {(garanties) &&
+        {(garanties && nom) &&
             <DataGrid
                 rows={garanties || []}
-                columns={simple ? simpleGarantieColumns(): complexGarantieColumns()}
+                columns={simple ? simpleGarantieColumns(nom): complexGarantieColumns(nom)}
                 pageSize={10}
                 autoHeight
                 hideFooter={true}

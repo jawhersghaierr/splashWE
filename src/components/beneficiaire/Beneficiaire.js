@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "../beneficiaire/searches/SearchAccordion";
-import {useGetEnvironmentsQuery} from "../../services/referentielApi";
+import { useGetEnvironmentsQuery } from "../../services/referentielApi";
 import {BeneficiaireGrid} from './grids/BeneficiaireGrid'
 
 import './beneficiaire.scss'
@@ -14,7 +14,6 @@ export const Beneficiaire = (props) => {
         exact: true,
         strict: false
     });
-
 
     const {data: enviroments, isFetching: enviromentsIsFetching, isSuccess: enviromentsIsSuccess} = useGetEnvironmentsQuery();
 

@@ -6,8 +6,11 @@ import Chip from '@mui/material/Chip';
 import {useGetBenefByIdQuery} from "./services/beneficiaireApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
-import {DoritInfoBox} from "./DroitInfoBox";
+import {DoritInfoBox} from "./components/DroitInfoBox";
 import {GarantiesGrid} from "./grids/GarantiesGrid";
+import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
+import {useGetRefsQuery} from "../../services/refsApi";
+import {RowInfo} from "./components/RowInfo";
 
 
 
@@ -56,17 +59,25 @@ export default function BeneficiaireDetailsById(props) {
         exact: true,
         strict: false
     });
-
     const [value, setValue] = React.useState(0);
+
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetBenefByIdQuery(match?.params?.id);
+    const {data: nomEnviroments} = useGetEnvironmentsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomGaranties, isFetching: nomGarantiesIsFetching, isSuccess: nomGarantiesIsSuccess} = useGetGarantiesQuery();
+    const {data: nomSousGaranties, isFetching: nomSousGarantiesIsFetching, isSuccess: nomSousGarantiesIsSuccess} = useGetSousGarantiesQuery();
+    const {data: nomReseaux, isFetching: nomReseauxIsFetching, isSuccess: nomReseauxIsSuccess} = useGetReseauxQuery();
+    const {data: nomDCS, isFetching: nomDCSIsFetching, isSuccess: nomDCSIsSuccess} = useGetDcsQuery();
 
-    let adress, dateFin, telephone, email, garanties;
+    let adress, dateFin, telephone, email, garanties, garantiesComplex;
 
     if (data) {
+
         // birdDate instanceof Date && !isNaN(birdDate)
         // data?.dateOuvertureDroits} > ${data?.dateDesactivationDroits
+
         let {adresse, dateOuvertureDroits, dateDesactivationDroits} = data;
         dateOuvertureDroits = new Date(dateOuvertureDroits);
         dateDesactivationDroits = new Date(dateDesactivationDroits);
@@ -80,9 +91,21 @@ export default function BeneficiaireDetailsById(props) {
         telephone = adresse?.telephone
         email = adresse?.email
 
-        if (data?.garanties) {
+        if (data?.garanties && nomDCS && nomGaranties && nomSousGaranties) {
             garanties = [];
-            data?.garanties.forEach((object, id) =>  garanties.push({ id, ...object}));
+            garantiesComplex = [];
+            data?.garanties.forEach((_garan, id) => {
+                let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)
+
+                console.log('garantie > ', garantie)
+                console.log('_garan.garantie > ', _garan.garantie)
+// debugger
+                if (garantie?.type == 'TP simple') {
+                    garanties.push({id, ..._garan})
+                } else {
+                    garantiesComplex.push({id, ..._garan})
+                }
+            });
         }
 
     }
@@ -101,8 +124,8 @@ export default function BeneficiaireDetailsById(props) {
             </Typography>
 
             <div style={{margin: '25px 0'}}>
-                {data?.numeroAdherentIndividuel && <span style={{margin: '5px 25px 5px 0'}}>{`N Adherent individuel : ${data?.numeroAdherentIndividuel}`}</span>}
-                {data?.numeroAdherentFamilial && <span style={{margin: '5px 25px 5px 0'}}>{`N Adherent Familial : ${data?.numeroAdherentFamilial}`}</span>}
+                {data?.numeroAdherentIndividuel && <span style={{margin: '5px 25px 5px 0'}}>{`Nº Adherent individuel : ${data?.numeroAdherentIndividuel}`}</span>}
+                {data?.numeroAdherentFamilial && <span style={{margin: '5px 25px 5px 0'}}>{`Nº Adherent Familial : ${data?.numeroAdherentFamilial}`}</span>}
                 {data?.numeroAdherentIndividuel && <span style={{margin: '5px 15px 5px 0'}}>
                     Droits ouverts : <b>{`${data?.dateOuvertureDroits}  ${dateFin.toLocaleDateString('en-GB')}`}</b>
                 </span>}
@@ -114,94 +137,120 @@ export default function BeneficiaireDetailsById(props) {
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
-                // aria-label="scrollable auto tabs example"
-                sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
-            >
+                sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}>
+
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
                 <Tab label={"Contrat"}  {...a11yProps(1)} />
                 <Tab label="Carte et couvertures"  {...a11yProps(2)}/>
                 <Tab label="Autres beneficiares"  {...a11yProps(3)}/>
                 <Tab label="Historique" {...a11yProps(4)} />
-
             </Tabs>
+
             <TabPanel value={value} index={0} data={data} sx={{display: 'flex', flexDirection: 'row'}}>
                 <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Identite</b></h3>
                     {data && <div>
-                        {data?.prenom && data?.nom && <div>{`Nome et prenom : ${data.prenom} ${data.nom}`}</div>}
-                        {data?.rangNaissance && <div>Rang et date de naissance : <b>{data.dateNaissance}</b><Chip label={data.rangNaissance} sx={{margin: '5px'}}/></div>}
+                        {data?.prenom && data?.nom && <RowInfo label={'Nome et prenom'} value={`${data.prenom} ${data.nom}`}/>}
+                        {data?.rangNaissance && <RowInfo label={'Rang et date de naissance'} value={data.dateNaissance} chip={data.rangNaissance}/>}
                     </div>}
                 </Box>
                 <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Coordinees</b></h3>
-                    {data && <div>
-                        {data?.adresse && <div><div>{`Adresse: ${adress}`}</div>
-                            <div>telephone: <b>{telephone}</b></div>
-                            <div>E-mail: <b>{email}</b></div></div>}
-                    </div>}
+                        {data && <div>
+                            <RowInfo label={'Adresse'} value={adress}/>
+                            <RowInfo label={'telephone'} value={telephone}/>
+                            <RowInfo label={'E-mail'} value={email}/>
+                        </div>}
                 </Box>
                 <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Regime</b></h3>
-                    <div>Grand Regime: <b>{data?.grandRegime}</b></div>
-                    <div>Caisse: <b>{data?.caisseAffiliation}</b></div>
-
+                    {data && <div>
+                        <RowInfo label={'Grand Regime'} value={data?.grandRegime}/>
+                        <RowInfo label={'Caisse'} value={data?.caisseAffiliation}/>
+                    </div>}
                 </Box>
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
-                <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
-                    <h3>Inormation</h3>
-                    OMC (environmentCode)
-                    <b>{data?.environmentCode}</b>
-                    N Client Viamedis (environmentCode)
-                    {/*http://10.241.25.10:8004/api/v1/environments*/}
+                <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
+                    <Box style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', flex: 1}}>
+                        <h2>Information</h2>
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            Environment <br/>
+                            {nomEnviroments && <b>{nomEnviroments.find(e=>e.code == data?.environmentCode)?.libelle}</b>}
+                        </Typography>
 
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            Nº CLIENT VIAMEDIS <br/>
+                            {nomEnviroments && <b>{nomEnviroments.find(e=>e.code == data?.environmentCode)?.numero}</b>}
+                        </Typography>
 
-                    {/*това е сервиза за енвайронмънтите*/}
-                    <h4>N CLIENT VIAMEDIS</h4>
-                     >>>> "numero": 990159,
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            TYPE DE CONTRACT<br/>
+                            <b>{data?.contratIndividuelCollectifLabel}</b>
+                        </Typography>
 
-                    <h5>TYPE DE CONTRACT</h5>
-                     {data?.contratIndividuelCollectifLabel}
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            Nº DE CONTRAT<br/>
+                            <b>{data?.numeroContratClient}</b>
+                        </Typography>
 
-                    <h5>N DE CONTRAT</h5>
-                    {data?.numeroContratClient}
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            CONTRAT RESPONSABLE<br/>
+                            <b>{(data?.contratResponsable)? 'OUI' : 'NON'}</b>
+                        </Typography>
 
-                    <h5>CONTRAR RESPONSABLE</h5>
-                    {(data?.contratResponsable)? 'OUI' : 'NON'}
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            PARTENAIRE<br/>
+                            <b>{data?.nomPartenaire}</b>
+                        </Typography>
 
-                    <h5>PARTENAIRE</h5>
-                    {data?.nomPartenaire}
+                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
+                            CENTRE DE GESTION<br/>
+                            <b>{data?.nomCentre}</b>
+                        </Typography>
+                    </Box>
 
-                    <h5>CENTRE DE GESTION</h5>
-                     {data?.nomCentre}
+                    <Box style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', flex: 1}}>
+                        <h2>Appartenance reseau du beneficiare</h2>
 
-                </Box>
-                <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
-                    <h3>Appartenance reseau du beneficiare</h3>
-                    по тоз код в референшъла от сервиза
-                    {/*/api/v1/reseaux*/}
-                    {/*{data?.reseauSoins}*/}
-                </Box>
+                        {(data?.reseauSoins && nomReseaux) && data?.reseauSoins.map( (reseau, i) => {
+                            let objReseau = nomReseaux.find(e=>e.code === reseau.reseauSoins)
+                            return <div key={`reseau_${i}`} style={{margin: '25px 0 '}}>
+                                <b>{objReseau.libelle}</b>
+                                {(nomGaranties && objReseau?.codesGarantie) && objReseau.codesGarantie.map((garant, i) => <div key={`garant_${i}`} style={{margin: '15px'}}>
+                                    {nomGaranties.find(e => e.code === garant).libelle}
+                                </div>)}
+
+                            </div>
+                        })}
+                    </Box>
+                </div>
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data} >
                 <div style={{display:'flex', flexDirection: 'column', width: '100%'}}>
                     <div style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', width: '600px', display: 'block'}}>
-                        <h3>Information Carte</h3>
-                        numeroCarteClient : {data?.numeroCarteClient}<br/>
-                        dateDesactivationDroits : {data?.dateDesactivationDroits}<br/>
-                        dateFermetureDroits : {data?.dateFermetureDroits}<br/>
-                        dateOuvertureDroits : {data?.dateOuvertureDroits}<br/>
+                        <h3 style={{marginBottom: '10px'}}>Information Carte</h3>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <div>
+                                <RowInfo label={'numeroCarteClient'} value={data?.numeroCarteClient}/>
+                                <RowInfo label={'date Desactivation Droits'} value={data?.dateDesactivationDroits}/>
+                            </div>
+                            <div>
+                                <RowInfo label={'date Fermeture Droits'} value={data?.dateFermetureDroits}/>
+                                <RowInfo label={'date Ouverture Droits'} value={data?.dateOuvertureDroits}/>
+                            </div>
+                        </div>
                     </div>
-                    {garanties && <div style={{display: 'flex', width: '100%'}}>
+                    {(garanties && nomRefs) &&<div style={{display: 'flex', width: '100%'}}>
                         <div style={{flex: 1, margin: '15px'}}>
                             <h3>Garanties Tiers Payant simple</h3>
-                            <GarantiesGrid garanties={garanties}/>
+                            <GarantiesGrid garanties={garanties} nom={nomRefs}/>
                         </div>
                         <div style={{flex: 1, margin: '15px'}}>
                             <h3>Garanties Tiers Payant complexes</h3>
-                            <GarantiesGrid garanties={garanties} simple={false}/>
+                            <GarantiesGrid garanties={garantiesComplex} nom={nomRefs} simple={false}/>
                         </div>
                     </div>}
                 </div>
@@ -210,7 +259,7 @@ export default function BeneficiaireDetailsById(props) {
             <TabPanel value={value} index={3} data={data} sx={{display: 'flex'}}>
                 {(data?.ouvrantDroit)?
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <DoritInfoBox droit={data} />
+                        <DoritInfoBox droit={data?.ouvrantDroit} />
                         {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => <DoritInfoBox droit={ouvrantDroit}  key={ouvrantDroit.id}/>)}
                     </div> :
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
