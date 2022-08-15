@@ -11,6 +11,7 @@ import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
+import {benefStatuses} from "./utils/utils";
 
 
 
@@ -96,10 +97,6 @@ export default function BeneficiaireDetailsById(props) {
             garantiesComplex = [];
             data?.garanties.forEach((_garan, id) => {
                 let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)
-
-                console.log('garantie > ', garantie)
-                console.log('_garan.garantie > ', _garan.garantie)
-// debugger
                 if (garantie?.type == 'TP simple') {
                     garanties.push({id, ..._garan})
                 } else {
@@ -120,15 +117,15 @@ export default function BeneficiaireDetailsById(props) {
             </Typography>
 
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                <Chip label={data?.status} sx={{color: 'black', margin: '5px'}}/>
+                <Chip label={benefStatuses[data?.status]?.label} sx={{bgcolor: benefStatuses[data?.status]?.color, margin: '5px'}}/>
             </Typography>
 
-            <div style={{margin: '25px 0'}}>
-                {data?.numeroAdherentIndividuel && <span style={{margin: '5px 25px 5px 0'}}>{`Nº Adherent individuel : ${data?.numeroAdherentIndividuel}`}</span>}
-                {data?.numeroAdherentFamilial && <span style={{margin: '5px 25px 5px 0'}}>{`Nº Adherent Familial : ${data?.numeroAdherentFamilial}`}</span>}
-                {data?.numeroAdherentIndividuel && <span style={{margin: '5px 15px 5px 0'}}>
-                    Droits ouverts : <b>{`${data?.dateOuvertureDroits}  ${dateFin.toLocaleDateString('en-GB')}`}</b>
-                </span>}
+            <div style={{margin: '25px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '870px'}}>
+                <span style={{margin: '5px'}}>Nº Adherent individuel : <b>{data?.numeroAdherentIndividuel}</b></span>
+                <span style={{margin: '5px'}}>Nº Adherent Familial : <b>{data?.numeroAdherentFamilial}</b></span>
+                <span style={{margin: '5px'}}>
+                    Droits ouverts : <b>{new Date(data?.dateOuvertureDroits)?.toLocaleDateString('en-GB')} - {dateFin?.toLocaleDateString('en-GB')}</b>
+                </span>
             </div>
 
             <Tabs
@@ -147,14 +144,14 @@ export default function BeneficiaireDetailsById(props) {
             </Tabs>
 
             <TabPanel value={value} index={0} data={data} sx={{display: 'flex', flexDirection: 'row'}}>
-                <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
+                <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Identite</b></h3>
                     {data && <div>
                         {data?.prenom && data?.nom && <RowInfo label={'Nome et prenom'} value={`${data.prenom} ${data.nom}`}/>}
-                        {data?.rangNaissance && <RowInfo label={'Rang et date de naissance'} value={data.dateNaissance} chip={data.rangNaissance}/>}
+                        {data?.rangNaissance && <RowInfo label={'Rang et date de naissance'} value={data?.dateNaissance?.split('-').reverse().join('/')} chip={data.rangNaissance}/>}
                     </div>}
                 </Box>
-                <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
+                <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Coordinees</b></h3>
                         {data && <div>
                             <RowInfo label={'Adresse'} value={adress}/>
@@ -162,7 +159,7 @@ export default function BeneficiaireDetailsById(props) {
                             <RowInfo label={'E-mail'} value={email}/>
                         </div>}
                 </Box>
-                <Box style={{backgroundColor: '#f3f3f3', flex: 1, margin: '5px', padding: '0 25px'}}>
+                <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Regime</b></h3>
                     {data && <div>
                         <RowInfo label={'Grand Regime'} value={data?.grandRegime}/>
@@ -173,7 +170,7 @@ export default function BeneficiaireDetailsById(props) {
 
             <TabPanel value={value} index={1} data={data}>
                 <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
-                    <Box style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', flex: 1}}>
+                    <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Information</h2>
                         <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
                             Environment <br/>
@@ -211,7 +208,7 @@ export default function BeneficiaireDetailsById(props) {
                         </Typography>
                     </Box>
 
-                    <Box style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', flex: 1}}>
+                    <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Appartenance reseau du beneficiare</h2>
 
                         {(data?.reseauSoins && nomReseaux) && data?.reseauSoins.map( (reseau, i) => {
@@ -230,16 +227,16 @@ export default function BeneficiaireDetailsById(props) {
 
             <TabPanel value={value} index={2} data={data} >
                 <div style={{display:'flex', flexDirection: 'column', width: '100%'}}>
-                    <div style={{backgroundColor: '#f3f3f3', margin: '5px', padding: '0 25px', width: '600px', display: 'block'}}>
+                    <div style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', width: '600px', display: 'block'}}>
                         <h3 style={{marginBottom: '10px'}}>Information Carte</h3>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <div>
                                 <RowInfo label={'numeroCarteClient'} value={data?.numeroCarteClient}/>
-                                <RowInfo label={'date Desactivation Droits'} value={data?.dateDesactivationDroits}/>
+                                <RowInfo label={'date Desactivation Droits'} value={new Date(data?.dateDesactivationDroits).toLocaleDateString('en-GB')}/>
                             </div>
                             <div>
-                                <RowInfo label={'date Fermeture Droits'} value={data?.dateFermetureDroits}/>
-                                <RowInfo label={'date Ouverture Droits'} value={data?.dateOuvertureDroits}/>
+                                <RowInfo label={'date Fermeture Droits'} value={new Date(data?.dateFermetureDroits).toLocaleDateString('en-GB')}/>
+                                <RowInfo label={'date Ouverture Droits'} value={new Date(data?.dateOuvertureDroits).toLocaleDateString('en-GB')}/>
                             </div>
                         </div>
                     </div>

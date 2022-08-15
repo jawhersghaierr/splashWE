@@ -111,13 +111,18 @@ export default function PsDetailsById(props) {
 
             </Tabs>
             <TabPanel value={value} index={0} data={data}>
-                <h3><b>Coordonnes</b></h3>
-                {data && <div>
-                    {data?.adresse1 && <p>{`adresse: ${data.adresse1}`}</p>}
-                    {data?.adresse2 && <p>{`adresse2: ${data.adresse2}`}</p>}
-                    {data?.codePostal && <p>{`Code Postal: ${data.codePostal}`}</p>}
-                    {data?.ville && <p>{`Ville: ${data.ville}`}</p>}
-                </div>}
+                {data && <Box style={{
+                    backgroundColor: '#F6F8FC',
+                    flex: 1,
+                    minWidth: '300px',
+                    margin: '5px',
+                    padding: '10px 25px 25px 25px'}}>
+                    <h2><b>Coordonnes</b></h2>
+                    {data?.adresse1 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse: <b>{data.adresse1}</b></Typography>}
+                    {data?.adresse2 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse2: <b>{data.adresse2}</b></Typography>}
+                    {data?.codePostal && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Code Postal: <b>{data.codePostal}</b></Typography>}
+                    {data?.ville && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Ville: <b>{data.ville}</b></Typography>}
+                </Box>}
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
                 {/*<div>Item two</div>*/}

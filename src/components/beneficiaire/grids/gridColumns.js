@@ -1,10 +1,10 @@
-import {statusRow} from "../utils/utils";
 import Chip from "@mui/material/Chip";
 import React from "react";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
+import {benefStatuses} from '../utils/utils'
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -44,42 +44,44 @@ const ribLabel = (discipl, disciplines) => {
 }
 
 export const columns = enviroments => [
-    { field: 'numeroAdherentFamilial', headerName: '№ Adherent Familial', width: 100 },
-    { field: 'numeroAdherentIndividuel', headerName: '№ Adherent Individuel', width: 100 },
-    { field: 'ayantDroit', headerName: 'Nom beneficiaire et lien Famillial', width: 155, sortable: false,
+    { field: 'numeroAdherentFamilial', headerName: '№ Adherent Familial', flex: 2 },
+    { field: 'numeroAdherentIndividuel', headerName: '№ Adherent Individuel', flex: 2 },
+    { field: 'ayantDroit', headerName: 'Nom beneficiaire et lien Famillial', flex: 4, sortable: false,
         renderCell: (params) => {
             return (<div>
                 <b>{params.row.prenom}</b> {params.row.nom}
-                <Chip label={params.row.lienFamillialLabel} sx={{display: 'block', margin: '5px'}}/>
+                <Chip label={params.row.lienFamillialLabel} sx={{display: 'block', margin: '5px', paddingTop: '6px',}}/>
             </div>)
     }},
-    { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', width: 125, sortable: false,
+    { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', flex: 3, sortable: false,
         renderCell: (params) => {
         console.log(params)
             return (<>
-                <Chip label={params.row.rangNaissance}/>&nbsp; {params.row.dateNaissance}
+                <Chip label={params.row.rangNaissance}/>&nbsp; {params.row?.dateNaissance?.split('-').reverse().join('/')}
             </>)
     }},
-    { field: 'environmentCode', headerName: 'OMC', renderCell: (params) => {
+    { field: 'environmentCode', headerName: 'OMC', flex: 1, renderCell: (params) => {
             return (<>
                 {params.row.environmentCode}
             </>)
         }},
-    { field: 'dateMiseaJour', headerName: 'Date de Mise a jour', width: 150, renderCell: (params) => {
+    { field: 'dateMiseaJour', headerName: 'Date de Mise a jour', flex: 2, renderCell: (params) => {
             return (<>
-                {params.row.dateMiseaJour}
+                {new Date(params.row.dateMiseaJour).toLocaleDateString('en-GB')}
             </>)
         }},
-    { field: 'dateOuvertureDroits', headerName: 'Date de Mise a jour', width: 150, renderCell: (params) => {
+    { field: 'dateOuvertureDroits', headerName: 'Date de Mise a jour', flex: 2, renderCell: (params) => {
             return (<>
-                {params.row.dateMiseaJour}<br/>
-                {params.row.dateNaissance}
+                {new Date(params.row.dateMiseaJour).toLocaleDateString('en-GB')}<br/>
+                {new Date(params.row.dateNaissance).toLocaleDateString('en-GB')}
             </>)
         }},
-    { field: 'status', headerName: 'Statut', width: 100, renderCell: (params) => {
-            return (<>
-                {params.row.status}
-            </>)
+    { field: 'status', headerName: 'Statut', flex: 2, renderCell: (params) => {
+            return (<Chip label={benefStatuses[params.row?.status]?.label}
+                          sx={{bgcolor: benefStatuses[params.row?.status]?.color,
+                              display: 'block',
+                              paddingTop: '6px',
+                              margin: '5px'}}/>)
         }},
     { field: 'id', headerName: '', width: 15, sortable: false, renderCell: (params) => {
             return <Link to={`/beneficiaire/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>

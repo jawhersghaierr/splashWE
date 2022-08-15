@@ -28,8 +28,6 @@ export const Beneficiaire = (props) => {
             enviromentsIsFetching={enviromentsIsFetching}
             enviromentsIsSuccess={enviromentsIsSuccess}/>
 
-        {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
-
         <BeneficiaireGrid enviroments={enviroments}/>
 
     </div>
