@@ -21,7 +21,7 @@ export const GarantiesGrid = ({garanties, nom, simple = true}) => {
                 components={{
                     NoRowsOverlay: () => (
                         <Stack height="75px" alignItems="center" justifyContent="center">
-                            <b>Aucun résultat pour ces critères de recherche</b>
+                            <b>Aucun résultat</b>
                         </Stack>
                     )
                 }}

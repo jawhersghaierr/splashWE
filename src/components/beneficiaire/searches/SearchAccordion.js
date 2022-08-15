@@ -154,6 +154,25 @@ export default function SearchAccordion(props) {
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
+
+                            <Field name="nom">
+                                {({ input, meta }) => (
+                                    <div style={{flex: 2, marginRight: '20px'}}>
+                                        <TextField
+                                            id="Nom"
+                                            variant="standard"
+                                            error={meta.invalid}
+                                            {...input}
+                                            placeholder={'Nom'}
+                                            sx={{width: '100%'}}
+                                            className="RoundedEl"
+                                            InputProps={{  disableUnderline: true }}
+                                        />
+                                        {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                    </div>
+                                )}
+                            </Field>
+
                             <Field name="prenom" >
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
@@ -163,7 +182,7 @@ export default function SearchAccordion(props) {
                                             sx={{width: '100%'}}
                                             error={meta.invalid}
                                             {...input}
-                                            placeholder={'Prenom'}
+                                            placeholder={'Prénom'}
                                             InputProps={{  disableUnderline: true }}
                                             className="RoundedEl"
                                         />
@@ -172,23 +191,6 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="nom">
-                            {({ input, meta }) => (
-                                <div style={{flex: 2, marginRight: '20px'}}>
-                                    <TextField
-                                        id="Nom"
-                                        variant="standard"
-                                        error={meta.invalid}
-                                        {...input}
-                                        placeholder={'Nom'}
-                                        sx={{width: '100%'}}
-                                        className="RoundedEl"
-                                        InputProps={{  disableUnderline: true }}
-                                    />
-                                    {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                </div>
-                            )}
-                            </Field>
 
                             <Field name="numAdherentIndividuel">
 
@@ -199,7 +201,7 @@ export default function SearchAccordion(props) {
                                             variant="standard"
                                             error={meta.invalid}
                                             {...input}
-                                            placeholder={'Nº Adherent Individuel'}
+                                            placeholder={'Nº Adhérent Individuel'}
                                             sx={{width: '100%'}}
                                             className="RoundedEl"
                                             InputProps={{  disableUnderline: true }}
@@ -302,7 +304,7 @@ export default function SearchAccordion(props) {
 
                             <Accordion expanded={expanded.panelInfoOMC} onChange={handleChange('panelInfoOMC')}>
                                 <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                    <Typography style={{marginLeft: '5px'}}><b>Informations OMC</b></Typography>
+                                    <Typography style={{marginLeft: '5px'}}><b>Informations environnement</b></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
@@ -310,7 +312,7 @@ export default function SearchAccordion(props) {
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important'}} className="RoundedEl">
-                                                <InputLabel id="Enviroment-label">Selectioner</InputLabel>
+                                                <InputLabel id="Enviroment-label">Sélectionner</InputLabel>
                                                 <Select
                                                     id="Enviroment"
                                                     labelId="Enviroment-label"

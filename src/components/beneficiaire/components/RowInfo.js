@@ -19,7 +19,7 @@ export const RowInfo = ({value, label, chip = null}) => {
             justifyContent: 'space-between'}}>
 
             <span>{label}&nbsp;:&nbsp;</span>
-            <b>{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}{value}</b>
+            <b>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
         </Typography>
     </div>
 }

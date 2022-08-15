@@ -79,3 +79,19 @@ export const isValidDate = (d) => {
         return false;
     }
 }
+
+export const dateConvertNaissance = (dat) => {
+    if (dat && dat !== undefined && dat !== '') {
+        return dat?.split('-').reverse().join('/')
+    } else {
+        return '';
+    }
+}
+
+export const convertDate = (dat) => {
+    if (dat && dat !== undefined && dat !== '') {
+        return new Date(dat).toLocaleDateString('en-GB');
+    } else {
+        return '';
+    }
+}
