@@ -117,7 +117,7 @@ const App = () => {
                   <Route exact={true} path="/PS" component={Ps} />
                   <Route path="/PS/:id?" component={PsDetailsById}/>
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/> />
-                  <Route path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/> />
+                  <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/> />
                   <Route path="/test" component={RemoteTest}/> />
                   <Route path="/PSremote" component={PSremote} />
                 </Switch>

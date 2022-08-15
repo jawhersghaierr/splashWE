@@ -99,7 +99,9 @@ export default function BeneficiaireDetailsById(props) {
             garanties = [];
             garantiesComplex = [];
             data?.garanties.forEach((_garan, id) => {
-                let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)
+                let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)[0];
+
+                // console.log(garantie)
                 if (garantie?.type == 'TP simple') {
                     garanties.push({id, ..._garan})
                 } else {
@@ -264,11 +266,15 @@ export default function BeneficiaireDetailsById(props) {
                 {(data?.ouvrantDroit)?
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         <DoritInfoBox droit={data?.ouvrantDroit} />
-                        {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => <DoritInfoBox droit={ouvrantDroit}  key={ouvrantDroit.id}/>)}
+                        {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => {
+                            if (ouvrantDroit.id !== data.id) {
+                                return <DoritInfoBox droit={ouvrantDroit} key={ouvrantDroit.id}/>
+                            } else return ''
+                        })}
                     </div> :
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <DoritInfoBox droit={data} simple={false}/>
-                        {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit}  key={ayantDroit.id}/>)}
+                        {/*<DoritInfoBox droit={data} simple={false}/>*/}
+                        {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
                     </div>
                 }
             </TabPanel>
