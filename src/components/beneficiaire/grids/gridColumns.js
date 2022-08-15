@@ -10,9 +10,9 @@ export const columns = enviroments => [
     { field: 'numeroAdherentIndividuel', headerName: '№ Adhérent Individuel', flex: 2 },
     { field: 'ayantDroit', headerName: 'Nom bénéficiaire et lien Famillial', flex: 4, sortable: false,
         renderCell: (params) => {
-            return (<div>
-                <b>{params.row.nom}</b> {params.row.prenom}
-                <Chip label={params.row.lienFamillialLabel} sx={{display: 'block', margin: '5px', paddingTop: '6px',}}/>
+            return (<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                <span><b>{params.row.nom}</b> {params.row.prenom}</span>
+                <Chip label={params.row.lienFamillialLabel} sx={{margin: '5px', maxWidth: '110px'}}/>
             </div>)
     }},
     { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', flex: 3, sortable: false,
