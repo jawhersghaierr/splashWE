@@ -178,7 +178,7 @@ export default function SearchAccordion(props) {
                                         variant="standard"
                                         error={meta.invalid}
                                         {...input}
-                                        placeholder={'Nº de facturation PS'}
+                                        placeholder={'Nº de modulTemplate PS'}
                                         sx={{width: '100%'}}
                                         className="RoundedEl"
                                         InputProps={{  disableUnderline: true }}

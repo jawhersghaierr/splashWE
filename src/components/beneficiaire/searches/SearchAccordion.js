@@ -191,7 +191,6 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-
                             <Field name="numAdherentIndividuel">
 
                                 {({ input, meta }) => (
@@ -414,7 +413,6 @@ export default function SearchAccordion(props) {
                 </StyledCard>
                {<FormSpy onChange={(values) => {
                    form.mutators.setValue(values)
-                    console.log(values)
                    const {
                        prenom,
                        nom,

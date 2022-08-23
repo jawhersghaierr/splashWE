@@ -69,6 +69,8 @@ export const beneficiaireApi = createApi({
                 if (dateDebutSoins) url += `&dateDebutSoins=${dateDebutSoins}`;
                 if (dateFinSoins) url += `&dateFinSoins=${dateFinSoins}`;
 
+                url += '&applyEnvCriteria=true';
+
                 console.log('params to be send > ', url);
 
                 return ({

@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
-import SearchAccordion from "../facturation/searches/SearchAccordion";
-import {FacturationGrid} from "./grids/FacturationGrid";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
+import SearchAccordion from "./searches/SearchAccordion";
+import {FacturesGrid} from "./grids/FacturesGrid";
+import {useGetDisciplinesQuery} from "../../services/referentielApi"
 import mainPS from '../../../assets/PS.png'
 
-import './facturation.scss'
+import './factures.scss'
 import {matchPath} from "react-router-dom";
 
-export const Facturation = (props) => {
+export const Factures = (props) => {
 
     const match = matchPath(props?.location?.pathname, {
         path: "/PS/:id",
@@ -21,7 +21,7 @@ export const Facturation = (props) => {
 
     return <div style={{padding: '0', margin: 0}}>
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>Beneficiaire</b> &nbsp;
+            <b>Factures</b> &nbsp;
             {match?.params?.id}
         </Typography>
         <SearchAccordion
@@ -32,7 +32,7 @@ export const Facturation = (props) => {
 
         {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
-        <FacturationGrid disciplines={disciplines}/>
+        <FacturesGrid disciplines={disciplines}/>
 
     </div>
 }

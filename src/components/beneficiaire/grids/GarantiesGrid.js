@@ -25,9 +25,10 @@ export const GarantiesGrid = ({garanties, nom, simple = true}) => {
                         </Stack>
                     )
                 }}
-                getRowClassName={(params) =>
-                    params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
-                }
+                getRowClassName={(params) => {
+                    console.log('params ROW ', params)
+                    return params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+                }}
                 // sortingMode="server"
                 // onSortModelChange={handleOrdering}
                 sx={{

@@ -17,7 +17,6 @@ export const columns = enviroments => [
     }},
     { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', flex: 3, sortable: false,
         renderCell: (params) => {
-        console.log(params)
             return (<>
                 {dateConvertNaissance(params.row?.dateNaissance)}&nbsp;<Chip label={params.row.rangNaissance}/>
             </>)

@@ -8,6 +8,7 @@ import { referentielApi } from './services/referentielApi';
 import { refsApi } from './services/refsApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import {psApi} from "./components/ps/services/psApi";
+import {facturesApi} from "./components/factures/services/facturesApi";
 import {beneficiaireApi} from "./components/beneficiaire/services/beneficiaireApi";
 import psReducer from './components/ps/psSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
@@ -54,6 +55,7 @@ export default function configureStore(initialState) {
       refsApi.middleware,
       referentielApi.middleware,
       psApi.middleware,
+      facturesApi.middleware,
       beneficiaireApi.middleware,
       ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
@@ -90,6 +92,7 @@ function createReducer(asyncReducers) {
     //TODO need automation - received object/array with reducers by index files from slice folders
     comp1: comp1Reducer,
     [psApi.reducerPath]: psApi.reducer,
+    [facturesApi.reducerPath]: facturesApi.reducer,
     [beneficiaireApi.reducerPath]: beneficiaireApi.reducer,
     ps: psReducer,
     benef: benefReducer,

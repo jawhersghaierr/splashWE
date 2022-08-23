@@ -35,6 +35,8 @@ import { purple } from '@mui/material/colors';
 import './theme.scss'
 import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
+import FacturesDetailsById from "./components/factures/FacturesDetailsById";
+import {Factures} from "./components/factures/Factures";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -118,6 +120,10 @@ const App = () => {
                   <Route path="/PS/:id?" component={PsDetailsById}/>
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/> />
                   <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/> />
+                  <Route path="/ligne" component={RemoteTest}/> />
+                  <Route exact={true} path="/factures" component={Factures}/> />
+                  <Route path="/factures/:id?" component={FacturesDetailsById}/> />
+                  <Route path="/intraitFactures" component={RemoteTest}/> />
                   <Route path="/test" component={RemoteTest}/> />
                   <Route path="/PSremote" component={PSremote} />
                 </Switch>

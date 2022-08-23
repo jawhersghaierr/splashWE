@@ -3,19 +3,19 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetBenefQuery} from "../services/beneficiaireApi";
+import {useGetFacturesQuery} from "../services/facturesApi";
 import {Typography} from "@mui/material";
-import {DataGrid, gridClasses } from '@mui/x-data-grid';
+import {DataGrid} from '@mui/x-data-grid';
 
-import { selectCriterias } from '../beneficiaireSlice'
+import { selectCriterias } from '../facturesSlice'
 
-import {columns} from "./gridColumns";
-import './beneficiaireGrid.scss';
+import {columns} from "./gridFacturesColumns";
+import './facturesGrid.scss';
 
 import {checker, usePrevious} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
-export const BeneficiaireGrid = ({enviroments}) => {
+export const FacturesGrid = ({disciplines}) => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -25,7 +25,7 @@ export const BeneficiaireGrid = ({enviroments}) => {
         sortProperty: null
     });
 
-    const {data} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -38,23 +38,25 @@ export const BeneficiaireGrid = ({enviroments}) => {
     };
 
     useEffect(() => {
-        if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-            setCurrentPage(0)
-        }
+
+            if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
+                setCurrentPage(0)
+            }
+
     }, [criterias, currentPage]);
 
 
     return <div className="gridContent">
 
-        {(data && enviroments) && <div>
+        {(data && disciplines) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*10 : 10)} sur {data.totElements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data?.result || []}
-                columns={columns(enviroments)}
+                rows={data.data || []}
+                columns={columns(disciplines)}
                 pageSize={10}
                 autoHeight
                 hideFooter={true}
@@ -75,19 +77,16 @@ export const BeneficiaireGrid = ({enviroments}) => {
 
                 sortingMode="server"
                 onSortModelChange={handleOrdering}
-                sx={{
-                    '& .MuiDataGrid-columnHeaderTitle': {
-                        textOverflow: "clip",
-                        whiteSpace: "break-spaces",
-                        lineHeight: 1
-                    },
 
-                }}
-                rowHeight={85}
             />
         </div>}
 
-        {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
+        {!data && <div>
+            <img  src={mainPS} alt="mainPS" className={'imgContext'}/>
+            <h2 style={{color: '#003154', position: 'relative', width: '400px', left: '605px', bottom: '545px'}}>
+                Vous y trouverez toutes les informations pertinentes pour les professionnels de la santé du système.
+            </h2>
+        </div>}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination

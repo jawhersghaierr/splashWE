@@ -10,23 +10,20 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        birdDate: null,
-        prenom: undefined,
-        nom: undefined,
-        numAdherentIndividuel: undefined,
-        dateDeNaissance: null,
-        numAdherentFamillial: undefined,
-        enviroment: undefined,
-        dateDebutSoins: null,
-        dateFinSoins: null
+        numPartenaire: undefined,
+        raisonSociale: undefined,
+        disciplines: undefined,
+        codePostal: undefined,
+        ville: undefined,
+        statutRibs: undefined,
     }
     // isLoading: null,
     // isError: null,
 }
 
 
-export const beneficiaireSlice = createSlice({
-    name: 'FACTURES',
+export const facturesSlice = createSlice({
+    name: 'PS',
     initialState,
     reducers: {
 
@@ -60,23 +57,41 @@ export const beneficiaireSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins
+                ville,
+                codePostal,
+                statutRibs,
+                disciplines,
+                numPartenaire,
+                raisonSociale
             } = action?.payload
 
             state.criterias = {...initialState.criterias};
             state.pagination = initialState.pagination;
             state.numCriterias = 0;
 
-            state.criterias.prenom = prenom;
-            state.criterias.nom = nom;
-            state.criterias.numAdherentIndividuel = numAdherentIndividuel;
-            state.criterias.birdDate = birdDate;
-            state.criterias.dateDeNaissance = dateDeNaissance;
-            state.criterias.numAdherentFamillial = numAdherentFamillial;
-            state.criterias.enviroment = enviroment;
-            state.criterias.dateDebutSoins = dateDebutSoins;
-            state.criterias.dateFinSoins = dateFinSoins;
-
+            state.criterias.raisonSociale = raisonSociale;
+            if (raisonSociale) {
+                state.numCriterias++;
+            }
+            state.criterias.ville = ville;
+            if (ville) {
+            }
+            state.criterias.codePostal = codePostal;
+            if (codePostal) {
+                state.numCriterias++;
+            }
+            state.criterias.statutRibs = statutRibs;
+            if (statutRibs) {
+                state.numCriterias++;
+            }
+            state.criterias.disciplines = disciplines;
+            if (disciplines) {
+                state.numCriterias++;
+            }
+            state.criterias.numPartenaire = numPartenaire;
+            if (numPartenaire) {
+                state.numCriterias++;
+            }
         },
     },
 
@@ -87,10 +102,10 @@ export const {
     setPagination,
     setCriterias,
     initCriterias
-} = beneficiaireSlice.actions;
+} = facturesSlice.actions;
 
-export const selectPagination = (state) => ({...state?.benef?.pagination});
-export const selectCriterias = (state) => ({...state?.benef?.criterias});
-export const selectNumCriterias = (state) => (state?.benef?.numCriterias);
+export const selectPagination = (state) => ({...state?.ps?.pagination});
+export const selectCriterias = (state) => ({...state?.ps?.criterias});
+export const selectNumCriterias = (state) => (state?.ps?.numCriterias);
 
-export default beneficiaireSlice.reducer;
+export default facturesSlice.reducer;
