@@ -3,13 +3,16 @@ import thunk from "redux-thunk";
 import thunkMiddleware from 'redux-thunk';
 //TODO need automation - import object/array index files from slice folders
 // import { entityApi } from './services/entityApi';
+// import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import comp1Reducer from './component1/comp1Slice';
 import { referentielApi } from './services/referentielApi';
 import { refsApi } from './services/refsApi';
-// import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import {psApi} from "./components/ps/services/psApi";
-import {facturesApi} from "./components/factures/services/facturesApi";
-import {beneficiaireApi} from "./components/beneficiaire/services/beneficiaireApi";
+import { psApi } from "./components/ps/services/psApi";
+import { facturesApi } from "./components/factures/services/facturesApi";
+import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
+import { paiementsApi } from "./components/factures/services/paiementsApi";
+import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
+
 import psReducer from './components/ps/psSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
 import facturesReducer from "./components/factures/facturesSlice";
@@ -56,6 +59,8 @@ export default function configureStore(initialState) {
       refsApi.middleware,
       referentielApi.middleware,
       psApi.middleware,
+      paiementsApi.middleware,
+      selAndIdbApi.middleware,
       facturesApi.middleware,
       beneficiaireApi.middleware,
       ...[thunk, thunkMiddleware, logger]);
@@ -93,6 +98,8 @@ function createReducer(asyncReducers) {
     //TODO need automation - received object/array with reducers by index files from slice folders
     comp1: comp1Reducer,
     [psApi.reducerPath]: psApi.reducer,
+    [paiementsApi.reducerPath]: paiementsApi.reducer,
+    [selAndIdbApi.reducerPath]: selAndIdbApi.reducer,
     [facturesApi.reducerPath]: facturesApi.reducer,
     [beneficiaireApi.reducerPath]: beneficiaireApi.reducer,
     ps: psReducer,

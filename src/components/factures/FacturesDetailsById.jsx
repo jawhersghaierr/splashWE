@@ -13,6 +13,8 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
+import {SelAssociesGrid} from "./grids/SelAssociesGrid";
+import {PaimentsGrid} from "./grids/PaimentsGrid";
 
 
 
@@ -83,9 +85,11 @@ export default function FacturesDetailsById(props) {
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}
             </Typography>
-            <Chip label={data?.status} sx={{color: 'black'}}/>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <div style={{flex: 1}}>
+
+            <Chip label={data?.status} sx={{color: 'black', margin: '15px 0 0 0'}}/>
+
+            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
+                <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
                     <RowInfo label={'Date d\'admission'} value={data?.factData?.dateEntree}/>
                     <RowInfo label={'Beneficiaire'} value={(data?.ben)?
                         <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
@@ -93,13 +97,13 @@ export default function FacturesDetailsById(props) {
                     <RowInfo label={'Enviroment'} value={data?.numEnv}/>
                     <RowInfo label={'Date de creation'} value={data?.factTransData?.receivedDate}/>
                 </div>
-                <div style={{flex: 1}}>
+                <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
                     <RowInfo label={'FINESS Géographique'} value={data?.ps?.numId}/>
                     <RowInfo label={'Nº Adherant'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
                     <RowInfo label={'AMC'} value={data?.numClient}/>
                     <RowInfo label={'Derniere modification'} value={data?.timestamp}/>
                 </div>
-                <div style={{flex: 1}}>
+                <div style={{flex: 1, maxWidth: '375px'}}>
                     <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
                     <RowInfo label={'Rang et date de naissance'}
                              value={(data?.ben)? data?.ben?.dateNai : data?.benInputData?.dateNai}
@@ -108,7 +112,6 @@ export default function FacturesDetailsById(props) {
                     <RowInfo label={'Montant RC'} value={`${data?.totalRc} €`}/>
                 </div>
             </div>
-
 
             <Tabs
                 TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
@@ -123,8 +126,8 @@ export default function FacturesDetailsById(props) {
                 <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
                 <Tab label="Paiements" {...a11yProps(3)} />
-
             </Tabs>
+
             <TabPanel value={value} index={0} data={data}>
                 {data && <Box style={{
                     backgroundColor: '#F6F8FC',
@@ -132,17 +135,18 @@ export default function FacturesDetailsById(props) {
                     minWidth: '300px',
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
-
-                    <h2><b>Informations demande</b></h2>
+                    <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+                        <b>Informations demande</b>
+                    </Typography>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{flex: 1, marginRight: '25px'}}>
+                        <div style={{flex: 1, marginRight: '5%'}}>
                             <RowInfo label={'Nº d\'angagemant'} value={data?.factData.numEng} border={true} justify={true}/>
                             <RowInfo label={'Date de reception'} value={data?.factTransData?.receivedDate} border={true} justify={true}/>
                             <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
                             <RowInfo label={'Motif de reje'} value={data?.errorLabel} border={true} justify={true}/>
                         </div>
                         <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={data?.factData.dateFact}/>
+                            <RowInfo label={'Date facture'} value={data?.factData.dateFact} border={true} justify={true}/>
                             <RowInfo label={'ID periode de facturation - Nº d\'occurance'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
                             <RowInfo label={'Date accident de travai'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
                             <RowInfo label={'Message de reje'} value={data?.comment} border={true} justify={true}/>
@@ -158,10 +162,10 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {/*<div>Item tree</div>*/}
+                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
-                {/*<div>Item four</div>*/}
+                {data?.numFact && <PaimentsGrid numFac={data.numFact}/>}
             </TabPanel>
 
         </Box>

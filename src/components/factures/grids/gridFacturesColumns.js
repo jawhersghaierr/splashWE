@@ -38,18 +38,3 @@ export const columns = disciplines => [
     }},
 ];
 
-
-// dateEntree: "2022-08-17"
-// dateNai: 19500201
-// domaine: "HOSP"
-// id: 3
-// nom: "BRUNO"
-// numAdh: "445555667"
-// numClient: "00401182"
-// numFact: 63800087
-// numId: 450000088
-// prenom: "THIERRY"
-// rc: 5
-// receivedDate: "2022-08-17"
-// receivedTime: "19:19:51"
-// status: "BAP"

@@ -26,11 +26,6 @@ export const FacturesGrid = ({disciplines}) => {
     });
 
     const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
-    if (data) {
-        console.log('****************************************************************************');
-        console.log('data > ', data);
-
-    }
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
