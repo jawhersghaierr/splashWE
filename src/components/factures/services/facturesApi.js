@@ -32,7 +32,7 @@ export const facturesApi = createApi({
 
                 const size = 10;
 
-                let url = `factures?page=${currentPage}&size=${size}`;
+                let url = `factures?pageNumber=${currentPage}&pageSize=${size}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
 
@@ -107,7 +107,7 @@ export const facturesApi = createApi({
 
         getFactureById: builder.query({
             query: (id) => {
-                let url = `paiements/factures/${id}`;
+                let url = `factures/${id}`;
                 return ({
                     url,
                     transformResponse: (response, meta, arg) => {

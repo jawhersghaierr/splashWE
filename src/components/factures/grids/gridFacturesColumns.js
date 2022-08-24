@@ -16,8 +16,8 @@ export const columns = disciplines => [
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell: (params) => {
         return (params.value)
     }},
-    { field: 'id', headerName: 'FINNES geographique', flex: 1 },
-    { field: 'prenom', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: 'FINNES geographique', flex: 1 },// numId
+    { field: 'prenom', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => { //dateEntree
         return (params.value)
     }},
     { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => {
@@ -34,7 +34,7 @@ export const columns = disciplines => [
             return <b>{params.value} Eu</b>
     }},
     { field: 'numId', headerName: '', flex: 1, renderCell: (params) => {
-            return <Link to={`/factures/${params?.row?.numFact}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
+            return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];
 

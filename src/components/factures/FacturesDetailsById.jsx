@@ -48,7 +48,7 @@ function a11yProps(index) {
 export default function FacturesDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/PS/:id",
+        path: "/factures/:id",
         exact: true,
         strict: false
     });
@@ -80,6 +80,60 @@ export default function FacturesDetailsById(props) {
                 Details de la facture
             </Typography>
             <div>
+
+
+                {/*{numFact}*/}
+                {/*{status}*/}
+                {/*{factData.dateEntree}*/}
+                {/*{ps.numId}*/}
+                {/*{ps.numJur}*/}
+                {/*Beneficiare {(ben)? `${ben.nom ben.prenom}` : benInputData.nom benInputData.prenom }*/}
+                {/*N Adherant {(ben)? `${ben.numAdhInd} ` : benInputData.numAdh }*/}
+                {/*Ranget de nassaince {(ben)? `${ben.dateNai}  ${ben.rangNai} ` : `${benInputData.dateNai}  ${benInputData.rangNai} ` }*/}
+                {/*{numEnv}*/}
+                {/*amc  {numClient}*/}
+                {/*{totalRc}*/}
+
+                {/*Date de creation {factTransData.receivedDate}*/}
+                {/*dernier de modification {timestamp}*/}
+
+
+
+                {/*tab*/}
+                {/**************************** information generale ***********************/}
+                {/*N engagement {factData.numEng}*/}
+                {/*date Facture {factData.dateFact}*/}
+                {/*date Reception {factTransData.receivedDate}*/}
+                {/*id Periodde fact N occcurance {factData.idPeriodeFact} {factData.occId}*/}
+                {/*domaine {factData.domaine}*/}
+                {/*Date accident de travai {factData.numDateAccident}*/}
+                {/*Periode de ---------*/}
+                {/*Motif de reje {errorLabel}*/}
+                {/*Message de reje {comment}*/}
+
+                {/********************************* Act *******************************/}
+                {/*grid columns from {factLines[]}*/}
+
+                {/*N {numLigne}*/}
+                {/*Acter {codeActe}*/}
+                {/*Mt {codeActe}*/}
+                {/*DCS {dcs}*/}
+                {/*DMt {dmt}*/}
+                {/*Periode {dateDebutSoins} - {dateFinSoins}*/}
+                {/*Coeff {coef}*/}
+                {/*Qte {quant}*/}
+                {/*Pu {pu} in 'Eu'*/}
+                {/*Base SS {br} in 'Eu'*/}
+                {/*Tx RO {taux} in '%'*/}
+                {/*Mnt RO {ro} in 'Eu'*/}
+                {/*DR {depense} in 'Eu'*/}
+                {/*Mnt RC {rc} in 'Eu'*/}
+                {/*Rac {rac} in 'Eu'*/}
+
+
+
+
+
                 {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}
                 {data &&
                     <div style={{display: 'flex', alignItems: 'center', padding: '15px 0', margin: '15px 0', height: '50px'}}>

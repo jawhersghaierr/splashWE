@@ -15,6 +15,8 @@ import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
 
 import HostMenuItemComponent from './HostMenuItemComponent'
+import {Popover} from "@material-ui/core";
+import {bindHover} from "material-ui-popup-state/core";
 
 // React runtime PropTypes
 export const HostMenuItemPropTypes = {
@@ -25,7 +27,7 @@ export const HostMenuItemPropTypes = {
 }
 
 const HostMenuItem = props => {
-    const { name, link, Icon, items = [] } = props
+    const { name, link, Icon, items = [] , popItems = [] } = props
     const classes = useStyles()
     const isExpandable = items && items.length > 0
     const [open, setOpen] = React.useState(true)
@@ -34,8 +36,9 @@ const HostMenuItem = props => {
         setOpen(!open)
     }
 
+
     const MenuItemRoot = (
-        <HostMenuItemComponent className={classes.menuItem} link={link} onClick={handleClick}>
+        <HostMenuItemComponent className={classes.menuItem} key={link} link={link} onClick={handleClick} popItems={popItems}>
             {!!Icon && (
                 <ListItemIcon className={classes.menuItemIcon}>
                     <Icon/>
@@ -44,6 +47,7 @@ const HostMenuItem = props => {
             <ListItemText primary={name} inset={!Icon} />
             {isExpandable && !open && <IconExpandMore />}
             {isExpandable && open && <IconExpandLess />}
+
         </HostMenuItemComponent>
     )
 
