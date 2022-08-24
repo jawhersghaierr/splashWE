@@ -26,7 +26,7 @@ const initialState = {
 
 
 export const beneficiaireSlice = createSlice({
-    name: 'FACTURES',
+    name: 'BENEF',
     initialState,
     reducers: {
 

@@ -5,7 +5,8 @@ export const facturesApi = createApi({
     reducerPath: 'facturesApi',
     baseQuery: fetchBaseQuery({
         // http://10.241.25.10:8003/api/v1/paiements/factures/10170
-        baseUrl: `http://${env_IP}:8003/api/v1`,
+        // http://10.241.25.10:8005/api/v1/factures
+        baseUrl: `http://${env_IP}:8005/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -18,16 +19,39 @@ export const facturesApi = createApi({
     }),
     endpoints: (builder) => ({
         getFactures: builder.query({
-            query: (
-                page = 0,
-                size = 10,
-                sortDirection = 'ASC',
-                sortProperty,
-            ) => ({
-                url: `paiements/factures?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
-                    return JSON.parse(response);
-            }}),
+            query: ({currentPage, criterias, sortProperties}) => {
+                const {
+                    numEng, numFact, numAdh, domaine, dateDeSoins, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
+                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateDeNaissance, birdDate, nir, cle
+                } = criterias;
+
+                const {
+                    sortDirection,
+                    sortProperty,
+                } = sortProperties;
+
+                const size = 10;
+
+                let url = `factures?page=${currentPage}&size=${size}`;
+                if (sortDirection) url += `&sortDirection=${sortDirection}`;
+                if (sortProperty) url += `&sortProperty=${sortProperty}`;
+
+                if(criterias) {
+                    Object.keys(criterias).forEach(key=>{
+                        if (criterias[key] !== null && criterias[key] !== undefined && criterias[key] !== '') {
+                            url += `&${key}=${criterias[key]}`;
+                        }
+                    })
+                }
+
+                return ({
+                    url,
+                    transformResponse: (response, meta, arg) => {
+                        return {...JSON.parse(response)};
+                    }
+                })
+
+            }
         }),
         getBankaccountps: builder.query({
             query: (
@@ -35,12 +59,7 @@ export const facturesApi = createApi({
                 size = 10,
                 sortDirection = 'ASC',
                 sortProperty,
-                finessGeo,
-                finessJur,
-                discipline,
-                codeCanal,
-                codeReseau,
-                codeTypePrestation
+                    ...rest
             ) => ({
                 url: `bankaccountps?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
                 transformResponse: (response, meta, arg) => {
@@ -102,6 +121,7 @@ export const facturesApi = createApi({
 })
 export const {
     useGetFacturesQuery,
+
     useGetFactureByIdQuery,
 } = facturesApi
 

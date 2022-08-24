@@ -30,7 +30,6 @@ import {ListItemText} from "@material-ui/core";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import {
     validators,
@@ -93,7 +92,6 @@ export default function SearchAccordion(props) {
     const {enviroments, enviromentsIsFetching, enviromentsIsSuccess} = props;
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-    console.log('Nomenclatures> ', nomRefs)
 
     const onSubmit = async (values) => {
 
@@ -102,10 +100,10 @@ export default function SearchAccordion(props) {
     };
 
     const [expanded, setExpanded] = useState({
-        panelInformationGenerales: false,
-        panelInformationsEstablishement: false,
-        panelInformationsBeneficiaires: false,
-        panelNIR: false,
+        panelInformationGenerales: true,
+        panelInformationsEstablishement: true,
+        panelInformationsBeneficiaires: true,
+        panelNIR: true,
     });
     const [dotShow, setDotShow] = useState(false);
 
@@ -136,11 +134,6 @@ export default function SearchAccordion(props) {
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
-                              //Object.keys(nomRefs.FACTURE_DOMAINE)
-                              if (_value?.domaine?.length === 0 ||
-                                  (_value?.domaine?.includes('all') && _value?.domaine?.length > Object.keys(nomRefs?.FACTURE_DOMAINE).length)
-                              ) _value = {..._value, domaine: undefined}
-                              if (_value?.domaine?.includes('all')) _value = {..._value, domaine: Object.keys(nomRefs?.FACTURE_DOMAINE)}
 
                               //Object.keys(nomRefs.FACTURE_STATUS)
                               if (_value?.status?.length === 0 ||
@@ -259,7 +252,7 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      {(nomRefs && nomRefs?.FACTURE_DOMAINE) && <Field name="domaine" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.FACTURE_DOMAINE) && <Field name="domaine" >
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -267,24 +260,12 @@ export default function SearchAccordion(props) {
                                                                   <Select
                                                                       id="Domaine"
                                                                       labelId="Domaine-label"
-                                                                      multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Domaine sélectionnéеs`
-                                                                          return selected[0];
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.domaine?.length == Object.keys(nomRefs.FACTURE_DOMAINE).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
+                                                                      MenuProps={{autoFocus: false}}>
 
                                                                       {Object.keys(nomRefs.FACTURE_DOMAINE).map(code => (
-                                                                          <MenuItem key={code} value={nomRefs.FACTURE_DOMAINE[code]}>
+                                                                          <MenuItem key={code} value={code}>
                                                                               {nomRefs.FACTURE_DOMAINE[code]}
                                                                           </MenuItem>
                                                                       ))}
@@ -427,7 +408,7 @@ export default function SearchAccordion(props) {
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.FACTURE_STATUS).map(code => (
-                                                                          <MenuItem key={code} value={nomRefs.FACTURE_STATUS[code]}>
+                                                                          <MenuItem key={code} value={code}>
                                                                               {nomRefs.FACTURE_STATUS[code]}
                                                                           </MenuItem>
                                                                       ))}
@@ -462,7 +443,7 @@ export default function SearchAccordion(props) {
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.FACTURE_ERROR).map(code => (
-                                                                          <MenuItem key={code} value={nomRefs.FACTURE_ERROR[code]}>
+                                                                          <MenuItem key={code} value={code}>
                                                                               {nomRefs.FACTURE_ERROR[code]}
                                                                           </MenuItem>
                                                                       ))}
@@ -580,7 +561,7 @@ export default function SearchAccordion(props) {
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.CLIENT).map(code => (
-                                                                          <MenuItem key={code} value={nomRefs.CLIENT[code]}>
+                                                                          <MenuItem key={code} value={code}>
                                                                               {nomRefs.CLIENT[code]}
                                                                           </MenuItem>
                                                                       ))}

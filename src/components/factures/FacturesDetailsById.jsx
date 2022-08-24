@@ -77,7 +77,7 @@ export default function FacturesDetailsById(props) {
                 <b>{data?.raisonSociale}</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                ROC
+                Details de la facture
             </Typography>
             <div>
                 {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}

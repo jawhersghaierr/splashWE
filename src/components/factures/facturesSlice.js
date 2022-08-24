@@ -10,12 +10,28 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        numPartenaire: undefined,
+        numFact: undefined,
+        numEng: undefined,
+        numAdh: undefined,
+        domaine: undefined,
+        dateDeSoins: undefined,
+        dateReceivedStart: undefined,
+        dateReceivedEnd: undefined,
+        idPeriodeFact: undefined,
+        dateFact: undefined,
+        status: undefined,
+        errorCode: undefined,
+        numId: undefined,
+        numJur: undefined,
         raisonSociale: undefined,
-        disciplines: undefined,
-        codePostal: undefined,
-        ville: undefined,
-        statutRibs: undefined,
+        department: undefined,
+        numClient: undefined,
+        nom: undefined,
+        prenom: undefined,
+        dateDeNaissance: undefined,
+        birdDate: undefined,
+        nir: undefined,
+        cle: undefined,
     }
     // isLoading: null,
     // isError: null,
@@ -23,7 +39,7 @@ const initialState = {
 
 
 export const facturesSlice = createSlice({
-    name: 'PS',
+    name: 'FACTURES',
     initialState,
     reducers: {
 
@@ -57,41 +73,43 @@ export const facturesSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                ville,
-                codePostal,
-                statutRibs,
-                disciplines,
-                numPartenaire,
-                raisonSociale
+                numFact,
+                numEng,
+                numAdh,
+                domaine,
+                dateDeSoins,
+                dateReceivedStart,
+                dateReceivedEnd,
+                idPeriodeFact,
+                dateFact,
+                status,
+                errorCode,
+                numId,
+                numJur,
+                raisonSociale,
+                department,
+                numClient,
+                nom,
+                prenom,
+                dateDeNaissance,
+                birdDate,
+                nir,
+                cle
             } = action?.payload
 
-            state.criterias = {...initialState.criterias};
-            state.pagination = initialState.pagination;
-            state.numCriterias = 0;
+            state.criterias = {};
 
-            state.criterias.raisonSociale = raisonSociale;
-            if (raisonSociale) {
-                state.numCriterias++;
+            if(action?.payload) {
+                Object.keys(action?.payload).forEach(key=>{
+                    if (action.payload[key] !== null && action.payload[key] !== undefined) {
+                        state.criterias[key] = action.payload[key]
+                        state.numCriterias++;
+                    }
+                })
+
             }
-            state.criterias.ville = ville;
-            if (ville) {
-            }
-            state.criterias.codePostal = codePostal;
-            if (codePostal) {
-                state.numCriterias++;
-            }
-            state.criterias.statutRibs = statutRibs;
-            if (statutRibs) {
-                state.numCriterias++;
-            }
-            state.criterias.disciplines = disciplines;
-            if (disciplines) {
-                state.numCriterias++;
-            }
-            state.criterias.numPartenaire = numPartenaire;
-            if (numPartenaire) {
-                state.numCriterias++;
-            }
+
+            state.pagination = initialState.pagination;
         },
     },
 
@@ -104,8 +122,8 @@ export const {
     initCriterias
 } = facturesSlice.actions;
 
-export const selectPagination = (state) => ({...state?.ps?.pagination});
-export const selectCriterias = (state) => ({...state?.ps?.criterias});
-export const selectNumCriterias = (state) => (state?.ps?.numCriterias);
+export const selectPagination = (state) => ({...state?.factures?.pagination});
+export const selectCriterias = (state) => ({...state?.factures?.criterias});
+export const selectNumCriterias = (state) => (state?.factures?.numCriterias);
 
 export default facturesSlice.reducer;
