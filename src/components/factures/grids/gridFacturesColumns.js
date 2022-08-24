@@ -16,8 +16,8 @@ export const columns = disciplines => [
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell: (params) => {
         return (params.value)
     }},
-    { field: 'id', headerName: 'FINNES geographique', flex: 1 },// numId
-    { field: 'prenom', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => { //dateEntree
+    { field: 'numId', headerName: 'FINNES geographique', flex: 1 },// numId
+    { field: 'dateEntree', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => { //dateEntree
         return (params.value)
     }},
     { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => {
@@ -31,9 +31,9 @@ export const columns = disciplines => [
         return <span><b>{params.row.nom}</b>{params.row.prenom}<br/>{params.row.dateNai}</span>
     }},
     { field: 'rc', headerName: 'Montant Rc', flex: 1, renderCell: (params) => {
-            return <b>{params.value} Eu</b>
+            return <b>{params.value} €</b>
     }},
-    { field: 'numId', headerName: '', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: '', flex: 1, renderCell: (params) => {
             return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

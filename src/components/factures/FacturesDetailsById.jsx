@@ -11,6 +11,8 @@ import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
+import {RowInfo} from "./components/RowInfo";
+import {ActesGrid} from "./grids/ActesGrid";
 
 
 
@@ -57,6 +59,8 @@ export default function FacturesDetailsById(props) {
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    let factLines = []
+    if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
 
     const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
@@ -74,78 +78,38 @@ export default function FacturesDetailsById(props) {
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>{data?.raisonSociale}</b>
+                <b>Details de la facture</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                Details de la facture
+                {data?.numFact}
             </Typography>
-            <div>
-
-
-                {/*{numFact}*/}
-                {/*{status}*/}
-                {/*{factData.dateEntree}*/}
-                {/*{ps.numId}*/}
-                {/*{ps.numJur}*/}
-                {/*Beneficiare {(ben)? `${ben.nom ben.prenom}` : benInputData.nom benInputData.prenom }*/}
-                {/*N Adherant {(ben)? `${ben.numAdhInd} ` : benInputData.numAdh }*/}
-                {/*Ranget de nassaince {(ben)? `${ben.dateNai}  ${ben.rangNai} ` : `${benInputData.dateNai}  ${benInputData.rangNai} ` }*/}
-                {/*{numEnv}*/}
-                {/*amc  {numClient}*/}
-                {/*{totalRc}*/}
-
-                {/*Date de creation {factTransData.receivedDate}*/}
-                {/*dernier de modification {timestamp}*/}
-
-
-
-                {/*tab*/}
-                {/**************************** information generale ***********************/}
-                {/*N engagement {factData.numEng}*/}
-                {/*date Facture {factData.dateFact}*/}
-                {/*date Reception {factTransData.receivedDate}*/}
-                {/*id Periodde fact N occcurance {factData.idPeriodeFact} {factData.occId}*/}
-                {/*domaine {factData.domaine}*/}
-                {/*Date accident de travai {factData.numDateAccident}*/}
-                {/*Periode de ---------*/}
-                {/*Motif de reje {errorLabel}*/}
-                {/*Message de reje {comment}*/}
-
-                {/********************************* Act *******************************/}
-                {/*grid columns from {factLines[]}*/}
-
-                {/*N {numLigne}*/}
-                {/*Acter {codeActe}*/}
-                {/*Mt {codeActe}*/}
-                {/*DCS {dcs}*/}
-                {/*DMt {dmt}*/}
-                {/*Periode {dateDebutSoins} - {dateFinSoins}*/}
-                {/*Coeff {coef}*/}
-                {/*Qte {quant}*/}
-                {/*Pu {pu} in 'Eu'*/}
-                {/*Base SS {br} in 'Eu'*/}
-                {/*Tx RO {taux} in '%'*/}
-                {/*Mnt RO {ro} in 'Eu'*/}
-                {/*DR {depense} in 'Eu'*/}
-                {/*Mnt RC {rc} in 'Eu'*/}
-                {/*Rac {rac} in 'Eu'*/}
-
-
-
-
-
-                {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}
-                {data &&
-                    <div style={{display: 'flex', alignItems: 'center', padding: '15px 0', margin: '15px 0', height: '50px'}}>
-                        Nº de partenaire&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.numPartenaire}</b> &nbsp;
-                        <Tooltip
-                            title={'Finess Géographique'}
-                            placement="top" arrow>
-                            <InfoOutlinedIcon/>
-                        </Tooltip>
-                        <span style={{marginLeft: '50px'}}>Finess Juridique&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.finessJuridique}</b></span>
-                    </div>}
+            <Chip label={data?.status} sx={{color: 'black'}}/>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{flex: 1}}>
+                    <RowInfo label={'Date d\'admission'} value={data?.factData?.dateEntree}/>
+                    <RowInfo label={'Beneficiaire'} value={(data?.ben)?
+                        <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
+                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
+                    <RowInfo label={'Enviroment'} value={data?.numEnv}/>
+                    <RowInfo label={'Date de creation'} value={data?.factTransData?.receivedDate}/>
+                </div>
+                <div style={{flex: 1}}>
+                    <RowInfo label={'FINESS Géographique'} value={data?.ps?.numId}/>
+                    <RowInfo label={'Nº Adherant'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
+                    <RowInfo label={'AMC'} value={data?.numClient}/>
+                    <RowInfo label={'Derniere modification'} value={data?.timestamp}/>
+                </div>
+                <div style={{flex: 1}}>
+                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
+                    <RowInfo label={'Rang et date de naissance'}
+                             value={(data?.ben)? data?.ben?.dateNai : data?.benInputData?.dateNai}
+                             chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
+                    />
+                    <RowInfo label={'Montant RC'} value={`${data?.totalRc} €`}/>
+                </div>
             </div>
+
+
             <Tabs
                 TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
                 value={value}
@@ -156,12 +120,9 @@ export default function FacturesDetailsById(props) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
-                <Tab label={<div>RIB&nbsp;
-                    {data?.statutRibs && <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
-                           sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>}
-                </div>}  {...a11yProps(1)} />
-                <Tab label="Droits"  {...a11yProps(2)}/>
-                <Tab label="Historique" {...a11yProps(3)} />
+                <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
+                <Tab label="Sel associes"  {...a11yProps(2)}/>
+                <Tab label="Paiements" {...a11yProps(3)} />
 
             </Tabs>
             <TabPanel value={value} index={0} data={data}>
@@ -171,16 +132,31 @@ export default function FacturesDetailsById(props) {
                     minWidth: '300px',
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
-                    <h2><b>Coordonnes</b></h2>
-                    {data?.adresse1 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse: <b>{data.adresse1}</b></Typography>}
-                    {data?.adresse2 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse2: <b>{data.adresse2}</b></Typography>}
-                    {data?.codePostal && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Code Postal: <b>{data.codePostal}</b></Typography>}
-                    {data?.ville && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Ville: <b>{data.ville}</b></Typography>}
+
+                    <h2><b>Informations demande</b></h2>
+                    <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{flex: 1, marginRight: '25px'}}>
+                            <RowInfo label={'Nº d\'angagemant'} value={data?.factData.numEng} border={true} justify={true}/>
+                            <RowInfo label={'Date de reception'} value={data?.factTransData?.receivedDate} border={true} justify={true}/>
+                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
+                            <RowInfo label={'Motif de reje'} value={data?.errorLabel} border={true} justify={true}/>
+                        </div>
+                        <div style={{flex: 1    }}>
+                            <RowInfo label={'Date facture'} value={data?.factData.dateFact}/>
+                            <RowInfo label={'ID periode de facturation - Nº d\'occurance'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
+                            <RowInfo label={'Date accident de travai'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
+                            <RowInfo label={'Message de reje'} value={data?.comment} border={true} justify={true}/>
+                        </div>
+                    </div>
+
                 </Box>}
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
-                {/*<div>Item two</div>*/}
+
+                {(data?.factLines && factLines.length > 0) && <ActesGrid data={factLines}/>}
+
             </TabPanel>
+
             <TabPanel value={value} index={2} data={data}>
                 {/*<div>Item tree</div>*/}
             </TabPanel>
