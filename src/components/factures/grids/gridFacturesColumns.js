@@ -12,7 +12,7 @@ export const columns = disciplines => [
         // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
         return (params.value);
     }},
-    { field: 'numFact', headerName: '№ facture', flex: 1 },
+    { field: 'numFact', headerName: '№ engagement', flex: 1 },
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell: (params) => {
         return (params.value)
     }},

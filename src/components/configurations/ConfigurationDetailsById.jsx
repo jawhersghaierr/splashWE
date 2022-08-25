@@ -56,7 +56,11 @@ export default function ConfigurationDetailsById(props) {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    // const {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    const data = null
+
+
+
     let factLines = []
     if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
 

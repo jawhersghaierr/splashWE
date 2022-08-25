@@ -12,6 +12,7 @@ import { facturesApi } from "./components/factures/services/facturesApi";
 import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
 import { paiementsApi } from "./components/factures/services/paiementsApi";
 import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
+import {configurationsApi} from "./components/configurations/services/configurationsApi";
 
 import psReducer from './components/ps/psSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
@@ -63,6 +64,7 @@ export default function configureStore(initialState) {
       selAndIdbApi.middleware,
       facturesApi.middleware,
       beneficiaireApi.middleware,
+      configurationsApi.middleware,
       ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -102,6 +104,7 @@ function createReducer(asyncReducers) {
     [selAndIdbApi.reducerPath]: selAndIdbApi.reducer,
     [facturesApi.reducerPath]: facturesApi.reducer,
     [beneficiaireApi.reducerPath]: beneficiaireApi.reducer,
+    [configurationsApi.reducerPath]: configurationsApi.reducer,
     ps: psReducer,
     benef: benefReducer,
     factures: facturesReducer,
