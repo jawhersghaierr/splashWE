@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
-import {FacturesGrid} from "./grids/FacturesGrid";
+import {ConfigutationGrid} from "./grids/ConfigutationGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
 import mainPS from '../../../assets/PS.png'
 
-import './factures.scss'
+import './configuration.scss'
 import {matchPath} from "react-router-dom";
 
-export const Factures = (props) => {
+export const Configuration = (props) => {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/factures/:id",
+        path: "/configuration/:id",
         exact: true,
         strict: false
     });
@@ -21,7 +21,7 @@ export const Factures = (props) => {
 
     return <div style={{padding: '0', margin: 0}}>
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>Factures</b> &nbsp;
+            <b>Configuration</b> &nbsp;
             {match?.params?.id}
         </Typography>
         <SearchAccordion
@@ -32,7 +32,7 @@ export const Factures = (props) => {
 
         {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
-        <FacturesGrid disciplines={disciplines}/>
+        <ConfigutationGrid disciplines={disciplines}/>
 
     </div>
 }

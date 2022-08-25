@@ -47,7 +47,7 @@ const hostMenuItems = [
         popItems: [
             {name: 'Services en ligne', link: '/ligne'},
             {name: 'Factures', link: '/factures'},
-            {name: 'Factures Intraiteables', link: '/intraitFactures'},
+            {name: 'Configuration Intraiteables', link: '/intraitFactures'},
         ]
     },
     {
@@ -56,15 +56,20 @@ const hostMenuItems = [
         link: '/factures'
     },
     {
-        name: 'Remote test App',
-        link: '/test',
         Icon: IconBarChart,
+        name: 'Configuration',
+        link: '/configuration'
     },
-    {
-        name: 'Hospi App',
-        link: '/Hospi',
-        Icon: AccountBalance,
-    },
+    // {
+    //     name: 'Remote test App',
+    //     link: '/test',
+    //     Icon: IconBarChart,
+    // },
+    // {
+    //     name: 'Hospi App',
+    //     link: '/Hospi',
+    //     Icon: AccountBalance,
+    // },
 ]
 
 
@@ -113,11 +118,11 @@ const HostMenu = () => {
                 <HostMenuItem {...item} key={index} />
             ))}
 
-            <MenuList>
-                {hostMenuItems.map((item, index) =>
-                    <RecursiveMenuItem autoFocus={false} label={item.name} key={`it_${index}`} icon={item.Icon}/>
-                )}
-            </MenuList>
+            {/*<MenuList>*/}
+            {/*    {hostMenuItems.map((item, index) =>*/}
+            {/*        <RecursiveMenuItem autoFocus={false} label={item.name} key={`it_${index}`} icon={item.Icon}/>*/}
+            {/*    )}*/}
+            {/*</MenuList>*/}
         </List>
     )
 }

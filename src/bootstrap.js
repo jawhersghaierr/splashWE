@@ -37,6 +37,8 @@ import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
 import FacturesDetailsById from "./components/factures/FacturesDetailsById";
 import {Factures} from "./components/factures/Factures";
+import {Configuration} from "./components/configurations/Configuration";
+import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -123,6 +125,8 @@ const App = () => {
                   <Route path="/ligne" component={RemoteTest}/> />
                   <Route exact={true} path="/factures" component={Factures}/> />
                   <Route path="/factures/:id?" component={FacturesDetailsById}/> />
+                  <Route exact={true} path="/configuration" component={Configuration}/> />
+                  <Route path="/configuration/:id?" component={ConfigurationDetailsById}/> />
                   <Route path="/intraitFactures" component={RemoteTest}/> />
                   <Route path="/test" component={RemoteTest}/> />
                   <Route path="/PSremote" component={PSremote} />
