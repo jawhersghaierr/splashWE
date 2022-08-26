@@ -49,13 +49,13 @@ export const BeneficiaireGrid = ({enviroments}) => {
         {(data && enviroments) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*10 : 10)} sur {data.totElements} résultats
+                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
                 </Typography>
             </div>
             <DataGrid
                 rows={data?.result || []}
                 columns={columns(enviroments)}
-                pageSize={10}
+                pageSize={20}
                 autoHeight
                 hideFooter={true}
                 disableColumnResize={false}

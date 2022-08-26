@@ -47,6 +47,7 @@ import {
 import './searchAccordion.scss'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
+import {fr} from "date-fns/locale";
 
 
 const Accordion = styled((props) => (
@@ -134,11 +135,11 @@ export default function SearchAccordion(props) {
                         let _value = value;
                         if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
-                        if (_value?.enviroment?.length === 0 ||
-                            (_value?.enviroment?.includes('all') && _value?.enviroment?.length > enviroments?.length)
-                        ) _value = {..._value, enviroment: undefined}
+                        if (_value?.envCodeList?.length === 0 ||
+                            (_value?.envCodeList?.includes('all') && _value?.envCodeList?.length > enviroments?.length)
+                        ) _value = {..._value, envCodeList: undefined}
 
-                        if (_value?.enviroment?.includes('all')) _value = {..._value, enviroment: enviroments?.map(({code})=>code)}
+                        if (_value?.envCodeList?.includes('all')) _value = {..._value, envCodeList: enviroments?.map(({code})=>code)}
 
                         return _value
 
@@ -149,13 +150,13 @@ export default function SearchAccordion(props) {
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
                 <StyledCard sx={{ display: 'block', minWidth: 775 }} id="BeneficiareSearchForm" variant="outlined">
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                            <Field name="nom">
+                            <Field name="nom" validate={validators.composeValidators(validators.maxValue(50))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
@@ -173,7 +174,7 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="prenom" >
+                            <Field name="prenom" validate={validators.composeValidators(validators.maxValue(50))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
@@ -191,8 +192,7 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="numAdherentIndividuel">
-
+                            <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(15))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2}}>
                                         <TextField
@@ -200,7 +200,7 @@ export default function SearchAccordion(props) {
                                             variant="standard"
                                             error={meta.invalid}
                                             {...input}
-                                            placeholder={'Nº Adhérent Individuel'}
+                                            placeholder={'Nº Adhérent'}
                                             sx={{width: '100%'}}
                                             className="RoundedEl"
                                             InputProps={{  disableUnderline: true }}
@@ -254,7 +254,7 @@ export default function SearchAccordion(props) {
                                                     }}
 
                                                     inputFormat="dd/MM/yyyy"
-
+                                                    placeholder={'jj/mm/aaaa'}
                                                     value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
 
                                                     renderInput={({ inputRef, inputProps, InputProps }) => {
@@ -262,7 +262,6 @@ export default function SearchAccordion(props) {
                                                         const {
                                                             disabled,
                                                             onChange,
-                                                            placeholder,
                                                             readOnly,
                                                             type,
                                                             value
@@ -277,7 +276,7 @@ export default function SearchAccordion(props) {
                                                                     form.getFieldState('birdDate').change(event.target.value)
                                                                     onChange(event)
                                                                 }}
-                                                                placeholder={placeholder}
+                                                                placeholder={"jj/mm/aaaa"}
                                                                 readOnly={readOnly}
                                                                 type={type}
                                                                 value={value}
@@ -307,7 +306,7 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                    {enviroments && <Field name="enviroment" format={value => value || []}>
+                                    {enviroments && <Field name="envCodeList" format={value => value || []}>
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important'}} className="RoundedEl">
@@ -360,7 +359,7 @@ export default function SearchAccordion(props) {
                                                         }}
                                                         value={(value === '' || value == undefined)? null: value}
                                                         renderInput={(params) =>
-                                                            <TextField {...params} style={{flex: 2, marginRight: '20px'}}/>}
+                                                            <TextField style={{flex: 2, marginRight: '15px'}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                     />
                                                 </FormControl>
                                         )}
@@ -372,10 +371,11 @@ export default function SearchAccordion(props) {
                                                 <DatePicker
                                                     label="au"
                                                     inputFormat="dd/MM/yyyy"
-                                                    // value={'12/12/2022'}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
-                                                    renderInput={(params) => <TextField {...params} style={{flex: 2}}/>}
+                                                    renderInput={(params) =>
+                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+
                                                 />
                                             </FormControl>
                                         )}
@@ -416,16 +416,16 @@ export default function SearchAccordion(props) {
                    const {
                        prenom,
                        nom,
-                       numAdherentIndividuel,
+                       numeroAdherent,
                        birdDate,
-                       enviroment,
+                       envCodeList,
                        dateDeNaissance,
                        numAdherentFamillial,
                        dateDebutSoins,
                        dateFinSoins
                    } = values?.values;
 
-                    if(birdDate || enviroment || dateDeNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
+                    if(birdDate || envCodeList || dateDeNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
                         setDotShow(true)
                     } else {
                         setDotShow(false)

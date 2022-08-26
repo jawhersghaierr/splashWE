@@ -24,11 +24,11 @@ export const beneficiaireApi = createApi({
                 let {
                     prenom,
                     nom,
-                    numAdherentIndividuel,
+                    numeroAdherent,
                     birdDate,
                     dateDeNaissance,
                     numAdherentFamillial,
-                    enviroment,
+                    envCodeList,
                     dateDebutSoins,
                     dateFinSoins
                 } = criterias;
@@ -55,17 +55,17 @@ export const beneficiaireApi = createApi({
                     } else dateDeNaissance = birdDate.split('/').reverse().join('');
                 }
 
-                const size = 10;
+                const size = 20;
                 let url = `droitsBeneficiaires?page=${currentPage}&size=${size}`;
 
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
                 if (prenom) url += `&prenom=${prenom}`;
                 if (nom) url += `&nom=${nom}`;
-                if (numAdherentIndividuel) url += `&numAdherentIndividuel=${numAdherentIndividuel}`;
+                if (numeroAdherent) url += `&numeroAdherent=${numeroAdherent}`;
                 if (dateDeNaissance) url += `&dateDeNaissance=${dateDeNaissance}`;
                 if (numAdherentFamillial) url += `&numAdherentFamillial=${numAdherentFamillial}`;
-                if (enviroment) url += `&enviroment=${enviroment}`;
+                if (envCodeList) url += `&envCodeList=${envCodeList}`;
                 if (dateDebutSoins) url += `&dateDebutSoins=${dateDebutSoins}`;
                 if (dateFinSoins) url += `&dateFinSoins=${dateFinSoins}`;
 

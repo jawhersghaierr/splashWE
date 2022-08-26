@@ -245,8 +245,8 @@ export default function SearchAccordion(props) {
                                       <Collapse in={panelExpanded} timeout="auto">
                                           <CardActions sx={{ display: 'block'}} >
 
-                                              <Accordion expanded={expanded.panelBeneficiaires} onChange={handleChange('panelInformationGenerales')}>
-                                                  <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
+                                              <Accordion expanded={expanded.panelInformationGenerales} onChange={handleChange('panelInformationGenerales')}>
+                                                  <AccordionSummary aria-controls="panelInformationGenerales-content" id="panelInformationGenerales-header">
                                                       <Typography><b>Information generales</b></Typography>
                                                   </AccordionSummary>
 
@@ -277,7 +277,6 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="dateDeSoins">
                                                           {({ input:{onChange, value}, meta }) => (
-                                                              // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
                                                                       label={'Date d\'admission / Date de soins '}
@@ -292,7 +291,7 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField {...params} style={{flex: 2}}/>}
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -315,7 +314,7 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField {...params} style={{flex: 2}}/>}
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -338,7 +337,7 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField {...params} style={{flex: 2}}/>}
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -377,7 +376,7 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField {...params} style={{flex: 2}}/>}
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -456,7 +455,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionDetails>
                                               </Accordion>
 
-                                              <Accordion expanded={expanded.panelInfoOMC} onChange={handleChange('panelInformationsEstablishement')}>
+                                              <Accordion expanded={expanded.panelInformationsEstablishement} onChange={handleChange('panelInformationsEstablishement')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                       <Typography style={{marginLeft: '5px'}}><b>Informations establishement</b></Typography>
                                                   </AccordionSummary>
@@ -530,7 +529,7 @@ export default function SearchAccordion(props) {
 
                                               </Accordion>
 
-                                              <Accordion expanded={expanded.panelInfoOMC} onChange={handleChange('panelInformationsBeneficiaires')}>
+                                              <Accordion expanded={expanded.panelInformationsBeneficiaires} onChange={handleChange('panelInformationsBeneficiaires')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                       <Typography style={{marginLeft: '5px'}}><b>Informations beneficiaires</b></Typography>
                                                   </AccordionSummary>
@@ -609,7 +608,7 @@ export default function SearchAccordion(props) {
                                                                   <DatePicker
 
                                                                       error={false}
-                                                                      sx={{borderRadius: '20px'}}
+                                                                      sx={{borderRadius: '20px', flex: 2}}
                                                                       onChange={(newDate) => {
                                                                           if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
                                                                               form.getFieldState('birdDate').change(newDate)
@@ -626,14 +625,12 @@ export default function SearchAccordion(props) {
                                                                           const {
                                                                               disabled,
                                                                               onChange,
-                                                                              placeholder,
                                                                               readOnly,
                                                                               type,
                                                                               value
                                                                           } = inputProps
 
-                                                                          return <>
-                                                                              <TextField
+                                                                          return <TextField
                                                                                   label="Date de naissance"
                                                                                   ref={inputRef}
                                                                                   disabled={disabled}
@@ -641,18 +638,18 @@ export default function SearchAccordion(props) {
                                                                                       form.getFieldState('birdDate').change(event.target.value)
                                                                                       onChange(event)
                                                                                   }}
-                                                                                  placeholder={placeholder}
+                                                                                  placeholder={'jj/mm/aaaa'}
                                                                                   readOnly={readOnly}
                                                                                   type={type}
                                                                                   value={value}
-                                                                                  className="RoundDate"
+                                                                                  style={{width: '100%'}}
                                                                                   InputProps={{
                                                                                       endAdornment: (
                                                                                           <InputAdornment position="end">
                                                                                               {InputProps?.endAdornment}
                                                                                           </InputAdornment>)
                                                                                   }}/>
-                                                                          </>
+
                                                                       }}
                                                                   />
                                                               </div>
@@ -666,7 +663,7 @@ export default function SearchAccordion(props) {
 
                                               </Accordion>
 
-                                              <Accordion expanded={expanded.panelInfoOMC} onChange={handleChange('panelNIR')}>
+                                              <Accordion expanded={expanded.panelNIR} onChange={handleChange('panelNIR')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                       <Typography style={{marginLeft: '5px'}}><b>Recherche par NIR</b></Typography>
                                                   </AccordionSummary>

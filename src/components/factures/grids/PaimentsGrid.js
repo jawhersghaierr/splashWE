@@ -16,7 +16,7 @@ export const PaimentsGrid = ({numFac}) => {
         <DataGrid
             rows={data?.elements || []}
             columns={columns()}
-            pageSize={10}
+            pageSize={20}
             autoHeight
             disableColumnResize={false}
             components={{

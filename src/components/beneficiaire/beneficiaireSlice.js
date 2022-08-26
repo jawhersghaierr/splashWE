@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     pagination: {
         page: 0,
-        size: 10,
+        size: 20,
         totElements: null,
         totPages: null,
         sortDirection: 'ASC',
@@ -13,10 +13,10 @@ const initialState = {
         birdDate: null,
         prenom: undefined,
         nom: undefined,
-        numAdherentIndividuel: undefined,
+        numeroAdherent: undefined,
         dateDeNaissance: null,
         numAdherentFamillial: undefined,
-        enviroment: undefined,
+        envCodeList: undefined,
         dateDebutSoins: null,
         dateFinSoins: null
     }
@@ -60,7 +60,7 @@ export const beneficiaireSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins
+                birdDate, prenom, nom, numeroAdherent, dateDeNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins
             } = action?.payload
 
             state.criterias = {...initialState.criterias};
@@ -69,11 +69,11 @@ export const beneficiaireSlice = createSlice({
 
             state.criterias.prenom = prenom;
             state.criterias.nom = nom;
-            state.criterias.numAdherentIndividuel = numAdherentIndividuel;
+            state.criterias.numeroAdherent = numeroAdherent;
             state.criterias.birdDate = birdDate;
             state.criterias.dateDeNaissance = dateDeNaissance;
             state.criterias.numAdherentFamillial = numAdherentFamillial;
-            state.criterias.enviroment = enviroment;
+            state.criterias.envCodeList = envCodeList;
             state.criterias.dateDebutSoins = dateDebutSoins;
             state.criterias.dateFinSoins = dateFinSoins;
 

@@ -25,6 +25,8 @@ export const FacturesGrid = ({disciplines}) => {
         sortProperty: null
     });
 
+    const size = 20;
+
     const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
@@ -51,13 +53,13 @@ export const FacturesGrid = ({disciplines}) => {
         {(data && data?.results) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage*10 : 10)} sur {data.totalElements} résultats
+                    {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
                 </Typography>
             </div>
             <DataGrid
                 rows={data?.results || []}
                 columns={columns()}
-                pageSize={10}
+                pageSize={size}
                 autoHeight
                 hideFooter={true}
                 disableColumnResize={false}

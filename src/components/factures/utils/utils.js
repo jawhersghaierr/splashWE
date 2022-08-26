@@ -102,9 +102,9 @@ export const checkInsidePanels = (values) => {
         nir,
         cle} = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: false,
-        panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: false,
-        panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: false,
+        panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: true,
+        panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: true,
+        panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     console.log(result)

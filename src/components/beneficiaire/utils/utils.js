@@ -23,12 +23,12 @@ const mustBeNumber = value => {
 }
 
 const minValue = min => value => {
-    let result = (value === undefined || value.toString().length >= min) ? undefined : `minimum ${min} caractères`
+    let result = (value === undefined || value.toString().length >= min) ? undefined : `Minimum ${min} caractères`
     return result;
 }
 
 const maxValue = max => value => {
-    let result = (value === undefined || value.toString().length < max) ? undefined : `maximum ${max-1} caractères`
+    let result = (value === undefined || value.toString().length < max) ? undefined : `Maximum ${max-1} caractères`
     return result;
 }
 
@@ -43,8 +43,8 @@ export const validators = {
 
 
 export const checker = (values) => {
-    const {birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins} = values || {};
-    if(birdDate || prenom || nom || numAdherentIndividuel || dateDeNaissance || numAdherentFamillial || enviroment || dateDebutSoins || dateFinSoins) {
+    const {birdDate, prenom, nom, numeroAdherent, dateDeNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins} = values || {};
+    if(birdDate || prenom || nom || numeroAdherent || dateDeNaissance || numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins) {
         return true
     } else {
         return false
@@ -53,10 +53,10 @@ export const checker = (values) => {
 
 export const checkInsidePanels = (values) => {
 
-    const {birdDate, prenom, nom, numAdherentIndividuel, dateDeNaissance, numAdherentFamillial, enviroment, dateDebutSoins, dateFinSoins} = values || {};
+    const {birdDate, prenom, nom, numeroAdherent, dateDeNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins} = values || {};
     let result =  {
         panelBeneficiaires: (dateDeNaissance || birdDate)? true: false,
-        panelInfoOMC: (numAdherentFamillial || enviroment || dateDebutSoins || dateFinSoins)? true: false,
+        panelInfoOMC: (numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins)? true: false,
     }
     console.log(result)
     return result

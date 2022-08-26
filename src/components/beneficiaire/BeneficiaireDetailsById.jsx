@@ -13,6 +13,8 @@ import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
 import {benefStatuses, convertDate, dateConvertNaissance} from "./utils/utils";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import {usePrevious} from "../factures/utils/utils";
+import {useEffect} from "react";
 
 
 
@@ -65,6 +67,14 @@ export default function BeneficiaireDetailsById(props) {
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
+    const prevId = usePrevious(match?.params?.id)
+    useEffect(() => {
+
+        if (prevId !== match?.params?.id ) {
+            setValue(0)
+        }
+
+    }, [prevId, match]);
     const {data = null} = useGetBenefByIdQuery(match?.params?.id);
     const {data: nomEnviroments} = useGetEnvironmentsQuery();
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
@@ -76,9 +86,6 @@ export default function BeneficiaireDetailsById(props) {
     let adress, dateFin, telephone, email, garanties, garantiesComplex;
 
     if (data) {
-
-        // birdDate instanceof Date && !isNaN(birdDate)
-        // data?.dateOuvertureDroits} > ${data?.dateDesactivationDroits
 
         let {adresse, dateFermetureDroits, dateDesactivationDroits, } = data;
         dateFermetureDroits = dateFermetureDroits && new Date(dateFermetureDroits) || null;
@@ -268,7 +275,7 @@ export default function BeneficiaireDetailsById(props) {
                         <DoritInfoBox droit={data?.ouvrantDroit} />
                         {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => {
                             if (ouvrantDroit.id !== data.id) {
-                                return <DoritInfoBox droit={ouvrantDroit} key={ouvrantDroit.id}/>
+                                return <DoritInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
                             } else return ''
                         })}
                     </div> :

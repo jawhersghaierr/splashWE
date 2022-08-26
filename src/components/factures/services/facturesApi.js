@@ -30,7 +30,7 @@ export const facturesApi = createApi({
                     sortProperty,
                 } = sortProperties;
 
-                const size = 10;
+                const size = 20;
 
                 let url = `factures?pageNumber=${currentPage}&pageSize=${size}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
@@ -56,7 +56,7 @@ export const facturesApi = createApi({
         getBankaccountps: builder.query({
             query: (
                 page = 0,
-                size = 10,
+                size = 20,
                 sortDirection = 'ASC',
                 sortProperty,
                     ...rest
@@ -82,7 +82,7 @@ export const facturesApi = createApi({
                     sortProperty,
                 } = sortProperties;
 
-                const size = 10;
+                const size = 20;
                 let url = `ets?page=${currentPage}&size=${size}`;
 
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;

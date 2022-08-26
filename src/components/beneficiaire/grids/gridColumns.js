@@ -8,7 +8,7 @@ import {benefStatuses, convertDate, dateConvertNaissance} from '../utils/utils'
 export const columns = enviroments => [
     { field: 'numeroAdherentFamilial', headerName: '№ Adhérent Familial', flex: 2 },
     { field: 'numeroAdherentIndividuel', headerName: '№ Adhérent Individuel', flex: 2 },
-    { field: 'ayantDroit', headerName: 'Nom bénéficiaire et lien Famillial', flex: 4, sortable: false,
+    { field: 'nom', headerName: 'Nom bénéficiaire et lien Famillial', flex: 4,
         renderCell: (params) => {
             return (<div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
                 <span><b>{params.row.nom}</b> {params.row.prenom}</span>
