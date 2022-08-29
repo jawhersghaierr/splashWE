@@ -151,34 +151,49 @@ export default function SearchAccordion(props) {
 
                                               <Field name="dateDeReference">
                                                   {({ input:{onChange, value}, meta }) => (
-                                                      <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
+                                                      <FormControl style={{ flex: '1 0 21%'}} className={"RoundHeaderDate"}>
                                                           <DatePicker
-                                                              label={'Date de reference'}
                                                               inputFormat="dd/MM/yyyy"
                                                               onChange={(newDate) => {
 
                                                                   if (isValidDate(newDate)) {
                                                                       onChange(newDate)
                                                                   } else {
-                                                                      onChange('null')
+                                                                      // meta.setValue({error: 'invalid date'})
+                                                                      // onChange('null')
                                                                   }
                                                               }}
                                                               value={(value === '' || value == undefined)? null: value}
                                                               renderInput={(params) =>
-                                                                  <TextField {...params} style={{flex: 2}}/>}
+                                                                  <div style={{flex: 2, marginRight: '20px'}}>
+                                                                      <TextField
+                                                                          id="Libelle"
+                                                                          variant="standard"
+                                                                          error={meta.invalid}
+                                                                          {...{...params, inputProps: {...params.inputProps, placeholder : "Date de reference"}, InputProps: {...params.InputProps, disableUnderline: true} } }
+                                                                          placeholder={'Libelle'}
+                                                                          sx={{width: '100%'}}
+                                                                          className="RoundedEl"
+                                                                      />
+                                                                      {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                                                  </div>}
                                                           />
                                                       </FormControl>
                                                   )}
                                               </Field>
 
 
-                                              <div style={{width: 150, display: 'flex'}}>
-                                                  {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
-                                                      <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
+                                              {props?.code == 'control' && <div style={{width: 150, display: 'flex'}}>
+                                                  {!panelExpanded &&
+                                                  <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
+                                                      <Badge color="secondary" variant="dot"
+                                                             invisible={!dotShow}><AddCircleIcon/></Badge>
                                                   </IconButton>}
-                                                  {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                                  <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
-                                              </div>
+                                                  {panelExpanded && <IconButton
+                                                      onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
+                                                  <Typography component="div"
+                                                              className='verticalTxt'><b>Critères</b></Typography>
+                                              </div>}
                                               <Button
                                                   variant="contained"
                                                   type="submit"
@@ -192,7 +207,51 @@ export default function SearchAccordion(props) {
                                       <CardContent sx={{ display: 'block', border: 0, padding: 0}}> </CardContent>
 
                                       <Collapse in={panelExpanded} timeout="auto">
-                                          <CardActions sx={{ display: 'block'}} >
+                                          <CardActions sx={{ display: 'flex', flexDirection: 'row'}} >
+
+
+
+
+                                              <Field name="enviroment"  validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                  {({ input, meta }) => (
+                                                      <div>
+                                                          <TextField
+                                                              id="Enviroment"
+                                                              sx={{width: 360}}
+
+                                                              label="Enviroment"
+                                                              variant="outlined"
+                                                              error={meta.invalid}
+                                                              {...input}
+                                                              className="RoundedEl"
+                                                          />
+                                                          {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                                      </div>
+                                                  )}
+                                              </Field>
+
+                                              <Field name="provanance"  validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                  {({ input, meta }) => (
+                                                      <div>
+                                                          <TextField
+                                                              id="Provanance"
+                                                              sx={{width: 360}}
+
+                                                              label="Provanance"
+                                                              variant="outlined"
+                                                              error={meta.invalid}
+                                                              {...input}
+                                                              className="RoundedEl"
+                                                          />
+                                                          {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                                      </div>
+                                                  )}
+                                              </Field>
+
+
+
+
+
 
 
 
@@ -225,34 +284,13 @@ export default function SearchAccordion(props) {
                                   {<FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numFact,
-                                          numEng,
-                                          numAdh,
-                                          domaine,
-                                          dateDeSoins,
-                                          dateReceivedStart,
-                                          dateReceivedEnd,
-                                          idPeriodeFact,
-                                          dateFact,
-                                          status,
-                                          errorCode,
-                                          numId,
-                                          numJur,
-                                          raisonSociale,
-                                          department,
-                                          numClient,
-                                          nom,
-                                          prenom,
-                                          dateDeNaissance,
-                                          birdDate,
-                                          nir,
-                                          cle
+                                          libelle,
+                                          dateDeReference,
+
                                       } = values?.values;
 
                                       if(
-                                          domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-                                          birdDate || nir || cle
+                                          libelle || dateDeReference
                                       ) {
                                           setDotShow(true)
                                       } else {

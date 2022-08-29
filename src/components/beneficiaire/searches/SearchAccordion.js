@@ -156,7 +156,7 @@ export default function SearchAccordion(props) {
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                            <Field name="nom" validate={validators.composeValidators(validators.maxValue(50))}>
+                            <Field name="nom" validate={validators.composeValidators(validators.maxValue(51))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
@@ -174,7 +174,7 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="prenom" validate={validators.composeValidators(validators.maxValue(50))}>
+                            <Field name="prenom" validate={validators.composeValidators(validators.maxValue(51))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
                                         <TextField
@@ -192,7 +192,7 @@ export default function SearchAccordion(props) {
                                 )}
                             </Field>
 
-                            <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(15))}>
+                            <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(16))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2}}>
                                         <TextField
@@ -235,7 +235,7 @@ export default function SearchAccordion(props) {
 
                             <Accordion expanded={expanded.panelBeneficiaires} onChange={handleChange('panelBeneficiaires')}>
                                 <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
-                                    <Typography><b>Information beneficiaires</b></Typography>
+                                    <Typography><b>Information bénéficiaires</b></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
 

@@ -26,7 +26,7 @@ export const columns = enviroments => [
                 {params.row.environmentCode}
             </>)
         }},
-    { field: 'dateMiseaJour', headerName: 'Date de Mise à jour', flex: 2, renderCell: (params) => {
+    { field: 'timestamp', headerName: 'Date de Mise à jour', flex: 2, renderCell: (params) => {
             return (<>
                 {convertDate(params.row.dateMiseaJour)}
             </>)

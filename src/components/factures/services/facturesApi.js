@@ -38,7 +38,7 @@ export const facturesApi = createApi({
 
                 if(criterias) {
                     Object.keys(criterias).forEach(key=>{
-                        if (criterias[key] !== null && criterias[key] !== undefined && criterias[key] !== '') {
+                        if (criterias[key] && criterias[key] !== 'null' && criterias[key] !== undefined && criterias[key] !== '') {
                             url += `&${key}=${criterias[key]}`;
                         }
                     })
@@ -52,57 +52,6 @@ export const facturesApi = createApi({
                 })
 
             }
-        }),
-        getBankaccountps: builder.query({
-            query: (
-                page = 0,
-                size = 20,
-                sortDirection = 'ASC',
-                sortProperty,
-                    ...rest
-            ) => ({
-                url: `bankaccountps?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
-                    return JSON.parse(response);
-            }}),
-        }),
-        getEts: builder.query({
-            query: ({currentPage, criterias, sortProperties}) => {
-                const {
-                    numPartenaire,
-                    raisonSociale,
-                    disciplines,
-                    codePostal,
-                    ville,
-                    statutRibs,
-                } = criterias;
-
-                const {
-                    sortDirection,
-                    sortProperty,
-                } = sortProperties;
-
-                const size = 20;
-                let url = `ets?page=${currentPage}&size=${size}`;
-
-                if (sortDirection) url += `&sortDirection=${sortDirection}`;
-                if (sortProperty) url += `&sortProperty=${sortProperty}`;
-                if (numPartenaire) url += `&numPartenaire=${numPartenaire}`;
-                if (raisonSociale) url += `&raisonSociale=${raisonSociale}`;
-                if (disciplines) url += `&disciplines=${disciplines}`;
-                if (codePostal) url += `&codePostal=${codePostal}`;
-                if (ville) url += `&ville=${ville}`;
-                if (statutRibs) url += `&statutRibs=${statutRibs}`;
-
-                console.log('params to be send > ', url);
-
-                return ({
-                    url,
-                    transformResponse: (response, meta, arg) => {
-                        return {...JSON.parse(response)};
-                    }
-                })
-            },
         }),
 
         getFactureById: builder.query({

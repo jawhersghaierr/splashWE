@@ -17,3 +17,18 @@
   font-size: medium;
 }
 
+.RoundHeaderDate {
+  & .MuiInputBase-root, .MuiOutlinedInput-root {
+    border-radius: 20px;
+  }
+  & .MuiInputBase-input, .MuiOutlinedInput-input {
+    //padding: 10px 14px;
+  }
+  & .MuiButtonBase-root, .MuiIconButton-root {
+    background-color: #003154;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  label {
+    top: -6px;
+  }
+}

@@ -1,35 +1,57 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
-import {ConfigutationGrid} from "./grids/ConfigutationGrid";
+import {GridConfigutation} from "./grids/GridConfigutation";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
 
 import './configuration.scss'
 import {matchPath} from "react-router-dom";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 
-export const Configuration = (props) => {
 
-    const match = matchPath(props?.location?.pathname, {
-        path: "/configuration/:id",
-        exact: true,
-        strict: false
-    });
 
-    const {data} = useGetConfigsQuery();
+export const Configuration = ({config}) => {
+    const [error, setError] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [items, setItems] = useState([]);
 
-    console.log('data > ', data)
+    useEffect(() => {
+        fetch(config?.url)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setIsLoaded(true);
+                    setItems(result);
+                },
+                (error) => {
+                    setIsLoaded(true);
+                    setError(error);
+                }
+            )
+    }, [config])
 
-    return <div style={{padding: '0', margin: 0}}>
-        <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>Configuration</b> &nbsp;
-            {match?.params?.id}
-        </Typography>
-        <SearchAccordion className="searchContainer" />
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+        return <div>Loading...</div>;
+    } else {
+        return (<>
 
-        {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
+            <SearchAccordion code={config?.code} />
 
-        <ConfigutationGrid/>
+            {items && <GridConfigutation data={items}/>}
+            <div style={{minHeight: '200px', background: 'white', padding: '15px', maxWidth: '600px', margin: '15px'}}>
 
-    </div>
+                {items && <pre style={{
+                    whiteSpace: 'pre-wrap',
+                    overflowWrap: 'break-word',
+                    background: 'white',
+                    margin: 0,
+                    padding: 0
+                }}>
+                    {JSON.stringify(items)}
+                </pre>}
+            </div>
+        </>);
+    }
 }

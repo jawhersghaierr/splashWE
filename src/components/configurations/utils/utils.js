@@ -45,31 +45,10 @@ export const validators = {
 
 export const checker = (values) => {
     const {
-        numFact,
-        numEng,
-        numAdh,
-        domaine,
-        dateDeSoins,
-        dateReceivedStart,
-        dateReceivedEnd,
-        idPeriodeFact,
-        dateFact,
-        status,
-        errorCode,
-        numId,
-        numJur,
-        raisonSociale,
-        department,
-        numClient,
-        nom,
-        prenom,
-        dateDeNaissance,
-        birdDate,
-        nir,
-        cle} = values || {};
-    if(domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-        errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-        birdDate || nir || cle) {
+        libelle,
+        dateDeReference,
+    } = values || {};
+    if( libelle || dateDeReference) {
         return true
     } else {
         return false
@@ -79,33 +58,12 @@ export const checker = (values) => {
 export const checkInsidePanels = (values) => {
 
     const {
-        numFact,
-        numEng,
-        numAdh,
-        domaine,
-        dateDeSoins,
-        dateReceivedStart,
-        dateReceivedEnd,
-        idPeriodeFact,
-        dateFact,
-        status,
-        errorCode,
-        numId,
-        numJur,
-        raisonSociale,
-        department,
-        numClient,
-        nom,
-        prenom,
-        dateDeNaissance,
-        birdDate,
-        nir,
-        cle} = values || {};
+        libelle,
+        dateDeReference,
+    } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: false,
-        panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: false,
-        panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: false,
-        panelNIR: (nir || cle)? true: false,
+        panelInformationGenerales: (libelle || dateDeReference)? true: false,
+        panelNIR: (true)? true: false,
     }
     console.log(result)
     return result

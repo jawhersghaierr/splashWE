@@ -1,10 +1,19 @@
 import {useEffect, useRef} from "react";
 import {statusesRIB} from "../../ps/utils/utils";
 
-export const benefStatuses = {
+export const facturesStatus = {
     Valide: {label: 'Valide', color: '#C7F99F'},
     Radié: {label: 'Radié', color: '#FFA3A3'},
     Suspendu: {label: 'Suspendu', color: '#FFD4AD'},
+
+    ANNULEE: {label: "Annulée",color: '#FFA3A3'},
+    A_RECYCLER: {label: "A recycler", color: '#FFD4AD'},
+    BAP: {label: "Bon à payer", color: '#C7F99F'},
+    EN_ATTENTE: {label: "En attente", color: '#FFD4AD'},
+    PAYEE: {label: "Payee", color: '#C7F99F'},
+    PENDING: {label: "En cours", color: '#FFD4AD'},
+    REJETEE: {label: "Rejetée", color: '#FFA3A3'},
+    REMBOURSEE: {label: "Remboursee", color: '#C7F99F'}
 }
 
 
@@ -67,7 +76,7 @@ export const checker = (values) => {
         birdDate,
         nir,
         cle} = values || {};
-    if(domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
+    if(numFact || numEng || numAdh || domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
         errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
         birdDate || nir || cle) {
         return true
@@ -130,8 +139,16 @@ export const isValidDate = (d) => {
 }
 
 export const dateConvertNaissance = (dat) => {
+    let pattern = /^(\d{4})(\d{2})(\d{2})/i;
+    let match = pattern.exec(dat);
+    let ssn = {}
+    ssn.year = match[1];
+    ssn.month = match[2];
+    ssn.day = match[3];
+
     if (dat && dat !== undefined && dat !== '') {
-        return dat?.split('-').reverse().join('/')
+        let {year, month, day} = ssn;
+        return `${day}/${month}/${year}`
     } else {
         return '';
     }
@@ -139,7 +156,7 @@ export const dateConvertNaissance = (dat) => {
 
 export const convertDate = (dat) => {
     if (dat && dat !== undefined && dat !== '') {
-        return new Date(dat).toLocaleDateString('en-GB');
+        return new Date(dat).toLocaleDateString('fr');
     } else {
         return '';
     }
@@ -169,3 +186,83 @@ export const statusRow = (formattedValue) => {
 
     return res;
 }
+
+
+export const calcCleFromNir = (values) => {
+    let ssn = {};
+    ssn.cle = null
+
+    let cle = null;
+    let {nir} = values
+
+    if (nir?.length > 13) {
+        console.log('invalid number')
+    }
+
+    // let pattern = /^([1278])(\d{2})(0[1-9]|1[0-2]|20)(\d{2}|2[AB])(\d{3})(\d{3})(\d{2})/i;
+    let pattern = /^([1278])(\d{2})(0[1-9]|1[0-2]|20)(\d{2}|2[AB])(\d{3})(\d{3})/i;
+    let match = pattern.exec(nir);
+    let valid = false
+
+    if (match && !ssn.cle ) {
+
+        ssn.gender = match[1]
+        ssn.year = match[2];
+        ssn.month = match[3];
+        ssn.department = match[4];
+        ssn.city = match[5];
+        ssn.certificate = match[6];
+        ssn.key = match[7];
+
+        if (ssn.certificate == '000' || ssn.key * 1 > 97) {
+            console.log('invalid certificate')
+            return null
+        }
+
+        if (ssn.department == '2A') {
+            ssn.department = '19';
+        } else if (ssn.department == '2B') {
+            ssn.department = '18'
+        } else if (ssn.department == '97') {
+            ssn.department += ssn.city[0];
+            if (ssn.department * 1 < 970 || ssn.department * 1 >= 989) {
+                console.log('invalid department');
+                return null
+            }
+            ssn.city = ssn.city.substring(1);
+            if (ssn.city * 1 < 1 || ssn.city * 1 > 90) {
+                console.log('invalid city');
+                return null
+            }
+        } else if (ssn.city * 1 < 1 || ssn.city * 1 > 990) {
+            console.log('invalid city');
+            return null
+        }
+
+        let insee = ssn.gender +
+            ssn.year + ssn.month +
+            ssn.department.replace('A', '0').replace('B', '0') +
+            ssn.city + ssn.certificate;
+
+        cle = 97 - (insee * 1) % 97;
+        if (cle < 9) cle = '0' + cle;
+
+        console.log('ssn: ', ssn)
+        console.log('cle = ', cle);
+
+        valid = true;
+        return cle
+        // form.getFieldState('cle').change(cle)
+        // 27 41 14 75 66 941
+
+    }else {
+        console.log('not match')
+        return null
+    }
+
+}
+
+export const currencyFormatter = new Intl.NumberFormat('fr', {
+    style: 'currency',
+    currency: 'EUR',
+});

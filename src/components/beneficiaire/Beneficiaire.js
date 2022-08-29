@@ -19,7 +19,7 @@ export const Beneficiaire = (props) => {
 
     return <div style={{padding: '0', margin: 0}}>
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>Beneficiaire</b> &nbsp;
+            <b>Bénéficiaire</b> &nbsp;
             {match?.params?.id}
         </Typography>
         <SearchAccordion

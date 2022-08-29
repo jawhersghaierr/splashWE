@@ -154,7 +154,7 @@ export default function BeneficiaireDetailsById(props) {
                 <Tab label={"Contrat"}  {...a11yProps(1)} />
                 <Tab label="Carte et couvertures"  {...a11yProps(2)}/>
                 <Tab label="Autres beneficiares"  {...a11yProps(3)}/>
-                <Tab label="Historique" {...a11yProps(4)} />
+                <Tab label="Historique" {...a11yProps(4)}/>
             </Tabs>
 
             <TabPanel value={value} index={0} data={data} sx={{display: 'flex', flexDirection: 'row'}}>

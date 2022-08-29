@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {statusRow} from "./utils/utils";
+import {facturesStatus, statusRow} from "./utils/utils";
 import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
@@ -86,7 +86,7 @@ export default function FacturesDetailsById(props) {
                 {data?.numFact}
             </Typography>
 
-            <Chip label={data?.status} sx={{color: 'black', margin: '15px 0 0 0'}}/>
+            <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
@@ -126,6 +126,7 @@ export default function FacturesDetailsById(props) {
                 <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
                 <Tab label="Paiements" {...a11yProps(3)} />
+                <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
             </Tabs>
 
             <TabPanel value={value} index={0} data={data}>
@@ -166,6 +167,10 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
                 {data?.numFact && <PaimentsGrid numFac={data.numFact}/>}
+            </TabPanel>
+
+            <TabPanel value={value} index={4} data={data}>
+                <div>here will become flux</div>
             </TabPanel>
 
         </Box>
