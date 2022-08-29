@@ -15,6 +15,7 @@ import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
+import {FluxInfo} from "./components/FluxInfo";
 
 
 
@@ -170,7 +171,8 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
-                <div>here will become flux</div>
+
+                { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
             </TabPanel>
 
         </Box>
