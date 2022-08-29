@@ -347,7 +347,7 @@ export default function SearchAccordion(props) {
                                             // <div className={"RoundDate"}>
                                                 <FormControl className="RoundDate">
                                                     <DatePicker
-                                                        label="Date de reference du"
+                                                        label="Date de référence du"
                                                         inputFormat="dd/MM/yyyy"
                                                         onChange={(newDate) => {
 
