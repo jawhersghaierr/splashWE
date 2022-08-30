@@ -12,7 +12,7 @@ export const RowInfo = ({value, label, chip = null, justify=false, border=false}
             { color: '#003154', padding: '5px 0' }}>
 
             <span>{label}&nbsp;:&nbsp;</span>
-            <b>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
+            <b>{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}&nbsp;{value}</b>
         </Typography>
     </div>
 }

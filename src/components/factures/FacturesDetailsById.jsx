@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {facturesStatus, statusRow} from "./utils/utils";
+import {convertDate, dateConvertNaissance, facturesStatus, statusRow} from "./utils/utils";
 import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
@@ -92,22 +92,22 @@ export default function FacturesDetailsById(props) {
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
                     <RowInfo label={'Date d\'admission'} value={data?.factData?.dateEntree}/>
-                    <RowInfo label={'Beneficiaire'} value={(data?.ben)?
+                    <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
                         <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
                         <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
-                    <RowInfo label={'Enviroment'} value={data?.numEnv}/>
-                    <RowInfo label={'Date de creation'} value={data?.factTransData?.receivedDate}/>
+                    <RowInfo label={'Environnement'} value={data?.numEnv}/>
+                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'FINESS Géographique'} value={data?.ps?.numId}/>
-                    <RowInfo label={'Nº Adherant'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
+                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
+                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
                     <RowInfo label={'AMC'} value={data?.numClient}/>
-                    <RowInfo label={'Derniere modification'} value={data?.timestamp}/>
+                    <RowInfo label={'Dernière modification'} value={data?.timestamp}/>
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
                     <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
-                    <RowInfo label={'Rang et date de naissance'}
-                             value={(data?.ben)? data?.ben?.dateNai : data?.benInputData?.dateNai}
+                    <RowInfo label={'Date de naissance et rang'}
+                             value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
                              chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
                     />
                     <RowInfo label={'Montant RC'} value={`${data?.totalRc} €`}/>
@@ -142,16 +142,16 @@ export default function FacturesDetailsById(props) {
                     </Typography>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'angagemant'} value={data?.factData.numEng} border={true} justify={true}/>
-                            <RowInfo label={'Date de reception'} value={data?.factTransData?.receivedDate} border={true} justify={true}/>
+                            <RowInfo label={'Nº d\'engagement'} value={data?.factData.numEng} border={true} justify={true}/>
+                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
                             <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
-                            <RowInfo label={'Motif de reje'} value={data?.errorLabel} border={true} justify={true}/>
+                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
                         </div>
                         <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={data?.factData.dateFact} border={true} justify={true}/>
-                            <RowInfo label={'ID periode de facturation - Nº d\'occurance'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
-                            <RowInfo label={'Date accident de travai'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
-                            <RowInfo label={'Message de reje'} value={data?.comment} border={true} justify={true}/>
+                            <RowInfo label={'Date facture'} value={convertDate(data?.factData.dateFact)} border={true} justify={true}/>
+                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
+                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
+                            <RowInfo label={'Message de rejet'} value={data?.comment} border={true} justify={true}/>
                         </div>
                     </div>
 

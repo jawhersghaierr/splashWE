@@ -139,9 +139,12 @@ export const isValidDate = (d) => {
 }
 
 export const dateConvertNaissance = (dat) => {
+    if (dat == undefined) return ''
+
     let pattern = /^(\d{4})(\d{2})(\d{2})/i;
     let match = pattern.exec(dat);
     let ssn = {}
+
     ssn.year = match[1];
     ssn.month = match[2];
     ssn.day = match[3];

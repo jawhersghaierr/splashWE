@@ -189,7 +189,7 @@ export default function SearchAccordion(props) {
                                                                       variant="standard"
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      placeholder={'Nº Facture'}
+                                                                      placeholder={'Nº facture'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
@@ -226,7 +226,7 @@ export default function SearchAccordion(props) {
                                                                       variant="standard"
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      placeholder={'Nº Adhérent'}
+                                                                      placeholder={'Nº adhérent'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
@@ -260,7 +260,7 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationGenerales} onChange={handleChange('panelInformationGenerales')}>
                                                   <AccordionSummary aria-controls="panelInformationGenerales-content" id="panelInformationGenerales-header">
-                                                      <Typography><b>Information generales</b></Typography>
+                                                      <Typography><b>Informations générales</b></Typography>
                                                   </AccordionSummary>
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -291,8 +291,31 @@ export default function SearchAccordion(props) {
                                                       <Field name="dateDeSoins">
                                                           {({ input:{onChange, value}, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <DateTimePicker
+                                                                  <DatePicker
                                                                       label={'Date d\'admission / Date de soins '}
+                                                                      inputFormat="dd/MM/yyyy"
+                                                                      onChange={(newDate) => {
+
+                                                                          if (isValidDate(newDate)) {
+                                                                              onChange(newDate)
+                                                                          } else {
+                                                                              onChange('null')
+                                                                          }
+                                                                      }}
+                                                                      value={(value === '' || value == undefined)? null: value}
+                                                                      renderInput={(params) =>
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                                  />
+                                                              </FormControl>
+                                                          )}
+                                                      </Field>
+
+                                                      <Field name="dateReceivedStart">
+                                                          {({ input:{onChange, value}, meta }) => (
+                                                              // <div className={"RoundDate"}>
+                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
+                                                                  <DateTimePicker
+                                                                      label={'Réceptionné du'}
                                                                       inputFormat="dd/MM/yyyy HH:mm"
                                                                       onChange={(newDate) => {
 
@@ -310,36 +333,13 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedStart">
-                                                          {({ input:{onChange, value}, meta }) => (
-                                                              // <div className={"RoundDate"}>
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <DatePicker
-                                                                      label={'Receptionne du'}
-                                                                      inputFormat="dd/MM/yyyy"
-                                                                      onChange={(newDate) => {
-
-                                                                          if (isValidDate(newDate)) {
-                                                                              onChange(newDate)
-                                                                          } else {
-                                                                              onChange('null')
-                                                                          }
-                                                                      }}
-                                                                      value={(value === '' || value == undefined)? null: value}
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
-                                                                  />
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>
-
                                                       <Field name="dateReceivedEnd">
                                                           {({ input:{onChange, value}, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <DatePicker
+                                                                  <DateTimePicker
                                                                       label={'au '}
-                                                                      inputFormat="dd/MM/yyyy"
+                                                                      inputFormat="dd/MM/yyyy HH:mm"
                                                                       onChange={(newDate) => {
 
                                                                           if (isValidDate(newDate)) {
@@ -350,7 +350,7 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -361,7 +361,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="IdPeriodeFact"
-                                                                      label={'Id periode de facturation/N d\'ocurance'}
+                                                                      label={'ID période de facturation / Nº d\'occurrence'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -472,7 +472,7 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationsEstablishement} onChange={handleChange('panelInformationsEstablishement')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                                      <Typography style={{marginLeft: '5px'}}><b>Informations establishement</b></Typography>
+                                                      <Typography style={{marginLeft: '5px'}}><b>Informations établissement</b></Typography>
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
@@ -481,7 +481,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="FINESSgeographique"
-                                                                      label={'FINESS geographique'}
+                                                                      label={'FINESS géographique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -497,7 +497,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="FINESSJuridique"
-                                                                      label={'FINESS Juridique'}
+                                                                      label={'FINESS juridique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -513,7 +513,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="RaisonSociale"
-                                                                      label={'Raison Sociale'}
+                                                                      label={'Raison sociale'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -529,7 +529,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="Department"
-                                                                      label={'Nº Departement'}
+                                                                      label={'Nº département'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -546,7 +546,7 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationsBeneficiaires} onChange={handleChange('panelInformationsBeneficiaires')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                                      <Typography style={{marginLeft: '5px'}}><b>Informations beneficiaires</b></Typography>
+                                                      <Typography style={{marginLeft: '5px'}}><b>Informations bénéficiaires</b></Typography>
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
@@ -554,7 +554,7 @@ export default function SearchAccordion(props) {
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="NumClient-label">Clients</InputLabel>
+                                                                  <InputLabel id="NumClient-label">AMC</InputLabel>
                                                                   <Select
                                                                       id="NumClient"
                                                                       labelId="NumClient-label"
@@ -564,7 +564,7 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Client sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} AMC sélectionnés`
                                                                           return selected[0];
                                                                       }}>
 
@@ -606,7 +606,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="Prenom"
-                                                                      label={'Prenom'}
+                                                                      label={'Prénom'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -684,7 +684,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'start'}}>
 
-                                                      <Field name="nir" validate={validators.composeValidators(validators.maxValue(14))}>
+                                                      <Field name="nir" validate={validators.composeValidators(validators.minValue(13),validators.maxValue(14))}>
                                                           {({ input, meta }) => {
 
                                                               return (
@@ -723,7 +723,7 @@ export default function SearchAccordion(props) {
                                                                   }}>
                                                                       <TextField
                                                                           id="Cle"
-                                                                          label={'Cle'}
+                                                                          label={'Clé'}
                                                                           disabled={disableCle}
                                                                           variant="outlined"
                                                                           // error={meta.invalid}
