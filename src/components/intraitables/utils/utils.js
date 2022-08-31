@@ -71,17 +71,10 @@ export const isValidDate = (d) => {
     }
 }
 
-export const dateConvertNaissance = (dat) => {
-    if (dat && dat !== undefined && dat !== '') {
-        return dat?.split('-').reverse().join('/')
-    } else {
-        return '';
-    }
-}
 
 export const convertDate = (dat) => {
     if (dat && dat !== undefined && dat !== '') {
-        return new Date(dat).toLocaleDateString('en-GB');
+        return new Date(dat).toLocaleDateString('fr');
     } else {
         return '';
     }

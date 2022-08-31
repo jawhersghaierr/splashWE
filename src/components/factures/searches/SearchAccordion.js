@@ -31,6 +31,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
+
 import {
     validators,
     checker,
@@ -49,6 +50,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
 import InputAdornment from '@mui/material/InputAdornment';
 import {useGetRefsQuery} from "../../../services/refsApi";
+import {IMaskPhoneInput, TextMaskCustom} from "../components/TextMaskCustom";
+import {ConfirmNir} from "../components/ConfirmNir";
 
 
 const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0} square {...props} /> ) )
@@ -108,11 +111,17 @@ export default function SearchAccordion(props) {
     });
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
+    const [openNIRDialog, setOpenNIRDialog] = useState(false);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded({...expanded, [panel]: newExpanded});
+
+        if (panel == 'panelNIR' && !expanded.panelNIR) {
+            setOpenNIRDialog(true);
+        } else {
+            setExpanded({...expanded, [panel]: newExpanded});
+        }
     };
 
     const handleAccordionPanel = () => (event) => {
@@ -191,13 +200,21 @@ export default function SearchAccordion(props) {
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
                                                                       id="NumFact"
+                                                                      type={'number'}
                                                                       variant="standard"
                                                                       error={meta.invalid}
-                                                                      {...input}
                                                                       placeholder={'Nº facture'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
+                                                                      {...{
+                                                                          ...input,
+                                                                          inputProps: {
+                                                                              ...input.inputProps,
+                                                                              // step : 0.01,
+                                                                              lang: 'fr'
+                                                                          }
+                                                                      }}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </div>
@@ -363,14 +380,16 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22), validators.maxValue(23))}>
                                                           {({ input, meta }) => (
-                                                              <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
+                                                              <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
+                                                                  <IMaskPhoneInput
+                                                                      autoFocus
+                                                                      fullWidth
+                                                                      mask={"0000000000000 / 00"}
+                                                                      color="primary"
+                                                                      placeholder={"1234567890123 / 00"}
                                                                       id="IdPeriodeFact"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
-                                                                      variant="outlined"
-                                                                      error={meta.invalid}
                                                                       {...input}
-                                                                      className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -759,6 +778,18 @@ export default function SearchAccordion(props) {
                                                       variant="contained"
                                                       type="button"
                                                       onClick={()=> {
+                                                          setExpanded({...expanded, ['panelNIR']: true});
+                                                      }}
+                                                      className="RoundedEl"
+                                                      style={{marginRight: '15px'}}
+                                                  >
+                                                      Open NIR
+                                                  </Button>
+
+                                                  <Button
+                                                      variant="contained"
+                                                      type="button"
+                                                      onClick={()=> {
                                                           dispatch(initCriterias());
                                                           form.reset()
                                                       }}
@@ -816,6 +847,12 @@ export default function SearchAccordion(props) {
                                           setDotShow(false)
                                       }
                                   }}/>}
+
+                                  <ConfirmNir agreed={()=> {
+                                      setOpenNIRDialog(false);
+                                      setExpanded({...expanded, ['panelNIR']: true});
+                                  }} disagreed={()=>setOpenNIRDialog(false)} opened={openNIRDialog}/>
+
                               </LocalizationProvider></form>)}/>
         </div>
     );

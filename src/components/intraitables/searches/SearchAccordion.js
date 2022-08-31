@@ -69,7 +69,9 @@ export default function SearchAccordion(props) {
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
                 <StyledCard sx={{ display: 'block', minWidth: 775 }} id="IntraitablesSearchForm" variant="outlined">
-                    <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",
+                    <CardHeader sx={{
+                        bgcolor: '#f1f1f1',
+                        display: "flex",
                         '&.MuiCardHeader-root': {
                             margin: '0',
                             padding: '15px',
