@@ -3,19 +3,19 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetFacturesQuery} from "../services/facturesApi";
+import {useGetIntraitablesQuery} from "../services/intraitablesApi";
 import {Typography} from "@mui/material";
-import {DataGrid} from '@mui/x-data-grid';
+import {DataGrid, gridClasses } from '@mui/x-data-grid';
 
-import { selectCriterias } from '../facturesSlice'
+import { selectCriterias } from '../intraitablesSlice'
 
-import {columns} from "./gridFacturesColumns";
-import './facturesGrid.scss';
+import {columns} from "./columnsIntraitablesGrid";
+import './intraitablesGrid.scss';
 
 import {checker, usePrevious} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
-export const FacturesGrid = ({disciplines}) => {
+export const IntraitablesGrid = () => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -25,9 +25,7 @@ export const FacturesGrid = ({disciplines}) => {
         sortProperty: null
     });
 
-    const size = 20;
-
-    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -40,26 +38,24 @@ export const FacturesGrid = ({disciplines}) => {
     };
 
     useEffect(() => {
-
-            if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-                setCurrentPage(0)
-            }
-
+        if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
+            setCurrentPage(0)
+        }
     }, [criterias, currentPage]);
 
 
     return <div className="gridContent">
 
-        {(data && data?.results) && <div>
+        {(data) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
+                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data?.results || []}
+                rows={data || []}
                 columns={columns()}
-                pageSize={size}
+                pageSize={20}
                 autoHeight
                 hideFooter={true}
                 disableColumnResize={false}
@@ -79,26 +75,23 @@ export const FacturesGrid = ({disciplines}) => {
 
                 sortingMode="server"
                 onSortModelChange={handleOrdering}
-                sx={{ '& .boldValue': { fontWeight: 'bold', },
+                sx={{
                     '& .MuiDataGrid-columnHeaderTitle': {
                         textOverflow: "clip",
                         whiteSpace: "break-spaces",
                         lineHeight: 1
                     },
+
                 }}
+                rowHeight={85}
             />
         </div>}
 
-        {!data && <div>
-            <img  src={mainPS} alt="mainPS" className={'imgContext'}/>
-            <h2 style={{color: '#003154', position: 'relative', width: '400px', left: '605px', bottom: '545px'}}>
-                Vous y trouverez toutes les informations pertinentes pour les professionnels de la santé du système.
-            </h2>
-        </div>}
+        {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
-                count={data.totalPages}
+                count={data.totPages}
                 page={currentPage+1}
                 onChange={handlePageChange}
             />

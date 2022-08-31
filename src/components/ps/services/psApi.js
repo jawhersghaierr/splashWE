@@ -27,7 +27,7 @@ export const psApi = createApi({
                 referenceDate
             ) => ({
                 url: `etsroc?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
             }}),
         }),
@@ -45,7 +45,7 @@ export const psApi = createApi({
                 codeTypePrestation
             ) => ({
                 url: `bankaccountps?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
             }}),
         }),
@@ -81,7 +81,7 @@ export const psApi = createApi({
 
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })
@@ -93,7 +93,7 @@ export const psApi = createApi({
                 let url = `ets/${id}`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })

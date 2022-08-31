@@ -151,7 +151,7 @@ export default function FacturesDetailsById(props) {
                             <RowInfo label={'Date facture'} value={convertDate(data?.factData.dateFact)} border={true} justify={true}/>
                             <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
                             <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
-                            <RowInfo label={'Message de rejet'} value={data?.comment} border={true} justify={true}/>
+                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
                         </div>
                     </div>
 

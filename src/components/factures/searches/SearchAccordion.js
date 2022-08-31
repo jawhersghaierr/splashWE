@@ -164,6 +164,11 @@ export default function SearchAccordion(props) {
 
                                         break
 
+                                    case 'numJur':
+                                        if (value?.numJur?.length < 8) console.log(value.numJur, field)
+
+                                        break
+
                                 }
 
                               return _value
@@ -181,7 +186,7 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact">
+                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(16))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -199,7 +204,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numEng" >
+                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(14))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -208,7 +213,7 @@ export default function SearchAccordion(props) {
                                                                       sx={{width: '100%'}}
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      placeholder={'Nº d\'engagment'}
+                                                                      placeholder={'Nº d\'engagement'}
                                                                       InputProps={{  disableUnderline: true }}
                                                                       className="RoundedEl"
                                                                   />
@@ -356,7 +361,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22), validators.maxValue(23))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -412,7 +417,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
-                                                                          return selected[0];
+                                                                          return nomRefs.FACTURE_STATUS[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
@@ -447,12 +452,12 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
-                                                                          return selected[0];
+                                                                          return nomRefs.FACTURE_ERROR[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.discipline?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
+                                                                              primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
@@ -492,7 +497,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numJur" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="numJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -501,6 +506,10 @@ export default function SearchAccordion(props) {
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
+                                                                      onBlur={(e)=> {
+                                                                          if (e.target.value.length == 8) form.getFieldState('numJur').change('0' + e.target.value)
+                                                                          return input.onBlur(e)
+                                                                      }}
                                                                       className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
@@ -524,11 +533,12 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="department" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="department" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="Department"
+                                                                      type={"number"}
                                                                       label={'Nº département'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -546,7 +556,7 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationsBeneficiaires} onChange={handleChange('panelInformationsBeneficiaires')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                                      <Typography style={{marginLeft: '5px'}}><b>Informations bénéficiaires</b></Typography>
+                                                      <Typography style={{marginLeft: '5px'}}><b>Informations bénéficiaire</b></Typography>
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
@@ -565,7 +575,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} AMC sélectionnés`
-                                                                          return selected[0];
+                                                                          return nomRefs.CLIENT[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
@@ -706,14 +716,13 @@ export default function SearchAccordion(props) {
                                                                               return input.onChange(e)
                                                                           }}
                                                                       />
-                                                                      {meta.error && meta.touched && <span
-                                                                          className={'MetaErrInfo'}>{meta.error}</span>}
+                                                                      {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                                   </FormControl>
                                                               )
                                                           }}
                                                       </Field>
 
-                                                      <Field name="cle" validate={validators.composeValidators(validators.minValue(2), validators.maxValue(3))}>
+                                                      <Field name="cle" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => {
                                                               return (
                                                                   <FormControl className="RoundedEl" style={{
@@ -724,6 +733,7 @@ export default function SearchAccordion(props) {
                                                                       <TextField
                                                                           id="Cle"
                                                                           label={'Clé'}
+                                                                          type={"number"}
                                                                           disabled={disableCle}
                                                                           variant="outlined"
                                                                           // error={meta.invalid}

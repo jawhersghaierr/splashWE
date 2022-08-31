@@ -38,12 +38,22 @@ const hostMenuItems = [
     {
         name: 'Beneficiaire App',
         link: '/beneficiaire',
-        Icon: IconBarChart,
+        Icon: IconPeople,
     },
     {
-        name: 'ROC App',
-        link: '/roc',
-        Icon: IconLibraryBooks,
+        Icon: IconPeople,
+        name: 'Factures',
+        link: '/factures'
+    },
+    {
+        Icon: IconBarChart,
+        name: 'Configuration',
+        link: '/configuration'
+    },
+    {
+        name: 'ROC Intraitables',
+        link: '/intraitables',
+        Icon: IconBarChart,
         popItems: [
             {name: 'Services en ligne', link: '/ligne'},
             {name: 'Factures', link: '/factures'},
@@ -52,13 +62,11 @@ const hostMenuItems = [
     },
     {
         Icon: IconLibraryBooks,
-        name: 'Factures',
-        link: '/factures'
+        name: 'Paiements',
     },
     {
-        Icon: IconBarChart,
-        name: 'Configuration',
-        link: '/configuration'
+        Icon: IconLibraryBooks,
+        name: 'Virements',
     },
     // {
     //     name: 'Remote test App',

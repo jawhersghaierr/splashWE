@@ -17,7 +17,10 @@ import {fluxApi} from "./components/factures/services/fluxApi";
 
 import psReducer from './components/ps/psSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
+import intraitablesReducer from './components/intraitables/intraitablesSlice'
 import facturesReducer from "./components/factures/facturesSlice";
+import {intraitablesApi} from "./components/intraitables/services/intraitablesApi";
+import {intraitablesSlice} from "./components/intraitables/intraitablesSlice";
 
 function logger({ getState }) {
   return next => action => {
@@ -67,6 +70,7 @@ export default function configureStore(initialState) {
       beneficiaireApi.middleware,
       fluxApi.middleware,
       configurationsApi.middleware,
+      intraitablesApi.middleware,
       ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -108,9 +112,11 @@ function createReducer(asyncReducers) {
     [beneficiaireApi.reducerPath]: beneficiaireApi.reducer,
     [fluxApi.reducerPath]: fluxApi.reducer,
     [configurationsApi.reducerPath]: configurationsApi.reducer,
+    [intraitablesApi.reducerPath]: intraitablesApi.reducer,
     ps: psReducer,
     benef: benefReducer,
     factures: facturesReducer,
+    intraitables: intraitablesReducer,
     ...staticReducers,
     ...asyncReducers,
   });
