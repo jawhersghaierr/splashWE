@@ -14,7 +14,7 @@ export const SelAssociesGrid = ({numEng}) => {
     return <div style={{margin: 0}}>
 
         {data && <DataGrid
-                    rows={data || []}
+                    rows={data.assosiete || []}
                     columns={columns()}
                     pageSize={20}
                     autoHeight
@@ -31,6 +31,13 @@ export const SelAssociesGrid = ({numEng}) => {
                     }
                     onCellClick={(params, event) => {
                         event.defaultMuiPrevented = true;
+                    }}
+                    sx={{ '& .boldValue': { fontWeight: 'bold', },
+                        '& .MuiDataGrid-columnHeaderTitle': {
+                            textOverflow: "clip",
+                            whiteSpace: "break-spaces",
+                            lineHeight: 1
+                        },
                     }}
 
         />}

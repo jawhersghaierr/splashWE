@@ -6,9 +6,9 @@ import './facturesGrid.scss';
 import {useGetPaiementsFacturesByIdQuery} from "../services/paiementsApi";
 
 
-export const PaimentsGrid = ({numFac}) => {
+export const PaimentsGrid = ({factId}) => {
 
-    let {data} = useGetPaiementsFacturesByIdQuery(numFac)
+    let {data} = useGetPaiementsFacturesByIdQuery(factId)
 
 
     return <div style={{margin: 0}}>
@@ -31,6 +31,13 @@ export const PaimentsGrid = ({numFac}) => {
             }
             onCellClick={(params, event) => {
                 event.defaultMuiPrevented = true;
+            }}
+            sx={{ '& .boldValue': { fontWeight: 'bold', },
+                '& .MuiDataGrid-columnHeaderTitle': {
+                    textOverflow: "clip",
+                    whiteSpace: "break-spaces",
+                    lineHeight: 1
+                },
             }}
         />
 

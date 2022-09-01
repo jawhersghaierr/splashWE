@@ -81,7 +81,7 @@ export default function FacturesDetailsById(props) {
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Details de la facture</b>
+                <b>Détails de la facture</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}
@@ -167,7 +167,7 @@ export default function FacturesDetailsById(props) {
                 {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
-                {data?.numFact && <PaimentsGrid numFac={data.numFact}/>}
+                {match?.params?.id && <PaimentsGrid factId={match?.params?.id}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

@@ -42,13 +42,48 @@ const maxValue = max => value => {
     return result;
 }
 
+/**
+ *
+ * @param values from final-form
+ * @param associed array of strings (keys from form)
+ * @returns {function(*=): string}
+ */
+const associated = (values, associed) => value => {
+    let isOk = true
+    let needed = {}
+    if (associed) {
+
+        Object.keys(associed).forEach(el=> {
+
+            if (el == 'dateDeNaissance' && (!values[el] || values[el] == undefined || values[el] == '')){
+
+                if (
+                    (!values['birdDate'] || values['birdDate'] == undefined || values['birdDate'] == '')
+                ) {
+                    isOk = false
+                    needed[el] = associed[el]
+                }
+            } else if (
+                value && value !== undefined && value !== '' &&
+                (!values[el] || values[el] == undefined || values[el] == '')
+            ){
+                isOk = false
+                needed[el] = associed[el]
+            }
+        })
+    }
+
+    return (isOk) ? undefined : `need more values (${Object.values(needed).join(', ')})`
+}
+
 
 export const validators = {
     composeValidators,
     required,
     mustBeNumber,
     minValue,
-    maxValue
+    maxValue,
+    associated
 }
 
 
@@ -126,43 +161,6 @@ export const usePrevious = (value) => {
         ref.current = value;
     },[value]);
     return ref.current;
-}
-
-export const isValidDate = (d) => {
-    try {
-        d.toISOString();
-        return true;
-    }
-    catch(ex) {
-        return false;
-    }
-}
-
-export const dateConvertNaissance = (dat) => {
-    if (dat == undefined) return ''
-
-    let pattern = /^(\d{4})(\d{2})(\d{2})/i;
-    let match = pattern.exec(dat);
-    let ssn = {}
-
-    ssn.year = match[1];
-    ssn.month = match[2];
-    ssn.day = match[3];
-
-    if (dat && dat !== undefined && dat !== '') {
-        let {year, month, day} = ssn;
-        return `${day}/${month}/${year}`
-    } else {
-        return '';
-    }
-}
-
-export const convertDate = (dat) => {
-    if (dat && dat !== undefined && dat !== '') {
-        return new Date(dat).toLocaleDateString('fr');
-    } else {
-        return '';
-    }
 }
 
 
@@ -265,14 +263,59 @@ export const calcCleFromNir = (values) => {
 
 }
 
+export const isValidDate = (d) => {
+    try {
+        d.toISOString();
+        return true;
+    }
+    catch(ex) {
+        return false;
+    }
+}
+
+
+
+export const dateConvertNaissanceRAW = (dat) => {
+    if (dat && dat !== undefined && dat !== '') {
+        return dat?.split('-').reverse().join('/')
+    } else {
+        return '';
+    }
+}
+
+export const dateConvertNaissance = (dat) => {
+    if (dat == undefined) return ''
+
+    let pattern = /^(\d{4})(\d{2})(\d{2})/i;
+    let match = pattern.exec(dat);
+    let ssn = {}
+
+    ssn.year = match[1];
+    ssn.month = match[2];
+    ssn.day = match[3];
+
+    if (dat && dat !== undefined && dat !== '') {
+        let {year, month, day} = ssn;
+        return `${day}/${month}/${year}`
+    } else {
+        return '';
+    }
+}
+
+export const convertDate = (dat) => {
+    if (dat && dat !== undefined && dat !== '') {
+        return new Date(dat).toLocaleDateString('fr');
+    } else {
+        return '';
+    }
+}
+
 export const currencyFormatter = new Intl.NumberFormat('fr', {
     style: 'currency',
     currency: 'EUR',
 });
 
 export const formatIntlDateWithHHMM = (dateStr) => {
-
-
     return new Intl.DateTimeFormat("fr", {
         day: "2-digit",
         month: "2-digit",

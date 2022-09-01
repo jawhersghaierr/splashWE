@@ -195,7 +195,7 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(16))}>
+                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(11))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -378,15 +378,15 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22), validators.maxValue(23))}>
+                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22), validators.maxValue(25))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
                                                                   <IMaskPhoneInput
                                                                       autoFocus
                                                                       fullWidth
-                                                                      mask={"0000000000000 / 00"}
+                                                                      mask={"0000000000000000000000 / 00"}
                                                                       color="primary"
-                                                                      placeholder={"1234567890123 / 00"}
+                                                                      placeholder={"1234567890123456789012 / 00"}
                                                                       id="IdPeriodeFact"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
                                                                       {...input}
@@ -614,14 +614,18 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="nom" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="nom" validate={validators.composeValidators(
+                                                          validators.minValue(3),
+                                                          validators.maxValue(51),
+                                                          validators.associated(values, {prenom: 'Prénom', dateDeNaissance: 'Date de naissance'})
+                                                      )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="Nom"
                                                                       label={'Nom'}
                                                                       variant="outlined"
-                                                                      error={meta.invalid}
+                                                                      // error={meta.invalid}
                                                                       {...input}
                                                                       className="RoundedEl"
                                                                   />
@@ -630,14 +634,18 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="prenom" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="prenom" validate={validators.composeValidators(
+                                                          validators.minValue(3),
+                                                          validators.maxValue(51),
+                                                          validators.associated(values, {nom: 'Nom', dateDeNaissance: 'Date de naissance'})
+                                                      )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
                                                                       id="Prenom"
                                                                       label={'Prénom'}
                                                                       variant="outlined"
-                                                                      error={meta.invalid}
+                                                                      // error={meta.invalid}
                                                                       {...input}
                                                                       className="RoundedEl"
                                                                   />
@@ -773,19 +781,6 @@ export default function SearchAccordion(props) {
 
 
                                               <div style={{ margin: '10px', textAlign: 'right'}}>
-
-                                                  <Button
-                                                      variant="contained"
-                                                      type="button"
-                                                      onClick={()=> {
-                                                          setExpanded({...expanded, ['panelNIR']: true});
-                                                      }}
-                                                      className="RoundedEl"
-                                                      style={{marginRight: '15px'}}
-                                                  >
-                                                      Open NIR
-                                                  </Button>
-
                                                   <Button
                                                       variant="contained"
                                                       type="button"
