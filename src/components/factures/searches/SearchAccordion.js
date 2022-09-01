@@ -332,7 +332,9 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedStart">
+                                                      <Field name="dateReceivedStart" validate={
+                                                          validators.composeValidators(validators.lowerThan(values, {dateReceivedEnd: 'au'}))
+                                                      }>
                                                           {({ input:{onChange, value}, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -351,11 +353,14 @@ export default function SearchAccordion(props) {
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
                                                                   />
+                                                                  {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedEnd">
+                                                      <Field name="dateReceivedEnd" validate={
+                                                          validators.composeValidators(validators.biggerThan(values, {dateReceivedStart: 'Réceptionné du'}))
+                                                      }>
                                                           {({ input:{onChange, value}, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -374,20 +379,21 @@ export default function SearchAccordion(props) {
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
                                                                   />
+                                                                  {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
                                                       </Field>
 
-                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22), validators.maxValue(25))}>
+                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
                                                                   <IMaskPhoneInput
+                                                                      id="IdPeriodeFact"
                                                                       autoFocus
                                                                       fullWidth
                                                                       mask={"0000000000000000000000 / 00"}
-                                                                      color="primary"
                                                                       placeholder={"1234567890123456789012 / 00"}
-                                                                      id="IdPeriodeFact"
+                                                                      color="primary"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
                                                                       {...input}
                                                                   />

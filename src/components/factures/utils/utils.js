@@ -49,24 +49,23 @@ const maxValue = max => value => {
  * @returns {function(*=): string}
  */
 const associated = (values, associed) => value => {
+
     let isOk = true
     let needed = {}
-    if (associed) {
+
+    if (associed && value && value !== undefined && value !== '') {
 
         Object.keys(associed).forEach(el=> {
 
-            if (el == 'dateDeNaissance' && (!values[el] || values[el] == undefined || values[el] == '')){
+            if ( el == 'dateDeNaissance' && (!values[el] || values[el] == undefined || values[el] == '') ){
 
                 if (
-                    (!values['birdDate'] || values['birdDate'] == undefined || values['birdDate'] == '')
-                ) {
+                    ( !values['birdDate'] || values['birdDate'] == undefined || values['birdDate'] == '' )
+                ){
                     isOk = false
                     needed[el] = associed[el]
                 }
-            } else if (
-                value && value !== undefined && value !== '' &&
-                (!values[el] || values[el] == undefined || values[el] == '')
-            ){
+            } else if ( !values[el] || values[el] == undefined || values[el] == '' ){
                 isOk = false
                 needed[el] = associed[el]
             }
@@ -76,6 +75,39 @@ const associated = (values, associed) => value => {
     return (isOk) ? undefined : `need more values (${Object.values(needed).join(', ')})`
 }
 
+const biggerThan = (values, than) => value => {
+    let date1, date2 = null;
+
+    if (
+        value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
+    ){
+        date1 = new Date(value).toLocaleDateString('fr');
+        date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+    }
+    console.log('date1 > ', date1)
+    console.log('date2 > ', date2)
+    console.log('date1 > date2 :', Boolean(date1 > date2))
+
+    return ( date1 && date2 && date1 > date2 ) ? 'undefined' : `should be Bigger than ${Object.values(than)[0]})`
+}
+
+const lowerThan = (values, than) => value => {
+
+    let date1, date2 = null;
+
+    if (
+        value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
+    ){
+        date1 = new Date(value)
+        date2 = new Date(values[Object.keys(than)[0]])
+    }
+    console.log('date1 > ', date1)
+    console.log('date2 > ', date2)
+    console.log('date1 < date2 :', Boolean(date1 < date2))
+
+
+    return ( date1 && date2 && date1 < date2 ) ? 'undefined' : `should be Lower than ${Object.values(than)[0]})`
+}
 
 export const validators = {
     composeValidators,
@@ -83,7 +115,9 @@ export const validators = {
     mustBeNumber,
     minValue,
     maxValue,
-    associated
+    associated,
+    biggerThan,
+    lowerThan,
 }
 
 
@@ -309,6 +343,7 @@ export const convertDate = (dat) => {
         return '';
     }
 }
+
 
 export const currencyFormatter = new Intl.NumberFormat('fr', {
     style: 'currency',
