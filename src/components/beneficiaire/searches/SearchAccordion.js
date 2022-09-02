@@ -252,7 +252,6 @@ export default function SearchAccordion(props) {
                                                             onChange(newDate)
                                                         }
                                                     }}
-
                                                     inputFormat="dd/MM/yyyy"
                                                     placeholder={'jj/mm/aaaa'}
                                                     value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
@@ -342,9 +341,9 @@ export default function SearchAccordion(props) {
                                         )}
                                     </Field>}
 
-                                    <Field name="dateDebutSoins">
+                                    <Field name="dateDebutSoins" >
                                         {({ input, meta }) => (
-                                            <FormControl className="RoundDate">
+                                            <FormControl className="RoundDate" sx={{ marginRight: '20px!important'}}>
                                                 <DatePicker
                                                     label="Date de référence du"
                                                     inputFormat="dd/MM/yyyy"
