@@ -311,24 +311,16 @@ export default function SearchAccordion(props) {
                                                       </Field>}
 
                                                       <Field name="dateDeSoins">
-                                                          {({ input:{onChange, value}, meta }) => (
+                                                          {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
                                                                       label={'Date d\'admission / Date de soins '}
+                                                                      value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                                      onChange={input?.onChange || null}
                                                                       inputFormat="dd/MM/yyyy"
-                                                                      onChange={(newDate) => {
-
-                                                                          if (isValidDate(newDate)) {
-                                                                              onChange(newDate)
-                                                                          } else {
-                                                                              onChange('null')
-                                                                          }
-                                                                      }}
-                                                                      value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
-                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid} />}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}/>}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -337,25 +329,17 @@ export default function SearchAccordion(props) {
                                                       <Field name="dateReceivedStart" validate={
                                                           validators.composeValidators(validators.lowerThan(values, {dateReceivedEnd: 'au'}))
                                                       }>
-                                                          {({ input:{onChange, value}, meta }) => (
+                                                          {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
                                                                       inputFormat="dd/MM/yyyy HH:mm"
-                                                                      onChange={(newDate) => {
-
-                                                                          if (isValidDate(newDate)) {
-                                                                              onChange(newDate)
-                                                                          } else {
-                                                                              onChange('null')
-                                                                          }
-                                                                      }}
-                                                                      value={(value === '' || value == undefined)? null: value}
+                                                                      value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                                      onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}}
-                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid}/>}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -365,25 +349,17 @@ export default function SearchAccordion(props) {
                                                       <Field name="dateReceivedEnd" validate={
                                                           validators.composeValidators(validators.biggerThan(values, {dateReceivedStart: 'Réceptionné du'}))
                                                       }>
-                                                          {({ input:{onChange, value}, meta }) => (
+                                                          {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
                                                                       inputFormat="dd/MM/yyyy HH:mm"
-                                                                      onChange={(newDate) => {
-
-                                                                          if (isValidDate(newDate)) {
-                                                                              onChange(newDate)
-                                                                          } else {
-                                                                              onChange('null')
-                                                                          }
-                                                                      }}
-                                                                      value={(value === '' || value == undefined)? null: value}
+                                                                      value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                                      onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}}
-                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid}/>}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -409,27 +385,18 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
                                                       <Field name="dateFact">
-                                                          {({ input:{onChange, value}, meta }) => (
+                                                          {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
                                                                       label={'Date facture'}
                                                                       // error={false}
                                                                       inputFormat="dd/MM/yyyy"
-                                                                      onChange={(newDate) => {
-
-                                                                          if (isValidDate(newDate)) {
-                                                                              onChange(newDate)
-                                                                          } else {
-                                                                              onChange('null')
-                                                                          }
-                                                                      }}
-                                                                      value={(value === '' || value == undefined)? null: value}
-                                                                      // value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
+                                                                      value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                                      onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
                                                                                      {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
-                                                                                     // error={(!value && value === '' || value == undefined)?false: meta.invalid}
                                                                           />}
                                                                   />
                                                               </FormControl>
@@ -474,6 +441,7 @@ export default function SearchAccordion(props) {
                                                       {(nomRefs && nomRefs?.FACTURE_ERROR) && <Field name="errorCode" format={value => value || []}>
 
                                                           {({input, meta}) => (
+                                                              console.log(values),
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Motif-label">Motif de rejet</InputLabel>
                                                                   <Select
@@ -484,6 +452,7 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
+                                                                      disabled={!(values?.status?.includes('REJETEE') || values?.status?.includes('ANNULEE'))}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
                                                                           return nomRefs.FACTURE_ERROR[selected[0]];
