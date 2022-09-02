@@ -31,13 +31,13 @@ export const columns = enviroments => [
                 {convertDate(params.row.dateMiseaJour)}
             </>)
         }},
-    { field: 'dateOuvertureDroits', headerName: 'Date de Validité', flex: 2, renderCell: (params) => {
+    { field: 'dateOuvertureDroits', headerName: 'Date de Validité', flex: 2, sortable: false, renderCell: (params) => {
             return (<>
                 {convertDate(params.row.dateOuvertureDroits)}<br/>
                 {convertDate(params.row.dateFermetureDroits)}
             </>)
         }},
-    { field: 'status', headerName: 'Statut', flex: 2, renderCell: (params) => {
+    { field: 'status', headerName: 'Statut', flex: 2, sortable: false, renderCell: (params) => {
             return (<Chip label={benefStatuses[params.row?.status]?.label}
                           sx={{bgcolor: benefStatuses[params.row?.status]?.color,
                               display: 'block',

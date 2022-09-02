@@ -147,7 +147,7 @@ export default function SearchAccordion(props) {
                 }
             }}
 
-            render = {({ handleSubmit, form, submitting, pristine, values }) => (
+            render = {({ handleSubmit, form, submitting, pristine, values, error }) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
@@ -235,7 +235,7 @@ export default function SearchAccordion(props) {
 
                             <Accordion expanded={expanded.panelBeneficiaires} onChange={handleChange('panelBeneficiaires')}>
                                 <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
-                                    <Typography><b>Information bénéficiaires</b></Typography>
+                                    <Typography style={{paddingLeft: '5px'}}><b>Informations bénéficiaires</b></Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
 
@@ -343,25 +343,17 @@ export default function SearchAccordion(props) {
                                     </Field>}
 
                                     <Field name="dateDebutSoins">
-                                        {({ input:{onChange, value}, meta }) => (
-                                            // <div className={"RoundDate"}>
-                                                <FormControl className="RoundDate">
-                                                    <DatePicker
-                                                        label="Date de référence du"
-                                                        inputFormat="dd/MM/yyyy"
-                                                        onChange={(newDate) => {
-
-                                                            if (isValidDate(newDate)) {
-                                                                onChange(newDate)
-                                                            } else {
-                                                                onChange('null')
-                                                            }
-                                                        }}
-                                                        value={(value === '' || value == undefined)? null: value}
-                                                        renderInput={(params) =>
-                                                            <TextField style={{flex: 2, marginRight: '15px'}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
-                                                    />
-                                                </FormControl>
+                                        {({ input, meta }) => (
+                                            <FormControl className="RoundDate">
+                                                <DatePicker
+                                                    label="Date de référence du"
+                                                    inputFormat="dd/MM/yyyy"
+                                                    value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                                    onChange={input?.onChange || null}
+                                                    renderInput={(params) =>
+                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                />
+                                            </FormControl>
                                         )}
                                     </Field>
 
@@ -402,7 +394,7 @@ export default function SearchAccordion(props) {
                                 </Button>
                                 <Button variant="contained"
                                         type="submit" size="medium"
-                                        disabled={!checker(values)}
+                                        disabled={!checker(values) || error || pristine}
                                         className="RoundedEl">
                                     <SearchIcon/>Rechercher
                                 </Button>

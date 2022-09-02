@@ -110,8 +110,10 @@ module.exports = {
             },
 
             {
-                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-                type: 'asset/inline'
+                test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+                type: 'asset/inline',
+                // test: /\.svg/,
+                // type: 'asset/inline'
             },
 
             // Images: Copy image files to build folder
