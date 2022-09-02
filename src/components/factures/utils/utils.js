@@ -83,12 +83,9 @@ const biggerThan = (values, than) => value => {
     ){
         date1 = new Date(value).toLocaleDateString('fr');
         date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+        if (date1 < date2) return `should be Bigger than ${Object.values(than)[0]}`
     }
-    console.log('date1 > ', date1)
-    console.log('date2 > ', date2)
-    console.log('date1 > date2 :', Boolean(date1 > date2))
-
-    return ( date1 && date2 && date1 > date2 ) ? 'undefined' : `should be Bigger than ${Object.values(than)[0]})`
+    return undefined
 }
 
 const lowerThan = (values, than) => value => {
@@ -98,15 +95,11 @@ const lowerThan = (values, than) => value => {
     if (
         value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
     ){
-        date1 = new Date(value)
-        date2 = new Date(values[Object.keys(than)[0]])
+        date1 = new Date(value).toLocaleDateString('fr');
+        date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+        if (date1 > date2) return `should be Lower than ${Object.values(than)[0]}`
     }
-    console.log('date1 > ', date1)
-    console.log('date2 > ', date2)
-    console.log('date1 < date2 :', Boolean(date1 < date2))
-
-
-    return ( date1 && date2 && date1 < date2 ) ? 'undefined' : `should be Lower than ${Object.values(than)[0]})`
+    return undefined
 }
 
 export const validators = {
