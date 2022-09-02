@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {convertDate, dateConvertNaissance, facturesStatus, statusRow} from "./utils/utils";
+import {convertDate, dateConvertNaissance, facturesStatus, IntlDateWithHHMM, statusRow} from "./utils/utils";
 import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
@@ -91,7 +91,7 @@ export default function FacturesDetailsById(props) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Date d\'admission'} value={data?.factData?.dateEntree}/>
+                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)}/>
                     <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
                         <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
                         <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
@@ -102,11 +102,11 @@ export default function FacturesDetailsById(props) {
                     <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
                     <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
                     <RowInfo label={'AMC'} value={data?.numClient}/>
-                    <RowInfo label={'Dernière modification'} value={data?.timestamp}/>
+                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)}/>
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
                     <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
-                    <RowInfo label={'Date de naissance et rang'}
+                    <RowInfo label={'Date et rang de naissance'}
                              value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
                              chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
                     />

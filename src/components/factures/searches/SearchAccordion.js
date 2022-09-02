@@ -282,7 +282,7 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationGenerales} onChange={handleChange('panelInformationGenerales')}>
                                                   <AccordionSummary aria-controls="panelInformationGenerales-content" id="panelInformationGenerales-header">
-                                                      <Typography><b>Informations générales</b></Typography>
+                                                      <Typography style={{paddingLeft: '5px'}}><b>Informations générales</b></Typography>
                                                   </AccordionSummary>
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -326,7 +326,9 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                                          <TextField style={{flex: 2}}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -351,7 +353,9 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                          <TextField style={{flex: 2}}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}}
+                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid}/>}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -377,7 +381,9 @@ export default function SearchAccordion(props) {
                                                                       }}
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                          <TextField style={{flex: 2}}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}}
+                                                                                     error={(!value && value === '' || value == undefined)?false: meta.invalid}/>}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -421,7 +427,10 @@ export default function SearchAccordion(props) {
                                                                       value={(value === '' || value == undefined)? null: value}
                                                                       // value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                                          <TextField style={{flex: 2}}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                                                     // error={(!value && value === '' || value == undefined)?false: meta.invalid}
+                                                                          />}
                                                                   />
                                                               </FormControl>
                                                           )}

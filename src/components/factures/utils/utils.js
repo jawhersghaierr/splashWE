@@ -77,12 +77,15 @@ const associated = (values, associed) => value => {
 
 const biggerThan = (values, than) => value => {
     let date1, date2 = null;
+    console.log('values[Object.keys(than)[0]] > ', values[Object.keys(than)[0]])
 
-    if (
-        value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
-    ){
+    if ( value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined ){
         date1 = new Date(value).toLocaleDateString('fr');
         date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+
+        console.log(date1)
+        console.log(date2)
+
         if (date1 < date2) return `should be Bigger than ${Object.values(than)[0]}`
     }
     return undefined
@@ -92,11 +95,18 @@ const lowerThan = (values, than) => value => {
 
     let date1, date2 = null;
 
+    console.log('values[Object.keys(than)[0]] > ', values[Object.keys(than)[0]])
+
     if (
-        value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
+        value && value !== undefined && value !== '' &&
+        values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
     ){
         date1 = new Date(value).toLocaleDateString('fr');
         date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+
+        console.log(date1)
+        console.log(date2)
+
         if (date1 > date2) return `should be Lower than ${Object.values(than)[0]}`
     }
     return undefined
@@ -342,15 +352,21 @@ export const currencyFormatter = new Intl.NumberFormat('fr', {
     style: 'currency',
     currency: 'EUR',
 });
-
-export const formatIntlDateWithHHMM = (dateStr) => {
-    return new Intl.DateTimeFormat("fr", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-    })
-};
+//
+// export const IntlDateWithHHMM = (dateStr) => {
+//     const p = new Intl.DateTimeFormat('fr', {
+//         year:'numeric',
+//         month:'2-digit',
+//         day:'2-digit',
+//         hour:'2-digit',
+//         minute:'2-digit',
+//         second:'2-digit',
+//         hour12: false,
+//         timeZone:'UTC'
+//     }).formatToParts(dateStr).reduce((acc, part) => {
+//         acc[part.type] = part.value;
+//         return acc;
+//     }, {});
+//
+//     return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;
+// };
