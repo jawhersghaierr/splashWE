@@ -2,10 +2,9 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
@@ -16,16 +15,9 @@ import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import InputLabel from '@mui/material/InputLabel';
 
 import Collapse from '@mui/material/Collapse';
 import Badge from '@mui/material/Badge';
-
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-
-import OutlinedInput from '@mui/material/OutlinedInput';
-import {ListItemText} from "@material-ui/core";
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
@@ -182,6 +174,15 @@ export default function SearchAccordion(props) {
                                                   )}
                                               </Field>
 
+                                              <Field name="statut">
+                                                  {({ input, meta }) => (
+                                                      <div style={{width: '260px', display: 'flex'}}>
+                                                          <Checkbox defaultChecked sx={{'&.MuiCheckbox-root': {color: '#003154'}}}  />
+                                                          <Typography component="div" className='verticalTxt'><b>Seuls les éléments actifs</b></Typography>
+                                                      </div>
+                                                  )}
+                                              </Field>
+
 
                                               {props?.code == 'control' && <div style={{width: 150, display: 'flex'}}>
                                                   {!panelExpanded &&
@@ -191,8 +192,7 @@ export default function SearchAccordion(props) {
                                                   </IconButton>}
                                                   {panelExpanded && <IconButton
                                                       onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                                  <Typography component="div"
-                                                              className='verticalTxt'><b>Critères</b></Typography>
+                                                  <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
                                               </div>}
                                               <Button
                                                   variant="contained"
@@ -247,13 +247,6 @@ export default function SearchAccordion(props) {
                                                       </div>
                                                   )}
                                               </Field>
-
-
-
-
-
-
-
 
                                               <div style={{ margin: '10px', textAlign: 'right'}}>
 

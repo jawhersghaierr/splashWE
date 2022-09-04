@@ -2,6 +2,7 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, Typography, Button, TextField}  from "@mui/material";
+
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
@@ -24,6 +25,7 @@ import {
 } from '../intraitablesSlice'
 
 import './searchAccordion.scss'
+import {validators} from "../../factures/utils/utils";
 
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -87,19 +89,12 @@ export default function SearchAccordion(props) {
 
 
                             <Field name="periodFrom">
-                                {({ input:{onChange, value}, meta }) => (
+                                {({ input, meta }) => (
                                     <FormControl className="RoundDate" style={{ flex: '1 0 21%'}}>
                                         <DatePicker
                                             inputFormat="dd/MM/yyyy"
-                                            onChange={(newDate) => {
-
-                                                if (isValidDate(newDate)) {
-                                                    onChange(newDate)
-                                                } else {
-                                                    onChange('null')
-                                                }
-                                            }}
-                                            value={(value === '' || value == undefined)? null: value}
+                                            value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                            onChange={input?.onChange || null}
                                             renderInput={(params) =>
                                                 <TextField
                                                     className="RoundedEl"
@@ -113,20 +108,15 @@ export default function SearchAccordion(props) {
                             <Typography variant="h6" noWrap component="div" sx={{padding: '5px 25px', color: '#003154'}}>
                                 au
                             </Typography>
-                            <Field name="periodTo">
-                                {({ input:{onChange, value}, meta }) => (
+                            <Field name="periodTo"
+                                   validate={validators.composeValidators(validators.biggerThan(values, {periodFrom: 'Réceptionné du'}))}
+                            >
+                                {({ input, meta }) => (
                                     <FormControl className="RoundDate" style={{ flex: '1 0 21%'}}>
                                         <DatePicker
                                             inputFormat="dd/MM/yyyy"
-                                            onChange={(newDate) => {
-
-                                                if (isValidDate(newDate)) {
-                                                    onChange(newDate)
-                                                } else {
-                                                    onChange('null')
-                                                }
-                                            }}
-                                            value={(value === '' || value == undefined)? null: value}
+                                            value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
+                                            onChange={input?.onChange || null}
                                             renderInput={(params) =>
                                                 <div style={{flex: 2, marginRight: '20px', outline: 'none',}}>
                                                     <TextField

@@ -86,7 +86,7 @@ const biggerThan = (values, than) => value => {
         console.log(date1)
         console.log(date2)
 
-        if (date1 < date2) return `should be Bigger than ${Object.values(than)[0]}`
+        if (date1 < date2) return `Date après le: ${convertDate(values[Object.keys(than)[0]])}`
     }
     return undefined
 }

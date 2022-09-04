@@ -195,7 +195,7 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(11))}>
+                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -326,9 +326,9 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedStart" validate={
-                                                          validators.composeValidators(validators.lowerThan(values, {dateReceivedEnd: 'au'}))
-                                                      }>
+                                                      <Field name="dateReceivedStart"
+                                                             // validate={ validators.composeValidators(validators.lowerThan(values, {dateReceivedEnd: 'au'})) }
+                                                      >
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
