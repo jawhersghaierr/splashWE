@@ -18,6 +18,7 @@ import PopupState, {bindPopover, bindTrigger} from "material-ui-popup-state";
 import Box from "@mui/material/Box";
 import {bindHover} from "material-ui-popup-state/core";
 import MenuItem from "@mui/material/MenuItem";
+import PaiementDetailsById from "../components/paiement/PaiementDetailsById";
 
 const hostMenuItems = [
     {
@@ -63,6 +64,7 @@ const hostMenuItems = [
     {
         Icon: IconLibraryBooks,
         name: 'Paiements',
+        link: '/paiement'
     },
     {
         Icon: IconLibraryBooks,

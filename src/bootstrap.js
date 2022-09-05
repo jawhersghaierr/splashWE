@@ -40,6 +40,8 @@ import {Factures} from "./components/factures/Factures";
 import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
 import {ListConfiguration} from "./components/configurations/ListConfiguration";
 import {Intraitables} from "./components/intraitables/Intraitables";
+import {Paiement} from "./components/paiement/Paiement";
+import PaiementDetailsById from "./components/paiement/PaiementDetailsById";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -128,6 +130,8 @@ const App = () => {
                   <Route path="/factures/:id?" component={FacturesDetailsById}/> />
                   <Route exact={true} path="/configuration" component={ListConfiguration}/> />
                   <Route path="/configuration/:id?" component={ConfigurationDetailsById}/> />
+                  <Route exact={true} path="/paiement" component={Paiement}/> />
+                  <Route path="/paiement/:id?" component={PaiementDetailsById}/> />
                   <Route path="/intraitables" component={Intraitables}/> />
                   <Route path="/intraitFactures" component={RemoteTest}/> />
                   <Route path="/test" component={RemoteTest}/> />
