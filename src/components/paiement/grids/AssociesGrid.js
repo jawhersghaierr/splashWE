@@ -3,13 +3,8 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './paiementsGrid.scss';
-import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 
-export const AssociesGrid = ({numEng}) => {
-    console.log('numEng > ', numEng)
-
-    let {data} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
-
+export const AssociesGrid = (data) => {
 
     return <div style={{margin: 0}}>
 
