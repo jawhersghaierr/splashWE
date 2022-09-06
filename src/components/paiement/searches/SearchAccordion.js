@@ -53,6 +53,7 @@ import {useGetRefsQuery} from "../../../services/refsApi";
 import {IMaskPhoneInput, TextMaskCustom} from "../components/TextMaskCustom";
 import {ConfirmNir} from "../components/ConfirmNir";
 import PaiementDetailsById from "../PaiementDetailsById";
+import {useGetDisciplinesQuery} from "../../../services/referentielApi";
 
 
 const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0} square {...props} /> ) )
@@ -94,11 +95,12 @@ export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
-    const {disciplines, disciplinesIsFetching, disciplinesIsSuccess} = props;
 
 
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+
+    console.log('nomRefs > ', nomRefs)
 
     const onSubmit = async (values) => {
 
@@ -149,39 +151,62 @@ export default function SearchAccordion(props) {
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
-                              //Object.keys(nomRefs.FACTURE_STATUS)
-                              if (_value?.status?.length === 0 ||
-                                  (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
-                              ) _value = {..._value, status: undefined}
-                              if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
-
                               //Object.keys(nomRefs.FACTURE_ERROR)
-                              if (_value?.errorCode?.length === 0 ||
-                                  (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(nomRefs?.FACTURE_ERROR).length)
-                              ) _value = {..._value, errorCode: undefined}
-                              if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(nomRefs?.FACTURE_ERROR)}
-
-                              //Object.keys(nomRefs.CLIENT)
-                              if (_value?.numClient?.length === 0 ||
-                                  (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
-                              ) _value = {..._value, numClient: undefined}
-                              if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
+                              // if (_value?.errorCode?.length === 0 ||
+                              //     (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(nomRefs?.FACTURE_ERROR).length)
+                              // ) _value = {..._value, errorCode: undefined}
+                              // if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(nomRefs?.FACTURE_ERROR)}
 
                                 switch (field.active) {
                                     case 'nir':
                                         let cle = calcCleFromNir(value)
                                         _value.cle = cle || undefined
-                                            setDisableCle(cle ? false : true)
-                                        break
+                                        setDisableCle(cle ? false : true)
+                                    break
 
                                     case 'cle':
-
-                                        break
+                                    break
 
                                     case 'numJur':
                                         if (value?.numJur?.length < 8) console.log(value.numJur, field)
+                                    break
 
-                                        break
+                                    case 'numEnv':
+                                        //Object.keys(nomRefs.CLIENT)
+                                        if (_value?.numEnv?.length === 0 ||
+                                            (_value?.numEnv?.includes('all') && _value?.numEnv?.length > Object.keys(nomRefs?.CLIENT).length)
+                                        ) _value = {..._value, numEnv: undefined}
+                                        if (_value?.numEnv?.includes('all')) _value = {..._value, numEnv: Object.keys(nomRefs?.CLIENT)}
+                                    break
+
+                                    case 'status':
+                                        //Object.keys(nomRefs.STATUS_PAIAE)
+                                        if (_value?.status?.length === 0 ||
+                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.STATUS_PAIAE).length)
+                                        ) _value = {..._value, status: undefined}
+                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.STATUS_PAIAE)}
+                                    break
+
+                                    case 'grоupDisciplines': // nomRefs?.DISCIPLINE_GROUP
+                                        if (_value?.grоupDisciplines?.length === 0 ||
+                                            (_value?.grоupDisciplines?.includes('all') && _value?.grоupDisciplines?.length > Object.keys(nomRefs?.DISCIPLINE_GROUP).length)
+                                        ) _value = {..._value, grоupDisciplines: undefined}
+                                        if (_value?.grоupDisciplines?.includes('all')) _value = {..._value, grоupDisciplines: Object.keys(nomRefs?.DISCIPLINE_GROUP)}
+                                    break
+
+                                    case 'disciplines': // nomRefs?.DISCIPLINE
+                                        if (_value?.disciplines?.length === 0 ||
+                                            (_value?.disciplines?.includes('all') && _value?.disciplines?.length > Object.keys(nomRefs?.DISCIPLINE).length)
+                                        ) _value = {..._value, disciplines: undefined}
+                                        if (_value?.disciplines?.includes('all')) _value = {..._value, disciplines: Object.keys(nomRefs?.DISCIPLINE)}
+                                    break
+
+                                    case 'provenance': // nomRefs?.PROVENANCE
+                                        if (_value?.provenance?.length === 0 ||
+                                            (_value?.provenance?.includes('all') && _value?.provenance?.length > Object.keys(nomRefs?.PROVENANCE).length)
+                                        ) _value = {..._value, provenance: undefined}
+                                        if (_value?.provenance?.includes('all')) _value = {..._value, provenance: Object.keys(nomRefs?.PROVENANCE)}
+                                    break
 
                                 }
 
@@ -200,11 +225,11 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(10))}>
+                                                      <Field name="numeroFacture" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
-                                                                      id="NumFact"
+                                                                      id="NumeroFacture"
                                                                       type={'number'}
                                                                       variant="standard"
                                                                       error={meta.invalid}
@@ -226,7 +251,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(14))}>
+                                                      <Field name="numIdPs" validate={validators.composeValidators(validators.maxValue(14))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -244,12 +269,12 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numAdh">
+                                                      <Field name="numAdhInd">
 
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2}}>
                                                                   <TextField
-                                                                      id="NumAdh"
+                                                                      id="numAdhInd"
                                                                       variant="standard"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -292,7 +317,7 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      <Field name="dateDeSoinsDu">
+                                                      <Field name="dateDebutSoin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -308,7 +333,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeSoinsAu">
+                                                      <Field name="dateDebutSoinFin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -324,7 +349,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      {disciplines && <Field name="disciplines" format={value => value || []}>
+                                                      {nomRefs && nomRefs?.DISCIPLINE_GROUP && <Field name="grоupDisciplines" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl  style={{ flex: '1 0 21%', margin: '15px 5px'}} className="RoundedEl">
@@ -341,24 +366,24 @@ export default function SearchAccordion(props) {
                                                                           if (selected.length > 1) {
                                                                               return `${selected.length} disciplines sélectionnéеs`
                                                                           }
-                                                                          return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
+                                                                          return nomRefs.DISCIPLINE_GROUP[selected.toString()] || '';
                                                                       }}
                                                                   >
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                              primary={(values?.grоupDisciplines?.length == Object.keys(nomRefs?.DISCIPLINE_GROUP).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
-                                                                      {disciplines.map(({code, libelle}) => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {libelle}
+                                                                      {Object.keys(nomRefs.DISCIPLINE_GROUP).map(key => (
+                                                                          <MenuItem key={key} value={key}>
+                                                                              {nomRefs.DISCIPLINE_GROUP[key]}
                                                                           </MenuItem>
                                                                       ))}
                                                                   </Select></FormControl>
                                                           )}
                                                       </Field>}
 
-                                                      {disciplines && <Field name="disciplines" format={value => value || []}>
+                                                      {nomRefs && nomRefs?.DISCIPLINE && <Field name="disciplines" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl  style={{ flex: '1 0 21%', margin: '15px 5px'}} className="RoundedEl">
@@ -375,28 +400,28 @@ export default function SearchAccordion(props) {
                                                                           if (selected.length > 1) {
                                                                               return `${selected.length} disciplines sélectionnéеs`
                                                                           }
-                                                                          return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
+                                                                          return nomRefs.DISCIPLINE[selected.toString()] || '';
                                                                       }}
                                                                   >
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                              primary={(values?.disciplines?.length == Object.keys(nomRefs?.DISCIPLINE).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
-                                                                      {disciplines.map(({code, libelle}) => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {libelle}
+                                                                      {Object.keys(nomRefs.DISCIPLINE).map(key => (
+                                                                          <MenuItem key={key} value={key}>
+                                                                              {nomRefs.DISCIPLINE[key]}
                                                                           </MenuItem>
                                                                       ))}
                                                                   </Select></FormControl>
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="numJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
+                                                      <Field name="numeroPsJuridique" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
-                                                                      id="FINESSJuridique"
+                                                                      id="NumeroPsJuridique"
                                                                       label={'Nº FINESS juridique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -413,11 +438,11 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      <Field name="numTitre" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="complNumTitre" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
-                                                                      id="NumTitre"
+                                                                      id="ComplNumTitre"
                                                                       label={'Nº titre'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -430,7 +455,7 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      <Field name="dateHospiDu">
+                                                      <Field name="dateDebutHospitalisation">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -446,7 +471,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateHospiAu">
+                                                      <Field name="dateDebutHospitalisationFin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -471,7 +496,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      {(nomRefs && nomRefs?.FACTURE_STATUS) && <Field name="status" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.STATUS_PAIAE) && <Field name="status" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -486,18 +511,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
-                                                                          return nomRefs.FACTURE_STATUS[selected[0]];
+                                                                          return nomRefs.STATUS_PAIAE[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
+                                                                              primary={(values?.status?.length == Object.keys(nomRefs.STATUS_PAIAE).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.FACTURE_STATUS).map(code => (
+                                                                      {Object.keys(nomRefs.STATUS_PAIAE).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_STATUS[code]}
+                                                                              {nomRefs.STATUS_PAIAE[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -506,11 +531,11 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="montantRCduPaiement" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="totalRc" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
-                                                                      id="MontantRCduPaiement"
+                                                                      id="TotalRc"
                                                                       label={'Montant RC du paiement'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -532,7 +557,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap'}}>
 
-                                                      <Field name="dateDeLaFactureDu">
+                                                      <Field name="dateFacture">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -548,7 +573,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeLaFactureDuAu">
+                                                      <Field name="dateFactureFin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -564,7 +589,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeReceptionDu">
+                                                      <Field name="receivedDate">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -580,7 +605,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeReceptionAu">
+                                                      <Field name="receivedDateFin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -596,7 +621,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeTraitementDeLaFactureDu">
+                                                      <Field name="creationDate">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -612,7 +637,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeTraitementDeLaFactureAu">
+                                                      <Field name="creationDateFin">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -629,11 +654,11 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      <Field name="montantRCdeLaFacture" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="factureRc" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
-                                                                      id="montantRCdeLaFacture"
+                                                                      id="FactureRc"
                                                                       label={'Montant RC de la facture'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -654,27 +679,19 @@ export default function SearchAccordion(props) {
                                               </Accordion>
 
 
-
-
-
-
-
-
-
-
                                               <Accordion expanded={expanded.panelInformationSupplementaires} onChange={handleChange('panelInformationSupplementaires')}>
                                                   <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                       <Typography style={{marginLeft: '5px'}}><b>Information supplementaires</b></Typography>
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'start'}}>
 
-                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="enviroment" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="numEnv" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Enviroment-label">Enviroment</InputLabel>
                                                                   <Select
-                                                                      id="Enviroment"
+                                                                      id="NumEnv"
                                                                       labelId="Enviroment-label"
                                                                       multiple
 
@@ -688,7 +705,7 @@ export default function SearchAccordion(props) {
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
+                                                                              primary={(values?.numEnv?.length == Object.keys(nomRefs.CLIENT).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
@@ -703,7 +720,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="provanance" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="provenance" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -718,18 +735,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Provanance sélectionnés`
-                                                                          return nomRefs.CLIENT[selected[0]];
+                                                                          return nomRefs.PROVENANCE[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
+                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.PROVENANCE).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.CLIENT).map(code => (
+                                                                      {Object.keys(nomRefs.PROVENANCE).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.CLIENT[code]}
+                                                                              {nomRefs.PROVENANCE[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -943,22 +960,28 @@ export default function SearchAccordion(props) {
                                   {<FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numFact,
-                                          numEng,
-                                          numAdh,
-                                          domaine,
-                                          dateDeSoins,
-                                          dateReceivedStart,
-                                          dateReceivedEnd,
-                                          idPeriodeFact,
-                                          dateFact,
+                                          numeroFacture,
+                                          numIdPs,
+                                          numAdhInd,
+                                          dateDebutSoin,
+                                          dateDebutSoinFin,
+                                          grоupDisciplines,
+                                          disciplines,
+                                          numeroPsJuridique,
+                                          complNumTitre,
+                                          dateDebutHospitalisation,
+                                          dateDebutHospitalisationFin,
                                           status,
-                                          errorCode,
-                                          numId,
-                                          numJur,
-                                          raisonSociale,
-                                          department,
-                                          numClient,
+                                          totalRc,
+                                          dateFacture,
+                                          dateFactureFin,
+                                          receivedDate,
+                                          receivedDateFin,
+                                          creationDate,
+                                          creationDateFin,
+                                          factureRc,
+                                          numEnv,
+                                          provenance,
                                           nom,
                                           prenom,
                                           dateDeNaissance,
@@ -968,9 +991,9 @@ export default function SearchAccordion(props) {
                                       } = values?.values;
 
                                       if(
-                                          domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-                                          birdDate || nir || cle
+                                          dateDebutSoin || dateDebutSoinFin || grоupDisciplines || disciplines || numeroPsJuridique || complNumTitre || dateDebutHospitalisation ||
+                                          dateDebutHospitalisationFin || status || totalRc || dateFacture || dateFactureFin || receivedDate || receivedDateFin || creationDate ||
+                                          creationDateFin || factureRc || numEnv || provenance || nom || prenom || dateDeNaissance || birdDate || nir || cle
                                       ) {
                                           setDotShow(true)
                                       } else {

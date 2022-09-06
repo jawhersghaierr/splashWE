@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
-import {FacturesGrid} from "./grids/FacturesGrid";
+import {PaiementsGrid} from "./grids/PaiementsGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
 import mainPS from '../../../assets/PS.png'
 
@@ -33,7 +33,7 @@ export const Paiement = (props) => {
 
         {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
-        <FacturesGrid disciplines={disciplines}/>
+        <PaiementsGrid disciplines={disciplines}/>
 
     </div>
 }

@@ -28,7 +28,7 @@ export const facturationApi = createApi({
                 referenceDate
             ) => ({
                 url: `etsroc?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
             }}),
         }),
@@ -46,7 +46,7 @@ export const facturationApi = createApi({
                 codeTypePrestation
             ) => ({
                 url: `bankaccountps?page=${page}&size=${size}&sortDirection=${sortDirection}&sortProperty=${sortProperty}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
             }}),
         }),
@@ -94,7 +94,7 @@ export const facturationApi = createApi({
                 let url = `ets/${id}`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })
@@ -131,7 +131,7 @@ export const localReferentielApi = createApi({
         getDisciplines: builder.query({
             query: () => ({
                 url: `disciplines`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),

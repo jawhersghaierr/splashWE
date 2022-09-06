@@ -22,7 +22,7 @@ export const configurationsApi = createApi({
                 let url = `configs`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })
@@ -34,7 +34,7 @@ export const configurationsApi = createApi({
                 let url = `configs/${id}`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })

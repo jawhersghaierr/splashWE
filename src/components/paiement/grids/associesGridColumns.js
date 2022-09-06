@@ -7,25 +7,27 @@ import {convertDate, dateConvertNaissanceRAW} from "../utils/utils";
 
 
 export const columns = disciplines => [
+    { field: 'date', headerName: 'Date et heure de reception', flex: 2, sortable: false, renderCell: (params) => {
+            return (params.value);
+        }},
     { field: 'type', headerName: 'Type', flex: 2, sortable: false, renderCell: (params) => {
             return (params.value);
         }},
-    { field: 'domaine', headerName: 'Domaine', flex: 2, renderCell: (params) => {
+    { field: 'numero', headerName: 'Numero', flex: 2, renderCell: (params) => {
             return (params.value)
         }},
 
-    { field: 'dateAdmission', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => { //dateEntree
+    { field: 'montant', headerName: 'Montant', flex: 1, renderCell: (params) => { //dateEntree
             return (convertDate(params.value))
         }},
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell: (params) => {
             return (
-                <Chip label={`${params?.value?.label}`}
-                      sx={{color: 'black'}}/>
+                <Chip label={`${params?.value?.label}`} sx={{color: 'black'}}/>
             )}},
 
-    { field: 'beneficiaryName', headerName: 'Nom et date de naissance beneficiaire', flex: 3, renderCell: (params) => {
+    { field: 'details', headerName: 'Details', flex: 3, renderCell: (params) => {
             let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
-            return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
+            return <span><b>{nom}</b> {prenom}</span>
         }},
 
     { field: 'id', headerName: '', maxWidth: '30px', flex: 1, renderCell: (params) => {

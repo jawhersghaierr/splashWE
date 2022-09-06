@@ -3,23 +3,20 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {convertDate, dateConvertNaissance, facturesStatus, IntlDateWithHHMM, statusRow} from "./utils/utils";
+import {convertDate, dateConvertNaissance, facturesStatus, statusRow} from "./utils/utils";
 import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "./grids/ActesGrid";
-import {SelAssociesGrid} from "./grids/SelAssociesGrid";
-import {PaimentsGrid} from "./grids/PaimentsGrid";
-import {FluxInfo} from "./components/FluxInfo";
+import {HistoryGrid} from "./grids/HistoryGrid";
+import {useGetPaiementByIdQuery} from "./services/paiementsApi";
+import {AssociesGrid} from "./grids/AssociesGrid";
 
 
 
 function TabPanel(props) {
+
     const { children, value, index, data, ...other } = props;
 
     return (
@@ -50,67 +47,57 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
+
+
+const oneRowHeader = ({ dateCreation, dateModification}) => {
+
+    return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
+        <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
+            <RowInfo label={'Date de creation'} value={convertDate(dateCreation)}/>
+        </div>
+        <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
+            <RowInfo label={'Derniere modification'} value={convertDate(dateModification)}/>
+        </div>
+    </div>
+}
+
+
+
+
 export default function PaiementDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/factures/:id",
+        path: "/paiement/:id",
         exact: true,
         strict: false
     });
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetFactureByIdQuery(match?.params?.id);
-    let factLines = []
-    if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
+    const {data = null} = useGetPaiementByIdQuery(match?.params?.id);
 
     const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
-
-    const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
-
-    // useEffect(() => {
-    //     console.log(resultData);
-    // }, [resultData]);
-
-    const reShapeDiscipline = (_discipline) => resultData.find(item => item.code.toString() === _discipline)?.libelle || ''
-
 
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails de la facture</b>
+                <b>Détails du paiement</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                {data?.numFact}
+                {data?.idFacture}
             </Typography>
 
-            <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
+            <Chip label={data?.paiementStatus}  sx={{color: 'black', margin: '15px 0 0 0' }}/>
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)}/>
-                    <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
-                        <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
-                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
-                    <RowInfo label={'Environnement'} value={data?.numEnv}/>
-                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>
+                    <RowInfo label={'Montant RC'} value={data?.rc}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
-                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
-                    <RowInfo label={'AMC'} value={data?.numClient}/>
-                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)}/>
-                </div>
-                <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
-                    <RowInfo label={'Date et rang de naissance'}
-                             value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
-                             chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
-                    />
-                    <RowInfo label={'Montant RC'} value={`${data?.totalRc} €`}/>
+                    <RowInfo label={'Facture'} value={data?.numFacture}/>
                 </div>
             </div>
 
@@ -123,56 +110,18 @@ export default function PaiementDetailsById(props) {
                 // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
-                <Tab label="Informations generales"  {...a11yProps(0)}/>
-                <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
-                <Tab label="Sel associes"  {...a11yProps(2)}/>
-                <Tab label="Paiements" {...a11yProps(3)} />
-                <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
+                <Tab label="ELEMENT ASSOCIES"  {...a11yProps(0)}/>
+                <Tab label="HISTORIQUE"  {...a11yProps(1)} />
             </Tabs>
 
             <TabPanel value={value} index={0} data={data}>
-                {data && <Box style={{
-                    backgroundColor: '#F6F8FC',
-                    flex: 1,
-                    minWidth: '300px',
-                    margin: '5px',
-                    padding: '10px 25px 25px 25px'}}>
-                    <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                        <b>Informations demande</b>
-                    </Typography>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData.numEng} border={true} justify={true}/>
-                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
-                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
-                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
-                        </div>
-                        <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
-                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
-                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
-                        </div>
-                    </div>
-
-                </Box>}
+                {data && oneRowHeader(data)}
+                {(data?.associes && data?.associes.length > 0) && <AssociesGrid data={data?.associes}/>}
             </TabPanel>
+
             <TabPanel value={value} index={1} data={data}>
-
-                {(data?.factLines && factLines.length > 0) && <ActesGrid data={factLines}/>}
-
-            </TabPanel>
-
-            <TabPanel value={value} index={2} data={data}>
-                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
-            </TabPanel>
-            <TabPanel value={value} index={3} data={data}>
-                {match?.params?.id && <PaimentsGrid factId={match?.params?.id}/>}
-            </TabPanel>
-
-            <TabPanel value={value} index={4} data={data}>
-
-                { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
+                {data && oneRowHeader(data)}
+                {(data?.historyElements && data?.historyElements.length > 0) && <HistoryGrid data={data?.historyElements}/>}
             </TabPanel>
 
         </Box>

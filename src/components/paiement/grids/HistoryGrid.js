@@ -1,10 +1,10 @@
 import React from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./actesGridColumns";
-import './facturesGrid.scss';
+import {columns} from "./historyGridColumns";
+import './paiementsGrid.scss';
 
-export const ActesGrid = ({data}) => {
+export const HistoryGrid = ({data}) => {
 
     return <DataGrid
                     rows={data || []}

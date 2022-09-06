@@ -26,7 +26,7 @@ export const selAndIdbApi = createApi({
 
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })

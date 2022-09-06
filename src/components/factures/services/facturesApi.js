@@ -95,7 +95,7 @@ export const facturesApi = createApi({
                 let url = `factures/${id}`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })

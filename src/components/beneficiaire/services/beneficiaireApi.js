@@ -75,7 +75,7 @@ export const beneficiaireApi = createApi({
 
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })
@@ -87,7 +87,7 @@ export const beneficiaireApi = createApi({
                 let url = `droitsBeneficiaires/${id}?fields=ADRESSE,GAR,RES_SOINS,AYANT_DROITS,OUVRANT_DROITS`;
                 return ({
                     url,
-                    transformResponse: (response, meta, arg) => {
+                    transform: (response, meta, arg) => {
                         return {...JSON.parse(response)};
                     }
                 })

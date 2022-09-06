@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./paimentsGridColumns";
 import './facturesGrid.scss';
-import {useGetPaiementsFacturesByIdQuery} from "../services/paiementsApi";
+import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiementsApi";
 
 
 export const PaimentsGrid = ({factId}) => {

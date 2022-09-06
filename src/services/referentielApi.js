@@ -40,14 +40,14 @@ export const referentielApi = createApi({
         getParcours: builder.query({
             query: () => ({
                 url: 'parcours',
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
         }),
         getParcoursById: builder.query({
             query: (id) => ({
                 url: `parcours/${id}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -55,14 +55,14 @@ export const referentielApi = createApi({
         getClients: builder.query({
             query: () => ({
                 url: 'clients',
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
         }),
         getClientsById: builder.query({
             query: (id) => ({
                 url: `clients/${id}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -70,14 +70,14 @@ export const referentielApi = createApi({
         getEnvironments: builder.query({
             query: () => ({
                 url: 'environments',
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
         }),
         getEnvironmentsById: builder.query({
             query: (id) => ({
                 url: `environments/${id}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -85,14 +85,14 @@ export const referentielApi = createApi({
         getNatures: builder.query({
             query: () => ({
                 url: 'natures',
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
         }),
         getNaturesById: builder.query({
             query: (id) => ({
                 url: `natures/${id}`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -100,7 +100,7 @@ export const referentielApi = createApi({
         getDisciplines: builder.query({
             query: () => ({
                 url: `disciplines`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -109,7 +109,7 @@ export const referentielApi = createApi({
         getGaranties: builder.query({
             query: () => ({
                 url: `garanties`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -118,7 +118,7 @@ export const referentielApi = createApi({
         getSousGaranties: builder.query({
             query: () => ({
                 url: `sousGaranties`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -127,7 +127,7 @@ export const referentielApi = createApi({
         getReseaux: builder.query({
             query: () => ({
                 url: `reseaux`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),
@@ -136,7 +136,7 @@ export const referentielApi = createApi({
         getDcs: builder.query({
             query: () => ({
                 url: `dcs`,
-                transformResponse: (response, meta, arg) => {
+                transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }
             }),

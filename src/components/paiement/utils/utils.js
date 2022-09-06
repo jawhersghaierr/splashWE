@@ -126,31 +126,40 @@ export const validators = {
 
 export const checker = (values) => {
     const {
-        numFact,
-        numEng,
-        numAdh,
-        domaine,
-        dateDeSoins,
-        dateReceivedStart,
-        dateReceivedEnd,
-        idPeriodeFact,
-        dateFact,
+        numeroFacture,
+        numIdPs,
+        numAdhInd,
+        dateDebutSoin,
+        dateDebutSoinFin,
+        grоupDisciplines,
+        disciplines,
+        numeroPsJuridique,
+        complNumTitre,
+        dateDebutHospitalisation,
+        dateDebutHospitalisationFin,
         status,
-        errorCode,
-        numId,
-        numJur,
-        raisonSociale,
-        department,
-        numClient,
+        totalRc,
+        dateFacture,
+        dateFactureFin,
+        receivedDate,
+        receivedDateFin,
+        creationDate,
+        creationDateFin,
+        factureRc,
+        numEnv,
+        provenance,
         nom,
         prenom,
         dateDeNaissance,
         birdDate,
         nir,
-        cle} = values || {};
-    if(numFact || numEng || numAdh || domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-        errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-        birdDate || nir || cle) {
+        cle
+    } = values || {};
+
+    if(numeroFacture || numIdPs || numAdhInd || dateDebutSoin || dateDebutSoinFin || grоupDisciplines || disciplines || numeroPsJuridique || complNumTitre || dateDebutHospitalisation ||
+        dateDebutHospitalisationFin || status || totalRc || dateFacture || dateFactureFin || receivedDate || receivedDateFin || creationDate ||
+        creationDateFin || factureRc || numEnv || provenance || nom || prenom || dateDeNaissance || birdDate || nir || cle
+    ) {
         return true
     } else {
         return false
@@ -160,28 +169,33 @@ export const checker = (values) => {
 export const checkInsidePanels = (values) => {
 
     const {
-        numFact,
-        numEng,
-        numAdh,
-        domaine,
-        dateDeSoins,
-        dateReceivedStart,
-        dateReceivedEnd,
-        idPeriodeFact,
-        dateFact,
+        dateDebutSoin,
+        dateDebutSoinFin,
+        grоupDisciplines,
+        disciplines,
+        numeroPsJuridique,
+        complNumTitre,
+        dateDebutHospitalisation,
+        dateDebutHospitalisationFin,
         status,
-        errorCode,
-        numId,
-        numJur,
-        raisonSociale,
-        department,
-        numClient,
+        totalRc,
+        dateFacture,
+        dateFactureFin,
+        receivedDate,
+        receivedDateFin,
+        creationDate,
+        creationDateFin,
+        factureRc,
+        numEnv,
+        provenance,
         nom,
         prenom,
         dateDeNaissance,
         birdDate,
         nir,
-        cle} = values || {};
+        cle
+    } = values || {};
+
     let result =  {
 
         panelSoins: true,
@@ -216,13 +230,6 @@ export const statusRow = (formattedValue) => {
         res[stat.statutRib] = {}
         res[stat.statutRib] = {...stat, ...statusesRIB[stat.statutRib]};
     })
-    /*
-        Ако има поне 1 ПС чийто риб е en attente - показваме En attente
-        Aко има поне 1 ПС чийто риб е refused - показваме Refusé
-        Ако ПС-ите нямат риб или той е деактивиран - показваме Manquant
-        Ако ПС-ите нямат активна конвенция - тогава показваме Inactif
-        Ако всичките рибове на ПС са валидирани - показваме Validé
-    */
 
     if (res.ATT?.count > 0) return {...res, ATT: {...res.ATT, shown: true}};
     if (res.REF?.count > 0) return {...res, REF: {...res.REF, shown: true}};
@@ -298,8 +305,6 @@ export const calcCleFromNir = (values) => {
 
         valid = true;
         return cle
-        // form.getFieldState('cle').change(cle)
-        // 27 41 14 75 66 941
 
     }else {
         console.log('not match')
@@ -347,9 +352,13 @@ export const dateConvertNaissance = (dat) => {
     }
 }
 
-export const convertDate = (dat) => {
+export const convertDate = (dat, hh = false) => {
     if (dat && dat !== undefined && dat !== '') {
-        return new Date(dat).toLocaleDateString('fr');
+        if (!hh) {
+            return new Date(dat).toLocaleDateString('fr');
+        } else {
+            return new Date(dat).toLocaleString('fr', {hour12: false})
+        }
     } else {
         return '';
     }
@@ -360,21 +369,3 @@ export const currencyFormatter = new Intl.NumberFormat('fr', {
     style: 'currency',
     currency: 'EUR',
 });
-//
-// export const IntlDateWithHHMM = (dateStr) => {
-//     const p = new Intl.DateTimeFormat('fr', {
-//         year:'numeric',
-//         month:'2-digit',
-//         day:'2-digit',
-//         hour:'2-digit',
-//         minute:'2-digit',
-//         second:'2-digit',
-//         hour12: false,
-//         timeZone:'UTC'
-//     }).formatToParts(dateStr).reduce((acc, part) => {
-//         acc[part.type] = part.value;
-//         return acc;
-//     }, {});
-//
-//     return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;
-// };

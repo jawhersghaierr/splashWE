@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./selAssociesGridColumns";
-import './facturesGrid.scss';
+import {columns} from "./associesGridColumns";
+import './paiementsGrid.scss';
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 
-export const SelAssociesGrid = ({numEng}) => {
+export const AssociesGrid = ({numEng}) => {
     console.log('numEng > ', numEng)
 
     let {data} = useGetSelsAndIdbOfFactureEngNQuery(numEng)

@@ -10,7 +10,9 @@ import { refsApi } from './services/refsApi';
 import { psApi } from "./components/ps/services/psApi";
 import { facturesApi } from "./components/factures/services/facturesApi";
 import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
-import { paiementsApi } from "./components/factures/services/paiementsApi";
+
+import { paiementsApi } from "./components/paiement/services/paiementsApi";
+
 import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
 import {configurationsApi} from "./components/configurations/services/configurationsApi";
 import {fluxApi} from "./components/factures/services/fluxApi";

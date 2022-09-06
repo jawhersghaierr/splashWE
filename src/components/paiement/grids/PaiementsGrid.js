@@ -3,19 +3,20 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetFacturesQuery} from "../services/facturesApi";
+
 import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
 import { selectCriterias } from '../paiementSlice'
 
-import {columns} from "./gridFacturesColumns";
-import './facturesGrid.scss';
+import {columns} from "./gridPaiementColumns";
+import './paiementsGrid.scss';
 
 import {checker, usePrevious} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
+import {useGetPaiementsQuery} from "../services/paiementsApi";
 
-export const FacturesGrid = ({disciplines}) => {
+export const PaiementsGrid = ({disciplines}) => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -27,7 +28,7 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
