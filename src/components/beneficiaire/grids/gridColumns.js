@@ -2,8 +2,7 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {benefStatuses, convertDate, dateConvertNaissance} from '../utils/utils'
-
+import {benefStatuses, convertDate, dateConvertNaissanceRAW} from '../../../utils/utils'
 
 export const columns = enviroments => [
     { field: 'numeroAdherentFamilial', headerName: '№ Adhérent Familial', flex: 2 },
@@ -18,7 +17,7 @@ export const columns = enviroments => [
     { field: 'dateNaissance', headerName: 'Date de Naissance et Rang', flex: 3, sortable: false,
         renderCell: (params) => {
             return (<>
-                {dateConvertNaissance(params.row?.dateNaissance)}&nbsp;<Chip label={params.row.rangNaissance}/>
+                {dateConvertNaissanceRAW(params.row?.dateNaissance)}&nbsp;<Chip label={params.row.rangNaissance}/>
             </>)
     }},
     { field: 'environmentCode', headerName: 'Environnement', flex: 1, renderCell: (params) => {

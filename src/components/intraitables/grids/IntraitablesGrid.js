@@ -12,7 +12,8 @@ import { selectCriterias } from '../intraitablesSlice'
 import {columns} from "./columnsIntraitablesGrid";
 import './intraitablesGrid.scss';
 
-import {checker, usePrevious} from '../utils/utils'
+import {usePrevious} from '../../../utils/utils'
+import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
 export const IntraitablesGrid = () => {
@@ -81,7 +82,7 @@ export const IntraitablesGrid = () => {
                         whiteSpace: "break-spaces",
                         lineHeight: 1
                     },
-
+                    '& .boldValue': { fontWeight: 'bold' }
                 }}
                 rowHeight={85}
             />

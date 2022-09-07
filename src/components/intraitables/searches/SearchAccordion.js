@@ -2,7 +2,6 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, Typography, Button, TextField}  from "@mui/material";
-
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
@@ -12,20 +11,12 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {fr} from "date-fns/locale";
+import { setCriterias, initCriterias, selectCriterias } from '../intraitablesSlice'
 
-import {
-    checker,
-    isValidDate
-} from '../utils/utils';
-
-import {
-    setCriterias,
-    initCriterias,
-    selectCriterias,
-} from '../intraitablesSlice'
+import {validators} from "../../../utils/utils";
+import { checker } from '../utils/utils';
 
 import './searchAccordion.scss'
-import {validators} from "../../factures/utils/utils";
 
 
 const StyledCard = styled(Card)(({ theme }) => ({

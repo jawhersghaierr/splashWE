@@ -37,7 +37,7 @@ export const GarantiesGrid = ({garanties, nom, simple = true}) => {
                         whiteSpace: "break-spaces",
                         lineHeight: 1
                     },
-
+                    '& .boldValue': { fontWeight: 'bold' }
                 }}
                 rowHeight={85}
             />}

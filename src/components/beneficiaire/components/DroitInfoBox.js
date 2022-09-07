@@ -1,10 +1,10 @@
 import React from 'react'
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
-import {RowInfo} from "./RowInfo";
-import {benefStatuses, convertDate, dateConvertNaissance} from "../utils/utils";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {Link} from "react-router-dom";
+import {RowInfo} from "./RowInfo";
+import {benefStatuses, convertDate, dateConvertNaissanceRAW } from "../../../utils/utils";
 
 export const DoritInfoBox = ({droit}) => {
 
@@ -23,7 +23,7 @@ export const DoritInfoBox = ({droit}) => {
         ({droit?.id}) {droit.lienFamillialLabel} <br/>
         <Chip label={benefStatuses[droit?.status]?.label} sx={{bgcolor: benefStatuses[droit?.status]?.color, margin: '5px'}}/>
 
-        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissance(droit?.dateNaissance)} chip={droit?.rangNaissance}/>
+        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(droit?.dateNaissance)} chip={droit?.rangNaissance}/>
         <RowInfo label={'N° adhérent individuel'} value={droit?.numeroAdherentIndividuel}/>
         <RowInfo label={'Date début droits'} value={convertDate(droit?.dateOuvertureDroits)}/>
         <RowInfo label={'Date fin droits'} value={convertDate(droit?.dateFermetureDroits)}/>

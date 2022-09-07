@@ -12,7 +12,8 @@ import { selectCriterias } from '../beneficiaireSlice'
 import {columns} from "./gridColumns";
 import './beneficiaireGrid.scss';
 
-import {checker, usePrevious} from '../utils/utils'
+import {usePrevious} from '../../../utils/utils'
+import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 
 export const BeneficiaireGrid = ({enviroments}) => {
@@ -81,7 +82,7 @@ export const BeneficiaireGrid = ({enviroments}) => {
                         whiteSpace: "break-spaces",
                         lineHeight: 1
                     },
-
+                    '& .boldValue': { fontWeight: 'bold', },
                 }}
                 rowHeight={85}
             />

@@ -11,13 +11,9 @@ import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
-import {benefStatuses, convertDate, dateConvertNaissance} from "./utils/utils";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
-import {usePrevious} from "../factures/utils/utils";
+import {usePrevious, benefStatuses, convertDate, dateConvertNaissance, dateConvertNaissanceRAW} from "../../utils/utils";
+
 import {useEffect} from "react";
-
-
-
 
 
 function TabPanel(props) {
@@ -108,7 +104,6 @@ export default function BeneficiaireDetailsById(props) {
             data?.garanties.forEach((_garan, id) => {
                 let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)[0];
 
-                // console.log(garantie)
                 if (garantie?.type == 'TP simple') {
                     garanties.push({id, ..._garan})
                 } else {
@@ -163,7 +158,7 @@ export default function BeneficiaireDetailsById(props) {
                     {data && <div>
                         {(data?.prenom && data?.nom) && <RowInfo label={'Nom et prénom'} value={`${data.prenom} ${data.nom}`}/>}
                         {(data?.rangNaissance && data?.dateNaissance) &&
-                        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissance(data?.dateNaissance)} chip={data.rangNaissance}/>}
+                        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(data?.dateNaissance)} chip={data.rangNaissance}/>}
                     </div>}
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
@@ -280,7 +275,6 @@ export default function BeneficiaireDetailsById(props) {
                         })}
                     </div> :
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        {/*<DoritInfoBox droit={data} simple={false}/>*/}
                         {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
                     </div>
                 }

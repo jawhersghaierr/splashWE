@@ -2,44 +2,30 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-
 import CardHeader from '@mui/material/CardHeader';
-
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-
-import Collapse from '@mui/material/Collapse';
 import Badge from '@mui/material/Badge';
-
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Collapse from '@mui/material/Collapse';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+
 import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import {useGetRefsQuery} from "../../../services/refsApi";
 
-import {
-    validators,
-    checker,
-    checkInsidePanels,
-    isValidDate
-} from '../utils/utils';
+import { validators, isValidDate } from '../../../utils/utils';
+import { checker, checkInsidePanels } from '../utils/utils';
 
-import {
-    setCriterias,
-    initCriterias,
-    selectCriterias,
-} from '../configurationSlice'
+import { setCriterias, initCriterias, selectCriterias } from '../configurationSlice'
 
 import './searchAccordion.scss'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import InputAdornment from '@mui/material/InputAdornment';
-import {useGetRefsQuery} from "../../../services/refsApi";
 
 
 const StyledCard = styled(Card)(({ theme }) => ({

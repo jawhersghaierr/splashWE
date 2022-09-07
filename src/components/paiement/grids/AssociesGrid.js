@@ -4,12 +4,14 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './paiementsGrid.scss';
 
-export const AssociesGrid = (data) => {
+export const AssociesGrid = ({data}) => {
+
+    console.log(data)
 
     return <div style={{margin: 0}}>
 
         {data && <DataGrid
-                    rows={data.assosiete || []}
+                    rows={data || []}
                     columns={columns()}
                     pageSize={20}
                     autoHeight
@@ -34,7 +36,6 @@ export const AssociesGrid = (data) => {
                             lineHeight: 1
                         },
                     }}
-
         />}
 
     </div>

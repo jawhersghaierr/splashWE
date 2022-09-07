@@ -1,18 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetEtsQuery} from "../services/psApi";
 import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
-
 import { selectCriterias } from '../psSlice'
-
 import {columns} from "./gridColumns";
+import {usePrevious} from '../../../utils/utils'
+import {checker} from '../utils/utils'
+
 import './psGrid.scss';
 
-import {checker, usePrevious} from '../utils/utils'
+
 import mainPS from "../../../../assets/PS.png";
 
 export const PsGrid = ({disciplines}) => {
@@ -73,6 +73,13 @@ export const PsGrid = ({disciplines}) => {
                 }
                 onCellClick={(params, event) => {
                     event.defaultMuiPrevented = true;
+                }}
+                sx={{ '& .boldValue': { fontWeight: 'bold', },
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        textOverflow: "clip",
+                        whiteSpace: "break-spaces",
+                        lineHeight: 1
+                    },
                 }}
 
                 sortingMode="server"

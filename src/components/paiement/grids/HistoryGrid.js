@@ -25,7 +25,13 @@ export const HistoryGrid = ({data}) => {
                     onCellClick={(params, event) => {
                         event.defaultMuiPrevented = true;
                     }}
-
+                    sx={{ '& .boldValue': { fontWeight: 'bold', },
+                        '& .MuiDataGrid-columnHeaderTitle': {
+                            textOverflow: "clip",
+                            whiteSpace: "break-spaces",
+                            lineHeight: 1
+                        },
+                    }}
         />
 }
 

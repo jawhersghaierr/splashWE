@@ -33,6 +33,14 @@ export const GridConfigutation = ({data}) => {
                 onCellClick={(params, event) => {
                     event.defaultMuiPrevented = true;
                 }}
+                sx={{
+                    '& .MuiDataGrid-columnHeaderTitle': {
+                        textOverflow: "clip",
+                        whiteSpace: "break-spaces",
+                        lineHeight: 1
+                    },
+                    '& .boldValue': { fontWeight: 'bold' }
+                }}
             />}
 
     </div>

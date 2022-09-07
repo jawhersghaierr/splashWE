@@ -1,11 +1,8 @@
 import Chip from "@mui/material/Chip";
 import React from "react";
-
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {convertDate} from "../utils/utils";
-
-
+import {convertDate, currencyFormatter} from "../../../utils/utils";
 
 export const columns = disciplines => [
     { field: 'dateCreation', headerName: 'Date et heure de reception', minWidth: '150px', flex: 3, renderCell: (params) => { //dateEntree
@@ -13,11 +10,7 @@ export const columns = disciplines => [
         }},
     { field: 'type', headerName: 'Type', flex: 1},
     { field: 'numero', headerName: '№ Numero', type: 'number', flex: 1},
-
-    { field: 'montant', headerName: 'Montant', flex: 1, renderCell: (params) => {
-            return <b>{params.value} €</b>
-        }},
-
+    { field: 'montant', headerName: 'Montant', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: 'Statut', flex: 1, renderCell: (params) => {
             return (
                 <Chip label={`${params.value}`} sx={{color: 'black'}}/>

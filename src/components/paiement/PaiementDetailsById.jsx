@@ -3,15 +3,13 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {convertDate, dateConvertNaissance, facturesStatus, statusRow} from "./utils/utils";
-import {useEffect} from "react";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {HistoryGrid} from "./grids/HistoryGrid";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
 import {AssociesGrid} from "./grids/AssociesGrid";
+import {convertDate, facturesStatus, currencyFormatter} from "../../utils/utils";
 
 
 
@@ -77,8 +75,6 @@ export default function PaiementDetailsById(props) {
 
     const {data = null} = useGetPaiementByIdQuery(match?.params?.id);
 
-    const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
-    const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
 
     return (
 
@@ -94,7 +90,7 @@ export default function PaiementDetailsById(props) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Montant RC'} value={data?.rc}/>
+                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
                     <RowInfo label={'Facture'} value={data?.numFacture}/>
@@ -116,7 +112,7 @@ export default function PaiementDetailsById(props) {
 
             <TabPanel value={value} index={0} data={data}>
                 {data && oneRowHeader(data)}
-                {(data?.associes && data?.associes.length > 0) && <AssociesGrid data={data?.associes}/>}
+                {(data?.associatedElements && data?.associatedElements.length > 0) && <AssociesGrid data={data?.associatedElements}/>}
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>

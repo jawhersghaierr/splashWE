@@ -3,14 +3,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {useGetFactureByIdQuery} from "./services/configurationsApi";
-import {statusRow} from "./utils/utils";
 import {useEffect, useState} from "react";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 import {RowInfo} from "./components/RowInfo";
 import {ConfigutationGrid} from "./grids/GridRulesOfConfig";
 

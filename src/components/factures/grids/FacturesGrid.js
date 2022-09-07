@@ -8,12 +8,11 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
 import { selectCriterias } from '../facturesSlice'
-
 import {columns} from "./gridFacturesColumns";
-import './facturesGrid.scss';
-
-import {checker, usePrevious} from '../utils/utils'
+import {usePrevious} from '../../../utils/utils'
+import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
+import './facturesGrid.scss';
 
 export const FacturesGrid = ({disciplines}) => {
 

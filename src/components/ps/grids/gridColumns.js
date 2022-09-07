@@ -49,11 +49,8 @@ export const columns = disciplines => [
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (
-                <LightTooltip
-                    title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>}
-                    placement="top" arrow>
-                    <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`}
-                          sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>
+                <LightTooltip title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>} placement="top" arrow>
+                    <Chip label={`${statRow[shown]?.count} ${statRow[shown]?.label}${(statRow[shown]?.count > 1)? 's' : ''}`} sx={{bgcolor: statRow[shown]?.color, color: 'black'}}/>
                 </LightTooltip>
             )
         }},
@@ -82,9 +79,7 @@ export const columns = disciplines => [
                 </div>
             )
         }},
-    { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => (
-            params.formattedValue
-        )},
+    { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => ( params.formattedValue )},
     { field: 'codePostal', headerName: 'Code postal', width: 150 },
     { field: 'id', headerName: '', width: 15, sortable: false, renderCell: (params) => {
             return <Link to={`/PS/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>

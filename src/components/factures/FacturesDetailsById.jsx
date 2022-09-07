@@ -4,19 +4,17 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {convertDate, dateConvertNaissance, facturesStatus, IntlDateWithHHMM, statusRow} from "./utils/utils";
-import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
+import { convertDate, dateConvertNaissance, facturesStatus } from "../../utils/utils";
+import {statusRow} from "./utils/utils";
 
 
 function TabPanel(props) {
@@ -70,12 +68,6 @@ export default function FacturesDetailsById(props) {
 
     const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
 
-    // useEffect(() => {
-    //     console.log(resultData);
-    // }, [resultData]);
-
-    const reShapeDiscipline = (_discipline) => resultData.find(item => item.code.toString() === _discipline)?.libelle || ''
-
 
     return (
 
@@ -120,7 +112,6 @@ export default function FacturesDetailsById(props) {
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
-                // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>

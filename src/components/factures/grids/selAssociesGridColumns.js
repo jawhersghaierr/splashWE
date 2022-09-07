@@ -3,7 +3,7 @@ import React from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {convertDate, dateConvertNaissanceRAW} from "../utils/utils";
+import {convertDate, dateConvertNaissanceRAW} from "../../../utils/utils";
 
 
 export const columns = disciplines => [
@@ -18,10 +18,8 @@ export const columns = disciplines => [
             return (convertDate(params.value))
         }},
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell: (params) => {
-            return (
-                <Chip label={`${params?.value?.label}`}
-                      sx={{color: 'black'}}/>
-            )}},
+            return ( <Chip label={`${params?.value?.label}`} sx={{color: 'black'}}/> )
+    }},
 
     { field: 'beneficiaryName', headerName: 'Nom et date de naissance beneficiaire', flex: 3, renderCell: (params) => {
             let {nom, prenom, dateNaissance} = params?.row?.beneficiary;

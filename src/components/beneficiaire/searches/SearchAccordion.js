@@ -9,34 +9,25 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-
 import CardHeader from '@mui/material/CardHeader';
-
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
 import InputLabel from '@mui/material/InputLabel';
-
 import Collapse from '@mui/material/Collapse';
 import Badge from '@mui/material/Badge';
-
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import {
-    validators,
-    checker,
-    checkInsidePanels,
-    isValidDate
-} from '../utils/utils';
+import { validators, isValidDate } from '../../../utils/utils';
+
+import { checker, checkInsidePanels } from '../utils/utils';
 
 import {
     setCriterias,
