@@ -52,7 +52,7 @@ const hostMenuItems = [
         link: '/configuration'
     },
     {
-        name: 'ROC Intraitables',
+        name: 'Intraitables',
         link: '/intraitables',
         Icon: IconBarChart,
         popItems: [
@@ -69,6 +69,7 @@ const hostMenuItems = [
     {
         Icon: IconLibraryBooks,
         name: 'Virements',
+        link: '/virements'
     },
     // {
     //     name: 'Remote test App',

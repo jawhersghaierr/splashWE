@@ -10,7 +10,7 @@ export const Intraitables = (props) => {
     return <div style={{padding: '0', margin: 0}}>
 
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>ROC - Intraitables</b> &nbsp;
+            <b>Intraitables</b> &nbsp;
         </Typography>
 
         <SearchAccordion className="searchContainer" />

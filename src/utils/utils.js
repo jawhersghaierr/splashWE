@@ -293,7 +293,12 @@ export const isValidDate = (d) => {
     }
 }
 
-
+/**
+ *
+ * @param dateStr
+ * console.log(new Intl.DateTimeFormat('en-US').format(date));
+ * @constructor
+ */
 export const IntlDateWithHHMM = (dateStr) => {
     const p = new Intl.DateTimeFormat('fr', {
         year:'numeric',

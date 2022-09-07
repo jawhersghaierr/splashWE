@@ -13,7 +13,7 @@ export const columns = disciplines => [
     { field: 'numeroFacture', headerName: '№ de facturation PS/TS', flex: 2 },
     { field: 'provenance', headerName: 'Provenance', flex: 1 },
 
-    { field: 'creationDate', headerName: 'Date de Paiement', flex: 1, sortable: false, renderCell: (params) => {
+    { field: 'creationDate', headerName: 'Date de Virement', flex: 1, sortable: false, renderCell: (params) => {
         return (convertDate(params.value));
     }},
     { field: 'dateFacture', headerName: 'Date de Facture', flex: 1, sortable: false, renderCell: (params) => {
@@ -26,7 +26,7 @@ export const columns = disciplines => [
                 <Chip label={params.value} sx={{color: 'black'}}/>
             )}},
 
-    { field: 'status', headerName: 'Statut Paiement', flex: 1, renderCell: (params) => {
+    { field: 'status', headerName: 'Statut Virement', flex: 1, renderCell: (params) => {
             return (
                 <Chip label={params.value} sx={{color: 'black'}}/>
             )}},

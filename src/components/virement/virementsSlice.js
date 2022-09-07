@@ -10,42 +10,22 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        numeroFacture: undefined,
-        numIdPs: undefined,
+        numVirement: undefined,
+        numDecompte: undefined,
         numAdhInd: undefined,
-        dateDebutSoin: undefined,
-        dateDebutSoinFin: undefined,
-        grоupDisciplines: undefined,
-        disciplines: undefined,
-        numeroPsJuridique: undefined,
-        complNumTitre: undefined,
-        dateDebutHospitalisation: undefined,
-        dateDebutHospitalisationFin: undefined,
+        numPsAPayer: undefined,
+        dateTraitement: undefined,
+        dateTraitementFin: undefined,
         status: undefined,
-        totalRc: undefined,
-        dateFacture: undefined,
-        dateFactureFin: undefined,
-        receivedDate: undefined,
-        receivedDateFin: undefined,
-        creationDate: undefined,
-        creationDateFin: undefined,
-        factureRc: undefined,
-        numEnv: undefined,
-        provenance: undefined,
-        nom: undefined,
-        prenom: undefined,
-        dateDeNaissance: undefined,
-        birdDate: undefined,
-        nir: undefined,
-        cle: undefined
+        mntVirement: undefined
     }
     // isLoading: null,
     // isError: null,
 }
 
 
-export const paiementSlice = createSlice({
-    name: 'PAIEMENTS',
+export const virementsSlice = createSlice({
+    name: 'VIREMENTS',
     initialState,
     reducers: {
 
@@ -79,18 +59,14 @@ export const paiementSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                numeroFacture, numIdPs, numAdhInd,
-                dateDebutSoin, dateDebutSoinFin,
-                grоupDisciplines, disciplines,
-                numeroPsJuridique, complNumTitre,
-                dateDebutHospitalisation, dateDebutHospitalisationFin,
-                status, totalRc,
-                dateFacture, dateFactureFin,
-                receivedDate, receivedDateFin,
-                creationDate, creationDateFin,
-                factureRc, numEnv, provenance,
-                nom, prenom, dateDeNaissance, birdDate,
-                nir, cle
+                numVirement,
+                numDecompte,
+                numAdhInd,
+                numPsAPayer,
+                dateTraitement,
+                dateTraitementFin,
+                status,
+                mntVirement
             } = action?.payload
 
             state.criterias = {};
@@ -116,10 +92,10 @@ export const {
     setPagination,
     setCriterias,
     initCriterias
-} = paiementSlice.actions;
+} = virementsSlice.actions;
 
-export const selectPagination = (state) => ({...state?.paiements?.pagination});
-export const selectCriterias = (state) => ({...state?.paiements?.criterias});
-export const selectNumCriterias = (state) => (state?.paiements?.numCriterias);
+export const selectPagination = (state) => ({...state?.virements?.pagination});
+export const selectCriterias = (state) => ({...state?.virements?.criterias});
+export const selectNumCriterias = (state) => (state?.virements?.numCriterias);
 
-export default paiementSlice.reducer;
+export default virementsSlice.reducer;

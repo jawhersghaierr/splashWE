@@ -12,17 +12,19 @@ import { facturesApi } from "./components/factures/services/facturesApi";
 import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
 
 import { paiementsApi } from "./components/paiement/services/paiementsApi";
+import { virementsApi } from "./components/virement/services/virementsApi";
 
 import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
-import {configurationsApi} from "./components/configurations/services/configurationsApi";
-import {fluxApi} from "./components/factures/services/fluxApi";
+import { configurationsApi } from "./components/configurations/services/configurationsApi";
+import { fluxApi } from "./components/factures/services/fluxApi";
 
 import psReducer from './components/ps/psSlice'
+import paiementsReducer from './components/paiement/paiementSlice'
+import virementsReducer from './components/virement/virementsSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
 import intraitablesReducer from './components/intraitables/intraitablesSlice'
 import facturesReducer from "./components/factures/facturesSlice";
 import {intraitablesApi} from "./components/intraitables/services/intraitablesApi";
-import {intraitablesSlice} from "./components/intraitables/intraitablesSlice";
 
 function logger({ getState }) {
   return next => action => {
@@ -67,6 +69,7 @@ export default function configureStore(initialState) {
       referentielApi.middleware,
       psApi.middleware,
       paiementsApi.middleware,
+      virementsApi.middleware,
       selAndIdbApi.middleware,
       facturesApi.middleware,
       beneficiaireApi.middleware,
@@ -109,6 +112,7 @@ function createReducer(asyncReducers) {
     comp1: comp1Reducer,
     [psApi.reducerPath]: psApi.reducer,
     [paiementsApi.reducerPath]: paiementsApi.reducer,
+    [virementsApi.reducerPath]: virementsApi.reducer,
     [selAndIdbApi.reducerPath]: selAndIdbApi.reducer,
     [facturesApi.reducerPath]: facturesApi.reducer,
     [beneficiaireApi.reducerPath]: beneficiaireApi.reducer,
@@ -118,6 +122,8 @@ function createReducer(asyncReducers) {
     ps: psReducer,
     benef: benefReducer,
     factures: facturesReducer,
+    paiements: paiementsReducer,
+    virements: virementsReducer,
     intraitables: intraitablesReducer,
     ...staticReducers,
     ...asyncReducers,

@@ -33,7 +33,7 @@ export const Paiement = (props) => {
 
         {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
-        <PaiementsGrid disciplines={disciplines}/>
+        <PaiementsGrid/>
 
     </div>
 }
