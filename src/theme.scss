@@ -43,7 +43,19 @@
   &.Mui-disabled {
     color: #4C6F87;
   }
-
+}
+.RoundedEmptyButt {
+  &.MuiButton-root {
+    border-radius: 20px;
+    padding: 5px 15px;
+    text-transform: none;
+    border: 1px solid #003154;
+    color: #003154;
+    height: 40px;
+  }
+  &.Mui-disabled {
+    color: #4C6F87;
+  }
 }
 
 .RoundDate {

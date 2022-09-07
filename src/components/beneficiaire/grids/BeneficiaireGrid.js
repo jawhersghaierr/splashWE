@@ -9,7 +9,7 @@ import {DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { selectCriterias } from '../beneficiaireSlice'
 
-import {columns} from "./gridColumns";
+import {columns} from "./beneficiaireGridColumns";
 import './beneficiaireGrid.scss';
 
 import {usePrevious} from '../../../utils/utils'

@@ -26,7 +26,7 @@ export const columns = disciplines => [
             return params.value
         }},
 
-    { field: 'id', headerName: '', maxWidth: '30px', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/#/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
         }},
 ];

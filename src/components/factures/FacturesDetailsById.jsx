@@ -13,7 +13,7 @@ import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
-import { convertDate, dateConvertNaissance, facturesStatus } from "../../utils/utils";
+import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
 import {statusRow} from "./utils/utils";
 
 
@@ -102,7 +102,7 @@ export default function FacturesDetailsById(props) {
                              value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
                              chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
                     />
-                    <RowInfo label={'Montant RC'} value={`${data?.totalRc} €`}/>
+                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.totalRc)}/>
                 </div>
             </div>
 

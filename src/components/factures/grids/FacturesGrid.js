@@ -8,7 +8,7 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
 import { selectCriterias } from '../facturesSlice'
-import {columns} from "./gridFacturesColumns";
+import {columns} from "./facturesGridColumns";
 import {usePrevious} from '../../../utils/utils'
 import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";

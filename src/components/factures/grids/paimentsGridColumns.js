@@ -18,7 +18,7 @@ export const columns = disciplines => [
     { field: 'details', headerName: 'Details', flex: 2, renderCell: (params) => {
             return <b>{params.value}</b>
         }},
-    { field: 'id', headerName: '', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
         }},
 ];

@@ -25,7 +25,7 @@ export const columns = disciplines => [
     { field: 'domain', headerName: 'Domain d\'activities', flex: 1, renderCell: (params) => {
             return (params.value);
     }},
-    { field: 'type', headerName: 'Type de regle', maxWidth: '50px', sortable: false, flex: 1, renderCell: (params) => {
+    { field: 'type', headerName: 'Type de regle', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return (params.value);
     }},
 ];

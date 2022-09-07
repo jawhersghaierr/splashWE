@@ -32,7 +32,6 @@ import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 
 import './searchAccordion.scss'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
 import InputAdornment from '@mui/material/InputAdornment';
 import {useGetRefsQuery} from "../../../services/refsApi";
 import {IMaskPhoneInput, TextMaskCustom} from "../components/TextMaskCustom";
@@ -317,14 +316,14 @@ export default function SearchAccordion(props) {
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <DateTimePicker
+                                                                  <DatePicker
                                                                       label={'Réceptionné du'}
-                                                                      inputFormat="dd/MM/yyyy HH:mm"
+                                                                      inputFormat="dd/MM/yyyy"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -337,14 +336,14 @@ export default function SearchAccordion(props) {
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <DateTimePicker
+                                                                  <DatePicker
                                                                       label={'au '}
-                                                                      inputFormat="dd/MM/yyyy HH:mm"
+                                                                      inputFormat="dd/MM/yyyy"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -428,7 +427,7 @@ export default function SearchAccordion(props) {
                                                           {({input, meta}) => (
                                                               console.log(values),
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="Motif-label">Motif de rejet</InputLabel>
+                                                                  <InputLabel id="Motif-label">Motif</InputLabel>
                                                                   <Select
                                                                       id="Motif"
                                                                       labelId="Motif-label"
@@ -469,7 +468,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      <Field name="numId" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="numId" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -478,6 +477,10 @@ export default function SearchAccordion(props) {
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
+                                                                      onBlur={(e)=> {
+                                                                          if (e.target.value.length == 8) form.getFieldState('numId').change('0' + e.target.value)
+                                                                          return input.onBlur(e)
+                                                                      }}
                                                                       className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
@@ -623,7 +626,9 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeNaissance">
+                                                      <Field name="dateDeNaissance" validate={validators.composeValidators(
+                                                          validators.associated(values, {nom: 'Nom', prenom: 'Prénom'})
+                                                      )}>
                                                           {({ input: {onChange, value, ...rest}, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker

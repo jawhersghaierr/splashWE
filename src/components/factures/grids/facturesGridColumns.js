@@ -25,9 +25,8 @@ export const columns = disciplines => [
     { field: 'nom', headerName: '№ et date de naissance bénéficiaire', flex: 1, minWidth: '200px', renderCell: (params) => {
         return <span><b>{params.row.nom}</b>&nbsp;{params.row.prenom}<br/>{dateConvertNaissance(params.row.dateNai)}</span>
     }},
-    { field: 'rc', headerName: 'Montant Rc', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
-    { field: 'id', headerName: '', flex: 1, renderCell: (params) => {
+    { field: 'rc', headerName: 'Montant Rc', type: 'number', flex: 1, sortable: false, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
+    { field: 'id', headerName: '',flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];
-

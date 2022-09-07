@@ -6,7 +6,7 @@ import {useGetEtsQuery} from "../services/psApi";
 import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../psSlice'
-import {columns} from "./gridColumns";
+import {columns} from "./psGridColumns";
 import {usePrevious} from '../../../utils/utils'
 import {checker} from '../utils/utils'
 

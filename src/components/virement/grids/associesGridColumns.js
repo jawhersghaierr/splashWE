@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {convertDate, currencyFormatter} from "../../../utils/utils";
 
 export const columns = () => [
-    { field: 'dateCreation', headerName: 'Date et heure de reception', flex: 2, sortable: false, renderCell: (params) => {
+    { field: 'dateCreation', headerName: 'Date et heure de reception', minWidth: '200px', flex: 2, sortable: false, renderCell: (params) => {
             return (convertDate(params.value));
         }},
     { field: 'numeroFacture', headerName: 'Nº facture', flex: 2, sortable: false, renderCell: (params) => {
@@ -26,7 +26,7 @@ export const columns = () => [
             return params.value
         }},
 
-    { field: 'id', headerName: '', maxWidth: '30px', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: '', maxWidth: '15px', flex: 1, sortable: false, type: 'number', renderCell: (params) => {
             return <Link to={`/#/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
         }},
 ];

@@ -21,10 +21,10 @@ export const facturesStatus = {
     A_RECYCLER: {label: "A recycler", color: '#FFD4AD'},
     BAP: {label: "Bon à payer", color: '#C7F99F'},
     EN_ATTENTE: {label: "En attente", color: '#FFD4AD'},
-    PAYEE: {label: "Payee", color: '#C7F99F'},
+    PAYEE: {label: "Payée", color: '#C7F99F'},
     PENDING: {label: "En cours", color: '#FFD4AD'},
     REJETEE: {label: "Rejetée", color: '#FFA3A3'},
-    REMBOURSEE: {label: "Remboursee", color: '#C7F99F'}
+    REMBOURSEE: {label: "Remboursée", color: '#C7F99F'}
 }
 
 export const benefStatuses = {
@@ -125,7 +125,7 @@ const associated = (values, associed) => value => {
         })
     }
 
-    return (isOk) ? undefined : `need more values (${Object.values(needed).join(', ')})`
+    return (isOk) ? undefined : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${Object.values(needed).join(' ')}. Merci d'ajouter un critère de recherche.`
 }
 
 
