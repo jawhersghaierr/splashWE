@@ -116,6 +116,29 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+    let motif = {}
+
+    const changeMotiffs = ({target}) => {
+        let {value} = target;
+        console.log('>>>>>>> value > ', value)
+        motif = {}
+
+        if (nomRefs && value.length > 0) {
+            value.forEach(stat => {
+                Object.keys(
+                    Object.fromEntries(
+                        Object.entries(nomRefs.FACTURE_ERROR_RLTN)
+                            .filter(r => r[1] == stat)
+                    ))
+                    .forEach(code => (
+                        console.log(nomRefs.FACTURE_ERROR[code]),
+                        motif[code] =  nomRefs.FACTURE_ERROR[code]
+                    ))
+            })
+        }
+        console.log('>>>>>>> motif > ', motif)
+    }
+
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
@@ -400,6 +423,10 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
+                                                                      onChange={(e)=> {
+                                                                          changeMotiffs(e)
+                                                                          input.onChange(e)
+                                                                      }}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
                                                                           return nomRefs.FACTURE_STATUS[selected[0]];
@@ -425,14 +452,13 @@ export default function SearchAccordion(props) {
                                                       {(nomRefs && nomRefs?.FACTURE_ERROR) && <Field name="errorCode" format={value => value || []}>
 
                                                           {({input, meta}) => (
-                                                              console.log(values),
+
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Motif-label">Motif</InputLabel>
                                                                   <Select
                                                                       id="Motif"
                                                                       labelId="Motif-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -443,8 +469,7 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
+                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
@@ -452,7 +477,12 @@ export default function SearchAccordion(props) {
                                                                           <MenuItem key={code} value={code}>
                                                                               {nomRefs.FACTURE_ERROR[code]}
                                                                           </MenuItem>
-                                                                      ))}
+                                                                      )) }
+
+                                                                    {/*{(motif && motif.length > 0) && Object.keys(motif).map(code =>*/}
+                                                                    {/*    (<MenuItem key={code} value={code}>*/}
+                                                                    {/*        {motif[code]}*/}
+                                                                    {/*</MenuItem>))}*/}
 
                                                                   </Select>
                                                               </FormControl>
@@ -589,7 +619,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="nom" validate={validators.composeValidators(
                                                           validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, {prenom: 'Prénom', dateDeNaissance: 'Date de naissance'})
+                                                          validators.associated(values, ['prenom', 'dateDeNaissance'], 'Nom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -609,7 +639,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="prenom" validate={validators.composeValidators(
                                                           validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, {nom: 'Nom', dateDeNaissance: 'Date de naissance'})
+                                                          validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -626,9 +656,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeNaissance" validate={validators.composeValidators(
-                                                          validators.associated(values, {nom: 'Nom', prenom: 'Prénom'})
-                                                      )}>
+                                                      <Field name="dateDeNaissance" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
                                                           {({ input: {onChange, value, ...rest}, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -678,6 +706,7 @@ export default function SearchAccordion(props) {
 
                                                                       }}
                                                                   />
+                                                                  {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </div>
                                                           )}
                                                       </Field>

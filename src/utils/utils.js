@@ -56,11 +56,23 @@ const maxValue = max => value => {
     return result;
 }
 
+const noFutureDate = () => value => {
+
+    let date1, date2 = null;
+
+    if ( value && value !== undefined && value !== ''  ){
+        date1 = new Date(value)
+        date2 = new Date();
+        if (date1 > date2) return `La date ne peut pas être ultérieure à la date du jour`
+    }
+    return undefined
+}
+
+
 
 
 const biggerThan = (values, than) => value => {
     let date1, date2 = null;
-    console.log('values[Object.keys(than)[0]] > ', values[Object.keys(than)[0]])
 
     if ( value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined ){
         date1 = new Date(value).toLocaleDateString('fr');
@@ -77,8 +89,6 @@ const biggerThan = (values, than) => value => {
 const lowerThan = (values, than) => value => {
 
     let date1, date2 = null;
-
-    console.log('values[Object.keys(than)[0]] > ', values[Object.keys(than)[0]])
 
     if (
         value && value !== undefined && value !== '' &&
@@ -101,31 +111,26 @@ const lowerThan = (values, than) => value => {
  * @param associed array of strings (keys from form)
  * @returns {function(*=): string}
  */
-const associated = (values, associed) => value => {
+const associated = (values, associed, nameMsg) => value => {
 
     let isOk = true
-    let needed = {}
 
     if (associed && value && value !== undefined && value !== '') {
-
-        Object.keys(associed).forEach(el=> {
+        isOk = false
+        associed.forEach(el=> {
 
             if ( el == 'dateDeNaissance' && (!values[el] || values[el] == undefined || values[el] == '') ){
 
-                if (
-                    ( !values['birdDate'] || values['birdDate'] == undefined || values['birdDate'] == '' )
-                ){
-                    isOk = false
-                    needed[el] = associed[el]
+                if ( !(!values['birdDate'] || values['birdDate'] == undefined || values['birdDate'] == '') ){
+                    isOk = true
                 }
-            } else if ( !values[el] || values[el] == undefined || values[el] == '' ){
-                isOk = false
-                needed[el] = associed[el]
+            } else if ( !(!values[el] || values[el] == undefined || values[el] == '') ){
+                isOk = true
             }
         })
     }
 
-    return (isOk) ? undefined : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${Object.values(needed).join(' ')}. Merci d'ajouter un critère de recherche.`
+    return (isOk) ? undefined : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg}. Merci d'ajouter un critère de recherche.`
 }
 
 
@@ -142,6 +147,7 @@ export const validators = {
     mustBeNumber,
     minValue,
     maxValue,
+    noFutureDate,
     associated,
     biggerThan,
     lowerThan,

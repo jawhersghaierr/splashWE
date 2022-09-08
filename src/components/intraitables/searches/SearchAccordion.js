@@ -79,13 +79,15 @@ export default function SearchAccordion(props) {
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
-                            <Field name="periodFrom">
+                            <Field name="periodFrom" validate={validators.composeValidators(validators.noFutureDate())} >
                                 {({ input, meta }) => (
-                                    <FormControl className="RoundDate" style={{ flex: '1 0 21%'}}>
+                                    <FormControl className="RoundDate" style={{ flex: '1 0 21%', marginRight: '15px'}}>
                                         <DatePicker
+                                            label={'Date d\'intégration du'}
                                             inputFormat="dd/MM/yyyy"
                                             value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                             onChange={input?.onChange || null}
+                                            maxDate={new Date()}
                                             renderInput={(params) =>
                                                 <TextField
                                                     className="RoundedEl"
@@ -93,21 +95,19 @@ export default function SearchAccordion(props) {
                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
                                                 />}
                                         />
+                                        {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                     </FormControl>
                                 )}
                             </Field>
-                            <Typography variant="h6" noWrap component="div" sx={{padding: '5px 25px', color: '#003154'}}>
-                                au
-                            </Typography>
-                            <Field name="periodTo"
-                                   validate={validators.composeValidators(validators.biggerThan(values, {periodFrom: 'Réceptionné du'}))}
-                            >
+                            <Field name="periodTo" validate={validators.composeValidators(validators.biggerThan(values, {periodFrom: 'Réceptionné du'}), validators.noFutureDate())} >
                                 {({ input, meta }) => (
                                     <FormControl className="RoundDate" style={{ flex: '1 0 21%'}}>
                                         <DatePicker
+                                            label={'au'}
                                             inputFormat="dd/MM/yyyy"
                                             value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                             onChange={input?.onChange || null}
+                                            maxDate={new Date()}
                                             renderInput={(params) =>
                                                 <div style={{flex: 2, marginRight: '20px', outline: 'none',}}>
                                                     <TextField
@@ -117,11 +117,11 @@ export default function SearchAccordion(props) {
                                                         error={meta.invalid}
                                                         {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
                                                     />
-                                                    {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                 </div>
 
                                             }
                                         />
+                                        {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                     </FormControl>
                                 )}
                             </Field>

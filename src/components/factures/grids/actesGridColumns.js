@@ -2,7 +2,7 @@ import React from "react";
 import {convertDate, currencyFormatter} from "../../../utils/utils";
 
 export const columns = disciplines => [
-    { field: 'numLigne', headerName: '№', maxWidth: '20px', flex: 1, sortable: false, renderCell: (params) => {
+    { field: 'numLigne', headerName: 'N°', maxWidth: '20px', flex: 1, sortable: false, renderCell: (params) => {
         return (params.value);
     }},
     { field: 'codeActe', headerName: 'ACTE', flex: 1 },

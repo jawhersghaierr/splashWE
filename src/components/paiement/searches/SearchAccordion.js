@@ -766,7 +766,7 @@ export default function SearchAccordion(props) {
                                                           <Field name="nom" validate={validators.composeValidators(
                                                           validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, {prenom: 'Prénom', dateDeNaissance: 'Date de naissance'})
+                                                          validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -786,7 +786,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="prenom" validate={validators.composeValidators(
                                                           validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, {nom: 'Nom', dateDeNaissance: 'Date de naissance'})
+                                                          validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>

@@ -41,7 +41,6 @@ export const checkInsidePanels = (values) => {
         panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
-    console.log(result)
     return result
 }
 
