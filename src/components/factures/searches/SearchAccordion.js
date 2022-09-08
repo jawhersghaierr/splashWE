@@ -98,6 +98,7 @@ export default function SearchAccordion(props) {
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [motif, setMotif] = useState({});
     const prevMotif = usePrevious(motif)
+
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -116,8 +117,6 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
-
-    // let motif = {}
 
     return (
         <div className={'formContent'}>
@@ -168,17 +167,14 @@ export default function SearchAccordion(props) {
                                             (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
                                         ) _value = {..._value, status: undefined}
                                         if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
-
-                                        console.log(' prevMotif', prevMotif)
-                                        console.log(' motif', motif)
-                                        if (prevMotif !== motif) {
-
-                                            // _value = {..._value, errorCode: undefined}
+                                        if (_value.errorCode !== undefined) {
+                                            _value = {..._value, errorCode: undefined}
                                         }
 
-                                    break
+                                        break
 
                                 }
+
 
                               return _value
 
@@ -809,16 +805,13 @@ export default function SearchAccordion(props) {
                                       if (status) {
                                           let _motif = {}
                                           if (nomRefs && status.length > 0) {
-                                                  status?.forEach(stat => {
-                                                      Object.keys(
-                                                          Object.fromEntries(
-                                                              Object.entries(nomRefs.FACTURE_ERROR_RLTN)
-                                                                  .filter(r => r[1] == stat)
-                                                          ))
-                                                          .forEach(code => (
-                                                              _motif[code] =  nomRefs.FACTURE_ERROR[code]
-                                                          ))
-                                                  })
+                                              status?.forEach(stat => {
+                                                  Object.keys(
+                                                      Object.fromEntries(
+                                                          Object.entries(nomRefs.FACTURE_ERROR_RLTN).filter(r => r[1] == stat)
+                                                      ))
+                                                      .forEach(code => _motif[code] =  nomRefs.FACTURE_ERROR[code])
+                                              })
                                           }
                                           setMotif(_motif);
                                       }
