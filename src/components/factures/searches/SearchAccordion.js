@@ -25,7 +25,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-import { validators, isValidDate, calcCleFromNir } from '../../../utils/utils';
+import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
 import { checker, checkInsidePanels } from '../utils/utils';
 
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
@@ -97,7 +97,7 @@ export default function SearchAccordion(props) {
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [motif, setMotif] = useState({});
-
+    const prevMotif = usePrevious(motif)
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -166,10 +166,15 @@ export default function SearchAccordion(props) {
                                         //Object.keys(nomRefs.FACTURE_STATUS)
                                         if (_value?.status?.length === 0 ||
                                             (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
-                                        ) _value = {..._value, status: undefined, errorCode: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS), errorCode: undefined}
+                                        ) _value = {..._value, status: undefined}
+                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
 
-                                        if (JSON.stringify(state.lastFormState.values.status) !== JSON.stringify(state.formState.values.status)) _value = {..._value, errorCode: undefined}
+                                        console.log(' prevMotif', prevMotif)
+                                        console.log(' motif', motif)
+                                        if (prevMotif !== motif) {
+
+                                            // _value = {..._value, errorCode: undefined}
+                                        }
 
                                     break
 
