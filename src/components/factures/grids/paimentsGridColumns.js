@@ -9,7 +9,7 @@ export const columns = disciplines => [
             return (convertDate(params.value))
         }},
     { field: 'type', headerName: 'Type', flex: 1},
-    { field: 'numero', headerName: '№ Numero', type: 'number', flex: 1},
+    { field: 'numero', headerName: 'N° Numero', type: 'number', flex: 1},
     { field: 'montant', headerName: 'Montant', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: 'Statut', flex: 1, renderCell: (params) => {
             return (

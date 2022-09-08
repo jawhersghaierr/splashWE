@@ -96,6 +96,7 @@ export default function SearchAccordion(props) {
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
+    const [motif, setMotif] = useState({});
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -116,28 +117,7 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
-    let motif = {}
-
-    const changeMotiffs = ({target}) => {
-        let {value} = target;
-        console.log('>>>>>>> value > ', value)
-        motif = {}
-
-        if (nomRefs && value.length > 0) {
-            value.forEach(stat => {
-                Object.keys(
-                    Object.fromEntries(
-                        Object.entries(nomRefs.FACTURE_ERROR_RLTN)
-                            .filter(r => r[1] == stat)
-                    ))
-                    .forEach(code => (
-                        console.log(nomRefs.FACTURE_ERROR[code]),
-                        motif[code] =  nomRefs.FACTURE_ERROR[code]
-                    ))
-            })
-        }
-        console.log('>>>>>>> motif > ', motif)
-    }
+    // let motif = {}
 
     return (
         <div className={'formContent'}>
@@ -151,39 +131,47 @@ export default function SearchAccordion(props) {
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
-                              //Object.keys(nomRefs.FACTURE_STATUS)
-                              if (_value?.status?.length === 0 ||
-                                  (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
-                              ) _value = {..._value, status: undefined}
-                              if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
-
-                              //Object.keys(nomRefs.FACTURE_ERROR)
-                              if (_value?.errorCode?.length === 0 ||
-                                  (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(nomRefs?.FACTURE_ERROR).length)
-                              ) _value = {..._value, errorCode: undefined}
-                              if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(nomRefs?.FACTURE_ERROR)}
-
-                              //Object.keys(nomRefs.CLIENT)
-                              if (_value?.numClient?.length === 0 ||
-                                  (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
-                              ) _value = {..._value, numClient: undefined}
-                              if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
-
                                 switch (field.active) {
                                     case 'nir':
                                         let cle = calcCleFromNir(value)
                                         _value.cle = cle || undefined
                                             setDisableCle(cle ? false : true)
-                                        break
+                                    break
 
                                     case 'cle':
-
-                                        break
+                                    break
 
                                     case 'numJur':
                                         if (value?.numJur?.length < 8) console.log(value.numJur, field)
 
-                                        break
+                                    break
+
+                                    case 'numClient':
+                                        //Object.keys(nomRefs.CLIENT)
+                                        if (_value?.numClient?.length === 0 ||
+                                            (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
+                                        ) _value = {..._value, numClient: undefined}
+                                        if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
+                                    break
+
+                                    case 'errorCode':
+                                        //Object.keys(nomRefs.FACTURE_ERROR) actualy from state -> motif
+                                        if (_value?.errorCode?.length === 0 ||
+                                            (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(motif).length)
+                                        ) _value = {..._value, errorCode: undefined}
+                                        if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(motif)}
+                                    break
+
+                                    case 'status':
+                                        //Object.keys(nomRefs.FACTURE_STATUS)
+                                        if (_value?.status?.length === 0 ||
+                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
+                                        ) _value = {..._value, status: undefined, errorCode: undefined}
+                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS), errorCode: undefined}
+
+                                        if (JSON.stringify(state.lastFormState.values.status) !== JSON.stringify(state.formState.values.status)) _value = {..._value, errorCode: undefined}
+
+                                    break
 
                                 }
 
@@ -333,9 +321,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedStart"
-                                                             // validate={ validators.composeValidators(validators.lowerThan(values, {dateReceivedEnd: 'au'})) }
-                                                      >
+                                                      <Field name="dateReceivedStart" >
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -353,9 +339,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedEnd" validate={
-                                                          validators.composeValidators(validators.biggerThan(values, {dateReceivedStart: 'Réceptionné du'}))
-                                                      }>
+                                                      <Field name="dateReceivedEnd" validate={ validators.composeValidators(validators.biggerThan(values, {dateReceivedStart: 'Réceptionné du'})) }>
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -423,10 +407,6 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      onChange={(e)=> {
-                                                                          changeMotiffs(e)
-                                                                          input.onChange(e)
-                                                                      }}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
                                                                           return nomRefs.FACTURE_STATUS[selected[0]];
@@ -462,7 +442,7 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      disabled={!(values?.status?.includes('REJETEE') || values?.status?.includes('ANNULEE'))}
+                                                                      disabled={!Boolean(Object.keys(motif)?.length > 0)}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
                                                                           return nomRefs.FACTURE_ERROR[selected[0]];
@@ -473,16 +453,9 @@ export default function SearchAccordion(props) {
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.FACTURE_ERROR).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_ERROR[code]}
-                                                                          </MenuItem>
-                                                                      )) }
-
-                                                                    {/*{(motif && motif.length > 0) && Object.keys(motif).map(code =>*/}
-                                                                    {/*    (<MenuItem key={code} value={code}>*/}
-                                                                    {/*        {motif[code]}*/}
-                                                                    {/*</MenuItem>))}*/}
+                                                                    {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
+                                                                            {motif[code]}
+                                                                    </MenuItem>))}
 
                                                                   </Select>
                                                               </FormControl>
@@ -811,29 +784,42 @@ export default function SearchAccordion(props) {
                                   {<FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numFact,
-                                          numEng,
-                                          numAdh,
+                                          numFact, numEng, numAdh,
                                           domaine,
                                           dateDeSoins,
-                                          dateReceivedStart,
-                                          dateReceivedEnd,
-                                          idPeriodeFact,
-                                          dateFact,
-                                          status,
-                                          errorCode,
-                                          numId,
-                                          numJur,
+                                          dateReceivedStart, dateReceivedEnd,
+                                          idPeriodeFact, dateFact,
+                                          status, errorCode,
+                                          numId, numJur,
                                           raisonSociale,
-                                          department,
-                                          numClient,
-                                          nom,
-                                          prenom,
-                                          dateDeNaissance,
-                                          birdDate,
-                                          nir,
-                                          cle
+                                          department, numClient,
+                                          nom, prenom,
+                                          dateDeNaissance, birdDate,
+                                          nir, cle
                                       } = values?.values;
+
+                                      /**
+                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_ERROR_RLTN based on
+                                       */
+                                      if (status) {
+                                          let _motif = {}
+                                          if (nomRefs && status.length > 0) {
+                                                  status?.forEach(stat => {
+                                                      Object.keys(
+                                                          Object.fromEntries(
+                                                              Object.entries(nomRefs.FACTURE_ERROR_RLTN)
+                                                                  .filter(r => r[1] == stat)
+                                                          ))
+                                                          .forEach(code => (
+                                                              _motif[code] =  nomRefs.FACTURE_ERROR[code]
+                                                          ))
+                                                  })
+                                          }
+                                          setMotif(_motif);
+                                      }
+                                      //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
                                       if(
                                           domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||

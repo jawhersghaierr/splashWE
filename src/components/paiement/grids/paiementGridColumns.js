@@ -5,12 +5,12 @@ import {Link} from "react-router-dom";
 import {convertDate, dateConvertNaissance, currencyFormatter, facturesStatus} from "../../../utils/utils";
 
 export const columns = disciplines => [
-    { field: 'numAdhInd', headerName: '№ adhérent Nom et prénom', flex: 3, minWidth: '200px', renderCell: (params) => {
+    { field: 'numAdhInd', headerName: 'N° adhérent Nom et prénom', flex: 3, minWidth: '200px', renderCell: (params) => {
         let nom = params.row.nomPrenom?.split(' ')
             return <span>{params.value}<br/><b>{nom[0]}</b>&nbsp;{nom[1]}</span>
         }},
 
-    { field: 'numeroFacture', headerName: '№ de facturation PS/TS', flex: 2 },
+    { field: 'numeroFacture', headerName: 'N° de facturation PS/TS', flex: 2 },
     { field: 'provenance', headerName: 'Provenance', flex: 1 },
 
     { field: 'creationDate', headerName: 'Date de Virement', flex: 1, sortable: false, renderCell: (params) => {
@@ -20,7 +20,7 @@ export const columns = disciplines => [
         return (convertDate(params.value));
     }},
 
-    { field: 'numIdPs', headerName: '№ Facture / №  Titre', flex: 2 },
+    { field: 'numIdPs', headerName: 'N° Facture / N°  Titre', flex: 2 },
     { field: 'factureStatus', headerName: 'Statut Facture', flex: 1, renderCell: (params) => {
             return (
                 <Chip label={params.value} sx={{color: 'black'}}/>

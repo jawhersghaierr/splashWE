@@ -44,7 +44,7 @@ const ribLabel = (discipl, disciplines) => {
 }
 
 export const columns = disciplines => [
-    { field: 'numPartenaire', headerName: '№ de partenaire', width: 150 },
+    { field: 'numPartenaire', headerName: 'N° de partenaire', width: 150 },
     { field: 'statutRibs', headerName: 'Statut(s) RIB', width: 125, sortable: false, renderCell: (params) => {
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);

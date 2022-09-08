@@ -12,6 +12,6 @@ export const complexGarantieColumns = nom => [
     { field: 'sousGarantie', headerName: 'Sous Garantie', minWidth: 100, flex: 1, renderCell: params => nom?.SOUS_GARANTIE[params.row.sousGarantie] },
     { field: 'dcs', headerName: 'DCS', minWidth: 100, flex: 1},
     { field: 'formula', headerName: 'Formule', minWidth: 100, flex: 1 },
-    // { field: 'garantie', headerName: '№ Adherent Familial', width: 100 },
+    // { field: 'garantie', headerName: 'N° Adherent Familial', width: 100 },
 ];
 
