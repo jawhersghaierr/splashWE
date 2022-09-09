@@ -42,9 +42,7 @@ export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
-    const {enviroments, enviromentsIsFetching, enviromentsIsSuccess} = props;
     const formRef= useRef(null);
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const onSubmit = async (values) => {
 
@@ -117,7 +115,7 @@ export default function SearchAccordion(props) {
                                                               variant="standard"
                                                               error={meta.invalid}
                                                               {...input}
-                                                              placeholder={'Libelle'}
+                                                              placeholder={'Libellé'}
                                                               sx={{width: '100%'}}
                                                               className="RoundedEl"
                                                               InputProps={{  disableUnderline: true }}
@@ -148,7 +146,7 @@ export default function SearchAccordion(props) {
                                                                           id="Libelle"
                                                                           variant="standard"
                                                                           error={meta.invalid}
-                                                                          {...{...params, inputProps: {...params.inputProps, placeholder : "Date de reference"}, InputProps: {...params.InputProps, disableUnderline: true} } }
+                                                                          {...{...params, inputProps: {...params.inputProps, placeholder : "Date de référence"}, InputProps: {...params.InputProps, disableUnderline: true} } }
                                                                           placeholder={'Libelle'}
                                                                           sx={{width: '100%'}}
                                                                           className="RoundedEl"

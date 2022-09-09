@@ -2,25 +2,26 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
+import {convertDate} from "../../../utils/utils";
 
 
-export const columns = disciplines => [
-    { field: 'id', headerName: 'Code', flex: 1, renderCell: (params) => {
+export const columns = ({nomRefs}) => [
+    { field: 'id', headerName: 'Code', flex: 1, maxWidth: 55, renderCell: (params) => {
         return (params.value);
     }},
 
-    { field: 'type', headerName: 'Type de paramétre', flex: 3, renderCell: (params) => {
-            return (params.value);
+    { field: 'type', headerName: 'Type de paramétre', flex: 1, renderCell: (params) => { //FACTURE_CONFIGURATION_TYPE
+            return (nomRefs.FACTURE_CONFIGURATION_TYPE[params.value] || params.value);
         }},
-    { field: 'libelle', headerName: 'Libellé', flex: 2 },
-    { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => {
-            return (<Chip label={`${params.value}`} sx={{color: 'black'}}/> )
+    { field: 'label', headerName: 'Libellé', flex: 3 },
+    { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => { //FACTURE_CONFIGURATION_STATUS
+            return (<Chip label={`${nomRefs.FACTURE_CONFIGURATION_STATUS[params.value] || params.value}`} sx={{color: 'black'}}/> )
     }},
 
-    { field: 'timestamp', headerName: 'timestamp', flex: 2, renderCell: (params) => {
-        return (params.value);
+    { field: 'timestamp', headerName: 'Période de validaté', flex: 2, renderCell: (params) => {
+        return (`${convertDate(params.row?.startDate)}-${convertDate(params.row?.endDate)}`);
     }},
-    { field: 'user', headerName: 'user', flex: 2,renderCell: (params) => {
+    { field: 'user', headerName: 'Utilisateur', flex: 1,renderCell: (params) => {
         return (params.value);
     }},
 

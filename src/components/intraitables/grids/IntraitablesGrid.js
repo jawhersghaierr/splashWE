@@ -35,6 +35,7 @@ export const IntraitablesGrid = () => {
         setSortProperties({
             sortProperty: value[0]?.field || null,
             sortDirection: value[0]?.sort?.toUpperCase() || null
+
         })
     };
 
@@ -50,11 +51,11 @@ export const IntraitablesGrid = () => {
         {(data) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
+                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage*20 : 20)} sur {data.totallements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data || []}
+                rows={data?.data || []}
                 columns={columns()}
                 pageSize={20}
                 autoHeight
@@ -92,7 +93,7 @@ export const IntraitablesGrid = () => {
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
-                count={data.totPages}
+                count={data.totalPages}
                 page={currentPage+1}
                 onChange={handlePageChange}
             />

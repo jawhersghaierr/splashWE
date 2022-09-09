@@ -9,14 +9,14 @@ import {columns} from "./columnsConfigutationGrid";
 import './configutationGrid.scss';
 
 
-export const GridConfigutation = ({data}) => {
+export const GridConfigutation = ({data, nomRefs}) => {
 
 
     return <div className="gridContent">
 
-        {(data && data?.results) && <DataGrid
-                rows={data?.results || []}
-                columns={columns()}
+        {(data && data) && <DataGrid
+                rows={data || []}
+                columns={columns({nomRefs})}
                 pageSize={10}
                 autoHeight
                 disableColumnResize={false}

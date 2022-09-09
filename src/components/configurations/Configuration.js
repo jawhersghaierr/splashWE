@@ -10,7 +10,7 @@ import {useGetConfigsQuery} from "./services/configurationsApi";
 
 
 
-export const Configuration = ({config}) => {
+export const Configuration = ({config, nomRefs}) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
@@ -37,9 +37,9 @@ export const Configuration = ({config}) => {
     } else {
         return (<>
 
-            <SearchAccordion code={config?.code} />
+            <SearchAccordion code={config?.code} nomRefs={nomRefs}/>
 
-            {items && <GridConfigutation data={items}/>}
+            {items && <GridConfigutation data={items?.results} nomRefs={nomRefs}/>}
             <div style={{minHeight: '200px', background: 'white', padding: '15px', maxWidth: '600px', margin: '15px'}}>
 
                 {items && <pre style={{

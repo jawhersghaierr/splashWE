@@ -50,7 +50,7 @@ export const intraitablesApi = createApi({
                     }})
             },
             transformResponse: (response, meta, arg) => {
-                response?.forEach(el=>el.id = el.fileId)
+                response?.data?.forEach(el=>el.id = el.fileId)
                 return response;
             }
         }),

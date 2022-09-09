@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
-import SearchAccordion from "./searches/SearchAccordion";
-import {GridConfigutation} from "./grids/GridConfigutation";
-import {useGetDisciplinesQuery} from "../../services/referentielApi"
 
 import './configuration.scss'
 import {matchPath} from "react-router-dom";
@@ -10,6 +7,7 @@ import {useGetConfigsQuery} from "./services/configurationsApi";
 import {RowInfo} from "./components/RowInfo";
 import {Link} from "@material-ui/core";
 import {Configuration} from "./Configuration";
+import {useGetRefsQuery} from "../../services/refsApi";
 
 export const ListConfiguration = (props) => {
 
@@ -20,6 +18,7 @@ export const ListConfiguration = (props) => {
     });
 
     const {data} = useGetConfigsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const [config, setConfig] = useState(null);
 
@@ -50,7 +49,7 @@ export const ListConfiguration = (props) => {
 
         </div>}
 
-        {config && <Configuration config={config}/>}
+        {config && nomRefs && <Configuration config={config} nomRefs={nomRefs}/>}
 
     </div>
 }
