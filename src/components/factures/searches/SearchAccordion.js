@@ -409,8 +409,8 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
-                                                                          return nomRefs.FACTURE_STATUS[selected[0]];
+                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
+                                                                          return nomRefs.FACTURE_STATUS[selected[0]];ю
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>

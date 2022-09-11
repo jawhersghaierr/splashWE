@@ -10,6 +10,7 @@ import {RowInfo} from "./components/RowInfo";
 import {ConfigutationGrid} from "./grids/GridRulesOfConfig";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {convertDate} from "../../utils/utils";
+import {useGetConfigsQuery} from "./services/configurationsApi";
 
 
 function TabPanel(props) {
@@ -36,20 +37,33 @@ function a11yProps(index) {
 export default function ConfigurationDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/configuration/:id",
+        path: "/configuration/:domain?/:code?/:id?",
         exact: true,
         strict: false
     });
+
+    const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+
+    console.log(match)
+
+    const {domain, code, id} = match?.params
+
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState([]);
 
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    let url = null;
+
 
     useEffect(() => {
-        if (match?.params?.id) {
-            fetch(`http://10.241.25.10:8005/api/v1/configurations/${match.params.id}`)
-            // fetch(`http://10.241.25.10:80014/api/v1/configs/${match.params.id}`)
+
+        if (domain && code && id && LOCIsSuccess && LOC[domain]) {
+            url = LOC[domain]?.items?.find(e=>e.code==code)?.url?.split('?')[0] || null
+        }
+
+        if (url && id) {
+            fetch(`${url}/${id}`)
                 .then(res => res.json())
                 .then(
                     (result) => {
@@ -63,7 +77,7 @@ export default function ConfigurationDetailsById(props) {
                     }
                 )
         }
-    }, [])
+    }, [domain, code, id, LOCIsSuccess])
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };

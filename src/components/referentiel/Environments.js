@@ -28,7 +28,7 @@ export const Environments = () => {
                 rows={data}
                 columns={columns}
                 pageSize={5}
-                rowsPerPageOptions={[2]}
+                rowsPerPageOptions={[20]}
                 onCellClick={getDetails}
                 // checkboxSelection
             />

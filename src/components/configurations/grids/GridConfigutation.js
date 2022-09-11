@@ -1,23 +1,30 @@
 import React, {useEffect, useRef, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-
-import Stack from '@mui/material/Stack'
+import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from "@mui/material";
-import {DataGrid} from '@mui/x-data-grid';
+import Stack from '@mui/material/Stack'
 
+import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./columnsConfigutationGrid";
+
+import {getConfigurations, setConfig} from "../configurationsSlice";
 import './configutationGrid.scss';
 
 
-export const GridConfigutation = ({data, nomRefs}) => {
+export const GridConfigutation = ({data, nomRefs, domain, code}) => {
+    const dispatch = useDispatch();
+    const configItem = (value) => {
+        dispatch(setConfig(value));
+    };
+    const configurations = useSelector(getConfigurations);
 
+    // console.log(data)
 
     return <div className="gridContent">
 
-        {(data && data) && <DataGrid
-                rows={data || []}
-                columns={columns({nomRefs})}
-                pageSize={10}
+        {data && <DataGrid
+                rows={data.results || []}
+                columns={columns({nomRefs, configurations, domain, code})}
+                pageSize={20}
                 autoHeight
                 disableColumnResize={false}
                 components={{

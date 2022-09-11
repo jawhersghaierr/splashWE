@@ -23,7 +23,7 @@ import {useGetRefsQuery} from "../../../services/refsApi";
 import { validators, isValidDate } from '../../../utils/utils';
 import { checker, checkInsidePanels } from '../utils/utils';
 
-import { setCriterias, initCriterias, selectCriterias } from '../configurationSlice'
+import { setCriterias, initCriterias, selectCriterias } from '../configurationsSlice'
 
 import './searchAccordion.scss'
 
@@ -44,6 +44,8 @@ export default function SearchAccordion(props) {
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);
 
+    const {moreCriterias} = props;
+
     const onSubmit = async (values) => {
 
         await sleep(300);
@@ -59,10 +61,6 @@ export default function SearchAccordion(props) {
     const [dotShow, setDotShow] = useState(false);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
-
-    const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded({...expanded, [panel]: newExpanded});
-    };
 
     const handleAccordionPanel = () => (event) => {
         if (!panelExpanded) {
@@ -82,18 +80,7 @@ export default function SearchAccordion(props) {
                       setValue: ([field, value], state, utils) => {
 
                           utils.changeValue(state, field, (value) => {
-                              let _value = value;
-                              if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
-
-
-                              //Object.keys(nomRefs.FACTURE_STATUS)
-                              if (_value?.status?.length === 0 ||
-                                  (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
-                              ) _value = {..._value, status: undefined}
-                              if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
-
-                              return _value
-
+                              return value
                           })
                       }
                   }}
@@ -107,7 +94,7 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                              <Field name="libelle">
+                                              <Field name="label">
                                                   {({ input, meta }) => (
                                                       <div style={{flex: 2, marginRight: '20px'}}>
                                                           <TextField
@@ -168,7 +155,7 @@ export default function SearchAccordion(props) {
                                               </Field>
 
 
-                                              {props?.code == 'control' && <div style={{width: 150, display: 'flex'}}>
+                                              {moreCriterias && <div style={{width: 150, display: 'flex'}}>
                                                   {!panelExpanded &&
                                                   <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
                                                       <Badge color="secondary" variant="dot"
@@ -176,7 +163,8 @@ export default function SearchAccordion(props) {
                                                   </IconButton>}
                                                   {panelExpanded && <IconButton
                                                       onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                                  <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
+                                                  <Typography component="div"
+                                                              className='verticalTxt'><b>Critères</b></Typography>
                                               </div>}
                                               <Button
                                                   variant="contained"

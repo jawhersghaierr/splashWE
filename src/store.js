@@ -5,18 +5,18 @@ import thunkMiddleware from 'redux-thunk';
 // import { entityApi } from './services/entityApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import comp1Reducer from './component1/comp1Slice';
+
 import { referentielApi } from './services/referentielApi';
 import { refsApi } from './services/refsApi';
 import { psApi } from "./components/ps/services/psApi";
 import { facturesApi } from "./components/factures/services/facturesApi";
 import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
-
 import { paiementsApi } from "./components/paiement/services/paiementsApi";
 import { virementsApi } from "./components/virement/services/virementsApi";
-
 import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
-import { configurationsApi } from "./components/configurations/services/configurationsApi";
 import { fluxApi } from "./components/factures/services/fluxApi";
+import {intraitablesApi} from "./components/intraitables/services/intraitablesApi";
+import { configurationsApi } from "./components/configurations/services/configurationsApi";
 
 import psReducer from './components/ps/psSlice'
 import paiementsReducer from './components/paiement/paiementSlice'
@@ -24,7 +24,7 @@ import virementsReducer from './components/virement/virementsSlice'
 import benefReducer from './components/beneficiaire/beneficiaireSlice'
 import intraitablesReducer from './components/intraitables/intraitablesSlice'
 import facturesReducer from "./components/factures/facturesSlice";
-import {intraitablesApi} from "./components/intraitables/services/intraitablesApi";
+import configurationsReducer from './components/configurations/configurationsSlice';
 
 function logger({ getState }) {
   return next => action => {
@@ -125,6 +125,7 @@ function createReducer(asyncReducers) {
     paiements: paiementsReducer,
     virements: virementsReducer,
     intraitables: intraitablesReducer,
+    configurations: configurationsReducer,
     ...staticReducers,
     ...asyncReducers,
   });

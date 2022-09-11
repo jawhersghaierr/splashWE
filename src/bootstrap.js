@@ -39,6 +39,7 @@ import FacturesDetailsById from "./components/factures/FacturesDetailsById";
 import {Factures} from "./components/factures/Factures";
 import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
 import {ListConfiguration} from "./components/configurations/ListConfiguration";
+import {Configurations} from "./components/configurations/Configurations";
 import {Intraitables} from "./components/intraitables/Intraitables";
 import {Paiement} from "./components/paiement/Paiement";
 import PaiementDetailsById from "./components/paiement/PaiementDetailsById";
@@ -130,8 +131,12 @@ const App = () => {
                   <Route path="/ligne" component={RemoteTest}/> />
                   <Route exact={true} path="/factures" component={Factures}/> />
                   <Route path="/factures/:id?" component={FacturesDetailsById}/> />
-                  <Route exact={true} path="/configuration" component={ListConfiguration}/> />
-                  <Route path="/configuration/:id?" component={ConfigurationDetailsById}/> />
+
+                  <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
+                  <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
+                  <Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>
+                  {/*<Route name={'configuration'} path="/configuration" component={Configurations}/> />*/}
+
                   <Route exact={true} path="/paiement" component={Paiement}/> />
                   <Route path="/paiement/:id?" component={PaiementDetailsById}/> />
                   <Route exact={true} path="/virements" component={Virement}/> />

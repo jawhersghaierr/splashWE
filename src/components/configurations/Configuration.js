@@ -7,6 +7,7 @@ import {useGetDisciplinesQuery} from "../../services/referentielApi"
 import './configuration.scss'
 import {matchPath} from "react-router-dom";
 import {useGetConfigsQuery} from "./services/configurationsApi";
+import ConfigurationDetailsById from "./ConfigurationDetailsById";
 
 
 
@@ -14,6 +15,8 @@ export const Configuration = ({config, nomRefs}) => {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+
+    const [configItem, setConfigItem] = useState(null);
 
     useEffect(() => {
         fetch(config?.url)
@@ -30,6 +33,11 @@ export const Configuration = ({config, nomRefs}) => {
             )
     }, [config])
 
+    useEffect(() => {
+        console.log('configItem > ', configItem)
+        console.log('config > ', config)
+    }, [configItem])
+
     if (error) {
         return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -39,8 +47,10 @@ export const Configuration = ({config, nomRefs}) => {
 
             <SearchAccordion code={config?.code} nomRefs={nomRefs}/>
 
-            {items && <GridConfigutation data={items?.results} nomRefs={nomRefs}/>}
+            {items && !configItem && <GridConfigutation data={items?.results} nomRefs={nomRefs} configItem={setConfigItem} config={config}/>}}
+            {configItem && <ConfigurationDetailsById configItem={configItem} config={config} />}
             <div style={{minHeight: '200px', background: 'white', padding: '15px', maxWidth: '600px', margin: '15px'}}>
+
 
                 {items && <pre style={{
                     whiteSpace: 'pre-wrap',

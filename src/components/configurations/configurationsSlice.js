@@ -10,36 +10,25 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        numFact: undefined,
-        numEng: undefined,
-        numAdh: undefined,
-        domaine: undefined,
-        dateDeSoins: undefined,
-        dateReceivedStart: undefined,
-        dateReceivedEnd: undefined,
-        idPeriodeFact: undefined,
-        dateFact: undefined,
-        status: undefined,
-        errorCode: undefined,
-        numId: undefined,
-        numJur: undefined,
-        raisonSociale: undefined,
-        department: undefined,
-        numClient: undefined,
-        nom: undefined,
-        prenom: undefined,
-        dateDeNaissance: undefined,
-        birdDate: undefined,
-        nir: undefined,
-        cle: undefined,
-    }
+        label: undefined,
+        dateDeReference: undefined,
+        statut: undefined,
+    },
+    configuration: {
+        code: null,
+        label: null,
+        url: null,
+        urlAndParams: null,
+        configId: null,
+    },
+
     // isLoading: null,
     // isError: null,
 }
 
 
-export const configurationSlice = createSlice({
-    name: 'FACTURES',
+export const configurationsSlice = createSlice({
+    name: 'CONFIGURATIONS',
     initialState,
     reducers: {
 
@@ -73,28 +62,9 @@ export const configurationSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                numFact,
-                numEng,
-                numAdh,
-                domaine,
-                dateDeSoins,
-                dateReceivedStart,
-                dateReceivedEnd,
-                idPeriodeFact,
-                dateFact,
-                status,
-                errorCode,
-                numId,
-                numJur,
-                raisonSociale,
-                department,
-                numClient,
-                nom,
-                prenom,
-                dateDeNaissance,
-                birdDate,
-                nir,
-                cle
+                label,
+                dateDeReference,
+                statut
             } = action?.payload
 
             state.criterias = {};
@@ -111,6 +81,19 @@ export const configurationSlice = createSlice({
 
             state.pagination = initialState.pagination;
         },
+
+        setConfiguration: (state, action) => {
+            console.log(action)
+            // let {code = null, label = null, url:urlAndParams = null} = action?.payload
+            // let url = urlAndParams?.split('?')[0]
+
+            // state.configuration = {...state.configuration, code, label, urlAndParams, url}
+            state.configuration = {...state.configuration, ...action?.payload}
+        },
+        setConfig: (state, action) => {
+            console.log(action)
+            state.configuration = {...state.configuration, configId: action?.payload}
+        },
     },
 
 })
@@ -118,12 +101,16 @@ export const configurationSlice = createSlice({
 export const {
     setSort,
     setPagination,
+    initCriterias,
     setCriterias,
-    initCriterias
-} = configurationSlice.actions;
+    setConfiguration,
+    setConfig
+} = configurationsSlice.actions;
 
-export const selectPagination = (state) => ({...state?.factures?.pagination});
-export const selectCriterias = (state) => ({...state?.factures?.criterias});
-export const selectNumCriterias = (state) => (state?.factures?.numCriterias);
+export const selectPagination = (state) => ({...state?.configurations?.pagination});
+export const selectNumCriterias = (state) => (state?.configurations?.numCriterias);
+export const selectCriterias = (state) => ({...state?.configurations?.criterias});
 
-export default configurationSlice.reducer;
+export const getConfigurations = (state) => ({...state?.configurations?.configuration});
+
+export default configurationsSlice.reducer;

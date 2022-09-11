@@ -28,6 +28,9 @@ module.exports = {
         compress: true,
         hot: true,
         port: 8031,
+        historyApiFallback: {
+            disableDotRule: true
+        },
     },
 
     output: {

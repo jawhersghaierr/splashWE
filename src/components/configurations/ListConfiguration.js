@@ -1,55 +1,66 @@
 import React, {useEffect, useState} from 'react';
-import {Typography} from "@mui/material";
+import { Redirect } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
-import './configuration.scss'
+import {Typography} from "@mui/material";
 import {matchPath} from "react-router-dom";
 import {useGetConfigsQuery} from "./services/configurationsApi";
-import {RowInfo} from "./components/RowInfo";
-import {Link} from "@material-ui/core";
-import {Configuration} from "./Configuration";
 import {useGetRefsQuery} from "../../services/refsApi";
+import './configuration.scss'
+import {GridConfigutation} from "./grids/GridConfigutation";
+import SearchAccordion from "./searches/SearchAccordion";
 
 export const ListConfiguration = (props) => {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/configuration/:id",
+        path: "/configuration/:domain/:code",
         exact: true,
-        strict: false
+        strict: true
     });
 
-    const {data} = useGetConfigsQuery();
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {domain, code} = match?.params
+    const [items, setItems] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    const [config, setConfig] = useState(null);
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
+
+    let moreCriterias = null
+    if (code) moreCriterias = code?.includes('control') || null
+    let url = null;
+
+
+    useEffect(() => {
+
+        if (domain && code && LOCIsSuccess && LOC[domain]) {
+            url = LOC[domain]?.items?.find(e=>e.code==code)?.url || null
+        }
+
+        if (url) {
+            fetch(url)
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        setIsLoaded(true);
+                        setItems(result);
+                    },
+                    (error) => {
+                        setIsLoaded(true);
+                        setError(error);
+                    }
+                )
+        }
+
+    }, [domain, code, LOC, nomRefs])
+
 
     return <div style={{padding: '0', margin: 0}}>
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-            <b>Configuration</b> &nbsp;
-            {match?.params?.id}
+            <b>Configuration List</b> &nbsp;
         </Typography>
+        {code && <SearchAccordion code={code} nomRefs={nomRefs} moreCriterias={moreCriterias}/>}
 
-        {data &&  <div style={{display:'flex', flexDirection: 'row', flexWrap: 'wrap', width: '100%'}}>
-
-            {data && Object.keys(data).map(tConf =>
-                <div style={{
-                    backgroundColor: '#FFF',
-                    // backgroundColor: '#F6F8FC',
-                    margin: '15px',
-                    padding: '0 25px 25px 25px',
-                    // maxWidth: '450px',
-                    display: 'block'
-                }} key={data[tConf].code}>
-                    <h3 style={{marginBottom: '10px'}}>{data[tConf].label}</h3>
-                    {data[tConf]?.items.map(e => <div key={e?.code}>
-                        <Link to={`#`} onClick={()=>setConfig(e)} style={{cursor: 'pointer'}}>{e.label}</Link>
-                        {/*<RowInfo label={e.label} value={<Link to={`#`}>e.url</Link>} border={true} />*/}
-                    </div>)}
-                </div>
-            )}
-
-        </div>}
-
-        {config && nomRefs && <Configuration config={config} nomRefs={nomRefs}/>}
+        {items && nomRefs && <GridConfigutation data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
 
     </div>
 }
