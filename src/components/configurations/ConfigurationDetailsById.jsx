@@ -9,7 +9,7 @@ import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ConfigutationGrid} from "./grids/GridRulesOfConfig";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {convertDate} from "../../utils/utils";
+import {convertDate, factureConfigurationStatus} from "../../utils/utils";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 
 
@@ -34,6 +34,16 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
+
+function separetedMails (data) {
+    if (data && data.length > 0) return <span>
+        {data.split(';')
+            .map( (el, i) =><span key={`to_${i}`} style={{display: 'block'}}>{el}</span>
+        )}
+    </span>
+    return data
+}
+
 export default function ConfigurationDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
@@ -45,16 +55,21 @@ export default function ConfigurationDetailsById(props) {
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
-    console.log(match)
-
     const {domain, code, id} = match?.params
-
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState([]);
+    const [value, setValue] = useState(0);
+
+    let domainForPanel = null;
+
+    if (code && code !== undefined) {
+        if (code.includes('email')) domainForPanel = 'email'
+        if (code.includes('control')) domainForPanel = 'control'
+    }
+
 
     let url = null;
-
 
     useEffect(() => {
 
@@ -77,9 +92,9 @@ export default function ConfigurationDetailsById(props) {
                     }
                 )
         }
+
     }, [domain, code, id, LOCIsSuccess])
 
-    const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     return (
@@ -92,11 +107,10 @@ export default function ConfigurationDetailsById(props) {
                 > {data?.label}
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                type: {nomRefs && nomRefs.FACTURE_CONFIGURATION_TYPE[data?.type] || data?.type}
+                {nomRefs && nomRefs.FACTURE_CONFIGURATION_TYPE[data?.type] || data?.type}
             </Typography>
 
-            <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', margin: '15px 0 0 0'}}/>
-
+            <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
             {/*
             ******************************* MAIL ************************************
             {
@@ -135,8 +149,11 @@ export default function ConfigurationDetailsById(props) {
 
             */}
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
-                <RowInfo label={'Période de validité'} value={`${convertDate(data?.startDate)}${(data?.endDate)? '-' :''}${convertDate(data?.endDate)}`}/>
-                <RowInfo label={'Motif'} value={data?.motif}/>
+                <RowInfo
+                    label={'Période de validité'}
+                    value={`${convertDate(data?.startDate)}${(data?.endDate)? '-' :''}${convertDate(data?.endDate)}`}
+                    justify={true}/>
+                <RowInfo label={'Motif'} value={data?.motif} justify={true}/>
             </div>
 
             <Tabs
@@ -152,12 +169,13 @@ export default function ConfigurationDetailsById(props) {
             </Tabs>
 
             <TabPanel value={value} index={0}>
-                <Box style={{
+                {(domainForPanel !== 'email') && <Box style={{
                     backgroundColor: '#F6F8FC',
                     flex: 1,
                     minWidth: '300px',
                     margin: '5px',
-                    padding: '10px 25px 25px 25px'}}>
+                    padding: '10px 25px 25px 25px'
+                }}>
 
                     <RowInfo label={'Nombre de règles'} value={data?.rules?.length}/>
 
@@ -165,11 +183,26 @@ export default function ConfigurationDetailsById(props) {
                         <div style={{flex: 1, marginRight: '5%'}}>
                             {data?.rules && <ConfigutationGrid data={data?.rules}/>}
 
-                            {JSON.stringify(data)}
                         </div>
                     </div>}
 
-                </Box>
+                </Box>}
+                {(domainForPanel == 'email') && <Box style={{
+                    backgroundColor: '#F6F8FC',
+                    flex: 1,
+                    minWidth: '300px',
+                    margin: '5px',
+                    padding: '10px 25px 25px 25px'
+                }}>
+                    <h3><b>Détails des parameters</b></h3>
+                    <RowInfo label={'subject'} value={data?.subject}/>
+                    <RowInfo label={'body'} value={data?.body} justify={true}/>
+                    <RowInfo label={'from'} value={data?.from}/>
+                    <RowInfo label={'to'} value={separetedMails(data?.to)}/>
+
+                </Box>}
+
+                {/*{JSON.stringify(data)}*/}
             </TabPanel>
 
         </Box>

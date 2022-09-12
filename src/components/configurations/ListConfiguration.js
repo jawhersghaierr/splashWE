@@ -9,6 +9,8 @@ import {useGetRefsQuery} from "../../services/refsApi";
 import './configuration.scss'
 import {GridConfigutation} from "./grids/GridConfigutation";
 import SearchAccordion from "./searches/SearchAccordion";
+import {selectCriterias} from './configurationsSlice'
+
 
 export const ListConfiguration = (props) => {
 
@@ -28,7 +30,7 @@ export const ListConfiguration = (props) => {
     let moreCriterias = null
     if (code) moreCriterias = code?.includes('control') || null
     let url = null;
-
+    const criterias = useSelector(selectCriterias);
 
     useEffect(() => {
 
@@ -37,6 +39,21 @@ export const ListConfiguration = (props) => {
         }
 
         if (url) {
+
+            let filters = {...criterias}
+
+            if (criterias?.referenceDate && criterias?.referenceDate != '' && criterias?.referenceDate != undefined) {
+                filters.referenceDate = new Date(criterias?.referenceDate).toLocaleDateString('sv');
+            }
+
+            if (criterias?.status && criterias?.status !== '' && criterias?.status !== undefined) filters.status = 'A'
+            if(filters) {
+                Object.keys(filters).forEach( (key, ii)=>{
+                    if (filters[key] && filters[key] !== 'null' && filters[key] !== undefined && filters[key] !== '') {
+                        url += `${(url.includes('?'))? '&' : '?'}${key}=${filters[key]}`;
+                    }
+                })
+            }
             fetch(url)
                 .then(res => res.json())
                 .then(
@@ -51,7 +68,7 @@ export const ListConfiguration = (props) => {
                 )
         }
 
-    }, [domain, code, LOC, nomRefs])
+    }, [domain, code, LOC, nomRefs, criterias])
 
 
     return <div style={{padding: '0', margin: 0}}>

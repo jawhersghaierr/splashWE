@@ -4,16 +4,19 @@ import {Typography} from "@mui/material";
 
 export const RowInfo = ({value, label, chip = null, justify=false, border=false}) => {
 
-    return <div style={border? { flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0', borderBottom: '1px solid #EDF2FA' }:
-        { flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0'}}>
+    return <div style={border? { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0', borderBottom: '1px solid #EDF2FA' }:
+        { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0'}}>
 
         <Typography variant="subtitle1" noWrap component="div" sx={(justify)?
-            { color: '#003154', padding: '5px 0', display: 'flex', justifyContent: 'space-between'}:
-            { color: '#003154', padding: '5px 0' }}>
+            { color: '#003154', padding: '5px 0', display: 'flex', justifyContent: 'space-between', flex: 1 }:
+            { color: '#003154', padding: '5px 0', display: 'flex', justifyContent: 'flex-start', flex: 1 }}>
 
-            <span>{label}&nbsp;:&nbsp;</span>
-            <b>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
+            {label}&nbsp;:&nbsp;
         </Typography>
+        <span style={{overflowWrap: 'break-word', wordBreak: 'break-all', hyphens: 'manual', flex: 3, margin: '7px 0'}}>
+            <b>{value}&nbsp;</b>
+            {chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}
+        </span>
     </div>
 }
 

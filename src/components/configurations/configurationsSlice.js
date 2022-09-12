@@ -11,8 +11,14 @@ const initialState = {
     },
     criterias: {
         label: undefined,
-        dateDeReference: undefined,
-        statut: undefined,
+        referenceDate: undefined,
+        status: true,
+        environment: undefined,
+        provenance: undefined,
+        discipline: undefined,
+        factureContext: undefined,
+        canalReception: undefined,
+        dcs: undefined
     },
     configuration: {
         code: null,
@@ -22,8 +28,6 @@ const initialState = {
         configId: null,
     },
 
-    // isLoading: null,
-    // isError: null,
 }
 
 
@@ -61,19 +65,18 @@ export const configurationsSlice = createSlice({
         },
         setCriterias: (state, action) => {
 
-            const {
-                label,
-                dateDeReference,
-                statut
+            let {
+                label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
             } = action?.payload
+
+            let criterias = {...action?.payload, status: Boolean(!action?.payload?.status || action?.payload?.status == undefined)}
 
             state.criterias = {};
 
-            if(action?.payload) {
-                Object.keys(action?.payload).forEach(key=>{
+            if(criterias) {
+                Object.keys(criterias).forEach(key=>{
                     if (action.payload[key] !== null && action.payload[key] !== undefined) {
                         state.criterias[key] = action.payload[key]
-                        state.numCriterias++;
                     }
                 })
 
@@ -83,11 +86,6 @@ export const configurationsSlice = createSlice({
         },
 
         setConfiguration: (state, action) => {
-            console.log(action)
-            // let {code = null, label = null, url:urlAndParams = null} = action?.payload
-            // let url = urlAndParams?.split('?')[0]
-
-            // state.configuration = {...state.configuration, code, label, urlAndParams, url}
             state.configuration = {...state.configuration, ...action?.payload}
         },
         setConfig: (state, action) => {
@@ -99,16 +97,11 @@ export const configurationsSlice = createSlice({
 })
 
 export const {
-    setSort,
-    setPagination,
     initCriterias,
     setCriterias,
-    setConfiguration,
     setConfig
 } = configurationsSlice.actions;
 
-export const selectPagination = (state) => ({...state?.configurations?.pagination});
-export const selectNumCriterias = (state) => (state?.configurations?.numCriterias);
 export const selectCriterias = (state) => ({...state?.configurations?.criterias});
 
 export const getConfigurations = (state) => ({...state?.configurations?.configuration});

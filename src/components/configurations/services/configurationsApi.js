@@ -17,6 +17,7 @@ export const configurationsApi = createApi({
 
     }),
     endpoints: (builder) => ({
+
         getConfigs: builder.query({
             query: () => {
                 let url = `configs`;
@@ -29,23 +30,11 @@ export const configurationsApi = createApi({
 
             }
         }),
-        getConfigById: builder.query({
-            query: (id) => {
-                let url = `configs/${id}`;
-                return ({
-                    url,
-                    transform: (response, meta, arg) => {
-                        return {...JSON.parse(response)};
-                    }
-                })
-            },
-        }),
 
     }),
 })
 export const {
     useGetConfigsQuery,
-    useGetConfigByIdQuery,
 } = configurationsApi
 
 

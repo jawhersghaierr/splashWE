@@ -1,10 +1,7 @@
 
 export const checker = (values) => {
-    const {
-        libelle,
-        dateDeReference,
-    } = values || {};
-    if( libelle || dateDeReference) {
+    const { label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs } = values || {};
+    if( label || referenceDate || !status || status || environment || provenance || discipline || factureContext || canalReception || dcs ) {
         return true
     } else {
         return false
@@ -14,14 +11,9 @@ export const checker = (values) => {
 export const checkInsidePanels = (values) => {
 
     const {
-        libelle,
-        dateDeReference,
+        label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
     } = values || {};
-    let result =  {
-        panelInformationGenerales: (libelle || dateDeReference)? true: false,
-        panelNIR: (true)? true: false,
-    }
-    console.log(result)
-    return result
+
+    return Boolean(status || environment || provenance || discipline || factureContext || canalReception || dcs)
 }
 

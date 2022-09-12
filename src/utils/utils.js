@@ -4,6 +4,12 @@ import {useEffect, useRef} from "react";
  * Labels and Colors for Statuses
  * *******************************************************************************************************************
  */
+export const factureConfigurationStatus = {
+    A: {label: 'Active', color: '#C7F99F'},
+    S: {label: 'Suspendue', color: '#FFD4AD'},
+    I: {label: 'Inactive', color: '#FFA3A3'},
+}
+
 
 export const statusesRIB = {
     ATT: {label: 'En attente', color: '#FFD4AD'},
