@@ -169,7 +169,7 @@ export default function ConfigurationDetailsById(props) {
 
                 </Box>}
 
-                {JSON.stringify(data)}
+                {/*{JSON.stringify(data)}*/}
             </TabPanel>
 
         </Box>

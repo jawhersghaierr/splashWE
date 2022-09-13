@@ -4,8 +4,8 @@ import {Typography} from "@mui/material";
 
 export const RowInfo = ({value, label, chip = null, justify=false, border=false}) => {
 
-    return <div style={border? { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0', borderBottom: '1px solid #EDF2FA' }:
-        { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0'}}>
+    return <div style={border? { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0 0 0', borderBottom: '1px solid #EDF2FA' }:
+        { display: 'flex', flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0 0 0'}}>
 
         <Typography variant="subtitle1" noWrap component="div" sx={(justify)?
             { color: '#003154', padding: '5px 0', display: 'flex', justifyContent: 'space-between', flex: 1, minWidth: 165 }:
