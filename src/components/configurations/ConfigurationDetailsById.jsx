@@ -65,6 +65,7 @@ export default function ConfigurationDetailsById(props) {
 
     if (code && code !== undefined) {
         if (code.includes('email')) domainForPanel = 'email'
+        if (code.includes('delai')) domainForPanel = 'delai'
         if (code.includes('control')) domainForPanel = 'control'
     }
 
@@ -109,12 +110,14 @@ export default function ConfigurationDetailsById(props) {
 
             <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
-            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
+            <div style={{display: 'flex', flexDirection: 'column', margin: '25px 0 25px 0'}}>
                 <RowInfo
                     label={'Période de validité'}
-                    value={`${convertDate(data?.startDate)}${(data?.endDate)? '-' :''}${convertDate(data?.endDate)}`}
+                    value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`}
                     justify={true}/>
-                <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{ whiteSpace: 'pre-line' }}>{data?.content?.join('\n')}</div>} justify={true}/>
+                {domainForPanel !== 'delai' && <RowInfo label={'Détails du paramètre'}
+                          value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>}
+                          justify={true}/>}
             </div>
 
             <Tabs
@@ -139,11 +142,14 @@ export default function ConfigurationDetailsById(props) {
                 }}>
 
                     <RowInfo label={'Nombre de règles'} value={data?.rules?.length}/>
+                    {domainForPanel == 'delai' && <RowInfo label={'Détails du paramètre'}
+                                                           value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>
+                                                               {data?.content} mois
+                                                           </div>} justify={true}/>}
 
                     {isLoaded && <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
                             {data?.rules && nomRefs && <RulesOfConfigGrid data={data?.rules} nomRefs={nomRefs}/>}
-
                         </div>
                     </div>}
 
@@ -155,7 +161,7 @@ export default function ConfigurationDetailsById(props) {
                     margin: '5px',
                     padding: '10px 25px 25px 25px'
                 }}>
-                    <h3><b>Détails des paramètres</b></h3>
+                    <h3><b>Détails du paramètres</b></h3>
                     <RowInfo label={'Objet du email'} value={data?.subject}/>
                     <RowInfo label={'Corps du email'} value={data?.body} justify={true}/>
                     <RowInfo label={'Expéditeur du email'} value={data?.from}/>
