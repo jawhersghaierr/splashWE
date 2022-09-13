@@ -2,16 +2,16 @@ import React, {useEffect, useRef, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 
-import {columns} from "./columnsRulesGridOfConfig";
+import {columns} from "./rulesOfConfigGridColumns";
 import './configutationGrid.scss';
 
 
-export const ConfigutationGrid = ({data}) => {
+export const RulesOfConfigGrid = ({data, nomRefs}) => {
 
 
     return <DataGrid
                 rows={data || []}
-                columns={columns()}
+                columns={columns(nomRefs)}
                 pageSize={20}
                 autoHeight
                 disableColumnResize={false}

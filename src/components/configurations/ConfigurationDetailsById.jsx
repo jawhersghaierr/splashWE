@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
-import {ConfigutationGrid} from "./grids/GridRulesOfConfig";
+import {RulesOfConfigGrid} from "./grids/RulesOfConfigGrid";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {convertDate, factureConfigurationStatus} from "../../utils/utils";
 import {useGetConfigsQuery} from "./services/configurationsApi";
@@ -101,59 +101,20 @@ export default function ConfigurationDetailsById(props) {
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Configuration&nbsp;
-                    {/*{match?.params?.id}*/}
-                </b>
-                > {data?.label}
+                <b>Configuration&nbsp;</b>{data?.label}
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {nomRefs && nomRefs.FACTURE_CONFIGURATION_TYPE[data?.type] || data?.type}
             </Typography>
 
             <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
-            {/*
-            ******************************* MAIL ************************************
-            {
-                "id": "DOUBLON",
-                "label": "Report for error of allready integrated file",
-                "startDate": "2022-05-22",
-                "subject": "Fichier doublon ${FILE_NAME} détecté",
-                "body": "Le fichier ${FILE_NAME} est en doublon et a déjà été intégré le (date de la première intégration ${PREV_INTEGRATION_DATES})",
-                "from": "test@viamedis.fr",
-                "to": "g.markov@tinqin.com;il.ivanov@tinqin.com;m.ilova@tinqin.com",
-                "status": "Active",
-                "user": "N/A",
-                "motif": "N/A",
-                "type": "EMAIL"
-            }
-            ****************************** CONF ***************************************
 
-            {
-                "id": 2,
-                "label": "La donnée obligatoire Numéro Finess Juridique est manquante",
-                "status": "A",
-                "timestamp": "2022-06-17T22:52:01",
-                "user": "ADMIN",
-                "type": "F",
-                "rules": [
-                {
-                    "factureContexts": [
-                        "ROC"
-                    ]
-                    }
-                ],
-                    "content": [
-                    "La donnée obligatoire Numéro Finess Juridique est manquante"
-                ]
-            }
-
-            */}
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <RowInfo
                     label={'Période de validité'}
                     value={`${convertDate(data?.startDate)}${(data?.endDate)? '-' :''}${convertDate(data?.endDate)}`}
                     justify={true}/>
-                <RowInfo label={'Motif'} value={data?.motif} justify={true}/>
+                <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{ whiteSpace: 'pre-line' }}>{data?.content?.join('\n')}</div>} justify={true}/>
             </div>
 
             <Tabs
@@ -181,7 +142,7 @@ export default function ConfigurationDetailsById(props) {
 
                     {isLoaded && <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            {data?.rules && <ConfigutationGrid data={data?.rules}/>}
+                            {data?.rules && nomRefs && <RulesOfConfigGrid data={data?.rules} nomRefs={nomRefs}/>}
 
                         </div>
                     </div>}
@@ -194,15 +155,15 @@ export default function ConfigurationDetailsById(props) {
                     margin: '5px',
                     padding: '10px 25px 25px 25px'
                 }}>
-                    <h3><b>Détails des parameters</b></h3>
-                    <RowInfo label={'subject'} value={data?.subject}/>
-                    <RowInfo label={'body'} value={data?.body} justify={true}/>
-                    <RowInfo label={'from'} value={data?.from}/>
-                    <RowInfo label={'to'} value={separetedMails(data?.to)}/>
+                    <h3><b>Détails des paramètres</b></h3>
+                    <RowInfo label={'Objet du email'} value={data?.subject}/>
+                    <RowInfo label={'Corps du email'} value={data?.body} justify={true}/>
+                    <RowInfo label={'Expéditeur du email'} value={data?.from}/>
+                    <RowInfo label={'Destinataire du email'} value={separetedMails(data?.to)}/>
 
                 </Box>}
 
-                {/*{JSON.stringify(data)}*/}
+                {JSON.stringify(data)}
             </TabPanel>
 
         </Box>

@@ -4,13 +4,13 @@ import {Typography} from "@mui/material";
 import Stack from '@mui/material/Stack'
 
 import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./columnsConfigutationGrid";
+import {columns} from "./configutationGridColumns";
 
 import {getConfigurations, setConfig} from "../configurationsSlice";
 import './configutationGrid.scss';
 
 
-export const GridConfigutation = ({data, nomRefs, domain, code}) => {
+export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {
     const dispatch = useDispatch();
     const configItem = (value) => {
         dispatch(setConfig(value));

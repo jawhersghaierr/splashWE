@@ -7,7 +7,7 @@ import {matchPath} from "react-router-dom";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {useGetRefsQuery} from "../../services/refsApi";
 import './configuration.scss'
-import {GridConfigutation} from "./grids/GridConfigutation";
+import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import SearchAccordion from "./searches/SearchAccordion";
 import {selectCriterias} from './configurationsSlice'
 
@@ -77,7 +77,7 @@ export const ListConfiguration = (props) => {
         </Typography>
         {code && <SearchAccordion code={code} nomRefs={nomRefs} moreCriterias={moreCriterias}/>}
 
-        {items && nomRefs && <GridConfigutation data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
+        {items && nomRefs && <ConfigutationsGrid data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
 
     </div>
 }

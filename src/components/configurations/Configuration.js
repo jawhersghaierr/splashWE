@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
-import {GridConfigutation} from "./grids/GridConfigutation";
+import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
 
 import './configuration.scss'
@@ -47,7 +47,7 @@ export const Configuration = ({config, nomRefs}) => {
 
             <SearchAccordion code={config?.code} nomRefs={nomRefs}/>
 
-            {items && !configItem && <GridConfigutation data={items?.results} nomRefs={nomRefs} configItem={setConfigItem} config={config}/>}}
+            {items && !configItem && <ConfigutationsGrid data={items?.results} nomRefs={nomRefs} configItem={setConfigItem} config={config}/>}}
             {configItem && <ConfigurationDetailsById configItem={configItem} config={config} />}
             <div style={{minHeight: '200px', background: 'white', padding: '15px', maxWidth: '600px', margin: '15px'}}>
 

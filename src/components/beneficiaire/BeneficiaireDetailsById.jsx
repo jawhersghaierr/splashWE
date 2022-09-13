@@ -94,7 +94,7 @@ export default function BeneficiaireDetailsById(props) {
             dateFin = dateFermetureDroits;
         }
 
-        adress = `${adresse.numeroVoie} ${adresse.nomVoie} ${adresse.batimentresidence} ${adresse.appartementEscalierEtage} ${adresse.complementAdresse} ${adresse?.codePostal} ${adresse?.ville} ${adresse.pays} `
+        adress = `${adresse?.numeroVoie} ${adresse?.nomVoie} ${adresse?.batimentresidence} ${adresse?.appartementEscalierEtage} ${adresse?.complementAdresse} ${adresse?.codePostal} ${adresse?.ville} ${adresse?.pays} `
         telephone = adresse?.telephone
         email = adresse?.email
 

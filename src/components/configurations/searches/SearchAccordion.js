@@ -225,7 +225,7 @@ export default function SearchAccordion(props) {
                                                           <TextField
                                                               id="Enviroment"
                                                               sx={{maxWidth: 360}}
-                                                              label="Enviroment"
+                                                              label="Environnement"
                                                               variant="outlined"
                                                               error={meta.invalid}
                                                               {...input}
@@ -242,7 +242,7 @@ export default function SearchAccordion(props) {
                                                           <TextField
                                                               id="Provanance"
                                                               variant="outlined"
-                                                              label="Provanance"
+                                                              label="Provenance"
                                                               error={meta.invalid}
                                                               {...input}
                                                               className="RoundedEl"
@@ -356,7 +356,7 @@ export default function SearchAccordion(props) {
                                               {(nomRefs && nomRefs?.DCS) && <Field name="dcs" format={value => value || []}>
                                                   {({input, meta}) => (
                                                       <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: 360}}>
-                                                          <InputLabel id="Dcs-label">Domaines d'activities</InputLabel>
+                                                          <InputLabel id="Dcs-label">Domaine d'activité</InputLabel>
                                                           <Select
                                                               id="Dcs"
                                                               labelId="Dcs-label"
