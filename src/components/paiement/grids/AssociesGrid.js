@@ -6,8 +6,6 @@ import './paiementsGrid.scss';
 
 export const AssociesGrid = ({data}) => {
 
-    console.log(data)
-
     return <div style={{margin: 0}}>
 
         {data && <DataGrid

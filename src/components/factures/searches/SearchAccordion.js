@@ -2,40 +2,38 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import InputLabel from '@mui/material/InputLabel';
-import Collapse from '@mui/material/Collapse';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import {ListItemText} from "@material-ui/core";
+import InputLabel from '@mui/material/InputLabel';
+import Collapse from '@mui/material/Collapse';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import FormControl from '@mui/material/FormControl';
+import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+import { ListItemText } from "@material-ui/core";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
-import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
-import { checker, checkInsidePanels } from '../utils/utils';
-
-import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-
-import './searchAccordion.scss'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
-import {useGetRefsQuery} from "../../../services/refsApi";
-import {IMaskPhoneInput, TextMaskCustom} from "../components/TextMaskCustom";
-import {ConfirmNir} from "../components/ConfirmNir";
+import { useGetRefsQuery } from "../../../services/refsApi";
+import { MaskedInput } from "../../../utils/TextMaskCustom";
+import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
+import { checker, checkInsidePanels } from '../utils/utils';
+import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
+import { ConfirmNir } from "../../../utils/ConfirmNir";
+
+import './searchAccordion.scss'
 
 
 const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0} square {...props} /> ) )
@@ -340,7 +338,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedEnd" validate={ validators.composeValidators(validators.biggerThan(values, {dateReceivedStart: 'Réceptionné du'})) }>
+                                                      <Field name="dateReceivedEnd" validate={ validators.composeValidators(validators.beforeThan(values, 'dateReceivedStart')) }>
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -361,7 +359,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
-                                                                  <IMaskPhoneInput
+                                                                  <MaskedInput
                                                                       id="IdPeriodeFact"
                                                                       autoFocus
                                                                       fullWidth
@@ -601,7 +599,6 @@ export default function SearchAccordion(props) {
                                                                       id="Nom"
                                                                       label={'Nom'}
                                                                       variant="outlined"
-                                                                      // error={meta.invalid}
                                                                       {...input}
                                                                       className="RoundedEl"
                                                                   />
@@ -621,7 +618,6 @@ export default function SearchAccordion(props) {
                                                                       id="Prenom"
                                                                       label={'Prénom'}
                                                                       variant="outlined"
-                                                                      // error={meta.invalid}
                                                                       {...input}
                                                                       className="RoundedEl"
                                                                   />

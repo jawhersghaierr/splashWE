@@ -76,7 +76,6 @@ export const paiementsApi = createApi({
                     })
                 }
 
-                console.log(url)
                 return ({
                     url,
                     transform: (response, meta, arg) => {
@@ -102,7 +101,6 @@ export const paiementsApi = createApi({
             },
             transformResponse: (response, meta, arg) => {
                 response?.historyElements?.forEach((el, id)=>el.id = id)
-                console.log('>>>>>', response)
                 return response;
             }
 

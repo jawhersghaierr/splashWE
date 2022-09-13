@@ -145,12 +145,11 @@ export default function SearchAccordion(props) {
                                           }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numVirement" validate={validators.composeValidators(validators.maxValue(10))}>
+                                                      <Field name="numVirement" validate={validators.composeValidators(validators.maxValue(8))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
                                                                       id="NumVirement"
-                                                                      type={'number'}
                                                                       variant="standard"
                                                                       error={meta.invalid}
                                                                       placeholder={'Nº virement'}
@@ -161,7 +160,6 @@ export default function SearchAccordion(props) {
                                                                           ...input,
                                                                           inputProps: {
                                                                               ...input.inputProps,
-                                                                              // step : 0.01,
                                                                               lang: 'fr'
                                                                           }
                                                                       }}
@@ -171,7 +169,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numDecompte" validate={validators.composeValidators(validators.maxValue(14))}>
+                                                      <Field name="numDecompte" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -180,7 +178,7 @@ export default function SearchAccordion(props) {
                                                                       sx={{width: '100%'}}
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      placeholder={'Nº decompte'}
+                                                                      placeholder={'Nº décompte'}
                                                                       InputProps={{  disableUnderline: true }}
                                                                       className="RoundedEl"
                                                                   />
@@ -198,7 +196,11 @@ export default function SearchAccordion(props) {
                                                                       variant="standard"
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      placeholder={'Nº PS de facturation'}
+                                                                      onBlur={(e)=> {
+                                                                          if (e.target.value.length == 8) form.getFieldState('numIdPs').change('0' + e.target.value)
+                                                                          return input.onBlur(e)
+                                                                      }}
+                                                                      placeholder={'Nº de facturation PS'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
@@ -208,10 +210,13 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateTraitement">
+                                                      <Field name="dateTraitement" validate={validators.composeValidators(validators.noFutureDate())} >
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', maxWidth: '175px' }}>
+
                                                                   <DatePicker
+                                                                      label={'Date d\'émission du'}
+                                                                      maxDate={new Date()}
                                                                       inputFormat="dd/MM/yyyy"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -219,27 +224,33 @@ export default function SearchAccordion(props) {
                                                                           <TextField
                                                                               className="RoundedEl"
                                                                               sx={{width: '100%', flex: 2,  }}
+                                                                              error={meta.invalid}
                                                                               {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
                                                                           />}
                                                                   />
+                                                                  {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateTraitementFin">
+                                                      <Field name="dateTraitementFin" validate={validators.composeValidators(validators.beforeThan(values, 'dateTraitement'), validators.noFutureDate())} >
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', marginRight: '25px', maxWidth: '175px' }}>
                                                                   <DatePicker
                                                                       inputFormat="dd/MM/yyyy"
+                                                                      maxDate={new Date()}
+                                                                      label={'Date d\'émission аu'}
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
                                                                           <TextField
                                                                               className="RoundedEl"
                                                                               sx={{width: '100%', flex: 2,  }}
+                                                                              error={meta.invalid}
                                                                               {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
                                                                           />}
                                                                   />
+                                                                  {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
                                                       </Field>
@@ -286,7 +297,7 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Statuses sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
                                                                           return nomRefs.PAIEMENT_VIREMENT_STATUS[selected[0]];
                                                                       }}>
 

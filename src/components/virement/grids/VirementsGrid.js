@@ -11,6 +11,7 @@ import {usePrevious} from '../../../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 import {useGetVirementsQuery} from "../services/virementsApi";
 import './virementsGrid.scss';
+import {useGetRefsQuery} from "../../../services/refsApi";
 
 export const VirementsGrid = ({disciplines}) => {
 
@@ -25,6 +26,7 @@ export const VirementsGrid = ({disciplines}) => {
     const size = 20;
 
     const {data} = useGetVirementsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -47,7 +49,7 @@ export const VirementsGrid = ({disciplines}) => {
 
     return <div className="gridContent">
 
-        {(data && data?.results) && <div>
+        {(data && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
@@ -55,7 +57,7 @@ export const VirementsGrid = ({disciplines}) => {
             </div>
             <DataGrid
                 rows={data?.results || []}
-                columns={columns()}
+                columns={columns(nomRefs)}
                 pageSize={size}
                 autoHeight
                 hideFooter={true}

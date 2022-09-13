@@ -7,8 +7,9 @@ import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {useGetVirementsByIdQuery} from "./services/virementsApi";
-import {convertDate, facturesStatus, currencyFormatter} from "../../utils/utils";
+import {convertDate, facturesStatus, currencyFormatter, paiementsVirementStatus} from "../../utils/utils";
 import {AssociesGrid} from "./grids/AssociesGrid";
+import {useGetRefsQuery} from "../../services/refsApi";
 
 
 function TabPanel(props) {
@@ -72,19 +73,20 @@ export default function VirementDetailsById(props) {
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetVirementsByIdQuery(match?.params?.id);
-
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails du Virement</b>
+                <b>Détails du virement</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.idFacture}
             </Typography>
 
-            <Chip label={data?.status}  sx={{color: 'black', margin: '15px 0 0 0' }}/>
+            {nomRefs && <Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[data?.status]}
+                   sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsVirementStatus[data?.status].color}}/>}
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
@@ -107,8 +109,8 @@ export default function VirementDetailsById(props) {
                 // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
-                <Tab label="Informations générales"  {...a11yProps(0)}/>
-                <Tab label="Paiements associés"  {...a11yProps(1)} />
+                <Tab label="Informations generales"  {...a11yProps(0)}/>
+                <Tab label="Paiements associes"  {...a11yProps(1)} />
             </Tabs>
 
             <TabPanel value={value} index={0} data={data}>
@@ -135,7 +137,7 @@ export default function VirementDetailsById(props) {
                         </div>
                         <div style={{flex: 1    }}>
                             <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true} justify={true}/>
-                            <RowInfo label={'Nº PS de facturation'} value={data?.virementGeneralInfo?.numPsAPayer} border={true} justify={true}/>
+                            <RowInfo label={'Nº de facturation PS'} value={data?.virementGeneralInfo?.numPsAPayer} border={true} justify={true}/>
                             <RowInfo label={'Date de rapprochement bancaire'} value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)} border={true} justify={true}/>
                         </div>
                     </div>
@@ -146,7 +148,7 @@ export default function VirementDetailsById(props) {
 
             <TabPanel value={value} index={1} data={data}>
                 {data && oneRowHeader(data)}
-                {(data?.associatedElements && data?.associatedElements.length > 0) && <AssociesGrid data={data?.associatedElements}/>}
+                {(data?.associatedElements && data?.associatedElements.length > 0 && nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs}/>}
             </TabPanel>
 
         </Box>

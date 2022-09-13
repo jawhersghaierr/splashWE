@@ -4,11 +4,11 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./historyGridColumns";
 import './paiementsGrid.scss';
 
-export const HistoryGrid = ({data}) => {
+export const HistoryGrid = ({data, nomRefs}) => {
 
     return <DataGrid
                     rows={data || []}
-                    columns={columns()}
+                    columns={columns(nomRefs)}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}

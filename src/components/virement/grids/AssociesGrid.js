@@ -4,16 +4,14 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './virementsGrid.scss';
 
-export const AssociesGrid = ({data}) => {
-
-    console.log(data)
+export const AssociesGrid = ({data, nomRefs}) => {
 
     return <div style={{margin: 0}}>
 
         {data && <DataGrid
                     rows={data || []}
-                    columns={columns()}
-                    pageSize={100}
+                    columns={columns(nomRefs)}
+                    pageSize={20}
                     autoHeight
                     disableColumnResize={false}
                     components={{

@@ -24,20 +24,8 @@ export const refsApi = createApi({
                 transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
-            transformResponse: (response, meta, arg) => {
-                let STATUS_PAIAE = {
-                    EN_COURS: 'EN_COURS',
-                    VALIDE: 'VALIDE',
-                    VALIDE_HCP: 'VALIDE_HCP',
-                    SUSPENDU: 'SUSPENDU',
-                    EXTRAIT: 'EXTRAIT',
-                    ERREUR_EXTRACTION: 'ERREUR_EXTRACTION',
-                    EN_ATTENTE: 'EN_ATTENTE',
-                    PAYE: 'PAYE',
-                    REMBOURSE: 'REMBOURSE',
-                    ANNULE: 'ANNULE'
-                }
-                return {STATUS_PAIAE, ...response}
+            transform: (response, meta, arg) => {
+                return response
             }
         }),
     }),

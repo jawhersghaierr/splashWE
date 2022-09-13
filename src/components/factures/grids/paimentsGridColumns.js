@@ -5,16 +5,14 @@ import {Link} from "react-router-dom";
 import {convertDate, currencyFormatter} from "../../../utils/utils";
 
 export const columns = disciplines => [
-    { field: 'dateCreation', headerName: 'Date et heure de reception', minWidth: '150px', flex: 3, renderCell: (params) => { //dateEntree
-            return (convertDate(params.value))
+    { field: 'dateCreation', headerName: 'Date et heure de réception', minWidth: '150px', flex: 3, renderCell: (params) => { //dateEntree
+            return (convertDate(params.value, true))
         }},
     { field: 'type', headerName: 'Type', flex: 1},
     { field: 'numero', headerName: 'N° Numero', type: 'number', flex: 1},
     { field: 'montant', headerName: 'Montant', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: 'Statut', flex: 1, renderCell: (params) => {
-            return (
-                <Chip label={`${params.value}`} sx={{color: 'black'}}/>
-            )}},
+            return ( <Chip label={`${params.value}`} sx={{color: 'black'}}/> )}},
     { field: 'details', headerName: 'Details', flex: 2, renderCell: (params) => {
             return <b>{params.value}</b>
         }},

@@ -99,7 +99,7 @@ export default function SearchAccordion(props) {
                                     </FormControl>
                                 )}
                             </Field>
-                            <Field name="periodTo" validate={validators.composeValidators(validators.biggerThan(values, {periodFrom: 'Réceptionné du'}), validators.noFutureDate())} >
+                            <Field name="periodTo" validate={validators.composeValidators(validators.beforeThan(values, 'periodFrom'), validators.noFutureDate())} >
                                 {({ input, meta }) => (
                                     <FormControl className="RoundDate" style={{ flex: '1 0 21%'}}>
                                         <DatePicker

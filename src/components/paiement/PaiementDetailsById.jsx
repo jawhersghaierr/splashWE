@@ -9,8 +9,8 @@ import {RowInfo} from "./components/RowInfo";
 import {HistoryGrid} from "./grids/HistoryGrid";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
 import {AssociesGrid} from "./grids/AssociesGrid";
-import {convertDate, facturesStatus, currencyFormatter} from "../../utils/utils";
-
+import {convertDate, facturesStatus, currencyFormatter, paiementsStatus} from "../../utils/utils";
+import {useGetRefsQuery} from "../../services/refsApi";
 
 
 function TabPanel(props) {
@@ -51,16 +51,13 @@ const oneRowHeader = ({ dateCreation, dateModification}) => {
 
     return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-            <RowInfo label={'Date de creation'} value={convertDate(dateCreation)}/>
+            <RowInfo label={'Date de création'} value={convertDate(dateCreation)}/>
         </div>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-            <RowInfo label={'Derniere modification'} value={convertDate(dateModification)}/>
+            <RowInfo label={'Dernière modification'} value={convertDate(dateModification)}/>
         </div>
     </div>
 }
-
-
-
 
 export default function PaiementDetailsById(props) {
 
@@ -74,7 +71,7 @@ export default function PaiementDetailsById(props) {
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetPaiementByIdQuery(match?.params?.id);
-
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     return (
 
@@ -83,10 +80,10 @@ export default function PaiementDetailsById(props) {
                 <b>Détails du paiement</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                {data?.idFacture}
+                {data?.paiementType}
             </Typography>
 
-            <Chip label={data?.paiementStatus}  sx={{color: 'black', margin: '15px 0 0 0' }}/>
+            <Chip label={paiementsStatus[data?.paiementStatus]?.label}  sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsStatus[data?.paiementStatus]?.color }}/>
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
@@ -106,7 +103,7 @@ export default function PaiementDetailsById(props) {
                 // aria-label="scrollable auto tabs example"
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
-                <Tab label="ELEMENT ASSOCIES"  {...a11yProps(0)}/>
+                <Tab label="ELEMENTS ASSOCIES"  {...a11yProps(0)}/>
                 <Tab label="HISTORIQUE"  {...a11yProps(1)} />
             </Tabs>
 
@@ -117,7 +114,7 @@ export default function PaiementDetailsById(props) {
 
             <TabPanel value={value} index={1} data={data}>
                 {data && oneRowHeader(data)}
-                {(data?.historyElements && data?.historyElements.length > 0) && <HistoryGrid data={data?.historyElements}/>}
+                {(data?.historyElements && data?.historyElements.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElements} nomRefs={nomRefs}/>}
             </TabPanel>
 
         </Box>

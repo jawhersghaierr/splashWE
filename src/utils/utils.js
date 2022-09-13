@@ -4,6 +4,26 @@ import {useEffect, useRef} from "react";
  * Labels and Colors for Statuses
  * *******************************************************************************************************************
  */
+
+export const paiementsVirementStatus = {
+    DOUBLON: {label: 'Doublon', color: '#FFA3A3'},
+    VALIDE: {label: 'Valide', color: '#C7F99F'},
+}
+
+export const paiementsStatus = {
+    VALIDE: {label: 'Valide', color: '#C7F99F'},
+    VALIDE_HCP: {label: 'Valide HCP', color: '#C7F99F'},
+    SUSPENDU: {label: 'Suspendu', color: '#FFD4AD'},
+    ERREUR_EXTRACTION: {label: 'Erreur d\'extraction', color: '#FFA3A3'},
+    EN_ATTENTE: {label: 'En attente', color: '#FFD4AD'},
+    EXTRAIT: {label: 'Extrait', color: '#C7F99F'},
+    ERREUR: {label: 'Erreur', color: '#FFA3A3'},
+    ANNULE: {label: 'Annulé', color: '#FFA3A3'},
+    PAYE: {label: 'Payé', color: '#C7F99F'},
+    REMBOURSE: {label: 'Remboursé', color: '#B3EFF8'},
+    EN_COURS: {label: 'En cours', color: '#FFD4AD'}
+}
+
 export const factureConfigurationStatus = {
     A: {label: 'Active', color: '#C7F99F'},
     S: {label: 'Suspendue', color: '#FFD4AD'},
@@ -30,7 +50,7 @@ export const facturesStatus = {
     PAYEE: {label: "Payée", color: '#C7F99F'},
     PENDING: {label: "En cours", color: '#FFD4AD'},
     REJETEE: {label: "Rejetée", color: '#FFA3A3'},
-    REMBOURSEE: {label: "Remboursée", color: '#C7F99F'}
+    REMBOURSEE: {label: "Remboursée", color: '#B3EFF8'}
 }
 
 export const benefStatuses = {
@@ -74,39 +94,39 @@ const noFutureDate = () => value => {
     return undefined
 }
 
+const notBiggerThan = max => value => {
+    let result = (isNaN(value) || value === undefined || Number(value) < Number(max)) ? undefined : `maximum ${max-0.01}`
+    return result;
+}
 
 
 
-const biggerThan = (values, than) => value => {
+
+
+const beforeThan = (values, thanField) => value => {
     let date1, date2 = null;
 
-    if ( value && value !== undefined && value !== '' && values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined ){
-        date1 = new Date(value).toLocaleDateString('fr');
-        date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+    if ( value && value !== undefined && value !== '' && values[thanField] && values[thanField] !== '' && values[thanField] !== undefined ){
+        date1 = new Date(value)
+        date2 = new Date(values[thanField])
 
-        console.log(date1)
-        console.log(date2)
-
-        if (date1 < date2) return `Date après le: ${convertDate(values[Object.keys(than)[0]])}`
+        if (date1 < date2) return `Date après le: ${convertDate(values[thanField])}`
     }
     return undefined
 }
 
-const lowerThan = (values, than) => value => {
+const afterThan = (values, thanField) => value => {
 
     let date1, date2 = null;
 
     if (
         value && value !== undefined && value !== '' &&
-        values[Object.keys(than)[0]] && values[Object.keys(than)[0]] !== '' && values[Object.keys(than)[0]] !== undefined
+        values[thanField] && values[thanField] !== '' && values[thanField] !== undefined
     ){
-        date1 = new Date(value).toLocaleDateString('fr');
-        date2 = new Date(values[Object.keys(than)[0]]).toLocaleDateString('fr');
+        date1 = new Date(value)
+        date2 = new Date(values[thanField])
 
-        console.log(date1)
-        console.log(date2)
-
-        if (date1 > date2) return `should be Lower than ${Object.values(than)[0]}`
+        if (date1 > date2) return `should be Lower than ${Object.values(thanField)}`
     }
     return undefined
 }
@@ -155,8 +175,9 @@ export const validators = {
     maxValue,
     noFutureDate,
     associated,
-    biggerThan,
-    lowerThan,
+    beforeThan,
+    afterThan,
+    notBiggerThan
 }
 
 
