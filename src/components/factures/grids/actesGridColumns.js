@@ -1,13 +1,13 @@
 import React from "react";
 import {convertDate, currencyFormatter} from "../../../utils/utils";
 
-export const columns = disciplines => [
+export const columns = nomRefs => [
     { field: 'numLigne', headerName: 'N°', maxWidth: '20px', flex: 1, sortable: false, renderCell: (params) => {
         return (params.value);
     }},
     { field: 'codeActe', headerName: 'ACTE', flex: 1 },
     { field: 'dcs', headerName: 'DCS', flex: 1, renderCell: (params) => {
-        return (params.value)
+        return (nomRefs.DCS[params.value] || params.value)
     }},
     { field: 'dmt', headerName: 'DMT', flex: 1 },
     { field: 'Periode', headerName: 'Période', flex: 2, minWeight: '150px', renderCell: (params) => { //

@@ -4,11 +4,11 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./actesGridColumns";
 import './facturesGrid.scss';
 
-export const ActesGrid = ({data}) => {
+export const ActesGrid = ({data, nomRefs}) => {
 
     return <DataGrid
                     rows={data || []}
-                    columns={columns()}
+                    columns={columns(nomRefs)}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}

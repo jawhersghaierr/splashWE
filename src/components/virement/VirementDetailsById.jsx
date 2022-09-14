@@ -86,7 +86,7 @@ export default function VirementDetailsById(props) {
             </Typography>
 
             {nomRefs && <Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[data?.status]}
-                   sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsVirementStatus[data?.status].color}}/>}
+                   sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsVirementStatus[data?.status]?.color || 'rgba(0, 0, 0, 0.08)'}}/>}
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>

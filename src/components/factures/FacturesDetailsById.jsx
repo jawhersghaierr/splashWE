@@ -15,6 +15,7 @@ import {FluxInfo} from "./components/FluxInfo";
 
 import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
 import {statusRow} from "./utils/utils";
+import {useGetRefsQuery} from "../../services/refsApi";
 
 
 function TabPanel(props) {
@@ -67,6 +68,7 @@ export default function FacturesDetailsById(props) {
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
 
     const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
 
     return (
@@ -150,7 +152,7 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
 
-                {(data?.factLines && factLines.length > 0) && <ActesGrid data={factLines}/>}
+                {(data?.factLines && factLines.length > 0 && nomRefs) && <ActesGrid data={factLines} nomRefs={nomRefs}/>}
 
             </TabPanel>
 
@@ -158,7 +160,7 @@ export default function FacturesDetailsById(props) {
                 {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
-                {match?.params?.id && <PaimentsGrid factId={match?.params?.id}/>}
+                {match?.params?.id && nomRefs && <PaimentsGrid factId={match?.params?.id} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

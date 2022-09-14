@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
+import {Card, CardActions, CardContent, Typography, Button, TextField, InputAdornment} from "@mui/material";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -147,7 +147,7 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="numVirement" validate={validators.composeValidators(validators.maxValue(8))}>
                                                           {({ input, meta }) => (
-                                                              <div style={{flex: 2, marginRight: '20px'}}>
+                                                              <div style={{flex: 1, marginRight: '20px'}}>
                                                                   <TextField
                                                                       id="NumVirement"
                                                                       variant="standard"
@@ -171,7 +171,7 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="numDecompte" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
-                                                              <div style={{flex: 2, marginRight: '20px'}}>
+                                                              <div style={{flex: 1, marginRight: '20px'}}>
                                                                   <TextField
                                                                       id="NumDecompte"
                                                                       variant={'standard'}
@@ -190,7 +190,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="numPsAPayer">
 
                                                           {({ input, meta }) => (
-                                                              <div style={{flex: 2}}>
+                                                              <div style={{flex: 1}}>
                                                                   <TextField
                                                                       id="NumPsAPayer"
                                                                       variant="standard"
@@ -212,7 +212,7 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="dateTraitement" validate={validators.composeValidators(validators.noFutureDate())} >
                                                           {({ input, meta }) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', maxWidth: '175px' }}>
+                                                              <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', maxWidth: '225px' }}>
 
                                                                   <DatePicker
                                                                       label={'Date d\'émission du'}
@@ -235,7 +235,7 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="dateTraitementFin" validate={validators.composeValidators(validators.beforeThan(values, 'dateTraitement'), validators.noFutureDate())} >
                                                           {({ input, meta }) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', marginRight: '25px', maxWidth: '175px' }}>
+                                                              <FormControl className="RoundDate" style={{ flex: '1 0 11%', marginLeft: '25px', marginRight: '25px', maxWidth: '225px' }}>
                                                                   <DatePicker
                                                                       inputFormat="dd/MM/yyyy"
                                                                       maxDate={new Date()}
@@ -281,12 +281,12 @@ export default function SearchAccordion(props) {
 
                                               <Accordion expanded={expanded.panelInformationsDuVirement} onChange={handleChange('panelInformationsDuVirement')}>
 
-                                                  <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                  <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
                                                       {(nomRefs && nomRefs?.PAIEMENT_VIREMENT_STATUS) && <Field name="status" format={value => value || []}>
 
                                                           {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
+                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
                                                                   <InputLabel id="Statut-label">Statut du virement</InputLabel>
                                                                   <Select
                                                                       id="Statut"
@@ -318,15 +318,19 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="mntVirement" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
+                                                      <Field name="mntVirement" validate={validators.composeValidators(validators.notBiggerThan(1000000))}>
                                                           {({ input, meta }) => (
-                                                              <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
+                                                              <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
                                                                   <TextField
                                                                       id="MntVirement"
+                                                                      type={'number'}
                                                                       label={'Montant'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
-                                                                      {...input}
+                                                                      {...{...input,
+                                                                          inputProps: { ...input.inputProps, step : 0.01},
+                                                                          InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
+                                                                      }}
                                                                       className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}

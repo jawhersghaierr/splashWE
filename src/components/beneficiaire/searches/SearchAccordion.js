@@ -294,12 +294,12 @@ export default function SearchAccordion(props) {
                                 <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                     <Typography style={{marginLeft: '5px'}}><b>Informations environnement</b></Typography>
                                 </AccordionSummary>
-                                <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
                                     {enviroments && <Field name="envCodeList" format={value => value || []}>
 
                                         {({input, meta}) => (
-                                            <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important'}} className="RoundedEl">
+                                            <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
                                                 <InputLabel id="Enviroment-label">Sélectionner</InputLabel>
                                                 <Select
                                                     id="Enviroment"

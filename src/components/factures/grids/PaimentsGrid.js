@@ -6,7 +6,7 @@ import './facturesGrid.scss';
 import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiementsApi";
 
 
-export const PaimentsGrid = ({factId}) => {
+export const PaimentsGrid = ({factId, nomRefs}) => {
 
     let {data} = useGetPaiementsFacturesByIdQuery(factId)
 
@@ -15,7 +15,7 @@ export const PaimentsGrid = ({factId}) => {
 
         <DataGrid
             rows={data?.elements || []}
-            columns={columns()}
+            columns={columns(nomRefs)}
             pageSize={20}
             autoHeight
             disableColumnResize={false}
