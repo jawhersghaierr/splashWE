@@ -27,7 +27,12 @@ const hostMenuItems = [
         Icon: IconDashboard,
     },
     {
-        name: 'PS App',
+        Icon: IconBarChart,
+        name: 'Configuration',
+        link: '/configuration'
+    },
+    {
+        name: 'PS',
         link: '/PS',
         Icon: IconPeople,
     },
@@ -37,19 +42,32 @@ const hostMenuItems = [
     //     Icon: IconPeople,
     // },
     {
-        name: 'Beneficiaire App',
+        name: 'Beneficiaire',
         link: '/beneficiaire',
         Icon: IconPeople,
+    },
+    {
+        Icon: IconBarChart,
+        name: 'Paiements',
+        link: '/paiement'
+    },
+    {
+        Icon: IconBarChart,
+        name: 'Virements',
+        link: '/virements'
+    },
+    {
+        name: 'ROC',
+    },
+    {
+        Icon: IconLibraryBooks,
+        name: 'Services en ligne',
+        link: '/serviceEnLigne'
     },
     {
         Icon: IconPeople,
         name: 'Factures',
         link: '/factures'
-    },
-    {
-        Icon: IconBarChart,
-        name: 'Configuration',
-        link: '/configuration'
     },
     {
         name: 'Intraitables',
@@ -61,16 +79,7 @@ const hostMenuItems = [
             {name: 'Configuration Intraiteables', link: '/intraitFactures'},
         ]
     },
-    {
-        Icon: IconLibraryBooks,
-        name: 'Paiements',
-        link: '/paiement'
-    },
-    {
-        Icon: IconLibraryBooks,
-        name: 'Virements',
-        link: '/virements'
-    },
+
     // {
     //     name: 'Remote test App',
     //     link: '/test',

@@ -497,7 +497,7 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
                                                                           return nomRefs.PAIEMENT_STATUS[selected[0]];
                                                                       }}>
 
@@ -737,8 +737,8 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="Provenance" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} provenances sélectionnés`
-                                                                          return nomRefs.PROVENANCE[selected[0]];
+                                                                          if (selected.length > 1) return `${selected.length} provenances sélectionnées`
+                                                                          return `(${selected[0]}) ${nomRefs.PROVENANCE[selected[0]]}`;
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>

@@ -45,6 +45,8 @@ import {Paiement} from "./components/paiement/Paiement";
 import PaiementDetailsById from "./components/paiement/PaiementDetailsById";
 import {Virement} from "./components/virement/Virement";
 import VirementDetailsById from "./components/virement/VirementDetailsById";
+import {RocEnLigne} from "./components/rocEnLigne/RocEnLigne";
+import RocEnLigneDetailsById from "./components/rocEnLigne/RocEnLigneDetailsById";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -139,6 +141,10 @@ const App = () => {
 
                   <Route exact={true} path="/paiement" component={Paiement}/> />
                   <Route path="/paiement/:id?" component={PaiementDetailsById}/> />
+
+                  <Route exact={true} path="/serviceEnLigne" component={RocEnLigne}/> />
+                  <Route path="/serviceEnLigne/:id?" component={RocEnLigneDetailsById}/> />
+
                   <Route exact={true} path="/virements" component={Virement}/> />
                   <Route path="/virements/:id?" component={VirementDetailsById}/> />
                   <Route path="/intraitables" component={Intraitables}/> />
