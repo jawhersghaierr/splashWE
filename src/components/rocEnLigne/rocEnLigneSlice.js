@@ -39,7 +39,7 @@ const initialState = {
 
 
 export const rocEnLigneSlice = createSlice({
-    name: 'FACTURES',
+    name: 'RocEnLigne',
     initialState,
     reducers: {
 
@@ -122,8 +122,8 @@ export const {
     initCriterias
 } = rocEnLigneSlice.actions;
 
-export const selectPagination = (state) => ({...state?.factures?.pagination});
-export const selectCriterias = (state) => ({...state?.factures?.criterias});
-export const selectNumCriterias = (state) => (state?.factures?.numCriterias);
+export const selectPagination = (state) => ({...state?.rocEnLigne?.pagination});
+export const selectCriterias = (state) => ({...state?.rocEnLigne?.criterias});
+export const selectNumCriterias = (state) => (state?.rocEnLigne?.numCriterias);
 
 export default rocEnLigneSlice.reducer;

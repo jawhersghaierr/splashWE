@@ -9,7 +9,16 @@ export const columns = nomRefs => [
             return (convertDate(params.value, true))
         }},
     { field: 'type', headerName: 'Type', flex: 1, renderCell: (params) => {
-            return nomRefs.PAIEMENT_TYPE[params.value] ||nomRefs.PAIEMENT_VIREMENT_TYPE[params.value] || params.value
+            let type = params.formattedValue
+            let result = params.value
+
+            if (nomRefs.PAIEMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_TYPE[type]) {
+                result = nomRefs.PAIEMENT_STATUS[type]
+            }
+            if (nomRefs.PAIEMENT_VIREMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_VIREMENT_TYPE[type]) {
+                result = nomRefs.PAIEMENT_VIREMENT_TYPE[type]
+            }
+            return result
     }},
     { field: 'numero', headerName: 'N° Numero', type: 'number', flex: 1},
     { field: 'montant', headerName: 'Montant', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},

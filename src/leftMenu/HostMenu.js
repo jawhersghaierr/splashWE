@@ -47,6 +47,9 @@ const hostMenuItems = [
         Icon: IconPeople,
     },
     {
+        name: 'Paiements',
+    },
+    {
         Icon: IconBarChart,
         name: 'Paiements',
         link: '/paiement'

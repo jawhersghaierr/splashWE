@@ -17,6 +17,7 @@ import { selAndIdbApi } from "./components/factures/services/selAndIdbApi";
 import { fluxApi } from "./components/factures/services/fluxApi";
 import {intraitablesApi} from "./components/intraitables/services/intraitablesApi";
 import { configurationsApi } from "./components/configurations/services/configurationsApi";
+import {rocEnLigneApi} from "./components/rocEnLigne/services/rocEnLigneApi";
 
 import psReducer from './components/ps/psSlice'
 import paiementsReducer from './components/paiement/paiementSlice'
@@ -25,6 +26,7 @@ import benefReducer from './components/beneficiaire/beneficiaireSlice'
 import intraitablesReducer from './components/intraitables/intraitablesSlice'
 import facturesReducer from "./components/factures/facturesSlice";
 import configurationsReducer from './components/configurations/configurationsSlice';
+import rocEnLigneReducer from "./components/rocEnLigne/rocEnLigneSlice";
 
 function logger({ getState }) {
   return next => action => {
@@ -57,7 +59,6 @@ const staticReducers = {
 };
 
 
-
 /**
  * Cf. redux docs:
  * https://redux.js.org/recipes/code-splitting/#defining-an-injectreducer-function
@@ -76,6 +77,7 @@ export default function configureStore(initialState) {
       fluxApi.middleware,
       configurationsApi.middleware,
       intraitablesApi.middleware,
+      rocEnLigneApi.middleware,
       ...[thunk, thunkMiddleware, logger]);
   const composeEnhancers =
       typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -119,12 +121,14 @@ function createReducer(asyncReducers) {
     [fluxApi.reducerPath]: fluxApi.reducer,
     [configurationsApi.reducerPath]: configurationsApi.reducer,
     [intraitablesApi.reducerPath]: intraitablesApi.reducer,
+    [rocEnLigneApi.reducerPath]: rocEnLigneApi.reducer,
     ps: psReducer,
     benef: benefReducer,
     factures: facturesReducer,
     paiements: paiementsReducer,
     virements: virementsReducer,
     intraitables: intraitablesReducer,
+    rocEnLigne: rocEnLigneReducer,
     configurations: configurationsReducer,
     ...staticReducers,
     ...asyncReducers,
