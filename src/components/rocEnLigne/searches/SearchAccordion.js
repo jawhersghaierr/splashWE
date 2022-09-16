@@ -88,7 +88,6 @@ export default function SearchAccordion(props) {
     const [expanded, setExpanded] = useState({
         panelInformationGenerales: true,
         panelInformationsEstablishement: true,
-        panelInformationsServicesEnLigne: true,
         panelInformationsBeneficiaires: true,
         panelNIR: true,
     });
@@ -161,11 +160,11 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'status':
-                                        //Object.keys(nomRefs.FACTURE_STATUS)
+                                        //Object.keys(nomRefs.ROC_STATUSES)
                                         if (_value?.status?.length === 0 ||
-                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
+                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.ROC_STATUSES).length)
                                         ) _value = {..._value, status: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
+                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.ROC_STATUSES)}
                                         if (_value.errorCode !== undefined) {
                                             _value = {..._value, errorCode: undefined}
                                         }
@@ -198,7 +197,7 @@ export default function SearchAccordion(props) {
                                                                       type={'number'}
                                                                       variant="standard"
                                                                       error={meta.invalid}
-                                                                      placeholder={'Sélectionnér les services en ligne'}
+                                                                      placeholder={'Type de la demande'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
@@ -263,8 +262,8 @@ export default function SearchAccordion(props) {
                                                       <Button
                                                           variant="contained"
                                                           type="submit"
-                                                          size="medium" className='RoundedEl'
-                                                          disabled={!checker(values)} >
+                                                          // disabled={!checker(values)}
+                                                          size="medium" className='RoundedEl' >
                                                           <SearchIcon/>Rechercher
                                                       </Button>
                                                   </div>}
@@ -375,17 +374,8 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                  </AccordionDetails>
-                                              </Accordion>
 
-
-                                              <Accordion expanded={expanded.panelInformationsServicesEnLigne} onChange={handleChange('panelInformationsServicesEnLigne')}>
-                                                  <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                                      <Typography style={{marginLeft: '5px'}}><b>Informations services en ligne</b></Typography>
-                                                  </AccordionSummary>
-                                                  <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
-
-                                                      {(nomRefs && nomRefs?.FACTURE_STATUS) && <Field name="status" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.ROC_STATUSES) && <Field name="status" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '25%' }}>
@@ -400,18 +390,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.FACTURE_STATUS[selected[0]];ю
+                                                                          return nomRefs.ROC_STATUSES[selected[0]];ю
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
+                                                                              primary={(values?.status?.length == Object.keys(nomRefs.ROC_STATUSES).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.FACTURE_STATUS).map(code => (
+                                                                      {Object.keys(nomRefs.ROC_STATUSES).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_STATUS[code]}
+                                                                              {nomRefs.ROC_STATUSES[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -420,7 +410,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.FACTURE_ERROR) && <Field name="errorCode" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="errorCode" format={value => value || []}>
 
                                                           {({input, meta}) => (
 
@@ -433,16 +423,22 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      disabled={!Boolean(Object.keys(motif)?.length > 0)}
+                                                                      // disabled={!Boolean(Object.keys(motif)?.length > 0)}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
-                                                                          return nomRefs.FACTURE_ERROR[selected[0]];
+                                                                          return nomRefs.ROC_MOTIFS[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
+                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.ROC_MOTIFS).length) ?
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
+
+                                                                      {Object.keys(nomRefs.ROC_MOTIFS).map(code => (
+                                                                          <MenuItem key={code} value={code}>
+                                                                              {nomRefs.ROC_MOTIFS[code]}
+                                                                          </MenuItem>
+                                                                      ))}
 
                                                                       {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
                                                                           {motif[code]}
@@ -453,7 +449,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.FACTURE_ERROR) && <Field name="subMotif" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.ROC_SOUS_MOTIFS) && <Field name="subMotif" format={value => value || []}>
 
                                                           {({input, meta}) => (
 
@@ -466,16 +462,23 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      disabled={!Boolean(Object.keys(motif)?.length > 0)}
+                                                                      // disabled={!Boolean(Object.keys(motif)?.length > 0)}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Sub Motif sélectionnéеs`
-                                                                          return nomRefs.FACTURE_ERROR[selected[0]];
+                                                                          return nomRefs.ROC_SOUS_MOTIFS[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
+                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.ROC_SOUS_MOTIFS).length) ?
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
+
+
+                                                                      {Object.keys(nomRefs.ROC_SOUS_MOTIFS).map(code => (
+                                                                          <MenuItem key={code} value={code}>
+                                                                              {nomRefs.ROC_SOUS_MOTIFS[code]}
+                                                                          </MenuItem>
+                                                                      ))}
 
                                                                       {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
                                                                           {motif[code]}
@@ -794,7 +797,7 @@ export default function SearchAccordion(props) {
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!checker(values)}
+                                                          // disabled={!checker(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>
@@ -821,17 +824,17 @@ export default function SearchAccordion(props) {
                                       } = values?.values;
 
                                       /**
-                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_ERROR_RLTN based on
+                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
                                        */
                                       if (status) {
                                           let _motif = {}
                                           if (nomRefs && status.length > 0) {
                                               status?.forEach(stat => {
-                                                  Object.keys(
-                                                      Object.fromEntries(
-                                                          Object.entries(nomRefs.FACTURE_ERROR_RLTN).filter(r => r[1] == stat)
-                                                      ))
-                                                      .forEach(code => _motif[code] =  nomRefs.FACTURE_ERROR[code])
+
+                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR.filter(ee => {
+                                                      if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
+                                                  }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.ROC_MOTIFS[Object.keys(code)[0]])
+
                                               })
                                           }
                                           setMotif(_motif);

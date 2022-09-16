@@ -88,7 +88,8 @@ export const rocEnLigneApi = createApi({
 
         getRocEnLigneById: builder.query({
             query: (id) => {
-                let url = `factures/${id}`;
+                // http://10.241.25.10:8001/api/v1/sel/details?id=2&type=common&type=info
+                let url = `sel/details/?id=${id}&type=common,info,assosiete,facture`; //,acte
                 return ({
                     url,
                     transform: (response, meta, arg) => {

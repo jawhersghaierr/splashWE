@@ -52,7 +52,7 @@ function a11yProps(index) {
 export default function RocEnLigneDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
-        path: "/factures/:id",
+        path: "/serviceEnLigne/:id",
         exact: true,
         strict: false
     });
@@ -81,7 +81,7 @@ export default function RocEnLigneDetailsById(props) {
                 {data?.numFact}
             </Typography>
 
-            <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
+            <Chip label={`${facturesStatus[data?.common?.statut]?.label || data?.common?.statut}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.common?.statut]?.color, margin: '15px 0 0 0' }}/>
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
@@ -135,14 +135,14 @@ export default function RocEnLigneDetailsById(props) {
                     </Typography>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData.numEng} border={true} justify={true}/>
+                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true}/>
                             <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
                             <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
                             <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
                         </div>
                         <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
+                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true}/>
+                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
                             <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
                             <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
                         </div>

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
@@ -75,16 +75,8 @@ export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
-    const {enviroments, enviromentsIsFetching, enviromentsIsSuccess} = props;
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-
-    const onSubmit = async (values) => {
-
-        await sleep(300);
-        dispatch(setCriterias(values));
-    };
-
     const [expanded, setExpanded] = useState({
         panelInformationGenerales: true,
         panelInformationsEstablishement: true,
@@ -95,9 +87,12 @@ export default function SearchAccordion(props) {
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [motif, setMotif] = useState({});
+    const [panelExpanded, setPanelExpanded] = useState(false);
     const prevMotif = usePrevious(motif)
 
-    const [panelExpanded, setPanelExpanded] = useState(false);
+    useEffect(() => {
+        console.log('motif: ', motif)
+    }, [motif]);
 
     const handleChange = (panel) => (event, newExpanded) => {
 
@@ -106,6 +101,12 @@ export default function SearchAccordion(props) {
         } else {
             setExpanded({...expanded, [panel]: newExpanded});
         }
+    };
+
+    const onSubmit = async (values) => {
+
+        await sleep(300);
+        dispatch(setCriterias(values));
     };
 
     const handleAccordionPanel = () => (event) => {
@@ -796,17 +797,17 @@ export default function SearchAccordion(props) {
                                       } = values?.values;
 
                                       /**
-                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_ERROR_RLTN based on
+                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
                                        */
                                       if (status) {
                                           let _motif = {}
                                           if (nomRefs && status.length > 0) {
                                               status?.forEach(stat => {
-                                                  Object.keys(
-                                                      Object.fromEntries(
-                                                          Object.entries(nomRefs.FACTURE_ERROR_RLTN).filter(r => r[1] == stat)
-                                                      ))
-                                                      .forEach(code => _motif[code] =  nomRefs.FACTURE_ERROR[code])
+
+                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR.filter(ee => {
+                                                      if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
+                                                  }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.FACTURE_ERROR[Object.keys(code)[0]])
+
                                               })
                                           }
                                           setMotif(_motif);

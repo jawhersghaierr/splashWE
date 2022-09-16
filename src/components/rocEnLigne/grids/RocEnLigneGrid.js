@@ -26,7 +26,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -49,14 +49,14 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     return <div className="gridContent">
 
-        {(data && data?.results) && <div>
+        {(data && data?.demandes) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data?.results || []}
+                rows={data?.demandes || []}
                 columns={columns()}
                 pageSize={size}
                 autoHeight

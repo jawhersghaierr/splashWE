@@ -6,7 +6,7 @@ import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
@@ -14,9 +14,15 @@ import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
 import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
-import {statusRow} from "./utils/utils";
+import {checker, statusRow} from "./utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-
+import SearchIcon from "@mui/icons-material/Search";
+import {ConfirmNir} from "../../utils/ConfirmNir";
+import {useState} from "react";
+import {ConfirmFactureRejete} from "../../utils/ConfirmFactureRejete";
+import {ConfirmFactureAnule} from "../../utils/ConfirmFactureAnule";
+import {ConfirmFactureRecyclage} from "../../utils/ConfirmFactureRecyclage";
+import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
@@ -58,17 +64,16 @@ export default function FacturesDetailsById(props) {
     });
 
     const [value, setValue] = React.useState(0);
+    const [openRecyclageDialog, setOpenRecyclageDialog] = useState(false);
+    const [openRejeteDialog, setOpenRejeteDialog] = useState(false);
+    const [openAnuleDialog, setOpenAnuleDialog] = useState(false);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+
     let factLines = []
     if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
-
-    const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
-    const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
-
-    const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
 
     return (
@@ -81,7 +86,34 @@ export default function FacturesDetailsById(props) {
                 {data?.numFact}
             </Typography>
 
-            <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
+
+                {/*<div>*/}
+                {/*    <Button variant="contained"*/}
+                {/*            size="medium"*/}
+                {/*            onClick={(e)=>{*/}
+                {/*                setOpenRejeteDialog(true)*/}
+                {/*                console.log(e)*/}
+                {/*                console.log(data)*/}
+                {/*            }}*/}
+                {/*            className="RoundedEmptyButt" style={{marginRight: 15}}>*/}
+                {/*        Confirm le rejet*/}
+                {/*    </Button>*/}
+                {/*    <Button variant="contained"*/}
+                {/*            size="medium"*/}
+                {/*            onClick={(e)=>{*/}
+                {/*                setOpenAnuleDialog(true)*/}
+                {/*                console.log(e)*/}
+                {/*                console.log(data)*/}
+                {/*            }}*/}
+                {/*            className="RoundedEl">*/}
+                {/*        Recycler*/}
+                {/*    </Button>*/}
+
+                {/*</div>*/}
+
+            </div>
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
@@ -168,6 +200,17 @@ export default function FacturesDetailsById(props) {
                 { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
             </TabPanel>
 
+            <ConfirmFactureRecyclage agreed={()=> {
+                console.log('agreed')
+            }} disagreed={()=>console.log('disagreed')} opened={openRecyclageDialog}/>
+
+            {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs} agreed={() => {
+                console.log('agreed')
+            }} disagreed={() => console.log('disagreed')} opened={openRejeteDialog}/>}
+
+            <ConfirmFactureAnule agreed={()=> {
+                console.log('agreed')
+            }} disagreed={()=>console.log('disagreed')} opened={openAnuleDialog}/>
         </Box>
     );
 }

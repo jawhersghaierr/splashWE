@@ -38,7 +38,6 @@ export const checkInsidePanels = (values) => {
     let result =  {
         panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact )? true: true,
         panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: true,
-        panelInformationsServicesEnLigne: (subMotif || status || errorCode)? true: true,
         panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
