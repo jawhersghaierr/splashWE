@@ -91,7 +91,7 @@ export default function SearchAccordion(props) {
     const prevMotif = usePrevious(motif)
 
     useEffect(() => {
-        console.log('motif: ', motif)
+        // console.log('motif: ', motif)
     }, [motif]);
 
     const handleChange = (panel) => (event, newExpanded) => {

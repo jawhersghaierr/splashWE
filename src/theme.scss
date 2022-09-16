@@ -19,6 +19,7 @@
   border-radius: 20px;
   padding: 0;
   margin: 0;
+  height: 40px;
   & .MuiButton-root, .MuiOutlinedInput-root, .MuiInputBase-root, .MuiInputBase-input{
     border: 0;
     border-radius: 20px;
@@ -44,6 +45,7 @@
     color: #4C6F87;
   }
 }
+
 .RoundedEmptyButt {
   &.MuiButton-root {
     border-radius: 20px;

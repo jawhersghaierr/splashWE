@@ -18,19 +18,23 @@ export const ConfirmFactureRecyclage = ({opened, agreed, disagreed}) => {
 			// onClose={handleClose}
 			aria-labelledby="alert-dialog-title"
 			aria-describedby="alert-dialog-description"
+			maxWidth={'sm'} fullWidth={true}
 		>
 			<DialogTitle id="alert-dialog-title" sx={{background: '#ffd4ad'}}>
-				<Typography variant="h5" noWrap component="div"><b><ErrorOutlineOutlinedIcon/>Attention</b></Typography>
-				{"La recherche par NIR doit être utilisée en dernier recours, si l'objet recherché n'a pas été trouvé par d'autres critères. Confirmez-vous vouloir rechercher par NIR?"}
+				<Typography variant="h5" noWrap component="div" sx={{margin: '10px'}}>
+					<ErrorOutlineOutlinedIcon sx={{verticalAlign: 'top', width: 30, height: 30, margin: '0 5px'}}/>
+					<b>Attention</b>
+				</Typography>
+				<div style={{margin: '0 50px 15px'}}>{'Confirmez-vous le recylage?'}</div>
 			</DialogTitle>
 			<DialogContent>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={agreed} autoFocus className="RoundedEmptyButt" >
-					Oui
-				</Button>
-				<Button onClick={disagreed} className="RoundedEl" >
+				<Button onClick={disagreed} autoFocus className="RoundedEmptyButt" >
 					Non
+				</Button>
+				<Button onClick={agreed} className="RoundedEl" >
+					Oui
 				</Button>
 			</DialogActions>
 		</Dialog>

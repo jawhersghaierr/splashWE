@@ -281,7 +281,7 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      {(nomRefs && nomRefs?.FACTURE_DOMAINE) && <Field name="domaine" >
+                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" >
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -293,9 +293,9 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}>
 
-                                                                      {Object.keys(nomRefs.FACTURE_DOMAINE).map(code => (
+                                                                      {Object.keys(nomRefs.ROC_DOMAINS).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_DOMAINE[code]}
+                                                                              {nomRefs.ROC_DOMAINS[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -384,7 +384,6 @@ export default function SearchAccordion(props) {
                                                                       id="Statut"
                                                                       labelId="Statut-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}

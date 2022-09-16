@@ -14,17 +14,23 @@ import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
 import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
-import {checker, statusRow} from "./utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import SearchIcon from "@mui/icons-material/Search";
-import {ConfirmNir} from "../../utils/ConfirmNir";
 import {useState} from "react";
 import {ConfirmFactureRejete} from "../../utils/ConfirmFactureRejete";
 import {ConfirmFactureAnule} from "../../utils/ConfirmFactureAnule";
 import {ConfirmFactureRecyclage} from "../../utils/ConfirmFactureRecyclage";
-import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle';
+
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 
 function TabPanel(props) {
+
     const { children, value, index, data, ...other } = props;
 
     return (
@@ -55,6 +61,9 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
+
+
+
 export default function FacturesDetailsById(props) {
 
     const match = matchPath(props?.location?.pathname, {
@@ -62,6 +71,12 @@ export default function FacturesDetailsById(props) {
         exact: true,
         strict: false
     });
+
+    const [openMsg, setOpenMsg] = useState(false)
+
+    const handleMsgClose = () => {
+        setOpenMsg(false)
+    };
 
     const [value, setValue] = React.useState(0);
     const [openRecyclageDialog, setOpenRecyclageDialog] = useState(false);
@@ -89,29 +104,40 @@ export default function FacturesDetailsById(props) {
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
 
-                {/*<div>*/}
-                {/*    <Button variant="contained"*/}
-                {/*            size="medium"*/}
-                {/*            onClick={(e)=>{*/}
-                {/*                setOpenRejeteDialog(true)*/}
-                {/*                console.log(e)*/}
-                {/*                console.log(data)*/}
-                {/*            }}*/}
-                {/*            className="RoundedEmptyButt" style={{marginRight: 15}}>*/}
-                {/*        Confirm le rejet*/}
-                {/*    </Button>*/}
-                {/*    <Button variant="contained"*/}
-                {/*            size="medium"*/}
-                {/*            onClick={(e)=>{*/}
-                {/*                setOpenAnuleDialog(true)*/}
-                {/*                console.log(e)*/}
-                {/*                console.log(data)*/}
-                {/*            }}*/}
-                {/*            className="RoundedEl">*/}
-                {/*        Recycler*/}
-                {/*    </Button>*/}
+                <div>
+                    {data?.status == 'A_RECYCLER' && <Button variant="contained"
+                             size="medium"
+                             onClick={(e) => {
+                                 setOpenRejeteDialog(true)
+                                 console.log(e)
+                                 console.log(data)
+                             }}
+                             className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Confirm le rejet
+                    </Button>}
 
-                {/*</div>*/}
+                    {data?.status == 'REJETEE' && <Button variant="contained" size="medium"
+                            onClick={(e)=>{
+                                setOpenRecyclageDialog(true)
+                                console.log(e)
+                                console.log(data)
+                            }}
+                            style={{marginRight: '10px'}} className="RoundedEl">
+                        Recycler
+                    </Button>}
+
+                    {data?.status == 'REJETEE' && <Button variant="contained"
+                            size="medium"
+                            onClick={(e)=>{
+                                setOpenAnuleDialog(true)
+                                console.log(e)
+                                console.log(data)
+                            }}
+                            className="RoundedEl" style={{marginRight: '10px'}} >
+                        Anule
+                    </Button>}
+
+                </div>
 
             </div>
 
@@ -201,16 +227,53 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
 
             <ConfirmFactureRecyclage agreed={()=> {
+                setOpenMsg(true)
                 console.log('agreed')
-            }} disagreed={()=>console.log('disagreed')} opened={openRecyclageDialog}/>
+             }} disagreed={()=> {
+                console.log('disagreed')
+                setOpenMsg(true)
+                setOpenRecyclageDialog(false)
+             }}
+             opened={openRecyclageDialog}/>
 
-            {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs} agreed={() => {
-                console.log('agreed')
-            }} disagreed={() => console.log('disagreed')} opened={openRejeteDialog}/>}
+            {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
+                agreed={() => {
+                    setOpenMsg(true)
+                    console.log('agreed')
+                }}
+                disagreed={() => {
+                    console.log('disagreed')
+                    setOpenMsg(true)
+                    setOpenRejeteDialog(false)
+                }}
+                opened={openRejeteDialog}/>}
 
-            <ConfirmFactureAnule agreed={()=> {
-                console.log('agreed')
-            }} disagreed={()=>console.log('disagreed')} opened={openAnuleDialog}/>
+            {nomRefs && <ConfirmFactureAnule nomRefs={nomRefs}
+                agreed={()=> {
+                    console.log('agreed')
+                    setOpenMsg(true)
+                }}
+                disagreed={()=> {
+                    console.log('disagreed')
+                    setOpenMsg(true)
+                    setOpenAnuleDialog(false)
+                }}
+                opened={openAnuleDialog}/>}
+
+            <Snackbar open={openMsg}
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      autoHideDuration={6000}
+                      onClose={handleMsgClose}
+                      key={'bottom' + 'right'}>
+
+                <Alert onClose={handleMsgClose} severity="success" sx={{ width: '100%', background: '#c7f99f', color: '#003154'}}>
+                    <AlertTitle><b>Succès</b></AlertTitle>
+                    <div style={{padding: '5px 95px 0 0'}}>
+                        Votre facture a été rejetée avec succès
+                    </div>
+                </Alert>
+            </Snackbar>
+
         </Box>
     );
 }

@@ -10,6 +10,14 @@ export const paiementsVirementStatus = {
     VALIDE: {label: 'Valide', color: '#C7F99F'},
 }
 
+export const rocStatus = {
+    VALIDE: {label: 'Valide', color: '#C7F99F'},
+    INVALIDE: {label: 'Remboursé', color: '#B3EFF8'},
+    CALCULEE: {label: 'Suspendu', color: '#FFD4AD'},
+    ACCORDEE: {label: 'Erreur d\'extraction', color: '#FFA3A3'},
+    REJETEE: {label: "Rejetée", color: '#FFA3A3'},
+}
+
 export const paiementsStatus = {
     VALIDE: {label: 'Valide', color: '#C7F99F'},
     VALIDE_HCP: {label: 'Valide HCP', color: '#C7F99F'},

@@ -61,8 +61,8 @@ export default function RocEnLigneDetailsById(props) {
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetRocEnLigneByIdQuery(match?.params?.id);
-    let factLines = []
-    if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
+    let actes = []
+    if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
 
     const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
@@ -117,7 +117,7 @@ export default function RocEnLigneDetailsById(props) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
-                <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
+                <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) && <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
                 <Tab label="Paiements" {...a11yProps(3)} />
                 <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
@@ -152,12 +152,12 @@ export default function RocEnLigneDetailsById(props) {
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
 
-                {(data?.factLines && factLines.length > 0 && nomRefs) && <ActesGrid data={factLines} nomRefs={nomRefs}/>}
+                {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
 
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
+                {data?.common?.numeroEngagement && <SelAssociesGrid numEng={data?.common.numeroEngagement}/>}
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
                 {match?.params?.id && nomRefs && <PaimentsGrid factId={match?.params?.id} nomRefs={nomRefs}/>}

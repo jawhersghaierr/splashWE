@@ -49,14 +49,14 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     return <div className="gridContent">
 
-        {(data && data?.demandes) && <div>
+        {(data && data?.results) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
                 </Typography>
             </div>
             <DataGrid
-                rows={data?.demandes || []}
+                rows={data?.results || []}
                 columns={columns()}
                 pageSize={size}
                 autoHeight
