@@ -216,7 +216,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(14))}>
+                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -234,7 +234,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numAdh">
+                                                      <Field name="numAdh" validate={validators.composeValidators(validators.maxValue(16))}>
 
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2}}>
@@ -444,7 +444,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       disabled={!Boolean(Object.keys(motif)?.length > 0)}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} motifs sélectionnéеs`
                                                                           return nomRefs.FACTURE_ERROR[selected[0]];
                                                                       }}>
 
@@ -569,7 +569,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} AMC sélectionnés`
-                                                                          return nomRefs.CLIENT[selected[0]];
+                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
@@ -580,7 +580,7 @@ export default function SearchAccordion(props) {
 
                                                                       {Object.keys(nomRefs.CLIENT).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.CLIENT[code]}
+                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -590,7 +590,6 @@ export default function SearchAccordion(props) {
                                                       </Field>}
 
                                                       <Field name="nom" validate={validators.composeValidators(
-                                                          validators.minValue(3),
                                                           validators.maxValue(51),
                                                           validators.associated(values, ['prenom', 'dateDeNaissance'], 'Nom')
                                                       )}>
@@ -609,7 +608,6 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
                                                       <Field name="prenom" validate={validators.composeValidators(
-                                                          validators.minValue(3),
                                                           validators.maxValue(51),
                                                           validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
                                                       )}>

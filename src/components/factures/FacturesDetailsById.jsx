@@ -116,7 +116,7 @@ export default function FacturesDetailsById(props) {
                         Confirm le rejet
                     </Button>}
 
-                    {data?.status == 'REJETEE' && <Button variant="contained" size="medium"
+                    {data?.status == 'A_RECYCLER' && <Button variant="contained" size="medium"
                             onClick={(e)=>{
                                 setOpenRecyclageDialog(true)
                                 console.log(e)
@@ -126,7 +126,7 @@ export default function FacturesDetailsById(props) {
                         Recycler
                     </Button>}
 
-                    {data?.status == 'REJETEE' && <Button variant="contained"
+                    {['BAP', 'PAYEE', 'REJETEE', 'REMBOURSEE'].includes(data?.status) && <Button variant="contained"
                             size="medium"
                             onClick={(e)=>{
                                 setOpenAnuleDialog(true)

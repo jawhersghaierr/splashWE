@@ -83,7 +83,7 @@ export default function SearchAccordion(props) {
                                 {({ input, meta }) => (
                                     <FormControl className="RoundDate" style={{ flex: '1 0 21%', marginRight: '15px'}}>
                                         <DatePicker
-                                            label={'Date d\'intégration du'}
+                                            label={'Date d\'intégration du *'}
                                             inputFormat="dd/MM/yyyy"
                                             value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                             onChange={input?.onChange || null}
