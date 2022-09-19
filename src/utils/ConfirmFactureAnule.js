@@ -1,4 +1,6 @@
 import * as React from 'react';
+import {useEffect, useState} from "react";
+
 import {
 	Dialog,
 	FormControl,
@@ -11,13 +13,17 @@ import {
 	DialogContent,
 	DialogTitle, TextField, InputLabel
 } from "@mui/material";
-
 import CancelIcon from '@mui/icons-material/Cancel';
+import {matchPath} from "react-router-dom";
+import {env_IP, ports} from "../../env-vars";
 
-export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs}) => {
+export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
 
-	const [motif, setMotif] = React.useState('');
-	const [comment, setComment] = React.useState('');
+	const [motif, setMotif] = useState('');
+	const [comment, setComment] = useState('');
+	const [required, setRequired] = useState(null);
+	const [error, setError] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const handleMotifChange = (event) => {
 		setMotif(event.target.value);
@@ -27,8 +33,54 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs}) => {
 		setComment(event.target.value);
 	};
 
-	console.log('comment ', comment)
-	console.log('motif ', motif)
+	const confirme = () => {
+		if(motif){
+			console.log('confirme > ', motif, comment)
+			agreed();
+			disagreed()
+
+			if (url && data && data?.id) {
+				fetch(url,{
+					method: 'PATCH',
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({
+						"id": 0,
+						"status": "A_RECYCLER",
+						"motive": comment,
+						"errors": [
+							{
+								"code": motif,
+								// "target": "string",
+								// "value": "string",
+								// "lineId": "string"
+							}
+						]})
+				})
+					.then(res => res.json())
+					.then(
+						(data) => {
+							setIsLoaded(true);
+							setOpenMsg({success:true, open: true, data});
+						},
+						(error) => {
+							setIsLoaded(true);
+							console.log('error > ', error)
+							setOpenMsg({success: false, open: true, error: 'failed'});
+							setError(error);
+						}
+					)
+			}
+
+		} else {
+			setRequired('missing statement *')
+		}
+	}
+
+	let url = `http://${env_IP}:${ports.factures}/api/v1/factures/status`;
+
+	useEffect(() => {
+		if (motif) setRequired(null)
+	}, [motif])
 
 	return (
 		<Dialog
@@ -51,12 +103,16 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs}) => {
 						onChange={handleMotifChange}
 						required={true}
 						value={motif}
-						input={<OutlinedInput className="RoundedEl" label="Motif de rejet" sx={{minWidth: 200}}/>}
+						input={<OutlinedInput
+							className="RoundedEl"
+						 	label="Motif de rejet"
+							sx={{minWidth: 200}}/>}
 						id="motif">
 						{Object.keys(nomRefs.FACTURE_ERROR).map(code => (<MenuItem key={code} value={code}>
 							{nomRefs.FACTURE_ERROR[code]}
 						</MenuItem>))}
 					</Select>
+					<span style={{padding: '0 10px'}}>{required || ''}</span>
 				</FormControl>
 
 				<FormControl sx={{flex: 2, margin: '15px'}}>
@@ -74,7 +130,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs}) => {
 				<Button onClick={disagreed} autoFocus className="RoundedEmptyButt" >
 					Annuler
 				</Button>
-				<Button onClick={agreed} className="RoundedEl" >
+				<Button onClick={confirme} className="RoundedEl" >
 					Confirmer l'annulation
 				</Button>
 			</DialogActions>

@@ -802,7 +802,7 @@ export default function SearchAccordion(props) {
                                           if (nomRefs && status.length > 0) {
                                               status?.forEach(stat => {
 
-                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR.filter(ee => {
+                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR?.filter(ee => {
                                                       if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
                                                   }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.FACTURE_ERROR[Object.keys(code)[0]])
 

@@ -15,7 +15,7 @@ import {FluxInfo} from "./components/FluxInfo";
 
 import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ConfirmFactureRejete} from "../../utils/ConfirmFactureRejete";
 import {ConfirmFactureAnule} from "../../utils/ConfirmFactureAnule";
 import {ConfirmFactureRecyclage} from "../../utils/ConfirmFactureRecyclage";
@@ -72,10 +72,15 @@ export default function FacturesDetailsById(props) {
         strict: false
     });
 
-    const [openMsg, setOpenMsg] = useState(false)
+    const [openMsg, setOpenMsg] = useState({
+        open: false,
+        success: null,
+        error: null,
+        data: null,
+    })
 
     const handleMsgClose = () => {
-        setOpenMsg(false)
+        setOpenMsg({...openMsg, open: false})
     };
 
     const [value, setValue] = React.useState(0);
@@ -84,12 +89,12 @@ export default function FacturesDetailsById(props) {
     const [openAnuleDialog, setOpenAnuleDialog] = useState(false);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    let {data = null} = useGetFactureByIdQuery(match?.params?.id);
+
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     let factLines = []
     if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
-
 
     return (
 
@@ -208,69 +213,81 @@ export default function FacturesDetailsById(props) {
 
                 </Box>}
             </TabPanel>
+
             <TabPanel value={value} index={1} data={data}>
-
                 {(data?.factLines && factLines.length > 0 && nomRefs) && <ActesGrid data={factLines} nomRefs={nomRefs}/>}
-
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
                 {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
             </TabPanel>
+
             <TabPanel value={value} index={3} data={data}>
                 {match?.params?.id && nomRefs && <PaimentsGrid factId={match?.params?.id} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
-
                 { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
             </TabPanel>
 
             <ConfirmFactureRecyclage agreed={()=> {
-                setOpenMsg(true)
+                setOpenMsg({...openMsg, open: true})
                 console.log('agreed')
              }} disagreed={()=> {
                 console.log('disagreed')
-                setOpenMsg(true)
+                setOpenMsg({...openMsg, open: true})
                 setOpenRecyclageDialog(false)
              }}
+             data={data}
              opened={openRecyclageDialog}/>
 
             {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
+                data={data}
                 agreed={() => {
-                    setOpenMsg(true)
+                    setOpenMsg({...openMsg, open: true})
                     console.log('agreed')
                 }}
                 disagreed={() => {
                     console.log('disagreed')
-                    setOpenMsg(true)
+                    setOpenMsg({...openMsg, open: true})
                     setOpenRejeteDialog(false)
                 }}
                 opened={openRejeteDialog}/>}
 
             {nomRefs && <ConfirmFactureAnule nomRefs={nomRefs}
+                data={data}
+                setOpenMsg={setOpenMsg}
                 agreed={()=> {
                     console.log('agreed')
-                    setOpenMsg(true)
+                    setOpenMsg({...openMsg, open: true})
                 }}
                 disagreed={()=> {
                     console.log('disagreed')
-                    setOpenMsg(true)
                     setOpenAnuleDialog(false)
                 }}
                 opened={openAnuleDialog}/>}
 
-            <Snackbar open={openMsg}
+            <Snackbar open={openMsg.open}
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                       autoHideDuration={6000}
                       onClose={handleMsgClose}
                       key={'bottom' + 'right'}>
 
-                <Alert onClose={handleMsgClose} severity="success" sx={{ width: '100%', background: '#c7f99f', color: '#003154'}}>
-                    <AlertTitle><b>Succès</b></AlertTitle>
-                    <div style={{padding: '5px 95px 0 0'}}>
+                <Alert onClose={handleMsgClose}
+                       severity={(openMsg.success)? 'success': 'error'}
+                       sx={{
+                           width: '100%',
+                           // background: '#c7f99f',
+                           // color: '#003154'
+                       }}>
+                    {openMsg.success && <AlertTitle><b>Succès</b></AlertTitle>}
+                    {!openMsg.success && <AlertTitle><b>Error</b></AlertTitle>}
+                    {openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
                         Votre facture a été rejetée avec succès
-                    </div>
+                    </div>}
+                    {!openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
+                        {openMsg.error}
+                    </div>}
                 </Alert>
             </Snackbar>
 
