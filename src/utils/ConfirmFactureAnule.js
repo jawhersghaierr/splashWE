@@ -16,6 +16,7 @@ import {
 import CancelIcon from '@mui/icons-material/Cancel';
 import {matchPath} from "react-router-dom";
 import {env_IP, ports} from "../../env-vars";
+import {reshapeMotifVsStatus} from "../components/factures/utils/utils";
 
 export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
 
@@ -33,6 +34,8 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 		setComment(event.target.value);
 	};
 
+	let motifOptions = reshapeMotifVsStatus({status: ['ANNULEE'], nomRefs})
+
 	const confirme = () => {
 		if(motif){
 			console.log('confirme > ', motif, comment)
@@ -44,16 +47,11 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 					method: 'PATCH',
 					headers: {"Content-Type": "application/json"},
 					body: JSON.stringify({
-						"id": 0,
-						"status": "A_RECYCLER",
+						"id": data?.id,
+						"status": "ANNULEE",
 						"motive": comment,
 						"errors": [
-							{
-								"code": motif,
-								// "target": "string",
-								// "value": "string",
-								// "lineId": "string"
-							}
+							{ "code": motif }
 						]})
 				})
 					.then(res => res.json())
@@ -72,7 +70,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 			}
 
 		} else {
-			setRequired('missing statement *')
+			setRequired('Un motif d\'annulation doit être sélectionné *')
 		}
 	}
 
@@ -108,8 +106,8 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 						 	label="Motif de rejet"
 							sx={{minWidth: 200}}/>}
 						id="motif">
-						{Object.keys(nomRefs.FACTURE_ERROR).map(code => (<MenuItem key={code} value={code}>
-							{nomRefs.FACTURE_ERROR[code]}
+						{Object.keys(motifOptions).map(code => (<MenuItem key={code} value={code}>
+							{motifOptions[code]}
 						</MenuItem>))}
 					</Select>
 					<span style={{padding: '0 10px'}}>{required || ''}</span>

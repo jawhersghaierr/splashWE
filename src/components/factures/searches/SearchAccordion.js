@@ -29,7 +29,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../../utils/TextMaskCustom";
 import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
-import { checker, checkInsidePanels } from '../utils/utils';
+import {checker, checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 import { ConfirmNir } from "../../../utils/ConfirmNir";
 
@@ -794,25 +794,9 @@ export default function SearchAccordion(props) {
                                           nir, cle
                                       } = values?.values;
 
-                                      /**
-                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
-                                       */
-                                      if (status) {
-                                          let _motif = {}
-                                          if (nomRefs && status.length > 0) {
-                                              status?.forEach(stat => {
 
-                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR?.filter(ee => {
-                                                      if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
-                                                  }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.FACTURE_ERROR[Object.keys(code)[0]])
-
-                                              })
-                                          }
-                                          setMotif(_motif);
-                                      }
-                                      //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
+                                      let _motif = reshapeMotifVsStatus({status, nomRefs})
+                                      if (_motif) setMotif(_motif)
 
                                       if(
                                           domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||

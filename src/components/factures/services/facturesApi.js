@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
+import {env_IP, ports} from '../../../../env-vars'
 
 export const facturesApi = createApi({
     reducerPath: 'facturesApi',
     baseQuery: fetchBaseQuery({
-        // http://10.241.25.10:8003/api/v1/paiements/factures/10170
-        // http://10.241.25.10:8005/api/v1/factures
-        baseUrl: `http://${env_IP}:8005/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.factures}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -49,6 +47,10 @@ export const facturesApi = createApi({
                     } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
                 }
 
+                if (nir && nir != undefined && cle && cle != undefined) {
+                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+                }
+
                 if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
                     if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
 
@@ -78,8 +80,6 @@ export const facturesApi = createApi({
                     })
                 }
 
-
-                console.log(url)
                 return ({
                     url,
                     transform: (response, meta, arg) => {
@@ -106,7 +106,6 @@ export const facturesApi = createApi({
 })
 export const {
     useGetFacturesQuery,
-
     useGetFactureByIdQuery,
 } = facturesApi
 

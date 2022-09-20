@@ -139,7 +139,7 @@ export default function FacturesDetailsById(props) {
                                 console.log(data)
                             }}
                             className="RoundedEl" style={{marginRight: '10px'}} >
-                        Anule
+                        Annuler
                     </Button>}
 
                 </div>

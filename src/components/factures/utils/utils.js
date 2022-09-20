@@ -67,3 +67,26 @@ export const statusRow = (formattedValue) => {
 
     return res;
 }
+
+
+export const reshapeMotifVsStatus = ({status, nomRefs}) => {
+    /**
+     * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
+     */
+    if (!status && !nomRefs) return null
+
+    if (status) {
+        let _motif = {}
+        if (nomRefs && status.length > 0) {
+            status?.forEach(stat => {
+
+                nomRefs.FACTURE_RLTN_FACTURE_ERROR?.filter(ee => {
+                    if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
+                }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.FACTURE_ERROR[Object.keys(code)[0]])
+
+            })
+        }
+        return _motif || null;
+    }
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+}
