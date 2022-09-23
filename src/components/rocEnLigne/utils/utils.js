@@ -3,19 +3,19 @@ import {statusesRIB} from "../../../utils/utils";
 
 export const checker = (values) => {
     const {
-        numFact, numEng, numAdh,
-        domaine, dateDeSoins,
-        dateReceivedStart, dateReceivedEnd,
-        idPeriodeFact, dateFact,
-        status, errorCode, subMotif,
-        numId, numJur,
+        type, numEng, numAdh,
+        domaine, dateAdmission,
+        receptionDateStart, receptionDateEnd,
+        occId, dateFact,
+        statut, motif, sousMotif,
+        finessGeo, finessJur,
         raisonSociale,
-        department, numClient,
-        nom, prenom, dateDeNaissance, birdDate,
+        dеpartement, amc,
+        nom, prenom, dateNaiss, birdDate,
         nir, cle
     } = values || {};
-    if(numFact || numEng || numAdh || domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-        errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
+    if(type || numEng || numAdh || domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact || statut ||
+        motif || finessGeo || finessJur || raisonSociale || dеpartement || amc || nom || prenom || dateNaiss ||
         birdDate || nir || cle) {
         return true
     } else {
@@ -26,19 +26,19 @@ export const checker = (values) => {
 export const checkInsidePanels = (values) => {
 
     const {
-        numFact, numEng, numAdh,
-        domaine, dateDeSoins,
-        dateReceivedStart, dateReceivedEnd,
-        idPeriodeFact, dateFact, status, errorCode,
-        numId, numJur, raisonSociale,
-        department, numClient, subMotif,
-        nom, prenom, dateDeNaissance, birdDate,
+        type, numEng, numAdh,
+        domaine, dateAdmission,
+        receptionDateStart, receptionDateEnd,
+        occId, dateFact, statut, motif,
+        finessGeo, finessJur, raisonSociale,
+        dеpartement, amc, sousMotif,
+        nom, prenom, dateNaiss, birdDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact )? true: true,
-        panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: true,
-        panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: true,
+        panelInformationGenerales: (domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact )? true: true,
+        panelInformationsEstablishement: (finessGeo || finessJur || raisonSociale || dеpartement)? true: true,
+        panelInformationsBeneficiaires: (amc || nom || prenom || dateNaiss || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     return result
@@ -66,4 +66,58 @@ export const statusRow = (formattedValue) => {
     if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
 
     return res;
+}
+
+const REL_TYPE_STATUS = {
+    IDB: ['VALIDE', 'INVALIDE', 'REJETEE'],
+    SIM: ['CALCULEE', 'INVALIDE', 'REJETEE', 'ANNULEE'],
+    CLC: ['ACCORDEE', 'INVALIDE', 'REJETEE', 'FACTUREE', 'ANNULEE'],
+    DEL: ['VALIDE', 'INVALIDE', 'REJETEE']
+}
+
+
+
+
+//  ROC_RLTN_SOUS_MOTIFS_MOTIFS
+//  ROC_RLTN_SOUS_MOTIFS_TYPES
+//  ROC_RLTN_STATUSES_TYPES
+export const reshapeStatusFromTypes = ({type, nomRefs}) => {
+    let tmpTypes = []
+    type.forEach( _type =>
+        nomRefs.ROC_RLTN_STATUSES_TYPES.filter( e => Object.values(e)[0].includes(_type) && e ).forEach( e => tmpTypes.push(Object.keys(e)[0]) )
+    )
+
+    return [...new Set(tmpTypes)]
+}
+
+export const reshapeSubMotifsFromTypes = ({type, nomRefs}) => {
+    let tmpTypes = []
+    type.forEach( _type =>
+        nomRefs.ROC_RLTN_SOUS_MOTIFS_TYPES.filter( e => Object.values(e)[0].includes(_type) && e ).forEach( e => tmpTypes.push(Object.keys(e)[0]) )
+    )
+
+    return [...new Set(tmpTypes)]
+}
+
+
+export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
+    /**
+     * reshaping nomRefs.ROC_MOTIFS trough nomRefs.ROC_RLTN_STATUSES_TYPES based on localStatus
+     */
+    if (!statut && !nomRefs) return null
+
+    if (statut) {
+        let _motif = {}
+        if (nomRefs && statut.length > 0) {
+            statut?.forEach(stat => {
+
+                nomRefs.ROC_RLTN_STATUSES_TYPES?.filter(ee => {
+                    if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
+                }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.ROC_MOTIFS[Object.keys(code)[0]])
+
+            })
+        }
+        return _motif || null;
+    }
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 }

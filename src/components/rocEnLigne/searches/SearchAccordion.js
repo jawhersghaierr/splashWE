@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
@@ -29,7 +29,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../../utils/TextMaskCustom";
 import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
-import { checker, checkInsidePanels } from '../utils/utils';
+import {
+    checker,
+    checkInsidePanels,
+    reshapeMotifFromStatus,
+    reshapeStatusFromTypes, reshapeSubMotifsFromTypes
+} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice'
 import { ConfirmNir } from "../../../utils/ConfirmNir";
 
@@ -94,8 +99,20 @@ export default function SearchAccordion(props) {
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
-    const [motif, setMotif] = useState({});
-    const prevMotif = usePrevious(motif)
+
+    const [localStatus, setLocalStatus] = useState([]);
+    const [localMotif, setLocalMotif] = useState([]);
+    const [localSubMotif, setLocalSubMotif] = useState([]);
+
+
+    useEffect(() => {
+        console.log('localStatus: ', localStatus)
+    }, [localStatus]);
+
+    useEffect(() => {
+        console.log('localSubMotif: ', localSubMotif)
+    }, [localSubMotif]);
+
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -126,7 +143,7 @@ export default function SearchAccordion(props) {
 
                           utils.changeValue(state, field, (value) => {
                               let _value = value;
-                              if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
+                              if(field?.modified?.birdDate && value == null) { _value.dateNaiss = null}
 
                                 switch (field.active) {
                                     case 'nir':
@@ -138,38 +155,46 @@ export default function SearchAccordion(props) {
                                     case 'cle':
                                     break
 
-                                    case 'numJur':
-                                        if (value?.numJur?.length < 8) console.log(value.numJur, field)
+                                    case 'finessJur':
+                                        if (value?.finessJur?.length < 8) console.log(value.finessJur, field)
 
                                     break
 
-                                    case 'numClient':
+                                    case 'amc':
                                         //Object.keys(nomRefs.CLIENT)
-                                        if (_value?.numClient?.length === 0 ||
-                                            (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
-                                        ) _value = {..._value, numClient: undefined}
-                                        if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
+                                        if (_value?.amc?.length === 0 ||
+                                            (_value?.amc?.includes('all') && _value?.amc?.length > Object.keys(nomRefs?.CLIENT).length)
+                                        ) _value = {..._value, amc: undefined}
+                                        if (_value?.amc?.includes('all')) _value = {..._value, amc: Object.keys(nomRefs?.CLIENT)}
                                     break
 
-                                    case 'errorCode':
-                                        //Object.keys(nomRefs.FACTURE_ERROR) actualy from state -> motif
-                                        if (_value?.errorCode?.length === 0 ||
-                                            (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(motif).length)
-                                        ) _value = {..._value, errorCode: undefined}
-                                        if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(motif)}
+                                    case 'type':
+                                        //Object.keys(nomRefs.ROC_TYPES)
+                                        if (_value?.type?.length === 0 ||
+                                            (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
+                                        ) _value = {..._value, type: undefined}
+                                        if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
                                     break
 
-                                    case 'status':
+                                    case 'statut':
                                         //Object.keys(nomRefs.ROC_STATUSES)
-                                        if (_value?.status?.length === 0 ||
-                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.ROC_STATUSES).length)
-                                        ) _value = {..._value, status: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.ROC_STATUSES)}
-                                        if (_value.errorCode !== undefined) {
-                                            _value = {..._value, errorCode: undefined}
+                                        if (_value?.statut?.length === 0 ||
+                                            (_value?.statut?.includes('all') && _value?.statut?.length > Object.keys(localStatus).length)
+                                        ) _value = {..._value, statut: undefined}
+                                        if (_value?.statut?.includes('all')) _value = {..._value, statut: Object.keys(localStatus)}
+                                        if (_value.motif !== undefined) {
+                                            _value = {..._value, motif: undefined}
                                         }
+                                    break
 
-                                        break
+                                    case 'motif':
+                                        //Object.keys(nomRefs.FACTURE_ERROR) actualy from state -> localMotif
+                                        if (_value?.motif?.length === 0 ||
+                                            (_value?.motif?.includes('all') && _value?.motif?.length > Object.keys(localMotif).length)
+                                        ) _value = {..._value, motif: undefined}
+                                        if (_value?.motif?.includes('all')) _value = {..._value, motif: Object.keys(localMotif)}
+                                    break
+
 
                                 }
 
@@ -189,33 +214,46 @@ export default function SearchAccordion(props) {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(10))}>
-                                                          {({ input, meta }) => (
-                                                              <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField
-                                                                      id="NumFact"
-                                                                      type={'number'}
-                                                                      variant="standard"
-                                                                      error={meta.invalid}
-                                                                      placeholder={'Type de la demande'}
-                                                                      sx={{width: '100%'}}
-                                                                      className="RoundedEl"
-                                                                      InputProps={{  disableUnderline: true }}
-                                                                      {...{
-                                                                          ...input,
-                                                                          inputProps: {
-                                                                              ...input.inputProps,
-                                                                              // step : 0.01,
-                                                                              lang: 'fr'
-                                                                          }
-                                                                      }}
-                                                                  />
-                                                                  {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                                              </div>
-                                                          )}
-                                                      </Field>
 
-                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(14))}>
+                                              {(nomRefs && nomRefs?.ROC_TYPES) && <Field name="type" format={value => value || []}>
+
+                                                  {({input, meta}) => (
+                                                      <FormControl className="RoundDate" style={{ flex: 2, marginRight: '20px' }}>
+                                                          <InputLabel id="Type-label">Type de la demande</InputLabel>
+                                                          <Select
+                                                              id="Type"
+                                                              labelId="Type-label"
+                                                              multiple
+                                                              sx={{'fieldset': {border: 'none'}}}
+                                                              {...input}
+                                                              input={<OutlinedInput className="RoundedEl" label="Type" sx={{minWidth: 200}}/>}
+                                                              MenuProps={{autoFocus: false}}
+                                                              renderValue={(selected) => {
+                                                                  if (selected.length > 1) return `${selected.length} types sélectionnés`
+                                                                  return nomRefs.ROC_TYPES[selected[0]];
+                                                              }}>
+
+                                                              <MenuItem value="all" key='selectAll'>
+                                                                  <ListItemText
+                                                                      primary={(values?.type?.length == Object.keys(nomRefs.ROC_TYPES).length) ?
+                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                              </MenuItem>
+
+                                                              {Object.keys(nomRefs.ROC_TYPES).map(code => (
+                                                                  <MenuItem key={code} value={code}>
+                                                                      {nomRefs.ROC_TYPES[code]}
+                                                                  </MenuItem>
+                                                              ))}
+
+                                                          </Select>
+                                                      </FormControl>
+                                                  )}
+                                              </Field>}
+
+
+
+
+                                                        <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
                                                                   <TextField
@@ -231,9 +269,9 @@ export default function SearchAccordion(props) {
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </div>
                                                           )}
-                                                      </Field>
+                                                        </Field>
 
-                                                      <Field name="numAdh">
+                                                      <Field name="numAdh" validate={validators.composeValidators(validators.maxValue(16))}>
 
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2}}>
@@ -304,7 +342,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="dateDeSoins">
+                                                      <Field name="dateAdmission">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -320,7 +358,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedStart" >
+                                                      <Field name="receptionDateStart" >
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -338,7 +376,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateReceivedEnd" validate={ validators.composeValidators(validators.beforeThan(values, 'dateReceivedStart')) }>
+                                                      <Field name="receptionDateEnd" validate={ validators.composeValidators(validators.beforeThan(values, 'receptionDateStart')) }>
                                                           {({ input, meta }) => (
                                                               // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -356,15 +394,16 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22))}>
+                                                      <Field name="occId" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}, maxWidth: '25%' }}>
                                                                   <MaskedInput
-                                                                      id="IdPeriodeFact"
+                                                                      id="occId"
                                                                       autoFocus
                                                                       fullWidth
-                                                                      mask={"0000000000000000000000 / 00"}
-                                                                      placeholder={"1234567890123456789012 / 00"}
+                                                                      // mask={"0000000000000000000000 / 00"}
+                                                                      mask={"********************** / 00"}
+                                                                      placeholder={"********************** / 00"}
                                                                       color="primary"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
                                                                       {...input}
@@ -375,11 +414,11 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      {(nomRefs && nomRefs?.ROC_STATUSES) && <Field name="status" format={value => value || []}>
+                                                      {(nomRefs && localStatus) && <Field name="statut" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '25%' }}>
-                                                                  <InputLabel id="Statut-label">Statut SEL</InputLabel>
+                                                                  <InputLabel id="Statut-label">Statut</InputLabel>
                                                                   <Select
                                                                       id="Statut"
                                                                       labelId="Statut-label"
@@ -389,18 +428,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.ROC_STATUSES[selected[0]];ю
+                                                                          return localStatus[selected[0]];ю
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.ROC_STATUSES).length) ?
+                                                                              primary={(values?.statut?.length == Object.keys(localStatus).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.ROC_STATUSES).map(code => (
+                                                                      {Object.keys(localStatus).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ROC_STATUSES[code]}
+                                                                              {localStatus[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -409,7 +448,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="errorCode" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="motif" format={value => value || []}>
 
                                                           {({input, meta}) => (
 
@@ -422,14 +461,14 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      // disabled={!Boolean(Object.keys(motif)?.length > 0)}
+                                                                      // disabled={!Boolean(Object.keys(localMotif)?.length > 0)}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
                                                                           return nomRefs.ROC_MOTIFS[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.ROC_MOTIFS).length) ?
+                                                                          <ListItemText primary={(values?.motif?.length == Object.keys(nomRefs.ROC_MOTIFS).length) ?
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
@@ -439,8 +478,8 @@ export default function SearchAccordion(props) {
                                                                           </MenuItem>
                                                                       ))}
 
-                                                                      {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
-                                                                          {motif[code]}
+                                                                      {Object.keys(localMotif).map(code => (<MenuItem key={code} value={code}>
+                                                                          {localMotif[code]}
                                                                       </MenuItem>))}
 
                                                                   </Select>
@@ -448,7 +487,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.ROC_SOUS_MOTIFS) && <Field name="subMotif" format={value => value || []}>
+                                                      {nomRefs && <Field name="sousMotif" format={value => value || []}>
 
                                                           {({input, meta}) => (
 
@@ -461,27 +500,23 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      // disabled={!Boolean(Object.keys(motif)?.length > 0)}
+                                                                      // disabled={!Boolean(Object.keys(localMotif)?.length > 0)}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Sub Motif sélectionnéеs`
-                                                                          return nomRefs.ROC_SOUS_MOTIFS[selected[0]];
+                                                                          return localSubMotif[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.ROC_SOUS_MOTIFS).length) ?
+                                                                          <ListItemText primary={(values?.motif?.length == Object.keys(localSubMotif).length) ?
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
 
-                                                                      {Object.keys(nomRefs.ROC_SOUS_MOTIFS).map(code => (
+                                                                      {Object.keys(localSubMotif).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ROC_SOUS_MOTIFS[code]}
+                                                                              {localSubMotif[code]}
                                                                           </MenuItem>
                                                                       ))}
-
-                                                                      {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
-                                                                          {motif[code]}
-                                                                      </MenuItem>))}
 
                                                                   </Select>
                                                               </FormControl>
@@ -497,7 +532,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      <Field name="numId" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
+                                                      <Field name="finessGeo" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -507,7 +542,7 @@ export default function SearchAccordion(props) {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numId').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('finessGeo').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       className="RoundedEl"
@@ -517,7 +552,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
+                                                      <Field name="finessJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -527,7 +562,7 @@ export default function SearchAccordion(props) {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numJur').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('finessJur').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       className="RoundedEl"
@@ -553,7 +588,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="department" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
+                                                      <Field name="dеpartement" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -580,7 +615,7 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="numClient" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="amc" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -589,7 +624,6 @@ export default function SearchAccordion(props) {
                                                                       id="NumClient"
                                                                       labelId="NumClient-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -600,7 +634,7 @@ export default function SearchAccordion(props) {
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
+                                                                              primary={(values?.amc?.length == Object.keys(nomRefs.CLIENT).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
@@ -616,9 +650,8 @@ export default function SearchAccordion(props) {
                                                       </Field>}
 
                                                       <Field name="nom" validate={validators.composeValidators(
-                                                          validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['prenom', 'dateDeNaissance'], 'Nom')
+                                                          validators.associated(values, ['prenom', 'dateNaiss'], 'Nom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -635,9 +668,8 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
                                                       <Field name="prenom" validate={validators.composeValidators(
-                                                          validators.minValue(3),
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
+                                                          validators.associated(values, ['nom', 'dateNaiss'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -653,7 +685,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeNaissance" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
+                                                      <Field name="dateNaiss" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
                                                           {({ input: {onChange, value, ...rest}, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -808,43 +840,50 @@ export default function SearchAccordion(props) {
                                   {<FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numFact, numEng, numAdh,
+                                          type, numEng, numAdh,
                                           domaine,
-                                          dateDeSoins,
-                                          dateReceivedStart, dateReceivedEnd,
-                                          idPeriodeFact, dateFact,
-                                          status, errorCode,
-                                          numId, numJur,
+                                          dateAdmission,
+                                          receptionDateStart, receptionDateEnd,
+                                          occId, dateFact,
+                                          statut, motif,
+                                          finessGeo, finessJur,
                                           raisonSociale,
-                                          department, numClient,
+                                          dеpartement, amc,
                                           nom, prenom,
-                                          dateDeNaissance, birdDate,
+                                          dateNaiss, birdDate,
                                           nir, cle
                                       } = values?.values;
 
+                                      if (type){
+                                          let _typeStat = reshapeStatusFromTypes({nomRefs, type})
+                                          let _typeSubMotif = reshapeSubMotifsFromTypes({nomRefs, type})
+                                          let _statut = {}
+                                          let _subMotif = {}
+                                          Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
+                                              if (_typeStat.includes(stat)) _statut[stat] = nomRefs.ROC_STATUSES[stat]
+                                          })
+                                          setLocalStatus(_statut)
+
+                                          Object.keys(nomRefs.ROC_SOUS_MOTIFS).forEach( subMot => {
+                                              if (_typeSubMotif.includes(subMot)) _subMotif[subMot] = nomRefs.ROC_SOUS_MOTIFS[subMot]
+                                          })
+                                          setLocalSubMotif(_subMotif)
+                                      }
                                       /**
-                                       * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
+                                       * TODO MUST BE FIXED
                                        */
-                                      if (status) {
-                                          let _motif = {}
-                                          if (nomRefs && status.length > 0) {
-                                              status?.forEach(stat => {
+                                      if (statut) {
+                                          console.log('statut > ', statut)
 
-                                                  nomRefs.FACTURE_RLTN_FACTURE_ERROR.filter(ee => {
-                                                      if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
-                                                  }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.ROC_MOTIFS[Object.keys(code)[0]])
-
-                                              })
-                                          }
-                                          setMotif(_motif);
+                                          let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
+                                          console.log('tmpMotifs > ', tmpMotifs)
+                                          setLocalMotif(tmpMotifs);
                                       }
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
-
                                       if(
-                                          domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
+                                          domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact || statut ||
+                                          motif || finessGeo || finessJur || raisonSociale || dеpartement || amc || nom || prenom || dateNaiss ||
                                           birdDate || nir || cle
                                       ) {
                                           setDotShow(true)

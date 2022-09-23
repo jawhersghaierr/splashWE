@@ -13,10 +13,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs}) => {
+import {useEffect, useState} from "react";
+import {reshapeMotifVsStatus} from "../components/factures/utils/utils";
+import {env_IP, ports} from "../../env-vars";
+export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
 
 	const [motif, setMotif] = React.useState('');
 	const [comment, setComment] = React.useState('');
+	const [required, setRequired] = useState(null);
+	const [error, setError] = useState(null);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const handleMotifChange = (event) => {
 		setMotif(event.target.value);
@@ -26,8 +32,50 @@ export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs}) => {
 		setComment(event.target.value);
 	};
 
-	console.log('comment ', comment)
-	console.log('motif ', motif)
+	let motifOptions = reshapeMotifVsStatus({status: ['REJETEE'], nomRefs})
+	const confirme = () => {
+		if(motif){
+			console.log('confirme > ', motif, comment)
+			agreed();
+			disagreed()
+
+			if (url && data && data?.id) {
+				fetch(url,{
+					method: 'PATCH',
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({
+						"id": data?.id,
+						"status": "REJETEE",
+						"motive": comment,
+						"errors": [
+							{ "code": motif }
+						]})
+				})
+					.then(res => res.json())
+					.then(
+						(data) => {
+							setIsLoaded(true);
+							setOpenMsg({success:true, open: true, data});
+						},
+						(error) => {
+							setIsLoaded(true);
+							console.log('error > ', error)
+							setOpenMsg({success: false, open: true, error: 'failed'});
+							setError(error);
+						}
+					)
+			}
+
+		} else {
+			setRequired('Un motif d\'annulation doit être sélectionné *')
+		}
+	}
+
+	let url = `http://${env_IP}:${ports.factures}/api/v1/factures/status`;
+
+	useEffect(() => {
+		if (motif) setRequired(null)
+	}, [motif])
 
 	return (
 		<Dialog
@@ -74,7 +122,7 @@ export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs}) => {
 				<Button onClick={disagreed} autoFocus className="RoundedEmptyButt" >
 					Annuler
 				</Button>
-				<Button onClick={agreed} className="RoundedEl" >
+				<Button onClick={confirme} className="RoundedEl" >
 					Confirmer le rejet
 				</Button>
 			</DialogActions>

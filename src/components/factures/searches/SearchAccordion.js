@@ -206,8 +206,11 @@ export default function SearchAccordion(props) {
                                                                           ...input,
                                                                           inputProps: {
                                                                               ...input.inputProps,
-                                                                              // step : 0.01,
-                                                                              lang: 'fr'
+                                                                              step: 1,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
                                                                           }
                                                                       }}
                                                                   />
@@ -364,8 +367,8 @@ export default function SearchAccordion(props) {
                                                                       id="IdPeriodeFact"
                                                                       autoFocus
                                                                       fullWidth
-                                                                      mask={"0000000000000000000000 / 00"}
-                                                                      placeholder={"1234567890123456789012 / 00"}
+                                                                      mask={"********************** / 00"}
+                                                                      placeholder={"********************** / 00"}
                                                                       color="primary"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
                                                                       {...input}

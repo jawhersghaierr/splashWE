@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
+import {env_IP, ports} from '../../../../env-vars'
 
 export const rocEnLigneApi = createApi({
     reducerPath: 'rocEnLigneApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8001/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.selAndIdb}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

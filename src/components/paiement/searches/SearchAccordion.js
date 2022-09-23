@@ -216,7 +216,11 @@ export default function SearchAccordion(props) {
                                                                       InputProps={{  disableUnderline: true }}
                                                                       {...{ ...input, inputProps: {
                                                                               ...input.inputProps,
-                                                                              lang: 'fr'
+                                                                              step: 1,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
                                                                           }
                                                                       }}
                                                                   />
