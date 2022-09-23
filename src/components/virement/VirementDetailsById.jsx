@@ -61,18 +61,20 @@ const oneRowHeader = ({ creationDate, statusDate}) => {
 
 
 
-export default function VirementDetailsById(props) {
+export default function VirementDetailsById({location, modialId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const match = matchPath(location?.pathname, {
         path: "/virements/:id",
         exact: true,
         strict: false
     });
 
+    const virementID = (modialId)? modialId: match?.params?.id;
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetVirementsByIdQuery(match?.params?.id);
+    const {data = null} = useGetVirementsByIdQuery(virementID);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     return (

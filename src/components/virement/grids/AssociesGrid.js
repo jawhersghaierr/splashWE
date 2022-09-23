@@ -3,14 +3,25 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './virementsGrid.scss';
+import {ModalInfo} from "../../../utils/ModalInfo";
+import PaiementDetailsById from "../../paiement/PaiementDetailsById";
+import VirementDetailsById from "../VirementDetailsById";
 
 export const AssociesGrid = ({data, nomRefs}) => {
+
+    const [openModal, setOpenModal] = useState({open: false, data: null});
+    const handleModalOpen = (data = null) => {
+        setOpenModal({open: true, data});
+    };
+    const handleModalClose = () => {
+        setOpenModal({open: false, data: null});
+    };
 
     return <div style={{margin: 0}}>
 
         {data && <DataGrid
                     rows={data || []}
-                    columns={columns(nomRefs)}
+                    columns={columns({nomRefs, handleModalOpen})}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}
@@ -35,7 +46,10 @@ export const AssociesGrid = ({data, nomRefs}) => {
                         },
                     }}
         />}
-
+        <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
+            {(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}
+            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}
+        </ModalInfo>
     </div>
 }
 

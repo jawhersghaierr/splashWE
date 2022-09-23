@@ -4,12 +4,22 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
 import './facturesGrid.scss';
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
+import {Button} from "@mui/material";
+import {ModalInfo} from "../../../utils/ModalInfo";
+import PaiementDetailsById from "../../paiement/PaiementDetailsById";
+import VirementDetailsById from "../../virement/VirementDetailsById";
 
 export const SelAssociesGrid = ({numEng}) => {
-    console.log('numEng > ', numEng)
 
     let {data} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
 
+    const [openModal, setOpenModal] = useState({open: false, data: null});
+    const handleModalOpen = (data = null) => {
+        setOpenModal({open: true, data});
+    };
+    const handleModalClose = () => {
+        setOpenModal({open: false, data: null});
+    };
 
     return <div style={{margin: 0}}>
 
@@ -41,6 +51,10 @@ export const SelAssociesGrid = ({numEng}) => {
                     }}
 
         />}
+        <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
+            {/*{(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}*/}
+            {/*{(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}*/}
+        </ModalInfo>
 
     </div>
 }

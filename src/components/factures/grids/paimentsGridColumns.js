@@ -4,7 +4,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
 import {convertDate, currencyFormatter, paiementsStatus, paiementsVirementStatus} from "../../../utils/utils";
 
-export const columns = nomRefs => [
+export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'dateCreation', headerName: 'Date et heure de réception', minWidth: '150px', flex: 2, renderCell: (params) => { //dateEntree
             return (convertDate(params.value, true))
         }},
@@ -40,7 +40,7 @@ export const columns = nomRefs => [
             return <b>{params.value}</b>
         }},
     { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
-            return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
+            return <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(params.row)}/>
         }},
 ];
 

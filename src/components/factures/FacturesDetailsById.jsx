@@ -3,9 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import Modal from '@mui/material/Modal';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Button, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
@@ -65,13 +63,15 @@ function a11yProps(index) {
 
 
 
-export default function FacturesDetailsById(props) {
+export default function FacturesDetailsById({location, modialId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const match = matchPath(location?.pathname, {
         path: "/factures/:id",
         exact: true,
         strict: false
     });
+
+    const factureID = (modialId)? modialId: match?.params?.id;
 
     const [openMsg, setOpenMsg] = useState({
         open: false,
@@ -88,18 +88,10 @@ export default function FacturesDetailsById(props) {
     const [openRecyclageDialog, setOpenRecyclageDialog] = useState(false);
     const [openRejeteDialog, setOpenRejeteDialog] = useState(false);
     const [openAnuleDialog, setOpenAnuleDialog] = useState(false);
-    const [openModal, setOpenModal] = React.useState(false);
-
-    const handleModalOpen = () => {
-        setOpenModal(true);
-    };
-    const handleModalClose = () => {
-        setOpenModal(false);
-    };
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    let {data = null} = useGetFactureByIdQuery(match?.params?.id);
+    let {data = null} = useGetFactureByIdQuery(factureID);
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
@@ -233,7 +225,7 @@ export default function FacturesDetailsById(props) {
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
-                {match?.params?.id && nomRefs && <PaimentsGrid factId={match?.params?.id} nomRefs={nomRefs}/>}
+                {factureID && nomRefs && <PaimentsGrid factId={factureID} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
@@ -300,28 +292,6 @@ export default function FacturesDetailsById(props) {
                     </div>}
                 </Alert>
             </Snackbar>
-
-
-            <Button onClick={handleModalOpen}>Open modal</Button>
-            <Modal
-                // hideBackdrop
-                open={openModal}
-                onClose={handleModalClose}
-                aria-labelledby="child-modal-title"
-                aria-describedby="child-modal-description"
-            >
-                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-                    width: 400,
-                    bgcolor: 'background.paper',
-                    // border: '2px solid #000',
-                    boxShadow: 24, pt: 2, px: 4, pb: 3 }}>
-
-                    <h2 id="child-modal-title">Text in a child modal</h2>
-                    <p id="child-modal-description">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    </p>
-                </Box>
-            </Modal>
 
         </Box>
     );

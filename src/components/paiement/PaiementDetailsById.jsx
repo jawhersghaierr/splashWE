@@ -11,6 +11,12 @@ import {useGetPaiementByIdQuery} from "./services/paiementsApi";
 import {AssociesGrid} from "./grids/AssociesGrid";
 import {convertDate, facturesStatus, currencyFormatter, paiementsStatus} from "../../utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import {Link} from "@material-ui/core";
+import {ModalInfo} from "../../utils/ModalInfo";
+import VirementDetailsById from "../virement/VirementDetailsById";
+import {useState} from "react";
+import FacturesDetailsById from "../factures/FacturesDetailsById";
 
 
 function TabPanel(props) {
@@ -59,18 +65,29 @@ const oneRowHeader = ({ dateCreation, dateModification}) => {
     </div>
 }
 
-export default function PaiementDetailsById(props) {
+export default function PaiementDetailsById({location, modialId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const [openModal, setOpenModal] = useState({open: false, data: null});
+    const handleModalOpen = (data = null) => {
+        setOpenModal({open: true, data});
+    };
+    const handleModalClose = () => {
+        setOpenModal({open: false, data: null});
+    };
+
+
+    const match = matchPath(location?.pathname, {
         path: "/paiement/:id",
         exact: true,
         strict: false
     });
+    const paiementID = (modialId)? modialId: match?.params?.id;
 
     const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetPaiementByIdQuery(match?.params?.id);
+    const {data = null} = useGetPaiementByIdQuery(paiementID);
+
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     return (
@@ -90,7 +107,11 @@ export default function PaiementDetailsById(props) {
                     <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Facture'} value={data?.numFacture}/>
+                    <RowInfo label={'Facture'} value={
+                        <Link href={`#`} sx={{cursor: 'pointer'}}
+                            onClick={()=>handleModalOpen({id: data.idFacture})}>
+                            {data?.numFacture || ' '}
+                    </Link>}/>
                 </div>
             </div>
 
@@ -116,6 +137,10 @@ export default function PaiementDetailsById(props) {
                 {data && oneRowHeader(data)}
                 {(data?.historyElements && data?.historyElements.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElements} nomRefs={nomRefs}/>}
             </TabPanel>
+
+            <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-facture-${openModal?.data?.id}`}>
+                {data && openModal?.data?.id  && <FacturesDetailsById modialId={openModal?.data?.id} />}
+            </ModalInfo>
 
         </Box>
     );
