@@ -12,10 +12,9 @@ export const columns = ({nomRefs, handleModalOpen}) => [
             let type = params.formattedValue
             let result = params.value
 
-            if (nomRefs.PAIEMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_TYPE[type]) {
-                result = nomRefs.PAIEMENT_STATUS[type]
-            }
-            if (nomRefs.PAIEMENT_VIREMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_VIREMENT_TYPE[type]) {
+            if ( nomRefs.PAIEMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_TYPE[type] ) {
+                result = nomRefs.PAIEMENT_TYPE[type]
+            } else if (nomRefs.PAIEMENT_VIREMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_VIREMENT_TYPE[type]) {
                 result = nomRefs.PAIEMENT_VIREMENT_TYPE[type]
             }
             return result
@@ -37,10 +36,10 @@ export const columns = ({nomRefs, handleModalOpen}) => [
     }},
 
     { field: 'details', headerName: 'Details', flex: 3, renderCell: (params) => {
-            return <b>{params.value}</b>
-        }},
+        return <b>{params.value}</b>
+    }},
     { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
-            return <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(params.row)}/>
-        }},
+        return <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(params.row)}/>
+    }},
 ];
 

@@ -15,7 +15,7 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        setOpenModal({open: true, data});
+        if (data?.type == 'PAIEMENT' || data?.type == 'VIREMENT') setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});

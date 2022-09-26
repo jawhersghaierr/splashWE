@@ -13,7 +13,14 @@ import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
-import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
+import {
+    convertDate,
+    currencyFormatter,
+    dateConvertNaissance,
+    dateConvertNaissanceRAW,
+    facturesStatus,
+    rocStatus
+} from "../../utils/utils";
 import {statusRow} from "./utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
 
@@ -29,7 +36,7 @@ function TabPanel(props) {
             aria-labelledby={`full-width-tab-${index}`}
             {...other}
             style={{minHeight: '300px', background: 'white', padding: '15px'}}>
-            {data && <pre style={{
+            {data && <div style={{
                 whiteSpace: 'pre-wrap',
                 overflowWrap: 'break-word',
                 background: 'white',
@@ -38,7 +45,7 @@ function TabPanel(props) {
             }}>
                 {value === index && children}
                 {/*{JSON.stringify(data)}*/}
-            </pre>}
+            </div>}
         </div>
     );
 }
@@ -49,18 +56,20 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
-export default function RocEnLigneDetailsById(props) {
+export default function RocEnLigneDetailsById({location, modialId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const match = matchPath(location?.pathname, {
         path: "/serviceEnLigne/:id",
         exact: true,
         strict: false
     });
 
+    const rocID = (modialId)? modialId: match?.params?.id;
+
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetRocEnLigneByIdQuery(match?.params?.id);
+    const {data = null} = useGetRocEnLigneByIdQuery(rocID);
     let actes = []
     if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
 
@@ -75,36 +84,32 @@ export default function RocEnLigneDetailsById(props) {
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails de la facture</b>
+                <b>Détails de la facture {data?.common && data?.common?.typeDemande}</b>
             </Typography>
+            {data?.common && data?.common?.numFacturation}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}
             </Typography>
 
-            <Chip label={`${facturesStatus[data?.common?.statut]?.label || data?.common?.statut}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.common?.statut]?.color, margin: '15px 0 0 0' }}/>
-
+            <Chip label={`${rocStatus[data?.common?.statut]?.label || data?.common?.statut}`} sx={{color: 'black', bgcolor: rocStatus[data?.common?.statut]?.color, margin: '15px 0 0 0' }}/>
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
-                <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)}/>
-                    <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
-                        <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
-                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
-                    <RowInfo label={'Environnement'} value={data?.numEnv}/>
-                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>
+                <div style={{flex: 1, marginRight: '25px', maxWidth: '455px'}}>
+                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)}/>
+                    <RowInfo label={'Bénéficiaire'} value={<span><b>{data?.common?.beneficiaryName}</b> </span>} />
+                    <RowInfo label={'Environnement'} value={data?.common?.environment}/>
+                    {/*<RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>*/}
                 </div>
-                <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
-                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
-                    <RowInfo label={'AMC'} value={data?.numClient}/>
-                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)}/>
+                <div style={{flex: 1, marginRight: '25px', maxWidth: '425px'}}>
+                    <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo}/>
+                    <RowInfo label={'Nº adhérent'} value={data?.common?.numAdherent}/>
+                    <RowInfo label={'AMC'} value={data?.common?.amc}/>
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
+                    <RowInfo label={'FINESS juridique'} value={data?.common?.finessJur}/>
                     <RowInfo label={'Date et rang de naissance'}
-                             value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
-                             chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
+                             value={data?.common?.dateRangNaiss && dateConvertNaissanceRAW(data?.common?.dateRangNaiss)}
                     />
-                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.totalRc)}/>
+                    <RowInfo label={'Montant RC'} value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}/>
                 </div>
             </div>
 
@@ -126,25 +131,45 @@ export default function RocEnLigneDetailsById(props) {
             <TabPanel value={value} index={0} data={data}>
                 {data && <Box style={{
                     backgroundColor: '#F6F8FC',
+                    display: 'flex',
+                    flexDirection: 'row',
                     flex: 1,
                     minWidth: '300px',
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
-                    <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                        <b>Informations demande</b>
-                    </Typography>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true}/>
-                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
-                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
-                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
+
+                    <div style={{display: 'flex', flexDirection: 'column', flex: 2}}>
+                        <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+                            <b>Informations demande</b>
+                        </Typography>
+                        <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
+                            <div style={{flex: 1, marginRight: '5%'}}>
+                                <RowInfo label={'Nº d\'engagement'} value={data?.info?.demande?.numEng} border={true} justify={true}/>
+                                <RowInfo label={'Date de réception'} value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)} border={true} justify={true}/>
+                                <RowInfo label={'Période des prestations'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
+                                <RowInfo label={'Domaine'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
+                                <RowInfo label={'Motif de rejet'} value={data?.motifRejets || data?.motifRejets} border={true} justify={true}/>
+                            </div>
+                            <div style={{flex: 1 }}>
+                                <RowInfo label={'Nº facture'} value={convertDate(data?.info?.demande?.dateFact)} border={true} justify={true}/>
+                                <RowInfo label={'Date facture'} value={convertDate(data?.info?.demande?.dateFact)} border={true} justify={true}/>
+                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true} justify={true}/>
+                                <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail} border={true} justify={true}/>
+                                <RowInfo label={'Commentaire'} value={data?.info?.demande?.messageRejets} border={true} justify={true}/>
+                            </div>
                         </div>
-                        <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
-                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
-                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
+                    </div>
+
+                    <div style={{flex: 1}}>
+                        <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+                            <b>Informations ETS</b>
+                        </Typography>
+                        <div style={{margin: 0}}>
+                            <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo} border={true} justify={true}/>
+                            <RowInfo label={'Raison sociale'} value={data?.info?.ets?.RAISON_SOCIALE} border={true} justify={true}/>
+                            <RowInfo label={'Nom contact ETS'} value={data?.info?.ets?.nomContact} border={true} justify={true}/>
+                            <RowInfo label={'Nº téléphone'} value={data?.info?.ets?.telephone} border={true} justify={true}/>
+                            <RowInfo label={'Mail constact ETS'} value={data?.info?.ets?.email} border={true} justify={true}/>
                         </div>
                     </div>
 
@@ -160,7 +185,7 @@ export default function RocEnLigneDetailsById(props) {
                 {data?.common?.numeroEngagement && <SelAssociesGrid numEng={data?.common.numeroEngagement}/>}
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
-                {match?.params?.id && nomRefs && <PaimentsGrid factId={match?.params?.id} nomRefs={nomRefs}/>}
+                {rocID && nomRefs && <PaimentsGrid factId={rocID} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

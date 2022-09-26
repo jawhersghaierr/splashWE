@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {convertDate, dateConvertNaissanceRAW} from "../../../utils/utils";
 
 
-export const columns = disciplines => [
+export const columns = ({handleModalOpen}) => [
     { field: 'type', headerName: 'Type', flex: 2, sortable: false, renderCell: (params) => {
             return (params.value);
         }},
@@ -22,12 +22,13 @@ export const columns = disciplines => [
     }},
 
     { field: 'beneficiaryName', headerName: 'Nom et date de naissance beneficiaire', flex: 3, renderCell: (params) => {
-            let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
-            return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
-        }},
+        let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
+        return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
+    }},
 
     { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
-            return <Link to={`/#/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
-        }},
+        return <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(params.row)}/>
+    }},
+
 ];
 

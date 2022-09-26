@@ -8,6 +8,7 @@ import {Button} from "@mui/material";
 import {ModalInfo} from "../../../utils/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
+import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
 
 export const SelAssociesGrid = ({numEng}) => {
 
@@ -25,7 +26,7 @@ export const SelAssociesGrid = ({numEng}) => {
 
         {data && <DataGrid
                     rows={data.assosiete || []}
-                    columns={columns()}
+                    columns={columns({handleModalOpen})}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}
@@ -52,8 +53,7 @@ export const SelAssociesGrid = ({numEng}) => {
 
         />}
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {/*{(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}*/}
-            {/*{(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}*/}
+            {openModal?.data?.id && <RocEnLigneDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
 
     </div>

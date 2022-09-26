@@ -413,7 +413,7 @@ export default function SearchAccordion(props) {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numJur').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('numeroPsJuridique').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       className="RoundedEl"
@@ -667,6 +667,7 @@ export default function SearchAccordion(props) {
                                                                   <TextField
                                                                       id="FactureRc"
                                                                       label={'Montant RC de la facture'}
+                                                                      type={'number'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...{...input,
