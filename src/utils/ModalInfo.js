@@ -6,8 +6,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 export const ModalInfo = ({openModal, handleModalClose, children = '', modalTitle = 'modal-title'}) => {
 
-	console.log(openModal)
-
 	return (
 		<Modal
 			// hideBackdrop

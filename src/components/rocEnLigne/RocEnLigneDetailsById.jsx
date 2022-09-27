@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetRocEnLigneByIdQuery} from "./services/rocEnLigneApi";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
@@ -73,22 +72,17 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
     let actes = []
     if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
 
-    const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
-    const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
-
-    const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-
 
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails de la facture {data?.common && data?.common?.typeDemande}</b>
+                <b>Détail de la demande {data?.common && data?.common?.typeDemande}</b>
             </Typography>
             {data?.common && data?.common?.numFacturation}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                {data?.numFact}
+                {data?.common?.numeroEngagement}
             </Typography>
 
             <Chip label={`${rocStatus[data?.common?.statut]?.label || data?.common?.statut}`} sx={{color: 'black', bgcolor: rocStatus[data?.common?.statut]?.color, margin: '15px 0 0 0' }}/>
@@ -97,7 +91,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                     <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)}/>
                     <RowInfo label={'Bénéficiaire'} value={<span><b>{data?.common?.beneficiaryName}</b> </span>} />
                     <RowInfo label={'Environnement'} value={data?.common?.environment}/>
-                    {/*<RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>*/}
+                    <RowInfo label={'N° facturation'} value={data?.common?.numFacturation}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '425px'}}>
                     <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo}/>
@@ -122,9 +116,10 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
-                <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) && <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
+                {data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB' && <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) &&
+                <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />}
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
-                <Tab label="Paiements" {...a11yProps(3)} />
+                <Tab label="FACTURES ASSOCIEES" {...a11yProps(3)} />
                 <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
             </Tabs>
 
@@ -144,32 +139,34 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                         </Typography>
                         <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
                             <div style={{flex: 1, marginRight: '5%'}}>
-                                <RowInfo label={'Nº d\'engagement'} value={data?.info?.demande?.numEng} border={true} justify={true}/>
                                 <RowInfo label={'Date de réception'} value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)} border={true} justify={true}/>
-                                <RowInfo label={'Période des prestations'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
-                                <RowInfo label={'Domaine'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
+                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true} justify={true}/>
+                                <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance} border={true} justify={true}/>
+                                <RowInfo label={'Nature interruption séjour'} value={data?.info?.demande?.natureInterruptionSejour} border={true} justify={true}/>
+                                <RowInfo label={'Indicateur parcours de soins'} value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
                                 <RowInfo label={'Motif de rejet'} value={data?.motifRejets || data?.motifRejets} border={true} justify={true}/>
                             </div>
                             <div style={{flex: 1 }}>
-                                <RowInfo label={'Nº facture'} value={convertDate(data?.info?.demande?.dateFact)} border={true} justify={true}/>
-                                <RowInfo label={'Date facture'} value={convertDate(data?.info?.demande?.dateFact)} border={true} justify={true}/>
-                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true} justify={true}/>
-                                <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail} border={true} justify={true}/>
-                                <RowInfo label={'Commentaire'} value={data?.info?.demande?.messageRejets} border={true} justify={true}/>
+                                <RowInfo label={'Domaine'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
+                                <RowInfo label={'Période des prestations'} value={data?.info?.demande?.periodePrestation} border={true} justify={true}/>
+                                <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange} border={true} justify={true}/>
+                                <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
+                                <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
+                                <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)} border={true} justify={true}/>
+                                <RowInfo label={'Sous-motif de rejet'} value={convertDate(data?.info?.demande?.messageRejets)} border={true} justify={true}/>
                             </div>
                         </div>
                     </div>
 
                     <div style={{flex: 1}}>
                         <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                            <b>Informations ETS</b>
+                            <b>Informations établissement</b>
                         </Typography>
                         <div style={{margin: 0}}>
-                            <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo} border={true} justify={true}/>
-                            <RowInfo label={'Raison sociale'} value={data?.info?.ets?.RAISON_SOCIALE} border={true} justify={true}/>
-                            <RowInfo label={'Nom contact ETS'} value={data?.info?.ets?.nomContact} border={true} justify={true}/>
-                            <RowInfo label={'Nº téléphone'} value={data?.info?.ets?.telephone} border={true} justify={true}/>
-                            <RowInfo label={'Mail constact ETS'} value={data?.info?.ets?.email} border={true} justify={true}/>
+                            <RowInfo label={'Raison sociale'} value={data?.info?.ets?.raisonSociale} border={true} justify={true}/>
+                            <RowInfo label={'Nom contact ETS '} value={data?.info?.ets?.nomContact} border={true} justify={true}/>
+                            <RowInfo label={'Nº téléphone contact ETS'} value={data?.info?.ets?.telephone} border={true} justify={true}/>
+                            <RowInfo label={'Mail contact ETS'} value={data?.info?.ets?.email} border={true} justify={true}/>
                         </div>
                     </div>
 
@@ -190,7 +187,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
 
             <TabPanel value={value} index={4} data={data}>
 
-                { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
+                { rocID && <FluxInfo factId={rocID}/> }
             </TabPanel>
 
         </Box>

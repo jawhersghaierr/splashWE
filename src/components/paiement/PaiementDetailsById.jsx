@@ -97,7 +97,7 @@ export default function PaiementDetailsById({location, modialId = null}) {
                 <b>Détails du paiement</b>
             </Typography>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                {data?.paiementType}
+                {nomRefs && nomRefs.PAIEMENT_TYPE[data?.paiementType] || data?.paiementType}
             </Typography>
 
             <Chip label={paiementsStatus[data?.paiementStatus]?.label}  sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsStatus[data?.paiementStatus]?.color }}/>

@@ -4,18 +4,30 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
 import './rocEnLigneGrid.scss';
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
+import {ModalInfo} from "../../../utils/ModalInfo";
+import PaiementDetailsById from "../../paiement/PaiementDetailsById";
+import VirementDetailsById from "../../virement/VirementDetailsById";
+import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
 
 export const SelAssociesGrid = ({numEng}) => {
     console.log('numEng > ', numEng)
 
     let {data} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
 
+    const [openModal, setOpenModal] = useState({open: false, data: null});
+    const handleModalOpen = (data = null) => {
+        setOpenModal({open: true, data});
+    };
+    const handleModalClose = () => {
+        setOpenModal({open: false, data: null});
+    };
+
 
     return <div style={{margin: 0}}>
 
         {data && <DataGrid
                     rows={data.assosiete || []}
-                    columns={columns()}
+                    columns={columns({handleModalOpen})}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}
@@ -41,6 +53,9 @@ export const SelAssociesGrid = ({numEng}) => {
                     }}
 
         />}
+        <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
+            {openModal?.data?.id && <RocEnLigneDetailsById modialId={openModal?.data?.id} />}
+        </ModalInfo>
 
     </div>
 }

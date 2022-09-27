@@ -5,13 +5,21 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
 import {convertDate, currencyFormatter, paiementsVirementStatus} from "../../../utils/utils";
 
-export const columns = ({handleModalOpen}) => [
+export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'dateCreation', headerName: 'Date et heure de réception', flex: 2, sortable: false, renderCell: (params) => {
             return (convertDate(params.value, true));
         }},
 
     { field: 'type', headerName: 'Type', flex: 2, sortable: false, renderCell: (params) => {
-            return (params.value);
+            let type = params.formattedValue
+            let result = params.value
+
+            if ( nomRefs.PAIEMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_TYPE[type] ) {
+                result = nomRefs.PAIEMENT_TYPE[type]
+            } else if (nomRefs.PAIEMENT_VIREMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_VIREMENT_TYPE[type]) {
+                result = nomRefs.PAIEMENT_VIREMENT_TYPE[type]
+            }
+            return result;
     }},
 
     { field: 'numero', headerName: 'Numéro', flex: 2, renderCell: (params) => {

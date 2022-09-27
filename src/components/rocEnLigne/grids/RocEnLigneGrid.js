@@ -13,6 +13,7 @@ import {usePrevious} from '../../../utils/utils'
 import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 import './rocEnLigneGrid.scss';
+import {useGetRefsQuery} from "../../../services/refsApi";
 
 export const RocEnLigneGrid = ({disciplines}) => {
 
@@ -27,6 +28,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
     const size = 20;
 
     const {data} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -49,7 +51,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     return <div className="gridContent">
 
-        {(data && data?.results) && <div>
+        {(data && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
@@ -57,7 +59,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
             </div>
             <DataGrid
                 rows={data?.results || []}
-                columns={columns()}
+                columns={columns({nomRefs})}
                 pageSize={size}
                 autoHeight
                 hideFooter={true}

@@ -217,6 +217,7 @@ export default function SearchAccordion(props) {
                                                                       {...{ ...input, inputProps: {
                                                                               ...input.inputProps,
                                                                               step: 1,
+                                                                              min: 0,
                                                                               lang: 'fr',
                                                                               inputMode: 'numeric',
                                                                               pattern: '[0-9]*',
@@ -433,7 +434,16 @@ export default function SearchAccordion(props) {
                                                                       label={'Nº titre'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
-                                                                      {...input}
+                                                                      {...{ ...input, inputProps: {
+                                                                              ...input.inputProps,
+                                                                              step: 1,
+                                                                              min: 0,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                          }
+                                                                      }}
                                                                       className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
@@ -531,8 +541,16 @@ export default function SearchAccordion(props) {
                                                                       label={'Montant RC du paiement'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
-                                                                      {...{...input,
-                                                                          inputProps: { ...input.inputProps, step : 0.01},
+                                                                      {...{ ...input,
+                                                                          inputProps: {
+                                                                              ...input.inputProps,
+                                                                              step: 0.01,
+                                                                              min: 0,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                          },
                                                                           InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
                                                                       }}
                                                                       className="RoundedEl"
@@ -670,8 +688,16 @@ export default function SearchAccordion(props) {
                                                                       type={'number'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
-                                                                      {...{...input,
-                                                                          inputProps: { ...input.inputProps, step : 0.01},
+                                                                      {...{ ...input,
+                                                                          inputProps: {
+                                                                              ...input.inputProps,
+                                                                              step: 0.01,
+                                                                              min: 0,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                          },
                                                                           InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
                                                                       }}
                                                                       className="RoundedEl"

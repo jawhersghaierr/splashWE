@@ -151,6 +151,7 @@ export default function SearchAccordion(props) {
                                                                   <TextField
                                                                       id="NumVirement"
                                                                       variant="standard"
+                                                                      type={'number'}
                                                                       error={meta.invalid}
                                                                       placeholder={'Nº virement'}
                                                                       sx={{width: '100%'}}
@@ -187,8 +188,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numPsAPayer">
-
+                                                      <Field name="numPsAPayer" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 1}}>
                                                                   <TextField
@@ -197,7 +197,7 @@ export default function SearchAccordion(props) {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numIdPs').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('numPsAPayer').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       placeholder={'Nº de facturation PS'}
@@ -318,7 +318,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="mntVirement" validate={validators.composeValidators(validators.notBiggerThan(1000000))}>
+                                                      <Field name="mntVirement" validate={validators.composeValidators(validators.notBiggerThan(10000000))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
                                                                   <TextField
@@ -328,9 +328,17 @@ export default function SearchAccordion(props) {
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...{...input,
-                                                                          inputProps: { ...input.inputProps, step : 0.01},
+                                                                          inputProps: {
+                                                                              ...input.inputProps,
+                                                                              step: 0.01,
+                                                                              lang: 'fr',
+                                                                              inputMode: 'numeric',
+                                                                              pattern: '[0-9]*',
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                          },
                                                                           InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
                                                                       }}
+
                                                                       className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}

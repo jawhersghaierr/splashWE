@@ -202,8 +202,7 @@ export default function SearchAccordion(props) {
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
-                                                                      {...{
-                                                                          ...input,
+                                                                      {...{...input,
                                                                           inputProps: {
                                                                               ...input.inputProps,
                                                                               step: 1,

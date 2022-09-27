@@ -6,6 +6,7 @@ import './paiementsGrid.scss';
 import {ModalInfo} from "../../../utils/ModalInfo";
 import PaiementDetailsById from "../PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
+import {useGetRefsQuery} from "../../../services/refsApi";
 
 export const AssociesGrid = ({data}) => {
 
@@ -16,13 +17,14 @@ export const AssociesGrid = ({data}) => {
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
     };
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
 
     return <div style={{margin: 0}}>
 
-        {data && <DataGrid
+        {data && nomRefs && <DataGrid
                     rows={data || []}
-                    columns={columns({handleModalOpen})}
+                    columns={columns({nomRefs, handleModalOpen})}
                     pageSize={20}
                     autoHeight
                     disableColumnResize={false}

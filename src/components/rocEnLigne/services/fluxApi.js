@@ -7,7 +7,7 @@ export const fluxApi = createApi({
 
         // http://10.241.25.10:8014/api/v1/facture/flux/15180
 
-        baseUrl: `http://${env_IP}:8014/api/v1`,
+        baseUrl: `http://${env_IP}:8001/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -22,7 +22,7 @@ export const fluxApi = createApi({
         getFluxById: builder.query({
             query: (numFac) => {
 
-                const url = `facture/flux/${numFac}`;
+                const url = `sel/flux/${numFac}`;
 
                 return ({
                     url,

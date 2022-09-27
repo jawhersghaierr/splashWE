@@ -80,7 +80,6 @@ export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
-    const {enviroments, enviromentsIsFetching, enviromentsIsSuccess} = props;
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
@@ -453,7 +452,7 @@ export default function SearchAccordion(props) {
                                                           {({input, meta}) => (
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  <InputLabel id="Motif-label">Motif de rejet SEL</InputLabel>
+                                                                  <InputLabel id="Motif-label">Motif de rejet</InputLabel>
                                                                   <Select
                                                                       id="Motif"
                                                                       labelId="Motif-label"
@@ -492,7 +491,7 @@ export default function SearchAccordion(props) {
                                                           {({input, meta}) => (
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  <InputLabel id="SubMotif-label">Sous-motif de rejet SEL</InputLabel>
+                                                                  <InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>
                                                                   <Select
                                                                       id="SubMotif"
                                                                       labelId="SubMotif-label"
@@ -629,7 +628,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} AMC sélectionnés`
-                                                                          return nomRefs.CLIENT[selected[0]];
+                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
@@ -640,7 +639,7 @@ export default function SearchAccordion(props) {
 
                                                                       {Object.keys(nomRefs.CLIENT).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {nomRefs.CLIENT[code]}
+                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -651,7 +650,6 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="nom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['prenom', 'dateNaiss'], 'Nom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -669,7 +667,7 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="prenom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['nom', 'dateNaiss'], 'Prénom')
+                                                          validators.associated(values, ['amc', 'nom', 'dateNaiss', 'numAdh'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -685,7 +683,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateNaiss" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
+                                                      <Field name="dateNaiss" >
                                                           {({ input: {onChange, value, ...rest}, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker

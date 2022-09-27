@@ -11,7 +11,7 @@ import {
 } from "../../../utils/utils";
 
 export const columns = disciplines => [
-    { field: 'numAdhInd', headerName: 'N° adhérent Nom et prénom', flex: 3, minWidth: '200px', renderCell: (params) => {
+    { field: 'numAdhInd', headerName: 'N° adhérent Nom et prénom', sortable: false, flex: 3, minWidth: '200px', renderCell: (params) => {
         let nom = params.row.nomPrenom?.split(' ')
             return <span>{params.value}<br/><b>{nom[0]}</b>&nbsp;{nom[1]}</span>
         }},
@@ -20,10 +20,10 @@ export const columns = disciplines => [
 
     { field: 'provenance', headerName: 'Provenance', flex: 1 },
 
-    { field: 'creationDate', headerName: 'Date de paiement', flex: 1, sortable: false, renderCell: (params) => {
+    { field: 'creationDate', headerName: 'Date de paiement', flex: 1, renderCell: (params) => {
         return (convertDate(params.value));
     }},
-    { field: 'dateFacture', headerName: 'Date de facture', flex: 1, sortable: false, renderCell: (params) => {
+    { field: 'dateFacture', headerName: 'Date de facture', flex: 1, renderCell: (params) => {
         return (convertDate(params.value));
     }},
 
