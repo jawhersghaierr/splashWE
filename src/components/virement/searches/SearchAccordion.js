@@ -334,7 +334,7 @@ export default function SearchAccordion(props) {
                                                                               lang: 'fr',
                                                                               inputMode: 'numeric',
                                                                               pattern: '[0-9]*',
-                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                              onKeyDown: (е) => ["e", "E", "+", "-"].includes(е.key) && е.preventDefault()
                                                                           },
                                                                           InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
                                                                       }}
