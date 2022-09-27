@@ -153,7 +153,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                                 <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
                                 <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
                                 <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)} border={true} justify={true}/>
-                                <RowInfo label={'Sous-motif de rejet'} value={convertDate(data?.info?.demande?.messageRejets)} border={true} justify={true}/>
+                                <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets} border={true} justify={true}/>
                             </div>
                         </div>
                     </div>
