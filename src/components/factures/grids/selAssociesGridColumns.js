@@ -18,6 +18,7 @@ export const columns = ({handleModalOpen}) => [
             return (convertDate(params.value))
         }},
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell: (params) => {
+        console.log(params.value)
             return ( <Chip label={`${params?.value?.label}`} sx={{color: 'black'}}/> )
     }},
 

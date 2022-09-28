@@ -33,7 +33,7 @@ import {
     checker,
     checkInsidePanels,
     reshapeMotifFromStatus,
-    reshapeStatusFromTypes, reshapeSubMotifsFromTypes
+    reshapeStatusFromTypes, reshapeSubMotifsFromMotif,
 } from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice'
 import { ConfirmNir } from "../../../utils/ConfirmNir";
@@ -512,6 +512,7 @@ export default function SearchAccordion(props) {
 
 
                                                                       {Object.keys(localSubMotif).map(code => (
+                                                                          console.log('localSubMotif > option > ', code),
                                                                           <MenuItem key={code} value={code}>
                                                                               {localSubMotif[code]}
                                                                           </MenuItem>
@@ -843,7 +844,7 @@ export default function SearchAccordion(props) {
                                           dateAdmission,
                                           receptionDateStart, receptionDateEnd,
                                           occId, dateFact,
-                                          statut, motif,
+                                          statut, motif, sousMotif,
                                           finessGeo, finessJur,
                                           raisonSociale,
                                           dеpartement, amc,
@@ -854,7 +855,7 @@ export default function SearchAccordion(props) {
 
                                       if (type){
                                           let _typeStat = reshapeStatusFromTypes({nomRefs, type})
-                                          let _typeSubMotif = reshapeSubMotifsFromTypes({nomRefs, type})
+                                          // let _typeSubMotif = reshapeSubMotifsFromTypes({nomRefs, type})
                                           let _statut = {}
                                           let _subMotif = {}
                                           Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
@@ -862,20 +863,30 @@ export default function SearchAccordion(props) {
                                           })
                                           setLocalStatus(_statut)
 
-                                          Object.keys(nomRefs.ROC_SOUS_MOTIFS).forEach( subMot => {
-                                              if (_typeSubMotif.includes(subMot)) _subMotif[subMot] = nomRefs.ROC_SOUS_MOTIFS[subMot]
-                                          })
-                                          setLocalSubMotif(_subMotif)
+                                          // Object.keys(nomRefs.ROC_SOUS_MOTIFS).forEach( subMot => {
+                                          //     if (_typeSubMotif.includes(subMot)) _subMotif[subMot] = nomRefs.ROC_SOUS_MOTIFS[subMot]
+                                          // })
+                                          // setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
                                       }
                                       /**
                                        * TODO MUST BE FIXED
                                        */
                                       if (statut) {
-                                          console.log('statut > ', statut)
-
                                           let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
+
+                                          console.log('statut > ', statut)
                                           console.log('tmpMotifs > ', tmpMotifs)
-                                          setLocalMotif(tmpMotifs);
+                                          setLocalMotif(nomRefs.ROC_MOTIFS);
+                                      }
+                                      if (motif) {
+                                          let tmpSubIds = reshapeSubMotifsFromMotif({motif, nomRefs})
+                                          if (tmpSubIds) {
+                                              console.log('tmpSubIds > ', tmpSubIds)
+                                              setLocalSubMotif(tmpSubIds)
+                                          } else setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
+                                      }
+                                      if (sousMotif) {
+                                          console.log('sousMotif > ', sousMotif)
                                       }
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
