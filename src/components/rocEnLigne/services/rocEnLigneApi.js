@@ -57,6 +57,10 @@ export const rocEnLigneApi = createApi({
                     }
                 }
 
+                if (nir && nir != undefined && cle && cle != undefined) {
+                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+                }
+
                 const {
                     sortDirection,
                     sortProperty,

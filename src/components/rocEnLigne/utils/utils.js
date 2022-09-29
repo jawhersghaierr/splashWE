@@ -76,15 +76,18 @@ const REL_TYPE_STATUS = {
 }
 
 
-
-
+/**
+ *
+ * @param type
+ * @param nomRefs
+ * @returns {*[]}
+ */
 // ROC_RLTN_STATUSES_TYPES
 // ROC_RLTN_TYPES_MOTIFS
 // ROC_RLTN_MOTIFS_SOUS_MOTIFS
 
 export const reshapeStatusFromTypes = ({type, nomRefs}) => {
     let tmpTypes = []
-    // debugger
     type.forEach( _type =>
         nomRefs.ROC_RLTN_STATUSES_TYPES.filter( e => Object.values(e)[0].includes(_type) && e ).forEach( e => tmpTypes.push(Object.keys(e)[0]) )
     )
@@ -94,7 +97,6 @@ export const reshapeStatusFromTypes = ({type, nomRefs}) => {
 
 export const reshapeMotifsFromTypes = ({type, nomRefs}) => {
     let tmpTypes = []
-    // debugger
     type.forEach( _type =>
         nomRefs.ROC_RLTN_TYPES_MOTIFS.filter( e => Object.values(e)[0].includes(_type) && e ).forEach( e => tmpTypes.push(Object.keys(e)[0]) )
     )
@@ -117,19 +119,66 @@ export const reshapeSubMotifsFromMotif = ({motif, nomRefs}) => {
 }
 
 
+export const reshapeSubMotifsFromMotif1 = ({motif, nomRefs}) => {
+    let tmpSubMotif = []
+    let result = {}
+
+    motif.forEach( mot => {
+        let tmpResult = nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS.find(sub => mot == Object.keys(sub)[0])
+        if ( tmpResult && Object.values(tmpResult).length > 0 ) Object.values(tmpResult).forEach(el => tmpSubMotif.push(el))
+    })
+
+    tmpSubMotif.flat().forEach(el => {if (nomRefs.ROC_SOUS_MOTIFS[el]) result[el] = nomRefs.ROC_SOUS_MOTIFS[el]})
+    return (Object.keys(result).length > 0)? result : null;
+}
+
+
+// TODO to be checked one more time and optimise
+/**
+ *
+ * @param statut
+ * @param nomRefs
+ * @returns {null|{}}
+ */
 export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
     /**
+     *
+     *
+     *
+     // ROC_RLTN_TYPES_MOTIFS
+     // ROC_RLTN_STATUSES_TYPES
      * reshaping nomRefs.ROC_MOTIFS trough nomRefs.ROC_RLTN_STATUSES_TYPES based on localStatus
      */
     if (!statut && !nomRefs) return null
 
     if (statut) {
+
+
+        let avialbleTypes = []
+        // nomRefs.ROC_RLTN_STATUSES_TYPES?.forEach( tm => {
+        //
+        //     console.log(' ROC_RLTN_STATUSES_TYPES > ', tm)
+        // })
+        //
+        // nomRefs.ROC_RLTN_TYPES_MOTIFS?.forEach( tm => {
+        //
+        //     console.log(' ROC_RLTN_TYPES_MOTIFS > ', tm)
+        // })
+
+
         let _motif = {}
         if (nomRefs && statut.length > 0) {
             statut?.forEach(stat => {
 
-                nomRefs.ROC_RLTN_STATUSES_TYPES?.filter(ee => {
-                    if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
+                let  _type = []
+                nomRefs.ROC_RLTN_STATUSES_TYPES?.forEach( tm => {
+                    if (Object.keys(tm)[0] == stat) _type.push(Object.values(tm))
+                })
+
+                nomRefs.ROC_RLTN_TYPES_MOTIFS?.filter(ee => {
+                    if (Object.keys(ee).find(e => e == stat)) {
+                        return Object.keys(ee)
+                    }
                 }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.ROC_MOTIFS[Object.keys(code)[0]])
 
             })

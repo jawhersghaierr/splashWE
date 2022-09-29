@@ -105,11 +105,15 @@ export default function SearchAccordion(props) {
 
 
     useEffect(() => {
-        console.log('localStatus: ', localStatus)
-    }, [localStatus]);
+        if (nomRefsIsSuccess) {
+            setLocalStatus(nomRefs.ROC_STATUSES)
+            setLocalMotif(nomRefs.ROC_MOTIFS)
+            setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
+        }
+    }, [nomRefsIsSuccess]);
 
     useEffect(() => {
-        console.log('localSubMotif: ', localSubMotif)
+        // console.log('localSubMotif: ', localSubMotif)
     }, [localSubMotif]);
 
 
@@ -173,6 +177,15 @@ export default function SearchAccordion(props) {
                                             (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
                                         ) _value = {..._value, type: undefined}
                                         if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
+                                        if (_value.statut !== undefined) {
+                                            _value = {..._value, statut: undefined}
+                                        }
+                                        if (_value.motif !== undefined) {
+                                            _value = {..._value, motif: undefined}
+                                        }
+                                        if (_value.sousMotif !== undefined) {
+                                            _value = {..._value, sousMotif: undefined}
+                                        }
                                     break
 
                                     case 'statut':
@@ -181,17 +194,31 @@ export default function SearchAccordion(props) {
                                             (_value?.statut?.includes('all') && _value?.statut?.length > Object.keys(localStatus).length)
                                         ) _value = {..._value, statut: undefined}
                                         if (_value?.statut?.includes('all')) _value = {..._value, statut: Object.keys(localStatus)}
+
                                         if (_value.motif !== undefined) {
                                             _value = {..._value, motif: undefined}
+                                        }
+                                        if (_value.sousMotif !== undefined) {
+                                            _value = {..._value, sousMotif: undefined}
                                         }
                                     break
 
                                     case 'motif':
-                                        //Object.keys(nomRefs.FACTURE_ERROR) actualy from state -> localMotif
                                         if (_value?.motif?.length === 0 ||
                                             (_value?.motif?.includes('all') && _value?.motif?.length > Object.keys(localMotif).length)
                                         ) _value = {..._value, motif: undefined}
                                         if (_value?.motif?.includes('all')) _value = {..._value, motif: Object.keys(localMotif)}
+
+                                        if (_value.sousMotif !== undefined) {
+                                            _value = {..._value, sousMotif: undefined}
+                                        }
+                                    break
+
+                                    case 'sousMotif':
+                                        if (_value?.sousMotif?.length === 0 ||
+                                            (_value?.sousMotif?.includes('all') && _value?.sousMotif?.length > Object.keys(localSubMotif).length)
+                                        ) _value = {..._value, sousMotif: undefined}
+                                        if (_value?.sousMotif?.includes('all')) _value = {..._value, sousMotif: Object.keys(localSubMotif)}
                                     break
 
 
@@ -448,9 +475,7 @@ export default function SearchAccordion(props) {
                                                       </Field>}
 
                                                       {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="motif" format={value => value || []}>
-
                                                           {({input, meta}) => (
-
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
                                                                   <InputLabel id="Motif-label">Motif de rejet</InputLabel>
                                                                   <Select
@@ -460,7 +485,10 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      // disabled={!Boolean(Object.keys(localMotif)?.length > 0)}
+                                                                      disabled={!Boolean(
+                                                                    ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))
+                                                                          || (values?.statut == undefined || values?.statut?.length == 0)
+                                                                      )}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
                                                                           return nomRefs.ROC_MOTIFS[selected[0]];
@@ -499,7 +527,10 @@ export default function SearchAccordion(props) {
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
-                                                                      // disabled={!Boolean(Object.keys(localMotif)?.length > 0)}
+                                                                      disabled={!Boolean(
+                                                                          ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))
+                                                                          || (values?.statut == undefined || values?.statut?.length == 0)
+                                                                      )}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} Sub Motif sélectionnéеs`
                                                                           return localSubMotif[selected[0]];
@@ -510,9 +541,7 @@ export default function SearchAccordion(props) {
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-
                                                                       {Object.keys(localSubMotif).map(code => (
-                                                                          console.log('localSubMotif > option > ', code),
                                                                           <MenuItem key={code} value={code}>
                                                                               {localSubMotif[code]}
                                                                           </MenuItem>
@@ -853,40 +882,36 @@ export default function SearchAccordion(props) {
                                           nir, cle
                                       } = values?.values;
 
+                                      /**
+                                       * TODO MUST BE FIXED
+                                       * ****************************************************************
+                                       */
                                       if (type){
                                           let _typeStat = reshapeStatusFromTypes({nomRefs, type})
-                                          // let _typeSubMotif = reshapeSubMotifsFromTypes({nomRefs, type})
                                           let _statut = {}
-                                          let _subMotif = {}
                                           Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
                                               if (_typeStat.includes(stat)) _statut[stat] = nomRefs.ROC_STATUSES[stat]
                                           })
+                                          if (Object.keys(_statut).length == 0 ) _statut = nomRefs.ROC_STATUSES
                                           setLocalStatus(_statut)
-
-                                          // Object.keys(nomRefs.ROC_SOUS_MOTIFS).forEach( subMot => {
-                                          //     if (_typeSubMotif.includes(subMot)) _subMotif[subMot] = nomRefs.ROC_SOUS_MOTIFS[subMot]
-                                          // })
-                                          // setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
                                       }
-                                      /**
-                                       * TODO MUST BE FIXED
-                                       */
+
                                       if (statut) {
                                           let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
 
-                                          console.log('statut > ', statut)
-                                          console.log('tmpMotifs > ', tmpMotifs)
+                                          // console.log('statut > ', statut)
+                                          // console.log('tmpMotifs > ', tmpMotifs)
                                           setLocalMotif(nomRefs.ROC_MOTIFS);
+
                                       }
                                       if (motif) {
                                           let tmpSubIds = reshapeSubMotifsFromMotif({motif, nomRefs})
                                           if (tmpSubIds) {
-                                              console.log('tmpSubIds > ', tmpSubIds)
                                               setLocalSubMotif(tmpSubIds)
                                           } else setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
                                       }
                                       if (sousMotif) {
-                                          console.log('sousMotif > ', sousMotif)
+                                          // console.log('sousMotif > ', sousMotif)
                                       }
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

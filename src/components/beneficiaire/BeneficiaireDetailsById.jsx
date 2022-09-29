@@ -149,7 +149,7 @@ export default function BeneficiaireDetailsById(props) {
                 <Tab label={"Contrat"}  {...a11yProps(1)} />
                 <Tab label="Carte et couvertures"  {...a11yProps(2)}/>
                 <Tab label="Autres beneficiares"  {...a11yProps(3)}/>
-                <Tab label="Historique" {...a11yProps(4)}/>
+                <Tab label="Historique" {...a11yProps(4)} disabled/>
             </Tabs>
 
             <TabPanel value={value} index={0} data={data} sx={{display: 'flex', flexDirection: 'row'}}>
@@ -283,17 +283,17 @@ export default function BeneficiaireDetailsById(props) {
             <TabPanel value={value} index={4} data={data}>
                 <div>History Tab</div>
             </TabPanel>
-            <div style={{minHeight: '300px', background: 'white', padding: '15px', maxWidth: '600px'}}>
-                {data && <pre style={{
-                    whiteSpace: 'pre-wrap',
-                    overflowWrap: 'break-word',
-                    background: 'white',
-                    margin: 0,
-                    padding: 0
-                }}>
-                    {JSON.stringify(data)}
-                </pre>}
-            </div>
+            {/*<div style={{minHeight: '300px', background: 'white', padding: '15px', maxWidth: '600px'}}>*/}
+            {/*    {data && <pre style={{*/}
+            {/*        whiteSpace: 'pre-wrap',*/}
+            {/*        overflowWrap: 'break-word',*/}
+            {/*        background: 'white',*/}
+            {/*        margin: 0,*/}
+            {/*        padding: 0*/}
+            {/*    }}>*/}
+            {/*        {JSON.stringify(data)}*/}
+            {/*    </pre>}*/}
+            {/*</div>*/}
         </Box>
     );
 }

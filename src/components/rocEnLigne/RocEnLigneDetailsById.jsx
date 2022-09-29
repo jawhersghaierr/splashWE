@@ -9,18 +9,15 @@ import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
-import {PaimentsGrid} from "./grids/PaimentsGrid";
+import {FacturesAssociessGrid} from "./grids/FacturesAssociessGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
 import {
     convertDate,
     currencyFormatter,
-    dateConvertNaissance,
     dateConvertNaissanceRAW,
-    facturesStatus,
     rocStatus
 } from "../../utils/utils";
-import {statusRow} from "./utils/utils";
 import {useGetRefsQuery} from "../../services/refsApi";
 
 
@@ -43,7 +40,6 @@ function TabPanel(props) {
                 padding: 0
             }}>
                 {value === index && children}
-                {/*{JSON.stringify(data)}*/}
             </div>}
         </div>
     );
@@ -69,8 +65,16 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
     const handleChange = (event, newValue) => { setValue(newValue) };
 
     const {data = null} = useGetRocEnLigneByIdQuery(rocID);
+
     let actes = []
     if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
+
+    let engagements = []
+    if (data?.common?.numeroEngagement) engagements.push(data?.common?.numeroEngagement)
+    if (data?.assosiete) {
+        data?.assosiete.forEach(e => e?.numeroEngagement && engagements.push(e.numeroEngagement))
+    }
+    console.log('Engagements: ', engagements)
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
@@ -80,7 +84,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détail de la demande {data?.common && data?.common?.typeDemande}</b>
             </Typography>
-            {data?.common && data?.common?.numFacturation}
+            {/*{data?.common && data?.common?.numFacturation}*/}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.common?.numeroEngagement}
             </Typography>
@@ -89,7 +93,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '455px'}}>
                     <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)}/>
-                    <RowInfo label={'Bénéficiaire'} value={<span><b>{data?.common?.beneficiaryName}</b> </span>} />
+                    <RowInfo label={'Bénéficiaire'} value={<span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>} />
                     <RowInfo label={'Environnement'} value={data?.common?.environment}/>
                     <RowInfo label={'N° facturation'} value={data?.common?.numFacturation}/>
                 </div>
@@ -101,7 +105,8 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                 <div style={{flex: 1, maxWidth: '375px'}}>
                     <RowInfo label={'FINESS juridique'} value={data?.common?.finessJur}/>
                     <RowInfo label={'Date et rang de naissance'}
-                             value={data?.common?.dateRangNaiss && dateConvertNaissanceRAW(data?.common?.dateRangNaiss)}
+                             value={data?.common?.dateNaiss && dateConvertNaissanceRAW(data?.common?.dateNaiss)}
+                             chip={data?.common?.rang && data?.common?.rang || null}
                     />
                     <RowInfo label={'Montant RC'} value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}/>
                 </div>
@@ -116,7 +121,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
-                {data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB' && <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) &&
+                {(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB') && <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) &&
                 <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />}
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
                 <Tab label="FACTURES ASSOCIEES" {...a11yProps(3)} />
@@ -172,21 +177,20 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
 
                 </Box>}
             </TabPanel>
-            <TabPanel value={value} index={1} data={data}>
 
+            {(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB') && <TabPanel value={value} index={1} data={data}>
                 {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
-
-            </TabPanel>
+            </TabPanel>}
 
             <TabPanel value={value} index={2} data={data}>
-                {data?.common?.numeroEngagement && <SelAssociesGrid numEng={data?.common.numeroEngagement}/>}
+                {data && <SelAssociesGrid selAssosiete={data?.assosiete}/>}
             </TabPanel>
+
             <TabPanel value={value} index={3} data={data}>
-                {rocID && nomRefs && <PaimentsGrid factId={rocID} nomRefs={nomRefs}/>}
+                {engagements && nomRefs && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
-
                 { rocID && <FluxInfo factId={rocID}/> }
             </TabPanel>
 

@@ -1,21 +1,41 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./paimentsGridColumns";
+import {columns} from "./facturesAssociessGridColumns";
 import './rocEnLigneGrid.scss';
-import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiementsApi";
 import {ModalInfo} from "../../../utils/ModalInfo";
-import PaiementDetailsById from "../../paiement/PaiementDetailsById";
-import VirementDetailsById from "../../virement/VirementDetailsById";
+import {useGetFacturesQuery} from "../../factures/services/facturesApi";
+import {checker} from "../../factures/utils/utils";
+import Pagination from "@mui/material/Pagination";
+import FacturesDetailsById from "../../factures/FacturesDetailsById";
 
 
-export const PaimentsGrid = ({factId, nomRefs}) => {
+export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
 
-    let {data} = useGetPaiementsFacturesByIdQuery(factId)
+    const criterias = {numEng: engagements.join()}
+    const [currentPage, setCurrentPage] = useState( 0);
+    const [sortProperties, setSortProperties] = useState({
+        sortDirection: null,
+        sortProperty: null
+    });
+
+    const size = 20;
+
+    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value-1)
+    };
+    const handleOrdering = ( value) => {
+        setSortProperties({
+            sortProperty: value[0]?.field || null,
+            sortDirection: value[0]?.sort?.toUpperCase() || null
+        })
+    };
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        if (data?.type == 'PAIEMENT' || data?.type == 'VIREMENT') setOpenModal({open: true, data});
+        if (data) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -24,7 +44,7 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
     return <div style={{margin: 0}}>
 
         <DataGrid
-            rows={data?.elements || []}
+            rows={data?.results || []}
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
             autoHeight
@@ -42,6 +62,10 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
             onCellClick={(params, event) => {
                 event.defaultMuiPrevented = true;
             }}
+
+            sortingMode="server"
+            onSortModelChange={handleOrdering}
+
             sx={{ '& .boldValue': { fontWeight: 'bold', },
                 '& .MuiDataGrid-columnHeaderTitle': {
                     textOverflow: "clip",
@@ -50,9 +74,18 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
                 },
             }}
         />
+
+        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+            <Pagination
+                count={data.totalPages}
+                page={currentPage+1}
+                onChange={handlePageChange}
+            />
+        </Stack>}
+
+
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}
-            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}
+            {(openModal?.data) && <FacturesDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
 
     </div>

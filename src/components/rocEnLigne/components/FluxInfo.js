@@ -1,22 +1,22 @@
 import React from 'react'
 import {useGetFluxByIdQuery} from "../services/fluxApi";
+import XMLViewer from 'react-xml-viewer'
+
+const customTheme = {
+    overflowBreak: true
+}
 
 export const FluxInfo = ({factId}) => {
 
     const {data} = useGetFluxByIdQuery(factId);
-    let rows = []
 
-    if (data) data.forEach(aEl => rows.push(aEl.map(e=>e.data).reduce((a,b)=>`${a}${b}`)))
-
-    return <div style={{ flex: 1, minWidth: '200px', maxWidth: '100%', margin: '15px 0'}}>
-
-        {rows.length > 0 && rows.map((row, i) =>
-            <div key={i} style={{display: 'flex', flexDirection: 'row', margin: '25px 0'}}>
-                <div style={{flex: 1, maxWidth: '45px'}}>{i} :</div>
-                <div style={{flex: 11}}>{row}</div>
-            </div>)}
-        {/*{JSON.stringify(data)}*/}
-
+    return <div style={{ display: 'flex', flexDirection: 'row', flex: 1, minWidth: '200px', margin: '15px 0', fontSize: '12px'}}>
+        <div style={{flex: 1, marginRight: '25px', maxWidth: '45%', whiteSpace: 'break-spaces',}}>
+            {data?.fluxAller && <XMLViewer xml={data.fluxRetour} theme={customTheme}/>}
+        </div>
+        <div style={{flex: 1, maxWidth: '45%', whiteSpace: 'break-spaces'}}>
+            {data?.fluxRetour && <XMLViewer xml={data.fluxRetour} theme={customTheme}/>}
+        </div>
     </div>
 }
 

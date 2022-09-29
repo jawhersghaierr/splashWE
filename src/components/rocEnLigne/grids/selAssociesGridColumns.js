@@ -3,7 +3,7 @@ import React from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {convertDate, currencyFormatter, dateConvertNaissanceRAW} from "../../../utils/utils";
+import {convertDate, currencyFormatter, dateConvertNaissanceRAW, rocStatus} from "../../../utils/utils";
 
 
 export const columns = ({handleModalOpen}) => [
@@ -24,7 +24,7 @@ export const columns = ({handleModalOpen}) => [
             return (convertDate(params.value))
         }},
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell: (params) => {
-            return ( <Chip label={`${params?.value?.label}`} sx={{color: 'black'}}/> )
+            return ( <Chip label={`${params?.value?.label}`} sx={{color: 'black', bgcolor: rocStatus[params.value?.code]?.color || 'rgba(0, 0, 0, 0.08)'}}/> )
     }},
 
     { field: 'beneficiaryName', headerName: 'Nom et date de naissance beneficiaire', flex: 3, renderCell: (params) => {

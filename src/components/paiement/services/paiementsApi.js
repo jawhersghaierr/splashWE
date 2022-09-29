@@ -26,6 +26,7 @@ export const paiementsApi = createApi({
                     receivedDate, receivedDateFin,
                     creationDate, creationDateFin,
                     dateDeNaissance, birdDate,
+                    nir, cle
                 } = criterias;
 
                 let filters = {...criterias}
@@ -45,8 +46,6 @@ export const paiementsApi = createApi({
                 if (creationDate && creationDate != '' && creationDate != undefined) filters.creationDate = new Date(creationDate).toLocaleDateString('sv');
                 if (creationDateFin && creationDateFin != '' && creationDateFin != undefined) filters.creationDateFin = new Date(creationDateFin).toLocaleDateString('sv');
 
-
-
                 if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
                     filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
                 }
@@ -56,6 +55,10 @@ export const paiementsApi = createApi({
                     } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
                 }
 
+
+                if (nir && nir != undefined && cle && cle != undefined) {
+                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+                }
 
                 const {
                     sortDirection,

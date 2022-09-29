@@ -32,7 +32,7 @@ export const columns = nomRefs => [
     { field: 'dmt', headerName: 'DMT', flex: 1 },
     { field: 'idExecutant', headerName: 'Identifiant exécutant', flex: 1 },
     { field: 'periode', headerName: 'Période', flex: 2, minWeight: '150px', renderCell: (params) => { //
-            return (`${convertDate(params?.row?.dateDebutSoins)} - ${convertDate(params?.row?.dateFinSoins)}`)
+            return (`${convertDate(params?.row?.periodeStart)} - ${convertDate(params?.row?.periodeEnd)}`)
     }},
     { field: 'coefficient', headerName: 'COEFF', flex: 1 },
     { field: 'quantite', headerName: 'QTE', flex: 1 },
@@ -46,7 +46,6 @@ export const columns = nomRefs => [
     { field: 'montantRC', headerName: 'MNT RC', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'montantRAC', headerName: 'RAC', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: '', flex: 1, renderCell: (params) => {
-
             return (params.value && params.value !== undefined ) && <LightTooltip title={params.value} placement="top" arrow>
                 <ErrorOutlineOutlinedIcon sx={{verticalAlign: 'top', width: 30, height: 30, margin: '0 5px', cursor: 'pointer'}}/>
             </LightTooltip> || ''
