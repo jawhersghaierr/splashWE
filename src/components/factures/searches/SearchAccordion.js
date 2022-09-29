@@ -27,6 +27,7 @@ import { MaskedInput } from "../../../utils/TextMaskCustom";
 import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
 import {checker, checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
+import { ConfirmNir } from "../../../utils/ConfirmNir";
 import PanelNIR from '../../shared/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
@@ -51,7 +52,9 @@ export default function SearchAccordion(props) {
         panelInformationGenerales: true,
         panelInformationsEstablishement: true,
         panelInformationsBeneficiaires: true,
+        panelNIR: true,
     });
+    const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [motif, setMotif] = useState({});
@@ -63,7 +66,11 @@ export default function SearchAccordion(props) {
     }, [motif]);
 
     const handleChange = (panel) => (event, newExpanded) => {
-        setExpanded({...expanded, [panel]: newExpanded});
+        if (panel == 'panelNIR' && !expanded.panelNIR) {
+            setOpenNIRDialog(true);
+        } else {
+            setExpanded({...expanded, [panel]: newExpanded});
+        }
     };
 
     const onSubmit = async (values) => {
@@ -652,7 +659,28 @@ export default function SearchAccordion(props) {
 
                                               </Accordion>
 
-                                              <PanelNIR validators={validators} disableCle={disableCle} />
+                                              <Accordion expanded={expanded.panelNIR} onChange={handleChange('panelNIR')}>
+                                                <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
+                                                    <Typography style={{ marginLeft: "5px" }}><b>Recherche par NIR</b></Typography>
+                                                </AccordionSummary>
+                                                <AccordionDetails
+                                                    sx={{
+                                                        display: "flex",
+                                                        flexDirection: "row",
+                                                        justifyContent: "start",
+                                                    }}
+                                                >
+                                                    <PanelNIR validators={validators} disableCle={disableCle} />
+                                                    <ConfirmNir 
+                                                        agreed={()=> {
+                                                            setOpenNIRDialog(false);
+                                                            setExpanded({...expanded, ['panelNIR']: true});
+                                                        }} 
+                                                        disagreed={()=>setOpenNIRDialog(false)} 
+                                                        opened={openNIRDialog}
+                                                    />
+                                                </AccordionDetails>
+                                              </Accordion>
 
                                               <div style={{ margin: '10px', textAlign: 'right'}}>
                                                   <Button
