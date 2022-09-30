@@ -19,7 +19,7 @@ export const columns = ({nomRefs}) => [
         // return (params.value)
         return (nomRefs && nomRefs?.ROC_TYPES[params.value] || params.value)
     }},
-    { field: 'domaine', headerName: 'domaine', flex: 1, sortable: false, renderCell: (params) => {
+    { field: 'domaine', headerName: 'Domaine', flex: 1, sortable: false, renderCell: (params) => {
         return (params.value)
     }},
     { field: 'numeroPs', headerName: 'FINESS géographique', flex: 1, sortable: false, },

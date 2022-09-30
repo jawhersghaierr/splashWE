@@ -20,10 +20,12 @@ export const paiementsVirementStatus = {
 
 export const rocStatus = {
     VALIDE: {label: 'Valide', color: '#C7F99F'},
-    INVALIDE: {label: 'Invalide', color: '#B3EFF8'},
-    CALCULEE: {label: 'Calculée', color: '#FFD4AD'},
-    ACCORDEE: {label: 'Accordée', color: '#FFA3A3'},
+    INVALIDE: {label: 'Invalide', color: '#FFA3A3'},
+    CALCULEE: {label: 'Calculée', color: '#C7F99F'},
+    ACCORDEE: {label: 'Accordée', color: '#C7F99F'},
     REJETEE: {label: "Rejetée", color: '#FFA3A3'},
+    ANNULEE: {label: "Annulée", color: '#FFD4AD'},
+    FACTUREE: {label: "Facturée", color: '#B3EFF8'}
 }
 
 export const paiementsStatus = {
