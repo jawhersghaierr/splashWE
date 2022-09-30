@@ -536,12 +536,14 @@ export default function SearchAccordion(props) {
                                                                           return localSubMotif[selected[0]];
                                                                       }}>
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.motif?.length == Object.keys(localSubMotif).length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
+                                                                      {localSubMotif && <MenuItem value="all" key='selectAll'>
+                                                                          <ListItemText
+                                                                              primary={(values?.motif?.length == Object.keys(localSubMotif).length) ?
+                                                                                  <b>Désélectionner tout</b> :
+                                                                                  <b>Sélectionner tout</b>}/>
+                                                                      </MenuItem>}
 
-                                                                      {Object.keys(localSubMotif).map(code => (
+                                                                      {localSubMotif && Object.keys(localSubMotif).map(code => (
                                                                           <MenuItem key={code} value={code}>
                                                                               {localSubMotif[code]}
                                                                           </MenuItem>

@@ -6,6 +6,7 @@ export const columns = nomRefs => [
         return (params.value);
     }},
     { field: 'codeActe', headerName: 'ACTE', flex: 1 },
+    { field: 'modeTraitment', headerName: 'MT', flex: 1 },
     { field: 'dcs', headerName: 'DCS', flex: 1, renderCell: (params) => {
         return (nomRefs.DCS[params.value] || params.value)
     }},
@@ -24,4 +25,9 @@ export const columns = nomRefs => [
     { field: 'depense', headerName: 'DR', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'rc', headerName: 'MNT RC', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'rac', headerName: 'RAC', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'z', headerName: 'Total facturé', flex: 1, valueFormatter: (params) => {
+        let _row = params.api.getRow(params.id)
+            return currencyFormatter.format(Number(_row?.ro) + Number(_row?.depense) + Number(_row?.rc) + Number(_row?.rac))
+        }, cellClassName: 'boldValue'},
+
 ];

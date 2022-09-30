@@ -16,7 +16,8 @@ export const columns = ({nomRefs}) => [
     }},
     { field: 'numeroEngagement', headerName: 'N° engagement', flex: 1, sortable: false, },
     { field: 'type', headerName: 'Type', flex: 1, sortable: false, renderCell: (params) => {
-        return (nomRefs.ROC_TYPES[params.value] || params.value)
+        // return (params.value)
+        return (nomRefs && nomRefs?.ROC_TYPES[params.value] || params.value)
     }},
     { field: 'domaine', headerName: 'domaine', flex: 1, sortable: false, renderCell: (params) => {
         return (params.value)
