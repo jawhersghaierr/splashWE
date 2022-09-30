@@ -14,10 +14,6 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import Collapse from '@mui/material/Collapse';
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import { ListItemText } from "@material-ui/core";
@@ -32,34 +28,10 @@ import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../uti
 import {checker, checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 import { ConfirmNir } from "../../../utils/ConfirmNir";
+import PanelNIR from '../../shared/PanelNIR';
+import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'
-
-
-const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0} square {...props} /> ) )
-(({ theme }) => ({
-    border: `none`,
-    '&:before': {
-        display: 'none',
-    },
-}));
-
-const AccordionSummary = styled((props) => ( <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />))
-(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({ border: 'none' }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     "&.MuiPaper-rounded": {
@@ -67,7 +39,6 @@ const StyledCard = styled(Card)(({ theme }) => ({
         borderRadius: '30px',
     },
 }));
-
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -83,9 +54,9 @@ export default function SearchAccordion(props) {
         panelInformationsBeneficiaires: true,
         panelNIR: true,
     });
+    const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
-    const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [motif, setMotif] = useState({});
     const [panelExpanded, setPanelExpanded] = useState(false);
     const prevMotif = usePrevious(motif)
@@ -95,7 +66,6 @@ export default function SearchAccordion(props) {
     }, [motif]);
 
     const handleChange = (panel) => (event, newExpanded) => {
-
         if (panel == 'panelNIR' && !expanded.panelNIR) {
             setOpenNIRDialog(true);
         } else {
@@ -690,69 +660,27 @@ export default function SearchAccordion(props) {
                                               </Accordion>
 
                                               <Accordion expanded={expanded.panelNIR} onChange={handleChange('panelNIR')}>
-                                                  <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
-                                                      <Typography style={{marginLeft: '5px'}}><b>Recherche par NIR</b></Typography>
-                                                  </AccordionSummary>
-                                                  <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'start'}}>
-
-                                                      <Field name="nir" validate={validators.composeValidators(validators.minValue(13),validators.maxValue(14))}>
-                                                          {({ input, meta }) => {
-
-                                                              return (
-                                                                  <FormControl className="RoundedEl" style={{
-                                                                      flex: '1 0 21%',
-                                                                      margin: '15px 5px',
-                                                                      maxWidth: '200px',
-                                                                      minWidth: '175px',
-                                                                  }}>
-                                                                      <TextField
-                                                                          id="Nir"
-                                                                          label={'NIR'}
-                                                                          variant="outlined"
-                                                                          {...input}
-                                                                          error={meta.invalid}
-                                                                          className="RoundedEl"
-                                                                          onChange={(e) => {
-
-                                                                              return input.onChange(e)
-                                                                          }}
-                                                                      />
-                                                                      {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                                                  </FormControl>
-                                                              )
-                                                          }}
-                                                      </Field>
-
-                                                      <Field name="cle" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
-                                                          {({ input, meta }) => {
-                                                              return (
-                                                                  <FormControl className="RoundedEl" style={{
-                                                                      flex: '1 0 21%',
-                                                                      margin: '15px 5px',
-                                                                      maxWidth: '100px'
-                                                                  }}>
-                                                                      <TextField
-                                                                          id="Cle"
-                                                                          label={'Clé'}
-                                                                          type={"number"}
-                                                                          disabled={disableCle}
-                                                                          variant="outlined"
-                                                                          // error={meta.invalid}
-                                                                          className="RoundedEl"
-
-                                                                          {...input}
-
-                                                                      />
-                                                                      {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                                                  </FormControl>
-                                                              )
-                                                          }}
-                                                      </Field>
-
-                                                  </AccordionDetails>
-
+                                                <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
+                                                    <Typography style={{ marginLeft: "5px" }}><b>Recherche par NIR</b></Typography>
+                                                </AccordionSummary>
+                                                <AccordionDetails
+                                                    sx={{
+                                                        display: "flex",
+                                                        flexDirection: "row",
+                                                        justifyContent: "start",
+                                                    }}
+                                                >
+                                                    <PanelNIR validators={validators} disableCle={disableCle} />
+                                                    <ConfirmNir 
+                                                        agreed={()=> {
+                                                            setOpenNIRDialog(false);
+                                                            setExpanded({...expanded, ['panelNIR']: true});
+                                                        }} 
+                                                        disagreed={()=>setOpenNIRDialog(false)} 
+                                                        opened={openNIRDialog}
+                                                    />
+                                                </AccordionDetails>
                                               </Accordion>
-
 
                                               <div style={{ margin: '10px', textAlign: 'right'}}>
                                                   <Button
@@ -810,11 +738,6 @@ export default function SearchAccordion(props) {
                                           setDotShow(false)
                                       }
                                   }}/>}
-
-                                  <ConfirmNir agreed={()=> {
-                                      setOpenNIRDialog(false);
-                                      setExpanded({...expanded, ['panelNIR']: true});
-                                  }} disagreed={()=>setOpenNIRDialog(false)} opened={openNIRDialog}/>
 
                               </LocalizationProvider></form>)}/>
         </div>
