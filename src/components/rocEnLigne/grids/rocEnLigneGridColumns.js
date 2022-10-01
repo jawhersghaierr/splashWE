@@ -20,7 +20,7 @@ export const columns = ({nomRefs}) => [
         return (nomRefs && nomRefs?.ROC_TYPES[params.value] || params.value)
     }},
     { field: 'domaine', headerName: 'Domaine', flex: 1, sortable: false, renderCell: (params) => {
-        return (params.value)
+        return (nomRefs && nomRefs?.ROC_DOMAINS[params.value] || params.value)
     }},
     { field: 'numeroPs', headerName: 'FINESS géographique', flex: 1, sortable: false, },
     { field: 'dateEntree', headerName: 'Date d\'admission', flex: 1, sortable: false, renderCell: (params) => { //dateEntree

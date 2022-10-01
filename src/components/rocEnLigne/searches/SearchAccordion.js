@@ -141,6 +141,13 @@ export default function SearchAccordion(props) {
                                         if (_value?.amc?.includes('all')) _value = {..._value, amc: Object.keys(nomRefs?.CLIENT)}
                                     break
 
+                                    case 'domaine':
+                                        if (_value?.domaine?.length === 0 ||
+                                            (_value?.domaine?.includes('all') && _value?.domaine?.length > Object.keys(nomRefs?.ROC_DOMAINS).length)
+                                        ) _value = {..._value, domaine: undefined}
+                                        if (_value?.domaine?.includes('all')) _value = {..._value, domaine: Object.keys(nomRefs?.ROC_DOMAINS)}
+                                    break
+
                                     case 'type':
                                         //Object.keys(nomRefs.ROC_TYPES)
                                         if (_value?.type?.length === 0 ||
@@ -315,7 +322,7 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" >
+                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -323,9 +330,20 @@ export default function SearchAccordion(props) {
                                                                   <Select
                                                                       id="Domaine"
                                                                       labelId="Domaine-label"
+                                                                      multiple
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
+                                                                      renderValue={(selected) => {
+                                                                          if (selected.length > 1) return `${selected.length} domaine sélectionnés`
+                                                                          return nomRefs.ROC_DOMAINS[selected[0]];
+                                                                      }}
                                                                       MenuProps={{autoFocus: false}}>
+
+                                                                      <MenuItem value="all" key='selectAll'>
+                                                                          <ListItemText
+                                                                              primary={(values?.domaine?.length == Object.keys(nomRefs.ROC_DOMAINS).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                      </MenuItem>
 
                                                                       {Object.keys(nomRefs.ROC_DOMAINS).map(code => (
                                                                           <MenuItem key={code} value={code}>
@@ -360,6 +378,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
+                                                                      ampm={true}
                                                                       inputFormat="dd/MM/yyyy hh:mm"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -378,6 +397,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
+                                                                      ampm={true}
                                                                       inputFormat="dd/MM/yyyy hh:mm"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -424,7 +444,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return localStatus[selected[0]];ю
+                                                                          return localStatus[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>

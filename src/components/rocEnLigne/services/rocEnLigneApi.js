@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
+import {IntlDateWithHHMM} from "../../../utils/utils";
 
 export const rocEnLigneApi = createApi({
     reducerPath: 'rocEnLigneApi',
@@ -19,8 +20,8 @@ export const rocEnLigneApi = createApi({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
                 let {
-                    dateDeSoins, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
-                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateDeNaissance, birdDate, nir, cle
+                    dateDeSoins, receptionDateStart, receptionDateEnd, idPeriodeFact, dateFact, status,
+                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
                 } = criterias;
 
                 let filters = {...criterias}
@@ -28,23 +29,24 @@ export const rocEnLigneApi = createApi({
                 if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
                     filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
                 }
-
-                if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
-                    filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
+                if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
+                    filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
+                    // filters.receptionDateStart = new Date(receptionDateStart).toISOString()//.toLocaleDateString('sv');
                 }
 
-                if (dateReceivedEnd && dateReceivedEnd != '' && dateReceivedEnd != undefined) {
-                    filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
+                if (receptionDateEnd && receptionDateEnd != '' && receptionDateEnd != undefined) {
+                    filters.receptionDateEnd = IntlDateWithHHMM(receptionDateEnd)
+                    // filters.receptionDateEnd = new Date(receptionDateEnd).toISOString()//.toLocaleDateString('sv');//
                 }
 
-                if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
-                    filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+                if (dateNaiss && dateNaiss != '' && dateNaiss != undefined) {
+                    filters.dateNaiss = new Date(dateNaiss).toLocaleDateString('sv').replaceAll('-', '');
                 }
 
                 if (birdDate && birdDate != '' && birdDate != undefined) {
                     if (birdDate instanceof Date && !isNaN(birdDate)){
-                        filters.dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
+                        filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+                    } else filters.dateNaiss = birdDate.split('/').reverse().join('');
                 }
 
                 if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
