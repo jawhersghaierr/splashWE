@@ -149,11 +149,11 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                                 <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance} border={true} justify={true}/>
                                 <RowInfo label={'Nature interruption séjour'} value={data?.info?.demande?.natureInterruptionSejour} border={true} justify={true}/>
                                 <RowInfo label={'Indicateur parcours de soins'} value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
-                                <RowInfo label={'Motif de rejet'} value={data?.motifRejets || data?.motifRejets} border={true} justify={true}/>
+                                <RowInfo label={'Motif de rejet'} value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true} justify={true}/>
                             </div>
                             <div style={{flex: 1 }}>
                                 <RowInfo label={'Domaine'} value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine} border={true} justify={true}/>
-                                <RowInfo label={'Période des prestations'} value={data?.info?.demande?.periodePrestation} border={true} justify={true}/>
+                                <RowInfo label={'Période des prestations'} value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`} border={true} justify={true}/>
                                 <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange} border={true} justify={true}/>
                                 <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
                                 <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)} border={true} justify={true}/>
@@ -182,7 +182,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data && <SelAssociesGrid selAssosiete={data?.assosiete}/>}
+                {data && nomRefs && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>

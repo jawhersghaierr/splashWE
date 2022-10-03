@@ -20,7 +20,7 @@ export const rocEnLigneApi = createApi({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
                 let {
-                    dateDeSoins, receptionDateStart, receptionDateEnd, idPeriodeFact, dateFact, status,
+                    dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
                     errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
                 } = criterias;
 
@@ -28,6 +28,9 @@ export const rocEnLigneApi = createApi({
 
                 if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
                     filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
+                }
+                if (dateAdmission && dateAdmission != '' && dateAdmission != undefined) {
+                    filters.dateAdmission = new Date(dateAdmission).toLocaleDateString('sv');
                 }
                 if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
                     filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
@@ -49,13 +52,13 @@ export const rocEnLigneApi = createApi({
                     } else filters.dateNaiss = birdDate.split('/').reverse().join('');
                 }
 
-                if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
-                    if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
+                if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
+                    if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);
 
-                    if (idPeriodeFact.length == 27) {
-                        idPeriodeFact = idPeriodeFact.split(' / ')
-                        filters.occId = idPeriodeFact[1]
-                        filters.idPeriodeFact = idPeriodeFact[0]
+                    if (idPerFact.length == 27) {
+                        idPerFact = idPerFact.split(' / ')
+                        filters.occId = idPerFact[1]
+                        filters.idPerFact = idPerFact[0]
                     }
                 }
 

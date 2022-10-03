@@ -20,7 +20,8 @@ export const columns = ({nomRefs, handleModalOpen}) => [
     }},
 
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell: (params) => {
-        return <b>{params.value}</b>
+            return <b>{nomRefs?.ROC_DOMAINS[params.value] || params.value}</b>
+
     }},
 
     { field: 'dateEntree', headerName: 'Date d\'admission', minWidth: '150px', flex: 1, renderCell: (params) => { //dateEntree

@@ -6,7 +6,7 @@ import './rocEnLigneGrid.scss';
 import {ModalInfo} from "../../../utils/ModalInfo";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
 
-export const SelAssociesGrid = ({selAssosiete}) => {
+export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -21,7 +21,7 @@ console.log('assosiete > ', selAssosiete)
 
         <DataGrid
             rows={selAssosiete || []}
-            columns={columns({handleModalOpen})}
+            columns={columns({handleModalOpen, nomRefs})}
             pageSize={20}
             autoHeight
             disableColumnResize={false}
