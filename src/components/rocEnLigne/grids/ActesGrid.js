@@ -6,8 +6,28 @@ import './rocEnLigneGrid.scss';
 
 export const ActesGrid = ({data, nomRefs}) => {
 
+    let _data = {
+        id: 'total',
+        ligne: <b>Totaux</b>,
+        montantRo: 0,
+        depenseReelle: 0,
+        montantRC: 0,
+        montantRAC: 0,
+    }
+
+    data.forEach(el => {
+        _data.montantRo += el.montantRo
+        _data.depenseReelle += el.depenseReelle
+        _data.montantRC += el.montantRC
+        _data.montantRAC += el.montantRAC
+    })
+/*
+
+ */
+    console.log('actove : ', data)
+
     return <DataGrid
-                    rows={data || []}
+                    rows={[...data, _data] || []}
                     columns={columns(nomRefs)}
                     pageSize={20}
                     autoHeight

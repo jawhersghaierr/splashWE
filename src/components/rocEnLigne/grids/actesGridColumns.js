@@ -32,14 +32,14 @@ export const columns = nomRefs => [
     { field: 'dmt', headerName: 'DMT', flex: 1 },
     { field: 'idExecutant', headerName: 'Identifiant exécutant', flex: 1 },
     { field: 'periode', headerName: 'Période', flex: 2, minWeight: '150px', renderCell: (params) => { //
-            return (`${convertDate(params?.row?.periodeStart)} - ${convertDate(params?.row?.periodeEnd)}`)
+            return params?.row?.periodeEnd && (`${convertDate(params?.row?.periodeStart)} - ${convertDate(params?.row?.periodeEnd)}`) || convertDate(params?.row?.periodeStart)
     }},
     { field: 'coefficient', headerName: 'COEFF', flex: 1 },
     { field: 'quantite', headerName: 'QTE', flex: 1 },
     { field: 'prixUnitaire', headerName: 'PU', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'baseSS', headerName: 'Base SS', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'tauxRo', headerName: 'TX RO', type: 'number', flex: 1, renderCell: (params) => { //
-            return (`${Number(params.value) * 100} %`)
+            return params.value && (`${Number(params.value ) * 100} %`) || ''
     }, cellClassName: 'boldValue'},
     { field: 'montantRo', headerName: 'MNT RO', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'depenseReelle', headerName: 'DR', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
