@@ -1,5 +1,5 @@
 import React from "react";
-import {convertDate, currencyFormatter} from "../../../utils/utils";
+import {convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";

@@ -2,7 +2,8 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {benefStatuses, convertDate, dateConvertNaissanceRAW} from '../../../utils/utils'
+import {benefStatuses} from '../../../utils/status-utils';
+import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 
 export const columns = enviroments => [
     { field: 'numeroAdherentFamilial', headerName: 'N° Adhérent Familial', flex: 2 },

@@ -12,12 +12,8 @@ import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {FacturesAssociessGrid} from "./grids/FacturesAssociessGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
-import {
-    convertDate,
-    currencyFormatter,
-    dateConvertNaissanceRAW,
-    rocStatus
-} from "../../utils/utils";
+import {rocStatus} from "../../utils/status-utils";
+import {dateConvertNaissanceRAW, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
 
 

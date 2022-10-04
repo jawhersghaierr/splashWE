@@ -1,4 +1,4 @@
-import {statusesRIB} from "../../../utils/utils";
+import {statusesRIB} from "../../../utils/status-utils";
 
 export const statusRow = (formattedValue) => {
 

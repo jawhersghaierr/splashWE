@@ -30,7 +30,8 @@ import {ListItemText} from "@material-ui/core";
 import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { validators, isValidDate, calcCleFromNir } from '../../../utils/utils';
+import { isValidDate } from '../../../utils/convertor-utils';
+import { validators, calcCleFromNir } from '../../../utils/validator-utils';
 import { checker, checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";

@@ -9,7 +9,8 @@ import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {RulesOfConfigGrid} from "./grids/RulesOfConfigGrid";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {convertDate, factureConfigurationStatus} from "../../utils/utils";
+import {factureConfigurationStatus} from "../../utils/status-utils";
+import {convertDate} from "../../utils/convertor-utils";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 
 

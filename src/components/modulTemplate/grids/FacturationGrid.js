@@ -12,7 +12,8 @@ import { selectCriterias } from '../facturationSlice'
 import {columns} from "./gridColumns";
 import './facturationGrid.scss';
 
-import {checker, usePrevious} from '../utils/utils'
+import {checker} from '../utils/utils';
+import {usePrevious} from '../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
 
 export const FacturationGrid = ({disciplines}) => {

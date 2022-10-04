@@ -12,7 +12,8 @@ import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
 import {FluxInfo} from "./components/FluxInfo";
 
-import {convertDate, currencyFormatter, dateConvertNaissance, facturesStatus} from "../../utils/utils";
+import {facturesStatus} from "../../utils/status-utils";
+import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {useEffect, useState} from "react";
 import {ConfirmFactureRejete} from "../../utils/ConfirmFactureRejete";

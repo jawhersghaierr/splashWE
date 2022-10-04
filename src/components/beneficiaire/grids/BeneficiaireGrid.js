@@ -12,7 +12,7 @@ import { selectCriterias } from '../beneficiaireSlice'
 import {columns} from "./beneficiaireGridColumns";
 import './beneficiaireGrid.scss';
 
-import {usePrevious} from '../../../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
 

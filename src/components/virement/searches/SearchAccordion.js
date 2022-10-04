@@ -25,7 +25,7 @@ import {ListItemText} from "@material-ui/core";
 import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { validators, isValidDate } from '../../../utils/utils';
+import { validators } from '../../../utils/validator-utils';
 import { checker, checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'
 

@@ -7,7 +7,7 @@ import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../virementsSlice'
 import {columns} from "./virementGridColumns";
 import {checker} from '../utils/utils'
-import {usePrevious} from '../../../utils/utils'
+import {usePrevious} from '../../../utils/status-utils'
 import mainPS from "../../../../assets/PS.png";
 import {useGetVirementsQuery} from "../services/virementsApi";
 import './virementsGrid.scss';

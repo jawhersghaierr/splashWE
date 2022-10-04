@@ -1,5 +1,5 @@
 import React from "react";
-import {convertDate, currencyFormatter} from "../../../utils/utils";
+import {convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
 export const columns = nomRefs => [
     { field: 'numLigne', headerName: 'N°', maxWidth: '20px', flex: 1, sortable: false, renderCell: (params) => {

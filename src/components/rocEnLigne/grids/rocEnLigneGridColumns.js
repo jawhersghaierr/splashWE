@@ -3,12 +3,8 @@ import React from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {
-    dateConvertNaissance,
-    convertDate,
-    currencyFormatter,
-    rocStatus
-} from "../../../utils/utils";
+import {rocStatus} from "../../../utils/status-utils";
+import {dateConvertNaissance, convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
 export const columns = ({nomRefs}) => [
     { field: 'dateReception', headerName: 'Reçu le', flex: 1, sortable: false, renderCell: (params) => {

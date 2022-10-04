@@ -20,7 +20,7 @@ import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {useGetRefsQuery} from "../../../services/refsApi";
 
-import { validators, isValidDate } from '../../../utils/utils';
+import { validators } from '../../../utils/validator-utils';
 import { checker, checkInsidePanels } from '../utils/utils';
 
 import { setCriterias, initCriterias, selectCriterias } from '../configurationsSlice'

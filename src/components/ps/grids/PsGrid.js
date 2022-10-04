@@ -7,7 +7,7 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../psSlice'
 import {columns} from "./psGridColumns";
-import {usePrevious} from '../../../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 import {checker} from '../utils/utils'
 
 import './psGrid.scss';

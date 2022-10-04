@@ -1,5 +1,5 @@
 import {useEffect, useRef} from "react";
-import {statusesRIB} from "../../../utils/utils";
+import {statusesRIB} from "../../../utils/status-utils";
 
 export const checker = (values) => {
     const {

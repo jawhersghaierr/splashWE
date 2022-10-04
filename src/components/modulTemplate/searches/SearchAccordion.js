@@ -32,7 +32,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import {statusesRIB, validators, checker, checkInsidePanels} from '../utils/utils'
+import {checker, checkInsidePanels} from '../utils/utils';
+import { statusesRIB } from '../utils/status-utils';
+import { validators } from '../utils/validator-utils';
 import {
     setCriterias,
     initCriterias,

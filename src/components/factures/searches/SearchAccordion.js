@@ -24,7 +24,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../../utils/TextMaskCustom";
-import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
+import {isValidDate} from '../../../utils/convertor-utils';
+import {validators, calcCleFromNir} from '../../../utils/validator-utils';
+import {usePrevious} from '../../../utils/status-utils';
 import {checker, checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 import { ConfirmNir } from "../../../utils/ConfirmNir";

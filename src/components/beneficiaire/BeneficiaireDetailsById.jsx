@@ -11,7 +11,8 @@ import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
-import {usePrevious, benefStatuses, convertDate, dateConvertNaissance, dateConvertNaissanceRAW} from "../../utils/utils";
+import {usePrevious, benefStatuses} from "../../utils/status-utils";
+import {dateConvertNaissanceRAW, convertDate} from "../../utils/convertor-utils";
 
 import {useEffect} from "react";
 

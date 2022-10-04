@@ -2,9 +2,8 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom";
-import {convertDate, currencyFormatter, dateConvertNaissanceRAW, rocStatus} from "../../../utils/utils";
-
+import {rocStatus} from "../../../utils/status-utils";
+import {dateConvertNaissanceRAW, convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
 export const columns = ({handleModalOpen}) => [
     { field: 'receivedDate', headerName: 'Reçu le', flex: 2, sortable: false, renderCell: (params) => {

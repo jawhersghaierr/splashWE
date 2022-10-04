@@ -21,7 +21,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
-import {statusesRIB, validators} from '../../../utils/utils'
+import {statusesRIB} from '../../../utils/status-utils';
+import { validators } from '../../../utils/validator-utils';
 import {checker, checkInsidePanels} from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice'
 

@@ -1,12 +1,5 @@
 import {useEffect, useRef} from "react";
-
-export const statusesRIB = {
-    ATT: {label: 'En attente', color: '#FFD4AD'},
-    REF: {label: 'Refusé', color: '#FFA3A3'},
-    MIS: {label: 'Manquant', color: '#B3EFF8'},
-    NA: {label: 'Inactif', color: '#99ACBB'},
-    ACT: {label: 'Validé', color: '#C7F99F'}
-}
+import { statusesRIB } from '../../../utils/status-utils';
 
 
 const composeValidators = (...validators) => value => {
@@ -88,12 +81,4 @@ export const checkInsidePanels = (values) => {
     }
     console.log(result)
     return result
-}
-
-export const usePrevious = (value) => {
-    const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    },[value]);
-    return ref.current;
 }

@@ -12,8 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {fr} from "date-fns/locale";
 import { setCriterias, initCriterias, selectCriterias } from '../intraitablesSlice'
-
-import {validators} from "../../../utils/utils";
+import {validators} from '../../../utils/validator-utils';
 import { checker } from '../utils/utils';
 
 import './searchAccordion.scss'
