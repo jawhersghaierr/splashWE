@@ -23,13 +23,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { MaskedInput } from "../../../utils/TextMaskCustom";
+import { MaskedInput } from "../../shared/TextMaskCustom";
 import {isValidDate} from '../../../utils/convertor-utils';
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {usePrevious} from '../../../utils/status-utils';
 import { checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-import { ConfirmNir } from "../../../utils/ConfirmNir";
+import { ConfirmNir } from "../../shared/ConfirmNir";
 import PanelNIR from '../../shared/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
@@ -67,6 +67,13 @@ export default function SearchAccordion(props) {
         // console.log('motif: ', motif)
     }, [motif]);
 
+    useEffect(() => {
+        console.log('Mount')
+        return () => {
+            console.log('UnMount')
+        }
+    }, [])
+
     const handleChange = (panel) => (event, newExpanded) => {
         if (panel == 'panelNIR' && !expanded.panelNIR) {
             setOpenNIRDialog(true);
@@ -78,7 +85,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const handleAccordionPanel = () => (event) => {

@@ -25,7 +25,7 @@ export const PsGrid = ({disciplines}) => {
         sortProperty: null
     });
 
-    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

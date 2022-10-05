@@ -2,9 +2,7 @@ import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField, InputAdornment} from "@mui/material";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import FormControl from '@mui/material/FormControl';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
@@ -41,20 +39,6 @@ const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0
     },
 }));
 
-const AccordionSummary = styled((props) => ( <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />))
-(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-}));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({ border: 'none' }));
 
@@ -80,8 +64,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        console.log('setCriterias > ', values)
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({

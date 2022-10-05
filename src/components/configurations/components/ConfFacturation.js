@@ -79,7 +79,7 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             }}>
 
                 {domainForPanel !== 'delai' && <RowInfo label={'Nombre de règles'} value={data?.rules?.length}/>}
-                {domainForPanel == 'delai' && <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} justify={true}/>}
+                {domainForPanel == 'delai' && <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} />}
 
                 {domainForPanel !== 'delai' && <div style={{display: 'flex', flexDirection: 'row'}}>
                     <div style={{flex: 1, marginRight: '5%'}}>

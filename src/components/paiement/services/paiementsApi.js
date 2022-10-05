@@ -60,6 +60,8 @@ export const paiementsApi = createApi({
                     filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
                 }
 
+                filters.cashe = null
+
                 const {
                     sortDirection,
                     sortProperty,

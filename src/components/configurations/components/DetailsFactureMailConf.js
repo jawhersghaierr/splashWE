@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from "@mui/material/Box";
-import {RowInfo} from "../../beneficiaire/components/RowInfo";
+import {RowInfo} from "./RowInfo";
 
 function separetedMails (data) {
     if (data && data.length > 0) return <span>

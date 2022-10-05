@@ -17,9 +17,9 @@ import {Box, Card, CardActions, CardContent, TextField, Typography} from "@mui/m
 // import {changeAppNameAction} from "../../../hospi-ui/src/reducer";
 
 import {Parcours} from '@viamedis/shared-lib-ui';
-import {Clients} from "../components/referentiel/Clients";
-import {Environments} from "../components/referentiel/Environments";
-import {Natures} from "../components/referentiel/Natures";
+// import {Clients} from "../components/referentiel/Clients";
+// import {Environments} from "../components/referentiel/Environments";
+// import {Natures} from "../components/referentiel/Natures";
 
 
 export function Comp1() {
@@ -50,13 +50,13 @@ export function Comp1() {
         {/*    }}>*/}
         {/*</Box>*/}
             <Button>Parcours</Button>
-            <Parcours/>
+            {/*<Parcours/>*/}
 
             <Button>Clients</Button>
-            <Clients/>
+            {/*<Clients/>*/}
 
             <Button>Environments</Button>
-            <Environments/>
+            {/*<Environments/>*/}
 
             <Button>Natures</Button>
             <Natures/>

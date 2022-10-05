@@ -81,7 +81,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
 
     return <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
         <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-            <b>Configuration&nbsp;</b>{data?.content}-{data?.label}
+            <b>Configuration&nbsp;</b> {data?.label}
         </Typography>
         <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
             {data?.type}
@@ -138,7 +138,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                     backgroundColor: '#F6F8FC', flex: 1,
                     minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
                 }}>
-                    <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} justify={true}/>
+                    <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} </div>} />
                 </Box>}
             {/*{JSON.stringify(data)}*/}
         </TabPanel>

@@ -24,9 +24,9 @@ import { store } from './store';
 
 import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
-import AppBar from "./utils/AppBar";
-import DrawerHeader from "./utils/DrawerHeader";
-import Drawer from "./utils/Drawer"
+import AppBar from "./components/shared/AppBar";
+import DrawerHeader from "./components/shared/DrawerHeader";
+import Drawer from "./components/shared/Drawer"
 import {Ps} from './components/ps/PS'
 import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 

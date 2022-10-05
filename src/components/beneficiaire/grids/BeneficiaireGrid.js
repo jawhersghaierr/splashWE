@@ -26,7 +26,7 @@ export const BeneficiaireGrid = ({enviroments}) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data, isFetching, isSuccess} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

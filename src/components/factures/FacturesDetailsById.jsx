@@ -16,9 +16,9 @@ import {facturesStatus} from "../../utils/status-utils";
 import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {useEffect, useState} from "react";
-import {ConfirmFactureRejete} from "../../utils/ConfirmFactureRejete";
-import {ConfirmFactureAnule} from "../../utils/ConfirmFactureAnule";
-import {ConfirmFactureRecyclage} from "../../utils/ConfirmFactureRecyclage";
+import {ConfirmFactureRejete} from "../shared/ConfirmFactureRejete";
+import {ConfirmFactureAnule} from "../shared/ConfirmFactureAnule";
+import {ConfirmFactureRecyclage} from "../shared/ConfirmFactureRecyclage";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle';
@@ -92,7 +92,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    let {data = null} = useGetFactureByIdQuery(factureID);
+    let {data = null} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 

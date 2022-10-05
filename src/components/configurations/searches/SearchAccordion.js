@@ -55,7 +55,7 @@ export default function SearchAccordion(props) {
 
 
     const onSubmit = async (values) => {
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const handleAccordionPanel = () => (event) => {
@@ -120,7 +120,7 @@ export default function SearchAccordion(props) {
                                       }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                              <Field name="label">
+                                              <Field name="c">
                                                   {({ input, meta }) => (
                                                       <div style={{flex: 2, marginRight: '20px'}}>
                                                           <TextField

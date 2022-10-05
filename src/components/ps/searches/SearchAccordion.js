@@ -23,7 +23,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 import {statusesRIB} from '../../../utils/status-utils';
 import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import {checker, checkInsidePanels} from '../utils/utils'
+import {checkInsidePanels} from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice'
 
 import './searchAccordion.scss'
@@ -77,7 +77,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({
@@ -100,6 +100,13 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+
+    // useEffect(() => {
+    //     console.log('Mount')
+    //     return () => {
+    //         console.log('UnMount')
+    //     }
+    // }, [])
 
     return (
         <div className={'formContent'}>
@@ -348,7 +355,7 @@ export default function SearchAccordion(props) {
                         </CardActions>
                     </Collapse>
                 </StyledCard>
-               {<FormSpy onChange={(values) => {
+               {<FormSpy subscription={{values: true}} onChange={(values) => {
                    form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;
                     if(disciplines || statutRibs || codePostal || ville) {

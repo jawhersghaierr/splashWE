@@ -6,7 +6,7 @@ import {factureConfigurationStatus} from "../../../utils/status-utils";
 import {convertDate} from "../../../utils/convertor-utils";
 
 export const columns = ({nomRefs, configurations, domain, code}) => [
-    { field: 'id', headerName: 'Code', flex: 1, maxWidth: 55, renderCell: (params) => {
+    { field: 'id', headerName: 'Code', flex: 2, renderCell: (params) => {
         return (params.value);
     }},
     { field: 'type', headerName: 'Type de paramétre', flex: 1, renderCell: (params) => { //FACTURE_CONFIGURATION_TYPE
