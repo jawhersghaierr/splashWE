@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
+import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -114,6 +114,7 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
+    if (enviromentsIsFetching) return <CircularProgress/>
 
     return (
         <div className={'formContent'}>
