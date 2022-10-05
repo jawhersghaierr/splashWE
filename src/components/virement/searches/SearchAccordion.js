@@ -25,8 +25,8 @@ import {ListItemText} from "@material-ui/core";
 import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { validators } from '../../../utils/validator-utils';
-import { checker, checkInsidePanels } from '../utils/utils'
+import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
+import { checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'
 
 import './searchAccordion.scss'
@@ -115,12 +115,9 @@ export default function SearchAccordion(props) {
                               let _value = value;
 
                                 switch (field.active) {
-                                    case 'status':
-                                        //Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)
-                                        if (_value?.status?.length === 0 ||
-                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.PAIEMENT_VIREMENT_STATUS).length)
-                                        ) _value = {..._value, status: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.PAIEMENT_VIREMENT_STATUS)}
+                                    case 'status'://Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)
+                                        const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_VIREMENT_STATUS, field.active);
+                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
                                     break
                                 }
 
@@ -268,7 +265,7 @@ export default function SearchAccordion(props) {
                                                           variant="contained"
                                                           type="submit"
                                                           size="medium" className='RoundedEl'
-                                                          disabled={!checker(values)} >
+                                                          disabled={!allowSearch(values)} >
                                                           <SearchIcon/>Rechercher
                                                       </Button>
                                                   </div>}
@@ -359,14 +356,14 @@ export default function SearchAccordion(props) {
                                                           form.reset()
                                                       }}
                                                       className="RoundedEl"
-                                                      disabled={!checker(values)}
+                                                      disabled={!allowSearch(values)}
                                                       style={{marginRight: '15px'}}
                                                   >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!checker(values)}
+                                                          disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>

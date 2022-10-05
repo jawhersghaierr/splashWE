@@ -214,3 +214,24 @@ export const calcCleFromNir = (values) => {
     return null;
   }
 };
+
+export const selectDeselectAllValues = (fieldObj, ref, field) => {
+  if (fieldObj && fieldObj[field]) {
+    if (
+      fieldObj[field].length === 0 ||
+      (fieldObj[field].includes("all") &&
+        fieldObj[field].length > Object.keys(ref).length)
+    )
+      return { [field]: undefined };
+
+    if (fieldObj[field].includes("all")) return { [field]: Object.keys(ref) };
+  }
+};
+
+export const allowSearch = (values) => {
+  for (let key in values) {
+      if (values[key]) return true;
+  }
+  return false;
+}
+

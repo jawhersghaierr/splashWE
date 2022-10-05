@@ -13,8 +13,8 @@ import {columns} from "./columnsIntraitablesGrid";
 import './intraitablesGrid.scss';
 
 import {usePrevious} from '../../../utils/status-utils';
-import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const IntraitablesGrid = () => {
 
@@ -26,7 +26,7 @@ export const IntraitablesGrid = () => {
         sortProperty: null
     });
 
-    const {data} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

@@ -24,15 +24,6 @@ export const statusRow = (formattedValue) => {
     return res;
 }
 
-export const checker = (values) => {
-    const {numPartenaire, raisonSociale, disciplines, statutRibs, codePostal, ville} = values || {};
-    if(numPartenaire || raisonSociale || disciplines || statutRibs || codePostal || ville) {
-        return true
-    } else {
-        return false
-    }
-}
-
 export const checkInsidePanels = (values) => {
     const {disciplines, statutRibs, codePostal, ville} = values || {};
     console.log(values)

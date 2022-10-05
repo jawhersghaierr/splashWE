@@ -1,28 +1,6 @@
 import {useEffect, useRef} from "react";
 import {statusesRIB} from "../../../utils/status-utils";
 
-export const checker = (values) => {
-    const {
-        numFact, numEng, numAdh,
-        domaine, dateDeSoins,
-        dateReceivedStart, dateReceivedEnd,
-        idPeriodeFact, dateFact,
-        status, errorCode,
-        numId, numJur,
-        raisonSociale,
-        department, numClient,
-        nom, prenom, dateDeNaissance, birdDate,
-        nir, cle
-    } = values || {};
-    if(numFact || numEng || numAdh || domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-        errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-        birdDate || nir || cle) {
-        return true
-    } else {
-        return false
-    }
-}
-
 export const checkInsidePanels = (values) => {
 
     const {

@@ -22,7 +22,7 @@ import Select from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 import {statusesRIB} from '../../../utils/status-utils';
-import { validators } from '../../../utils/validator-utils';
+import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
 import {checker, checkInsidePanels} from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice'
 
@@ -111,17 +111,20 @@ export default function SearchAccordion(props) {
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
 
-                        if (_value?.disciplines?.length === 0 ||
-                            (_value?.disciplines?.includes('all') && _value?.disciplines?.length > disciplines?.length)
-                        ) _value = {..._value, disciplines: undefined}
+                        let discipline = {};
+                        for (let key in disciplines) {
+                            discipline[disciplines[key].code] = disciplines[key].libelle;  
+                        }
 
-                        if (_value?.disciplines?.includes('all')) _value = {..._value, disciplines: disciplines?.map(({code})=>code)}
+                        const disciplinesObj = selectDeselectAllValues(value, discipline, 'disciplines');
+                        _value.disciplines = disciplinesObj ? disciplinesObj.disciplines : value.disciplines;
 
-                        if (_value?.statutRibs?.length === 0 ||
-                            (_value?.statutRibs?.includes('all') && _value?.statutRibs?.length > Object.keys(statusesRIB).length)
-                        ) _value = {..._value, statutRibs: undefined}
-
-                        if (_value?.statutRibs?.includes('all')) _value = {..._value, statutRibs: Object.keys(statusesRIB).map((code)=>code)}
+                        let statusRibs = {};
+                        for (let key in statusesRIB) {
+                            statusRibs[key] = statusesRIB[key].label;  
+                        }
+                        const statutRibsObj = selectDeselectAllValues(value, statusRibs, 'statutRibs');
+                        _value.statutRibs = statutRibsObj ? statutRibsObj.statutRibs : value.statutRibs;
 
                         return _value
 
@@ -329,7 +332,7 @@ export default function SearchAccordion(props) {
                                         form.reset()
                                     }}
                                     className="RoundedEl"
-                                    disabled={!checker(values)}
+                                    disabled={!allowSearch(values)}
                                     style={{marginRight: '15px'}}
                                 >
                                     Effacer

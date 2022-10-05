@@ -13,8 +13,8 @@ import {columns} from "./beneficiaireGridColumns";
 import './beneficiaireGrid.scss';
 
 import {usePrevious} from '../../../utils/status-utils';
-import {checker} from '../utils/utils'
 import mainPS from "../../../../assets/PS.png";
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const BeneficiaireGrid = ({enviroments}) => {
 
@@ -26,7 +26,7 @@ export const BeneficiaireGrid = ({enviroments}) => {
         sortProperty: null
     });
 
-    const {data} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

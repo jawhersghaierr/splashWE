@@ -6,12 +6,12 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../virementsSlice'
 import {columns} from "./virementGridColumns";
-import {checker} from '../utils/utils'
 import {usePrevious} from '../../../utils/status-utils'
 import mainPS from "../../../../assets/PS.png";
 import {useGetVirementsQuery} from "../services/virementsApi";
 import './virementsGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const VirementsGrid = ({disciplines}) => {
 
@@ -25,7 +25,7 @@ export const VirementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetVirementsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetVirementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {

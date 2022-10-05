@@ -32,7 +32,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-import {checker, checkInsidePanels} from '../utils/utils';
+import { checkInsidePanels } from '../utils/utils';
 import { statusesRIB } from '../utils/status-utils';
 import { validators } from '../utils/validator-utils';
 import {
@@ -42,6 +42,7 @@ import {
 } from '../facturationSlice'
 
 import './searchAccordion.scss'
+import { allowSearch } from '../../../utils/validator-utils';
 
 
 
@@ -344,7 +345,7 @@ export default function SearchAccordion(props) {
                                         form.reset()
                                     }}
                                     className="RoundedEl"
-                                    disabled={!checker(values)}
+                                    disabled={!allowSearch(values)}
                                     style={{marginRight: '15px'}}
                                 >
                                     Effacer

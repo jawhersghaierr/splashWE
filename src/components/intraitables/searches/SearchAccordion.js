@@ -12,8 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {fr} from "date-fns/locale";
 import { setCriterias, initCriterias, selectCriterias } from '../intraitablesSlice'
-import {validators} from '../../../utils/validator-utils';
-import { checker } from '../utils/utils';
+import {allowSearch, validators} from '../../../utils/validator-utils';
 
 import './searchAccordion.scss'
 
@@ -133,7 +132,7 @@ export default function SearchAccordion(props) {
                                     form.reset()
                                 }}
                                 className="RoundedEl"
-                                disabled={!checker(values)}
+                                disabled={!allowSearch(values)}
                                 style={{marginRight: '15px'}}
                             >
                                 Effacer
@@ -143,7 +142,7 @@ export default function SearchAccordion(props) {
                                 variant="contained"
                                 type="submit"
                                 size="medium" className='RoundedEl'
-                                disabled={!checker(values)} >
+                                disabled={!allowSearch(values)} >
                                 <SearchIcon/>Rechercher
                             </Button>
                         </div>}
