@@ -76,7 +76,7 @@ export const IntlDateWithHHMM = (dateStr) => {
     minute: "2-digit",
     second: "2-digit",
     hour12: false,
-    timeZone: "UTC",
+    //timeZone: "UTC",
   })
     .formatToParts(dateStr)
     .reduce((acc, part) => {
@@ -84,7 +84,7 @@ export const IntlDateWithHHMM = (dateStr) => {
       return acc;
     }, {});
 
-  return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;
+  return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}.000Z`;
 };
 
 /**

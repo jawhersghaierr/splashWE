@@ -2,23 +2,24 @@ import React from 'react'
 import Chip from '@mui/material/Chip';
 import {Typography} from "@mui/material";
 
-export const RowInfo = ({value, label, chip = null}) => {
+export const RowInfo = ({value, label, chip = null, border = true, justify = false, styles = {}}) => {
 
     return <div style={{
         flex: 1,
-        minWidth: '200px',
+        minWidth: '55px',
         maxWidth: '100%',
         margin: '15px 0',
-        borderBottom: '1px solid #EDF2FA'
-        }}>
+        borderBottom: (border)? '1px solid #EDF2FA': 'none',
+        ...styles
+        }} >
 
         <Typography variant="subtitle1" noWrap component="div" sx={{
             color: '#003154',
             padding: '5px 0',
             display: 'flex',
-            justifyContent: 'space-between'}}>
+            justifyContent: (justify)? 'space-between': 'space-start'}}>
 
-            <span>{label}&nbsp;:&nbsp;</span>
+            {label && <span>{label}&nbsp;:&nbsp;</span>}
             <b>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
         </Typography>
     </div>

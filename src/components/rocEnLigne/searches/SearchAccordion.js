@@ -138,6 +138,11 @@ export default function SearchAccordion(props) {
                                         _value.amc = amcObj ? amcObj[field.active] : value[field.active];
                                     break
 
+                                    case 'domaine':
+                                        const domainObj = selectDeselectAllValues(value, nomRefs.ROC_DOMAINS, field.active);
+                                        _value.domaine = domainObj ? domainObj[field.active] : value[field.active];
+                                    break
+
                                     case 'type': //Object.keys(nomRefs.ROC_TYPES)
                                         const typeObj = selectDeselectAllValues(value, nomRefs.ROC_TYPES, field.active);
                                         _value.type = typeObj ? typeObj[field.active] : value[field.active];
@@ -303,7 +308,7 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" >
+                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -311,9 +316,20 @@ export default function SearchAccordion(props) {
                                                                   <Select
                                                                       id="Domaine"
                                                                       labelId="Domaine-label"
+                                                                      multiple
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
+                                                                      renderValue={(selected) => {
+                                                                          if (selected.length > 1) return `${selected.length} domaines sélectionnés`
+                                                                          return nomRefs.ROC_DOMAINS[selected[0]];
+                                                                      }}
                                                                       MenuProps={{autoFocus: false}}>
+
+                                                                      <MenuItem value="all" key='selectAll'>
+                                                                          <ListItemText
+                                                                              primary={(values?.domaine?.length == Object.keys(nomRefs.ROC_DOMAINS).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                      </MenuItem>
 
                                                                       {Object.keys(nomRefs.ROC_DOMAINS).map(code => (
                                                                           <MenuItem key={code} value={code}>
@@ -348,6 +364,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
+                                                                      ampm={false}
                                                                       inputFormat="dd/MM/yyyy hh:mm"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -366,6 +383,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
+                                                                      ampm={true}
                                                                       inputFormat="dd/MM/yyyy hh:mm"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -378,11 +396,11 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="occId" validate={validators.composeValidators(validators.minValue(22))}>
+                                                      <Field name="idPerFact" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}, maxWidth: '25%' }}>
                                                                   <MaskedInput
-                                                                      id="occId"
+                                                                      id="IdPerFact"
                                                                       autoFocus
                                                                       fullWidth
                                                                       // mask={"0000000000000000000000 / 00"}
@@ -412,7 +430,7 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return localStatus[selected[0]];ю
+                                                                          return localStatus[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
@@ -448,7 +466,7 @@ export default function SearchAccordion(props) {
                                                                           || (values?.statut == undefined || values?.statut?.length == 0)
                                                                       )}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Motif sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} motifs sélectionnés`
                                                                           return nomRefs.ROC_MOTIFS[selected[0]];
                                                                       }}>
 
@@ -490,7 +508,7 @@ export default function SearchAccordion(props) {
                                                                           || (values?.statut == undefined || values?.statut?.length == 0)
                                                                       )}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} Sub Motif sélectionnéеs`
+                                                                          if (selected.length > 1) return `${selected.length} sous-motifs sélectionnés`
                                                                           return localSubMotif[selected[0]];
                                                                       }}>
 
@@ -617,7 +635,7 @@ export default function SearchAccordion(props) {
                                                                       input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} AMC sélectionnés`
+                                                                          if (selected.length > 1) return `${selected.length} AMC sélectionnées`
                                                                           return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
                                                                       }}>
 
@@ -790,7 +808,7 @@ export default function SearchAccordion(props) {
                                           domaine,
                                           dateAdmission,
                                           receptionDateStart, receptionDateEnd,
-                                          occId, dateFact,
+                                          idPerFact, dateFact,
                                           statut, motif, sousMotif,
                                           finessGeo, finessJur,
                                           raisonSociale,
@@ -834,7 +852,7 @@ export default function SearchAccordion(props) {
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                                       if(
-                                          domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact || statut ||
+                                          domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||
                                           motif || finessGeo || finessJur || raisonSociale || dеpartement || amc || nom || prenom || dateNaiss ||
                                           birdDate || nir || cle
                                       ) {

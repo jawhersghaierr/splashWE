@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
+import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const rocEnLigneApi = createApi({
     reducerPath: 'rocEnLigneApi',
@@ -19,8 +20,8 @@ export const rocEnLigneApi = createApi({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
                 let {
-                    dateDeSoins, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
-                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateDeNaissance, birdDate, nir, cle
+                    dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
+                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
                 } = criterias;
 
                 let filters = {...criterias}
@@ -28,32 +29,36 @@ export const rocEnLigneApi = createApi({
                 if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
                     filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
                 }
-
-                if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
-                    filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
+                if (dateAdmission && dateAdmission != '' && dateAdmission != undefined) {
+                    filters.dateAdmission = new Date(dateAdmission).toLocaleDateString('sv');
+                }
+                if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
+                    filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
+                    // filters.receptionDateStart = new Date(receptionDateStart).toISOString()//.toLocaleDateString('sv');
                 }
 
-                if (dateReceivedEnd && dateReceivedEnd != '' && dateReceivedEnd != undefined) {
-                    filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
+                if (receptionDateEnd && receptionDateEnd != '' && receptionDateEnd != undefined) {
+                    filters.receptionDateEnd = IntlDateWithHHMM(receptionDateEnd)
+                    // filters.receptionDateEnd = new Date(receptionDateEnd).toISOString()//.toLocaleDateString('sv');//
                 }
 
-                if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
-                    filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+                if (dateNaiss && dateNaiss != '' && dateNaiss != undefined) {
+                    filters.dateNaiss = new Date(dateNaiss).toLocaleDateString('sv').replaceAll('-', '');
                 }
 
                 if (birdDate && birdDate != '' && birdDate != undefined) {
                     if (birdDate instanceof Date && !isNaN(birdDate)){
-                        filters.dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
+                        filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+                    } else filters.dateNaiss = birdDate.split('/').reverse().join('');
                 }
 
-                if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
-                    if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
+                if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
+                    if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);
 
-                    if (idPeriodeFact.length == 27) {
-                        idPeriodeFact = idPeriodeFact.split(' / ')
-                        filters.occId = idPeriodeFact[1]
-                        filters.idPeriodeFact = idPeriodeFact[0]
+                    if (idPerFact.length == 27) {
+                        idPerFact = idPerFact.split(' / ')
+                        filters.occId = idPerFact[1]
+                        filters.idPerFact = idPerFact[0]
                     }
                 }
 

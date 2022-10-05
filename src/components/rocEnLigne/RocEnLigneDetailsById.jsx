@@ -117,8 +117,8 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
-                {(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB') && <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) &&
-                <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />}
+                <Tab label={<div>Actes&nbsp;{(data?.actes && data?.actes.length) &&
+                <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} disabled={!(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB')} />
                 <Tab label="Sel associes"  {...a11yProps(2)}/>
                 <Tab label="FACTURES ASSOCIEES" {...a11yProps(3)} />
                 <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
@@ -145,11 +145,11 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                                 <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance} border={true} justify={true}/>
                                 <RowInfo label={'Nature interruption séjour'} value={data?.info?.demande?.natureInterruptionSejour} border={true} justify={true}/>
                                 <RowInfo label={'Indicateur parcours de soins'} value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
-                                <RowInfo label={'Motif de rejet'} value={data?.motifRejets || data?.motifRejets} border={true} justify={true}/>
+                                <RowInfo label={'Motif de rejet'} value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true} justify={true}/>
                             </div>
                             <div style={{flex: 1 }}>
-                                <RowInfo label={'Domaine'} value={data?.info?.demande?.domaine} border={true} justify={true}/>
-                                <RowInfo label={'Période des prestations'} value={data?.info?.demande?.periodePrestation} border={true} justify={true}/>
+                                <RowInfo label={'Domaine'} value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine} border={true} justify={true}/>
+                                <RowInfo label={'Période des prestations'} value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`} border={true} justify={true}/>
                                 <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange} border={true} justify={true}/>
                                 <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
                                 <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)} border={true} justify={true}/>
@@ -173,12 +173,12 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                 </Box>}
             </TabPanel>
 
-            {(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB') && <TabPanel value={value} index={1} data={data}>
+            <TabPanel value={value} index={1} data={data}>
                 {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
-            </TabPanel>}
+            </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data && <SelAssociesGrid selAssosiete={data?.assosiete}/>}
+                {data && nomRefs && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>

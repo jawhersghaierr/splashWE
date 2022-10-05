@@ -1,4 +1,3 @@
-import {useEffect, useRef} from "react";
 import {statusesRIB} from "../../../utils/status-utils";
 
 export const checker = (values) => {
@@ -6,7 +5,7 @@ export const checker = (values) => {
         type, numEng, numAdh,
         domaine, dateAdmission,
         receptionDateStart, receptionDateEnd,
-        occId, dateFact,
+        idPerFact, dateFact,
         statut, motif, sousMotif,
         finessGeo, finessJur,
         raisonSociale,
@@ -14,7 +13,7 @@ export const checker = (values) => {
         nom, prenom, dateNaiss, birdDate,
         nir, cle
     } = values || {};
-    if(type || numEng || numAdh || domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact || statut ||
+    if(type || numEng || numAdh || domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||
         motif || finessGeo || finessJur || raisonSociale || dеpartement || amc || nom || prenom || dateNaiss ||
         birdDate || nir || cle) {
         return true
@@ -29,14 +28,14 @@ export const checkInsidePanels = (values) => {
         type, numEng, numAdh,
         domaine, dateAdmission,
         receptionDateStart, receptionDateEnd,
-        occId, dateFact, statut, motif,
+        idPerFact, dateFact, statut, motif,
         finessGeo, finessJur, raisonSociale,
         dеpartement, amc, sousMotif,
         nom, prenom, dateNaiss, birdDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateAdmission || receptionDateStart || receptionDateEnd || occId || dateFact )? true: true,
+        panelInformationGenerales: (domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact )? true: true,
         panelInformationsEstablishement: (finessGeo || finessJur || raisonSociale || dеpartement)? true: true,
         panelInformationsBeneficiaires: (amc || nom || prenom || dateNaiss || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,

@@ -1,11 +1,10 @@
 import Chip from "@mui/material/Chip";
 import React from "react";
-
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {rocStatus} from "../../../utils/status-utils";
 import {dateConvertNaissanceRAW, convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
-export const columns = ({handleModalOpen}) => [
+export const columns = ({handleModalOpen, nomRefs}) => [
     { field: 'receivedDate', headerName: 'Reçu le', flex: 2, sortable: false, renderCell: (params) => {
             return convertDate(params.value, true);
         }},
@@ -16,7 +15,7 @@ export const columns = ({handleModalOpen}) => [
             return (params.value);
         }},
     { field: 'domaine', headerName: 'Domaine', flex: 2, renderCell: (params) => {
-            return (params.value)
+            return nomRefs?.ROC_DOMAINS[params.value] || params.value
         }},
 
     { field: 'dateAdmission', headerName: 'Date d\'admission', flex: 1, renderCell: (params) => { //dateEntree
