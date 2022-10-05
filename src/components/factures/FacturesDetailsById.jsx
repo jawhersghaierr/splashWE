@@ -1,21 +1,21 @@
 import * as React from 'react';
+import {useState} from "react";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
 import {matchPath} from "react-router-dom";
-import {Button, Typography} from "@mui/material";
+import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
-import {FluxInfo} from "./components/FluxInfo";
 
+import {FluxInfo} from "./components/FluxInfo";
 import {facturesStatus} from "../../utils/status-utils";
 import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {useEffect, useState} from "react";
 import {ConfirmFactureRejete} from "../shared/ConfirmFactureRejete";
 import {ConfirmFactureAnule} from "../shared/ConfirmFactureAnule";
 import {ConfirmFactureRecyclage} from "../shared/ConfirmFactureRecyclage";
@@ -63,7 +63,6 @@ function a11yProps(index) {
 }
 
 
-
 export default function FacturesDetailsById({location, modialId = null}) {
 
     const match = matchPath(location?.pathname, {
@@ -92,7 +91,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    let {data = null} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
+    let {data = null, isFetching} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
@@ -105,6 +104,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détails de la facture</b>
             </Typography>
+            {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}
             </Typography>
@@ -235,9 +235,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
             <ConfirmFactureRecyclage agreed={()=> {
                 setOpenMsg({...openMsg, open: true})
-                console.log('agreed')
              }} disagreed={()=> {
-                console.log('disagreed')
                 setOpenMsg({...openMsg, open: true})
                 setOpenRecyclageDialog(false)
              }}
@@ -248,11 +246,9 @@ export default function FacturesDetailsById({location, modialId = null}) {
                 data={data}
                 setOpenMsg={setOpenMsg}
                 agreed={() => {
-                    console.log('agreed')
                     setOpenMsg({...openMsg, open: true})
                 }}
                 disagreed={() => {
-                    console.log('disagreed')
                     setOpenRejeteDialog(false)
                 }}
                 opened={openRejeteDialog}/>}
@@ -261,11 +257,9 @@ export default function FacturesDetailsById({location, modialId = null}) {
                 data={data}
                 setOpenMsg={setOpenMsg}
                 agreed={()=> {
-                    console.log('agreed')
                     setOpenMsg({...openMsg, open: true})
                 }}
                 disagreed={()=> {
-                    console.log('disagreed')
                     setOpenAnuleDialog(false)
                 }}
                 opened={openAnuleDialog}/>}
@@ -278,11 +272,8 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
                 <Alert onClose={handleMsgClose}
                        severity={(openMsg.success)? 'success': 'error'}
-                       sx={{
-                           width: '100%',
-                           // background: '#c7f99f',
-                           // color: '#003154'
-                       }}>
+                       sx={{ width: '100%' }}>
+
                     {openMsg.success && <AlertTitle><b>Succès</b></AlertTitle>}
                     {!openMsg.success && <AlertTitle><b>Error</b></AlertTitle>}
                     {openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
@@ -291,6 +282,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
                     {!openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
                         {openMsg.error}
                     </div>}
+
                 </Alert>
             </Snackbar>
 

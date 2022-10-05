@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../virementsSlice'
 import {columns} from "./virementGridColumns";
@@ -25,8 +25,8 @@ export const VirementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetVirementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const { data, isFetching, isSuccess } = useGetVirementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const { data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess } = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -48,8 +48,8 @@ export const VirementsGrid = ({disciplines}) => {
 
 
     return <div className="gridContent">
-
-        {(data && data?.results && nomRefs) && <div>
+        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {(isSuccess && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats

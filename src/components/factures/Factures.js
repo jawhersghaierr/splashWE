@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
 import {FacturesGrid} from "./grids/FacturesGrid";
@@ -14,11 +14,8 @@ export const Factures = (props) => {
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
             <b>Factures</b>
         </Typography>
-        <SearchAccordion
-            disciplines={disciplines}
-            disciplinesIsFetching={disciplinesIsFetching}
-            className="searchContainer"
-            disciplinesIsSuccess={disciplinesIsSuccess}/>
+
+        <SearchAccordion className="searchContainer"/>
 
         <FacturesGrid disciplines={disciplines}/>
 

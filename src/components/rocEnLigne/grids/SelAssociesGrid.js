@@ -2,9 +2,9 @@ import React, {useEffect, useRef, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
-import './rocEnLigneGrid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
+import './rocEnLigneGrid.scss';
 
 export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {
 
@@ -15,7 +15,6 @@ export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
     };
-console.log('assosiete > ', selAssosiete)
 
     return <div style={{margin: 0}}>
 

@@ -2,10 +2,10 @@ import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
-import './paiementsGrid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
+import './paiementsGrid.scss';
 
 export const AssociesGrid = ({data}) => {
 
@@ -17,7 +17,6 @@ export const AssociesGrid = ({data}) => {
         setOpenModal({open: false, data: null});
     };
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-
 
     return <div style={{margin: 0}}>
 

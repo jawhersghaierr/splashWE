@@ -21,10 +21,6 @@ export const ActesGrid = ({data, nomRefs}) => {
         _data.montantRC += el.montantRC
         _data.montantRAC += el.montantRAC
     })
-/*
-
- */
-    console.log('actove : ', data)
 
     return <DataGrid
                     rows={[...data, _data] || []}

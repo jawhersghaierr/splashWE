@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetIntraitablesQuery} from "../services/intraitablesApi";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { selectCriterias } from '../intraitablesSlice'
@@ -26,7 +26,7 @@ export const IntraitablesGrid = () => {
         sortProperty: null
     });
 
-    const {data} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -47,14 +47,13 @@ export const IntraitablesGrid = () => {
 
 
     return <div className="gridContent">
-
-        {(data) && <div>
-            <div style={{margin: '25px'}}>
+        {isSuccess && <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage*20 : 20)} sur {data.totallements} résultats
+                    {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data?.totalPages))? Number(data?.totalElements) - currentPage*20 : 20)} sur {data?.totallements} résultats
                 </Typography>
-            </div>
-            <DataGrid
+            </div>}
+        {isFetching && <CircularProgress style={{margin: '0 50%'}}/>}
+        {isSuccess && <DataGrid
                 rows={data?.data || []}
                 columns={columns()}
                 pageSize={20}
@@ -86,10 +85,7 @@ export const IntraitablesGrid = () => {
                     '& .boldValue': { fontWeight: 'bold' }
                 }}
                 rowHeight={85}
-            />
-        </div>}
-
-        {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
+            />}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
@@ -99,6 +95,8 @@ export const IntraitablesGrid = () => {
             />
         </Stack>}
 
+
+        {!isSuccess && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
     </div>
 }
 

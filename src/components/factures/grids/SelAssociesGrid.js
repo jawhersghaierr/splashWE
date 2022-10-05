@@ -1,18 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
-import './facturesGrid.scss';
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
-import {Button} from "@mui/material";
+import {CircularProgress} from "@mui/material";
 import {ModalInfo} from "../../shared/ModalInfo";
-import PaiementDetailsById from "../../paiement/PaiementDetailsById";
-import VirementDetailsById from "../../virement/VirementDetailsById";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
+import './facturesGrid.scss';
 
 export const SelAssociesGrid = ({numEng}) => {
 
-    let {data} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
+    let {data, isFetching, isSuccess} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -23,8 +21,8 @@ export const SelAssociesGrid = ({numEng}) => {
     };
 
     return <div style={{margin: 0}}>
-
-        {data && <DataGrid
+        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {isSuccess && data && <DataGrid
                     rows={data.assosiete || []}
                     columns={columns({handleModalOpen})}
                     pageSize={20}

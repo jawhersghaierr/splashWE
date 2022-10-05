@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetFacturesQuery} from "../services/facturesApi";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
 import { selectCriterias } from '../facturesSlice'
@@ -26,7 +26,7 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const { data } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
+    const { data, isFetching, isSuccess } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
 
     const handlePageChange = (event, value) => {
@@ -47,13 +47,13 @@ export const FacturesGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">
-
-        {(data && data?.results) && <div>
+        {(isSuccess && data?.results) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
+                    {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data?.totalPages))? Number(data?.totalElements) - currentPage * size : size)} sur {data?.totalElements} résultats
                 </Typography>
             </div>
             <DataGrid

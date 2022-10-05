@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {useGetVirementsByIdQuery} from "./services/virementsApi";
 import {paiementsVirementStatus} from "../../utils/status-utils";
@@ -75,7 +75,7 @@ export default function VirementDetailsById({location, modialId = null}) {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetVirementsByIdQuery(virementID);
+    const {data = null, isFetching, isSuccess} = useGetVirementsByIdQuery(virementID);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     return (
@@ -84,14 +84,15 @@ export default function VirementDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détails du virement</b>
             </Typography>
+            {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.idFacture}
             </Typography>
 
-            {nomRefs && <Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[data?.status]}
+            {isSuccess && nomRefs && <Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[data?.status]}
                    sx={{color: 'black', margin: '15px 0 0 0', bgcolor: paiementsVirementStatus[data?.status]?.color || 'rgba(0, 0, 0, 0.08)'}}/>}
 
-            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
+            {isSuccess && <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
                     <RowInfo label={'Nº virement'} value={data?.numVirement}/>
                 </div>
@@ -101,7 +102,7 @@ export default function VirementDetailsById({location, modialId = null}) {
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
                     <RowInfo label={'Montant'} value={currencyFormatter.format(data?.mntVirement)}/>
                 </div>
-            </div>
+            </div>}
 
             <Tabs
                 TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
@@ -127,29 +128,40 @@ export default function VirementDetailsById({location, modialId = null}) {
                     <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                         <b>Détail</b>
                     </Typography>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
+                    {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+                    {isSuccess && <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
-                                <RowInfo label={'IBAN'} value={data?.virementGeneralInfo?.iban} border={true} justify={true}/>
+                                <RowInfo label={'IBAN'} value={data?.virementGeneralInfo?.iban} border={true}
+                                         justify={true}/>
                                 <div style={{marginLeft: '35px', maxWidth: '300px'}}>
-                                    <RowInfo label={'BIC'} value={data?.virementGeneralInfo?.bic} border={true} justify={true}/>
+                                    <RowInfo label={'BIC'} value={data?.virementGeneralInfo?.bic} border={true}
+                                             justify={true}/>
                                 </div>
                             </div>
-                            <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaire} border={true} justify={true}/>
-                            <RowInfo label={'Date d émission'} value={convertDate(data?.virementGeneralInfo?.dateTraitement) || ''} border={true} justify={true}/>
+                            <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaire} border={true}
+                                     justify={true}/>
+                            <RowInfo label={'Date d émission'}
+                                     value={convertDate(data?.virementGeneralInfo?.dateTraitement) || ''} border={true}
+                                     justify={true}/>
                         </div>
-                        <div style={{flex: 1    }}>
-                            <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true} justify={true}/>
-                            <RowInfo label={'Nº de facturation PS'} value={data?.virementGeneralInfo?.numPsAPayer} border={true} justify={true}/>
-                            <RowInfo label={'Date de rapprochement bancaire'} value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)} border={true} justify={true}/>
+                        <div style={{flex: 1}}>
+                            <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true}
+                                     justify={true}/>
+                            <RowInfo label={'Nº de facturation PS'} value={data?.virementGeneralInfo?.numPsAPayer}
+                                     border={true} justify={true}/>
+                            <RowInfo label={'Date de rapprochement bancaire'}
+                                     value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)}
+                                     border={true} justify={true}/>
                         </div>
-                    </div>
+                    </div>}
 
                 </Box>}
 
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
+                {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
                 {data && oneRowHeader(data)}
                 {(data?.associatedElements && data?.associatedElements.length > 0 && nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs}/>}
             </TabPanel>

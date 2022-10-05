@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
+import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
 import arrayMutators from 'final-form-arrays'
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
@@ -58,6 +58,7 @@ export default function SearchAccordion(props) {
 
         await sleep(300);
         dispatch(setCriterias({...values, cashe: Math.random()}));
+        setPanelExpanded(false);
     };
 
     const [expanded, setExpanded] = useState({
@@ -82,11 +83,6 @@ export default function SearchAccordion(props) {
         }
     }, [nomRefsIsSuccess]);
 
-    useEffect(() => {
-        // console.log('localSubMotif: ', localSubMotif)
-    }, [localSubMotif]);
-
-
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -105,6 +101,7 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+    if (nomRefsIsFetching || props.disciplinesIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}

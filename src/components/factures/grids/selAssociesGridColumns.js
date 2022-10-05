@@ -2,7 +2,7 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {dateConvertNaissanceRAWconvertDate, convertDate} from "../../../utils/convertor-utils";
+import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 
 
 export const columns = ({handleModalOpen}) => [

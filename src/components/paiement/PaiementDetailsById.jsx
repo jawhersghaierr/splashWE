@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {HistoryGrid} from "./grids/HistoryGrid";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
@@ -87,10 +87,11 @@ export default function PaiementDetailsById({location, modialId = null}) {
     const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetPaiementByIdQuery(paiementID);
+    const {data = null, isFetching, isSuccess} = useGetPaiementByIdQuery(paiementID);
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
+    if (isFetching || nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>

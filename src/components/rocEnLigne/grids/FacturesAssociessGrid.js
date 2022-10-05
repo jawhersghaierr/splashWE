@@ -8,6 +8,7 @@ import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import Pagination from "@mui/material/Pagination";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
+import {CircularProgress} from "@mui/material";
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
@@ -19,9 +20,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
         sortProperty: null
     });
 
-    const size = 20;
-
-    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -42,8 +41,8 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
     };
 
     return <div style={{margin: 0}}>
-
-        <DataGrid
+        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {isSuccess && <DataGrid
             rows={data?.results || []}
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
@@ -66,14 +65,15 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
             sortingMode="server"
             onSortModelChange={handleOrdering}
 
-            sx={{ '& .boldValue': { fontWeight: 'bold', },
+            sx={{
+                '& .boldValue': {fontWeight: 'bold',},
                 '& .MuiDataGrid-columnHeaderTitle': {
                     textOverflow: "clip",
                     whiteSpace: "break-spaces",
                     lineHeight: 1
                 },
             }}
-        />
+        />}
 
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination

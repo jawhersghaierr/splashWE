@@ -7,11 +7,12 @@ import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import './facturesGrid.scss';
+import {CircularProgress} from "@mui/material";
 
 
 export const PaimentsGrid = ({factId, nomRefs}) => {
 
-    let {data} = useGetPaiementsFacturesByIdQuery(factId)
+    let {data, isFetching, isSuccess} = useGetPaiementsFacturesByIdQuery(factId)
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -23,8 +24,9 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
 
 
     return <div style={{margin: 0}}>
+        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
 
-        <DataGrid
+        {isSuccess && <DataGrid
             rows={data?.elements || []}
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
@@ -43,14 +45,15 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
             onCellClick={(params, event) => {
                 event.defaultMuiPrevented = true;
             }}
-            sx={{ '& .boldValue': { fontWeight: 'bold', },
+            sx={{
+                '& .boldValue': {fontWeight: 'bold',},
                 '& .MuiDataGrid-columnHeaderTitle': {
                     textOverflow: "clip",
                     whiteSpace: "break-spaces",
                     lineHeight: 1
                 },
             }}
-        />
+        />}
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
             {(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}
             {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}

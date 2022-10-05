@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
+import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
 import arrayMutators from 'final-form-arrays'
 import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
@@ -44,7 +44,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-export default function SearchAccordion(props) {
+export default function SearchAccordion() {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
@@ -63,9 +63,6 @@ export default function SearchAccordion(props) {
     const [panelExpanded, setPanelExpanded] = useState(false);
     const prevMotif = usePrevious(motif)
 
-    useEffect(() => {
-        // console.log('motif: ', motif)
-    }, [motif]);
 
     useEffect(() => {
         console.log('Mount')
@@ -86,6 +83,7 @@ export default function SearchAccordion(props) {
 
         await sleep(300);
         dispatch(setCriterias({...values, cashe: Math.random()}));
+        setPanelExpanded(false);
     };
 
     const handleAccordionPanel = () => (event) => {
@@ -95,6 +93,8 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
+
+    if (nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return (
         <div className={'formContent'}>

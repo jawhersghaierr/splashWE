@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetRocEnLigneByIdQuery} from "./services/rocEnLigneApi";
 import {matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "./grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
@@ -60,7 +60,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const {data = null} = useGetRocEnLigneByIdQuery(rocID);
+    const {data = null, isFetching, isSuccess} = useGetRocEnLigneByIdQuery(rocID);
 
     let actes = []
     if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
@@ -70,7 +70,6 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
     if (data?.assosiete) {
         data?.assosiete.forEach(e => e?.numeroEngagement && engagements.push(e.numeroEngagement))
     }
-    console.log('Engagements: ', engagements)
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
@@ -80,16 +79,19 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détail de la demande {data?.common && data?.common?.typeDemande}</b>
             </Typography>
-            {/*{data?.common && data?.common?.numFacturation}*/}
-            <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+            {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {isSuccess && <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.common?.numeroEngagement}
-            </Typography>
+            </Typography>}
 
-            <Chip label={`${rocStatus[data?.common?.statut]?.label || data?.common?.statut}`} sx={{color: 'black', bgcolor: rocStatus[data?.common?.statut]?.color, margin: '15px 0 0 0' }}/>
-            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
+            {isSuccess && <Chip label={`${rocStatus[data?.common?.statut]?.label || data?.common?.statut}`}
+                   sx={{color: 'black', bgcolor: rocStatus[data?.common?.statut]?.color, margin: '15px 0 0 0'}}/>}
+
+            {isSuccess &&<div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '455px'}}>
                     <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)}/>
-                    <RowInfo label={'Bénéficiaire'} value={<span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>} />
+                    <RowInfo label={'Bénéficiaire'} value={
+                        <span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>}/>
                     <RowInfo label={'Environnement'} value={data?.common?.environment}/>
                     <RowInfo label={'N° facturation'} value={data?.common?.numFacturation}/>
                 </div>
@@ -104,9 +106,10 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                              value={data?.common?.dateNaiss && dateConvertNaissanceRAW(data?.common?.dateNaiss)}
                              chip={data?.common?.rang && data?.common?.rang || null}
                     />
-                    <RowInfo label={'Montant RC'} value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}/>
+                    <RowInfo label={'Montant RC'}
+                             value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}/>
                 </div>
-            </div>
+            </div>}
 
             <Tabs
                 TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
@@ -138,51 +141,78 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                         <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                             <b>Informations demande</b>
                         </Typography>
-                        <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
+                        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+                        {isSuccess && nomRefsIsSuccess && <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
                             <div style={{flex: 1, marginRight: '5%'}}>
-                                <RowInfo label={'Date de réception'} value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)} border={true} justify={true}/>
-                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true} justify={true}/>
-                                <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance} border={true} justify={true}/>
-                                <RowInfo label={'Nature interruption séjour'} value={data?.info?.demande?.natureInterruptionSejour} border={true} justify={true}/>
-                                <RowInfo label={'Indicateur parcours de soins'} value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
-                                <RowInfo label={'Motif de rejet'} value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true} justify={true}/>
+                                <RowInfo label={'Date de réception'}
+                                         value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'}
+                                         value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true}
+                                         justify={true}/>
+                                <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'Nature interruption séjour'}
+                                         value={data?.info?.demande?.natureInterruptionSejour} border={true}
+                                         justify={true}/>
+                                <RowInfo label={'Indicateur parcours de soins'}
+                                         value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
+                                <RowInfo label={'Motif de rejet'}
+                                         value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true}
+                                         justify={true}/>
                             </div>
-                            <div style={{flex: 1 }}>
-                                <RowInfo label={'Domaine'} value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine} border={true} justify={true}/>
-                                <RowInfo label={'Période des prestations'} value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`} border={true} justify={true}/>
-                                <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange} border={true} justify={true}/>
-                                <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier} border={true} justify={true}/>
-                                <RowInfo label={'Date accident de travail'} value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)} border={true} justify={true}/>
-                                <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets} border={true} justify={true}/>
+                            <div style={{flex: 1}}>
+                                <RowInfo label={'Domaine'}
+                                         value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'Période des prestations'}
+                                         value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'Date accident de travail'}
+                                         value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)}
+                                         border={true} justify={true}/>
+                                <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets}
+                                         border={true} justify={true}/>
                             </div>
-                        </div>
+                        </div>}
                     </div>
 
-                    <div style={{flex: 1}}>
+                    {isSuccess && <div style={{flex: 1}}>
                         <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                             <b>Informations établissement</b>
                         </Typography>
                         <div style={{margin: 0}}>
-                            <RowInfo label={'Raison sociale'} value={data?.info?.ets?.raisonSociale} border={true} justify={true}/>
-                            <RowInfo label={'Nom contact ETS '} value={data?.info?.ets?.nomContact} border={true} justify={true}/>
-                            <RowInfo label={'Nº téléphone contact ETS'} value={data?.info?.ets?.telephone} border={true} justify={true}/>
-                            <RowInfo label={'Mail contact ETS'} value={data?.info?.ets?.email} border={true} justify={true}/>
+                            <RowInfo label={'Raison sociale'} value={data?.info?.ets?.raisonSociale} border={true}
+                                     justify={true}/>
+                            <RowInfo label={'Nom contact ETS '} value={data?.info?.ets?.nomContact} border={true}
+                                     justify={true}/>
+                            <RowInfo label={'Nº téléphone contact ETS'} value={data?.info?.ets?.telephone} border={true}
+                                     justify={true}/>
+                            <RowInfo label={'Mail contact ETS'} value={data?.info?.ets?.email} border={true}
+                                     justify={true}/>
                         </div>
-                    </div>
+                    </div>}
 
                 </Box>}
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
                 {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data && nomRefs && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
+                {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
-                {engagements && nomRefs && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs}/>}
+                {engagements && nomRefsIsSuccess && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
