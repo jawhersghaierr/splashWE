@@ -34,7 +34,7 @@ import { validators, isValidDate, calcCleFromNir } from '../../../utils/utils';
 import { checker, checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { ConfirmNir } from "../../../utils/ConfirmNir";
+import { ConfirmNir } from "../../shared/ConfirmNir";
 import PanelNIR from '../../shared/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
@@ -58,7 +58,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({

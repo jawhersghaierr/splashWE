@@ -3,7 +3,6 @@ import {convertDate, currencyFormatter} from "../../../utils/utils";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
-import Chip from "@mui/material/Chip";
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -19,6 +18,11 @@ const LightTooltip = styled(({ className, ...props }) => (
         color: theme.palette.common.white,
     },
 }));
+
+const reformatCurrencyAtLastRow = ({id, value}) => {
+    if (id == 'total') return ''
+    return currencyFormatter.format(value)
+}
 
 export const columns = nomRefs => [
     { field: 'ligne', headerName: 'N°', maxWidth: '20px', flex: 1, sortable: false, renderCell: (params) => {
@@ -36,18 +40,17 @@ export const columns = nomRefs => [
     }},
     { field: 'coefficient', headerName: 'COEFF', flex: 1 },
     { field: 'quantite', headerName: 'QTE', flex: 1 },
-    { field: 'prixUnitaire', headerName: 'PU', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'baseSS', headerName: 'Base SS', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'tauxRo', headerName: 'TX RO', type: 'number', flex: 1, renderCell: (params) => { //
-            return params.value && (`${Number(params.value ) * 100} %`) || ''
-    }, cellClassName: 'boldValue'},
-    { field: 'montantRo', headerName: 'MNT RO', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'depenseReelle', headerName: 'DR', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'montantRC', headerName: 'MNT RC', type: 'number', flex: 1, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'montantRAC', headerName: 'RAC', type: 'number', flex: 1, sortable: false, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
+    { field: 'prixUnitaire', headerName: 'PU', type: 'number', flex: 1, valueFormatter: ({id, value}) => reformatCurrencyAtLastRow({id, value}), cellClassName: 'boldValue'},
+    { field: 'baseSS', headerName: 'Base SS', type: 'number', flex: 1, valueFormatter: ({id, value}) => reformatCurrencyAtLastRow({id, value}), cellClassName: 'boldValue'},
+    { field: 'tauxRo', headerName: 'TX RO', type: 'number', flex: 1, renderCell: ({id, value}) => (id == 'total')? '':`${Number(value ) * 100} %` || 0, cellClassName: 'boldValue'},
+    { field: 'montantRo', headerName: 'MNT RO', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue'},
+    { field: 'depenseReelle', headerName: 'DR', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value|| 0), cellClassName: 'boldValue'},
+    { field: 'montantRC', headerName: 'MNT RC', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue'},
+    { field: 'montantRAC', headerName: 'RAC', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue' },
     { field: 'statut', headerName: '', flex: 1, renderCell: (params) => {
             return (params.value && params.value !== undefined ) && <LightTooltip title={params.value} placement="top" arrow>
                 <ErrorOutlineOutlinedIcon sx={{verticalAlign: 'top', width: 30, height: 30, margin: '0 5px', cursor: 'pointer'}}/>
             </LightTooltip> || ''
     }},
 ];
+

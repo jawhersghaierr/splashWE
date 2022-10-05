@@ -3,7 +3,7 @@ import {useGetFluxByIdQuery} from "../services/fluxApi";
 
 export const FluxInfo = ({factId}) => {
 
-    const {data} = useGetFluxByIdQuery(factId);
+    const {data} = useGetFluxByIdQuery(factId, {forceRefetch: true} );
     let rows = []
 
     if (data) data.forEach(aEl => rows.push(aEl.map(e=>e.data).reduce((a,b)=>`${a}${b}`)))

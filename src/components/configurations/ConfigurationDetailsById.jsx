@@ -59,14 +59,11 @@ export default function ConfigurationDetailsById(props) {
 
     if (!isLoaded && nomRefsIsSuccess && nomRefs) return 'Loading ...'
 
-    console.log('domain > ', domain)
     switch (domain) {
         case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
         case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
 
     }
 
-    return (
-        <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
-    );
+    return (<div>no route</div>);
 }

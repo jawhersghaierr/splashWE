@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./facturesAssociessGridColumns";
 import './rocEnLigneGrid.scss';
-import {ModalInfo} from "../../../utils/ModalInfo";
+import {ModalInfo} from "../../shared/ModalInfo";
 import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import {checker} from "../../factures/utils/utils";
 import Pagination from "@mui/material/Pagination";

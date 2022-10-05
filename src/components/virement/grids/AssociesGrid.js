@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './virementsGrid.scss';
-import {ModalInfo} from "../../../utils/ModalInfo";
+import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../VirementDetailsById";
 

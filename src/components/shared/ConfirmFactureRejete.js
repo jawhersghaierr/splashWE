@@ -1,27 +1,25 @@
 import * as React from 'react';
-import {useEffect, useState} from "react";
-
 import {
 	Dialog,
-	FormControl,
 	Typography,
 	Button,
-	OutlinedInput,
-	Select,
-	MenuItem,
 	DialogActions,
 	DialogContent,
-	DialogTitle, TextField, InputLabel
+	DialogTitle, TextField
 } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
-import {matchPath} from "react-router-dom";
-import {env_IP, ports} from "../../env-vars";
-import {reshapeMotifVsStatus} from "../components/factures/utils/utils";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import {useEffect, useState} from "react";
+import {reshapeMotifVsStatus} from "../factures/utils/utils";
+import {env_IP, ports} from "../../../env-vars";
+export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
 
-export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
-
-	const [motif, setMotif] = useState('');
-	const [comment, setComment] = useState('');
+	const [motif, setMotif] = React.useState('');
+	const [comment, setComment] = React.useState('');
 	const [required, setRequired] = useState(null);
 	const [error, setError] = useState(null);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -34,8 +32,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 		setComment(event.target.value);
 	};
 
-	let motifOptions = reshapeMotifVsStatus({status: ['ANNULEE'], nomRefs})
-
+	let motifOptions = reshapeMotifVsStatus({status: ['REJETEE'], nomRefs})
 	const confirme = () => {
 		if(motif){
 			console.log('confirme > ', motif, comment)
@@ -48,7 +45,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 					headers: {"Content-Type": "application/json"},
 					body: JSON.stringify({
 						"id": data?.id,
-						"status": "ANNULEE",
+						"status": "REJETEE",
 						"motive": comment,
 						"errors": [
 							{ "code": motif }
@@ -89,28 +86,25 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 			maxWidth={'md'} fullWidth={true}>
 			<DialogTitle id="alert-dialog-title" sx={{background: '#f5f8fd', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
 				<Typography variant="h5" noWrap component="div">
-					<b>Annuler la facture</b>
+					<b>Rejeter la facture</b>
 				</Typography>
 				<CancelIcon style={{width: 30, height: 30,color: '#003154', cursor: 'pointer'}} onClick={disagreed}/>
 			</DialogTitle>
 
 			<DialogContent sx={{display: 'flex', flexDirection: 'row'}}>
 				<FormControl sx={{flex: 2, margin: '15px', 'label': {top: '-6px !important'},}}>
-					<InputLabel id="motif-label">Мotif d'annulation</InputLabel>
+					<InputLabel id="motif-label">Motif de rejet</InputLabel>
 					<Select
 						onChange={handleMotifChange}
+						label={'tamararam'}
 						required={true}
 						value={motif}
-						input={<OutlinedInput
-							className="RoundedEl"
-						 	label="Motif de rejet"
-							sx={{minWidth: 200}}/>}
+						input={<OutlinedInput className="RoundedEl" label="Motif de rejet" sx={{minWidth: 200}}/>}
 						id="motif">
-						{Object.keys(motifOptions).map(code => (<MenuItem key={code} value={code}>
-							{motifOptions[code]}
+						{Object.keys(nomRefs.FACTURE_ERROR).map(code => (<MenuItem key={code} value={code}>
+							{nomRefs.FACTURE_ERROR[code]}
 						</MenuItem>))}
 					</Select>
-					<span style={{padding: '0 10px'}}>{required || ''}</span>
 				</FormControl>
 
 				<FormControl sx={{flex: 2, margin: '15px'}}>
@@ -129,7 +123,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 					Annuler
 				</Button>
 				<Button onClick={confirme} className="RoundedEl" >
-					Confirmer l'annulation
+					Confirmer le rejet
 				</Button>
 			</DialogActions>
 		</Dialog>

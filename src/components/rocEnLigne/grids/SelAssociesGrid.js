@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
 import './rocEnLigneGrid.scss';
-import {ModalInfo} from "../../../utils/ModalInfo";
+import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
 
 export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {

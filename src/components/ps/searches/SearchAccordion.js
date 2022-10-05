@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
@@ -76,7 +76,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({
@@ -99,6 +99,13 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+
+    // useEffect(() => {
+    //     console.log('Mount')
+    //     return () => {
+    //         console.log('UnMount')
+    //     }
+    // }, [])
 
     return (
         <div className={'formContent'}>
@@ -344,7 +351,7 @@ export default function SearchAccordion(props) {
                         </CardActions>
                     </Collapse>
                 </StyledCard>
-               {<FormSpy onChange={(values) => {
+               {<FormSpy subscription={{values: true}} onChange={(values) => {
                    form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;
                     if(disciplines || statutRibs || codePostal || ville) {

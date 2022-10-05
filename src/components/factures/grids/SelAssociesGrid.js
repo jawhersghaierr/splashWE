@@ -5,7 +5,7 @@ import {columns} from "./selAssociesGridColumns";
 import './facturesGrid.scss';
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 import {Button} from "@mui/material";
-import {ModalInfo} from "../../../utils/ModalInfo";
+import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";

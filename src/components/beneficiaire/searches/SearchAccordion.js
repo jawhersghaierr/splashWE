@@ -90,7 +90,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({

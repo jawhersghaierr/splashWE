@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {convertDate, factureConfigurationStatus, facturesStatus} from "../../../utils/utils";
 
 export const columns = ({nomRefs, configurations, domain, code}) => [
-    { field: 'id', headerName: 'Code', flex: 1, maxWidth: 55, renderCell: (params) => {
+    { field: 'id', headerName: 'Code', flex: 2, renderCell: (params) => {
         return (params.value);
     }},
     { field: 'type', headerName: 'Type de paramétre', flex: 1, renderCell: (params) => { //FACTURE_CONFIGURATION_TYPE

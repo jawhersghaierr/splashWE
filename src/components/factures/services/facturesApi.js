@@ -15,6 +15,9 @@ export const facturesApi = createApi({
         },
 
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
     endpoints: (builder) => ({
         getFactures: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
@@ -60,6 +63,8 @@ export const facturesApi = createApi({
                         filters.idPeriodeFact = idPeriodeFact[0]
                     }
                 }
+
+                filters.cashe = null
 
                 const {
                     sortDirection,

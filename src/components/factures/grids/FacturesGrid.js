@@ -26,7 +26,8 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const { data } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias), forceRefetch: true });
+
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

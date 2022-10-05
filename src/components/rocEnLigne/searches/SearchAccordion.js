@@ -24,7 +24,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { MaskedInput } from "../../../utils/TextMaskCustom";
+import { MaskedInput } from "../../shared/TextMaskCustom";
 import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
 import {
     checker,
@@ -33,7 +33,7 @@ import {
     reshapeStatusFromTypes, reshapeSubMotifsFromMotif,
 } from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice';
-import { ConfirmNir } from "../../../utils/ConfirmNir";
+import { ConfirmNir } from "../../shared/ConfirmNir";
 import PanelNIR from '../../shared/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
@@ -58,7 +58,7 @@ export default function SearchAccordion(props) {
     const onSubmit = async (values) => {
 
         await sleep(300);
-        dispatch(setCriterias(values));
+        dispatch(setCriterias({...values, cashe: Math.random()}));
     };
 
     const [expanded, setExpanded] = useState({

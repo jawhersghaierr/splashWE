@@ -35,6 +35,8 @@ export const virementsApi = createApi({
                 if (dateTraitement && dateTraitement != '' && dateTraitement != undefined) filters.dateTraitement = new Date(dateTraitement).toLocaleDateString('sv');
                 if (dateTraitementFin && dateTraitementFin != '' && dateTraitementFin != undefined) filters.dateTraitementFin = new Date(dateTraitementFin).toLocaleDateString('sv');
 
+                filters.cashe = null
+
                 const {
                     sortDirection,
                     sortProperty,

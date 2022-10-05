@@ -13,7 +13,7 @@ import {convertDate, facturesStatus, currencyFormatter, paiementsStatus} from ".
 import {useGetRefsQuery} from "../../services/refsApi";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {Link} from "@material-ui/core";
-import {ModalInfo} from "../../utils/ModalInfo";
+import {ModalInfo} from "../shared/ModalInfo";
 import VirementDetailsById from "../virement/VirementDetailsById";
 import {useState} from "react";
 import FacturesDetailsById from "../factures/FacturesDetailsById";

@@ -18,6 +18,8 @@ export const fluxApi = createApi({
         },
 
     }),
+    // refetchOnFocus: true,
+    refetchOnReconnect: true,
     endpoints: (builder) => ({
         getFluxById: builder.query({
             query: (numFac) => {
