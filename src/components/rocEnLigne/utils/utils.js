@@ -1,27 +1,5 @@
 import {statusesRIB} from "../../../utils/status-utils";
 
-export const checker = (values) => {
-    const {
-        type, numEng, numAdh,
-        domaine, dateAdmission,
-        receptionDateStart, receptionDateEnd,
-        idPerFact, dateFact,
-        statut, motif, sousMotif,
-        finessGeo, finessJur,
-        raisonSociale,
-        dеpartement, amc,
-        nom, prenom, dateNaiss, birdDate,
-        nir, cle
-    } = values || {};
-    if(type || numEng || numAdh || domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||
-        motif || finessGeo || finessJur || raisonSociale || dеpartement || amc || nom || prenom || dateNaiss ||
-        birdDate || nir || cle) {
-        return true
-    } else {
-        return false
-    }
-}
-
 export const checkInsidePanels = (values) => {
 
     const {
