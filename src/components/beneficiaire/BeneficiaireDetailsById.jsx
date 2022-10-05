@@ -5,13 +5,14 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetBenefByIdQuery} from "./services/beneficiaireApi";
 import {Link, matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DoritInfoBox} from "./components/DroitInfoBox";
 import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
 import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
-import {usePrevious, benefStatuses, convertDate, dateConvertNaissance, dateConvertNaissanceRAW} from "../../utils/utils";
+import {usePrevious, benefStatuses} from "../../utils/status-utils";
+import {dateConvertNaissanceRAW, convertDate} from "../../utils/convertor-utils";
 
 import {useEffect} from "react";
 
@@ -71,7 +72,7 @@ export default function BeneficiaireDetailsById(props) {
         }
 
     }, [prevId, match]);
-    const {data = null} = useGetBenefByIdQuery(match?.params?.id);
+    const {data = null, isFetching, isSuccess} = useGetBenefByIdQuery(match?.params?.id);
     const {data: nomEnviroments} = useGetEnvironmentsQuery();
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
     const {data: nomGaranties, isFetching: nomGarantiesIsFetching, isSuccess: nomGarantiesIsSuccess} = useGetGarantiesQuery();
@@ -129,13 +130,20 @@ export default function BeneficiaireDetailsById(props) {
                 <Chip label={benefStatuses[data?.status]?.label} sx={{bgcolor: benefStatuses[data?.status]?.color, margin: '5px'}}/>
             </Typography>
 
-            <div style={{margin: '25px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', maxWidth: '870px'}}>
+            {isFetching && <CircularProgress/>}
+            {!isFetching && isSuccess && <div style={{
+                margin: '25px 0',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                maxWidth: '870px'
+            }}>
                 <span style={{margin: '5px'}}>Nº Adhérent individuel : <b>{data?.numeroAdherentIndividuel}</b></span>
                 <span style={{margin: '5px'}}>Nº Adhérent Familial : <b>{data?.numeroAdherentFamilial}</b></span>
                 <span style={{margin: '5px'}}>
                     Droits ouverts : <b>{convertDate(data?.dateOuvertureDroits)} - {dateFin?.toLocaleDateString('en-GB')}</b>
                 </span>
-            </div>
+            </div>}
 
             <Tabs
                 TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
@@ -155,6 +163,7 @@ export default function BeneficiaireDetailsById(props) {
             <TabPanel value={value} index={0} data={data} sx={{display: 'flex', flexDirection: 'row'}}>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Identité</b></h3>
+                    {isFetching && <CircularProgress/>}
                     {data && <div>
                         {(data?.prenom && data?.nom) && <RowInfo label={'Nom et prénom'} value={`${data.prenom} ${data.nom}`}/>}
                         {(data?.rangNaissance && data?.dateNaissance) &&
@@ -163,7 +172,8 @@ export default function BeneficiaireDetailsById(props) {
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Coordonnées</b></h3>
-                        {data && <div>
+                    {isFetching && <CircularProgress/>}
+                    {data && <div>
                             <RowInfo label={'Adresse'} value={adress}/>
                             <RowInfo label={'Téléphone'} value={telephone}/>
                             <RowInfo label={'E-mail'} value={<Link to={''} onClick={() => window.location =`mailTo:${email}`}>{email}</Link>}/>
@@ -171,6 +181,7 @@ export default function BeneficiaireDetailsById(props) {
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Régime</b></h3>
+                    {isFetching && <CircularProgress/>}
                     {data && <div>
                         <RowInfo label={'Grand Régime'} value={data?.grandRegime}/>
                         <RowInfo label={'Caisse'} value={data?.caisseAffiliation}/>
@@ -183,6 +194,7 @@ export default function BeneficiaireDetailsById(props) {
                 <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Information</h2>
+                        {isFetching && <CircularProgress/>}
                         <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
                             Environnement <br/>
                             {nomEnviroments && <b>{nomEnviroments.find(e=>e.code == data?.environmentCode)?.libelle}</b>}
@@ -221,7 +233,7 @@ export default function BeneficiaireDetailsById(props) {
 
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Appartenance réseau du bénéficiaire</h2>
-
+                        {isFetching && <CircularProgress/>}
                         {(data?.reseauSoins && nomReseaux) && data?.reseauSoins.map( (reseau, i) => {
                             let objReseau = nomReseaux.find(e=>e.code === reseau.reseauSoins)
                             return <div key={`reseau_${i}`} style={{margin: '25px 0 '}}>
@@ -240,6 +252,7 @@ export default function BeneficiaireDetailsById(props) {
                 <div style={{display:'flex', flexDirection: 'column', width: '100%'}}>
                     <div style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', width: '600px', display: 'block'}}>
                         <h3 style={{marginBottom: '10px'}}>Information Carte</h3>
+                        {isFetching && <CircularProgress/>}
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <div>
                                 <RowInfo label={'N° carte'} value={data?.numeroCarteClient}/>
@@ -254,6 +267,7 @@ export default function BeneficiaireDetailsById(props) {
                     {(garanties && nomRefs) &&<div style={{display: 'flex', width: '100%'}}>
                         <div style={{flex: 1, margin: '15px'}}>
                             <h3>Garanties Tiers Payant simple</h3>
+                            {isFetching && <CircularProgress/>}
                             <GarantiesGrid garanties={garanties} nom={nomRefs}/>
                         </div>
                         <div style={{flex: 1, margin: '15px'}}>

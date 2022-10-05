@@ -1,6 +1,7 @@
 import React from "react";
 import Chip from "@mui/material/Chip";
-import {convertDate, paiementsStatus} from "../../../utils/utils";
+import {paiementsStatus} from "../../../utils/status-utils";
+import {convertDate} from "../../../utils/convertor-utils";
 
 export const columns = nomRefs => [
     { field: 'date', headerName: 'Date et heure de l\'événement', flex: 2, mixWidth: '100px', renderCell: (params) => { //

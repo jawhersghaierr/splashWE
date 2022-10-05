@@ -15,8 +15,8 @@ import {
 } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
 import {matchPath} from "react-router-dom";
-import {env_IP, ports} from "../../../env-vars";
-import {reshapeMotifVsStatus} from "../factures/utils/utils";
+import {env_IP, ports} from "../../env-vars";
+import {reshapeMotifVsStatus} from "../components/factures/utils/utils";
 
 export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
 

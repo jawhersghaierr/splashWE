@@ -20,8 +20,8 @@ import { fr } from "date-fns/locale";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {useGetRefsQuery} from "../../../services/refsApi";
 
-import { validators, isValidDate } from '../../../utils/utils';
-import { checker, checkInsidePanels } from '../utils/utils';
+import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
+import { checkInsidePanels } from '../utils/utils';
 
 import { setCriterias, initCriterias, selectCriterias } from '../configurationsSlice'
 
@@ -75,43 +75,23 @@ export default function SearchAccordion(props) {
 
                               switch (field.active) {
                                   case 'discipline':
-                                      if (_value?.discipline?.length === 0 ||
-                                          (_value?.discipline?.includes('all') && _value?.discipline?.length > Object.keys(nomRefs?.DISCIPLINE).length)
-                                      ) _value = {..._value, discipline: undefined}
-                                      if (_value?.discipline?.includes('all')) _value = {
-                                          ..._value,
-                                          discipline: Object.keys(nomRefs?.DISCIPLINE)
-                                      }
+                                      const disciplineObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
+                                      _value.discipline = disciplineObj ? disciplineObj[field.active] : value[field.active];
                                   break
 
                                   case 'factureContext':
-                                      if (_value?.factureContext?.length === 0 ||
-                                          (_value?.factureContext?.includes('all') && _value?.factureContext?.length > Object.keys(nomRefs?.FACTURE_CONTEXT).length)
-                                      ) _value = {..._value, factureContext: undefined}
-                                      if (_value?.factureContext?.includes('all')) _value = {
-                                          ..._value,
-                                          factureContext: Object.keys(nomRefs?.FACTURE_CONTEXT)
-                                      }
+                                      const factureContextObj = selectDeselectAllValues(value, nomRefs.FACTURE_CONTEXT, field.active);
+                                      _value.factureContext = factureContextObj ? factureContextObj[field.active] : value[field.active];
                                   break
 
                                   case 'canalReception':
-                                      if (_value?.canalReception?.length === 0 ||
-                                          (_value?.canalReception?.includes('all') && _value?.canalReception?.length > Object.keys(nomRefs?.FACTURE_CANAL_INTEGRATION).length)
-                                      ) _value = {..._value, canalReception: undefined}
-                                      if (_value?.canalReception?.includes('all')) _value = {
-                                          ..._value,
-                                          canalReception: Object.keys(nomRefs?.FACTURE_CANAL_INTEGRATION)
-                                      }
+                                      const canalReceptiontObj = selectDeselectAllValues(value, nomRefs.FACTURE_CANAL_INTEGRATION, field.active);
+                                      _value.canalReception = canalReceptiontObj ? canalReceptiontObj[field.active] : value[field.active];
                                   break
 
                                   case 'dcs':
-                                      if (_value?.dcs?.length === 0 ||
-                                          (_value?.dcs?.includes('all') && _value?.dcs?.length > Object.keys(nomRefs?.DCS).length)
-                                      ) _value = {..._value, dcs: undefined}
-                                      if (_value?.dcs?.includes('all')) _value = {
-                                          ..._value,
-                                          dcs: Object.keys(nomRefs?.DCS)
-                                      }
+                                      const dcsObj = selectDeselectAllValues(value, nomRefs.DCS, field.active);
+                                      _value.dcs = dcsObj ? dcsObj[field.active] : value[field.active];
                                   break
 
                               }
@@ -208,7 +188,7 @@ export default function SearchAccordion(props) {
                                                   variant="contained"
                                                   type="submit"
                                                   size="medium" className='RoundedEl'
-                                                  disabled={!checker(values)} >
+                                                  disabled={!allowSearch(values)} >
                                                   <SearchIcon/>Rechercher
                                               </Button>
                                           </div>}
@@ -396,14 +376,14 @@ export default function SearchAccordion(props) {
                                                           form.reset()
                                                       }}
                                                       className="RoundedEl"
-                                                      disabled={!checker(values)}
+                                                      disabled={!allowSearch(values)}
                                                       style={{marginRight: '15px'}}
                                                   >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!checker(values)}
+                                                          disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>

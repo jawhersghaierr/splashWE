@@ -1,8 +1,8 @@
 import Chip from "@mui/material/Chip";
 import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom";
-import {convertDate, currencyFormatter, paiementsStatus, paiementsVirementStatus} from "../../../utils/utils";
+import {paiementsStatus, paiementsVirementStatus} from "../../../utils/status-utils";
+import {convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
 export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'dateCreation', headerName: 'Date et heure de réception', minWidth: '150px', flex: 2, renderCell: (params) => { //dateEntree

@@ -4,7 +4,8 @@ import Box from "@mui/material/Box";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {Link} from "react-router-dom";
 import {RowInfo} from "./RowInfo";
-import {benefStatuses, convertDate, dateConvertNaissanceRAW } from "../../../utils/utils";
+import {benefStatuses } from "../../../utils/status-utils";
+import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 
 export const DoritInfoBox = ({droit}) => {
 

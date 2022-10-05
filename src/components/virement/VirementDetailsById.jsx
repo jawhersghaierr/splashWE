@@ -7,7 +7,8 @@ import {matchPath} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {useGetVirementsByIdQuery} from "./services/virementsApi";
-import {convertDate, facturesStatus, currencyFormatter, paiementsVirementStatus} from "../../utils/utils";
+import {paiementsVirementStatus} from "../../utils/status-utils";
+import {convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {AssociesGrid} from "./grids/AssociesGrid";
 import {useGetRefsQuery} from "../../services/refsApi";
 

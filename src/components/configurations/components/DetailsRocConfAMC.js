@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from "@mui/material/Box";
 import {RowInfo} from "../../beneficiaire/components/RowInfo";
-import {convertDate} from "../../../utils/utils";
+import {convertDate} from "../../../utils/convertor-utils";
 
 export const DetailsRocConfAMC = ({data}) => {
 

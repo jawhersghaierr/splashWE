@@ -7,13 +7,13 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../psSlice'
 import {columns} from "./psGridColumns";
-import {usePrevious} from '../../../utils/utils'
-import {checker} from '../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 
 import './psGrid.scss';
 
 
 import mainPS from "../../../../assets/PS.png";
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const PsGrid = ({disciplines}) => {
 
@@ -25,7 +25,7 @@ export const PsGrid = ({disciplines}) => {
         sortProperty: null
     });
 
-    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias), forceRefetch: true });
+    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetBenefQuery} from "../services/beneficiaireApi";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { selectCriterias } from '../beneficiaireSlice'
@@ -12,9 +12,9 @@ import { selectCriterias } from '../beneficiaireSlice'
 import {columns} from "./beneficiaireGridColumns";
 import './beneficiaireGrid.scss';
 
-import {usePrevious} from '../../../utils/utils'
-import {checker} from '../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const BeneficiaireGrid = ({enviroments}) => {
 
@@ -26,7 +26,7 @@ export const BeneficiaireGrid = ({enviroments}) => {
         sortProperty: null
     });
 
-    const {data} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data, isFetching, isSuccess} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -53,7 +53,8 @@ export const BeneficiaireGrid = ({enviroments}) => {
                     {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
                 </Typography>
             </div>
-            <DataGrid
+            {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {!isFetching && isSuccess && <DataGrid
                 rows={data?.result || []}
                 columns={columns(enviroments)}
                 pageSize={20}
@@ -82,10 +83,10 @@ export const BeneficiaireGrid = ({enviroments}) => {
                         whiteSpace: "break-spaces",
                         lineHeight: 1
                     },
-                    '& .boldValue': { fontWeight: 'bold', },
+                    '& .boldValue': {fontWeight: 'bold',},
                 }}
                 rowHeight={85}
-            />
+            />}
         </div>}
 
         {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}

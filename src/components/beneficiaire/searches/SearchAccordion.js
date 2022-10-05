@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
+import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -25,9 +25,10 @@ import {ListItemText} from "@material-ui/core";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-import { validators, isValidDate } from '../../../utils/utils';
+import { isValidDate } from '../../../utils/convertor-utils';
+import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
 
-import { checker, checkInsidePanels } from '../utils/utils';
+import { checkInsidePanels } from '../utils/utils';
 
 import {
     setCriterias,
@@ -113,6 +114,7 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
+    if (enviromentsIsFetching) return <CircularProgress/>
 
     return (
         <div className={'formContent'}>
@@ -126,11 +128,13 @@ export default function SearchAccordion(props) {
                         let _value = value;
                         if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
 
-                        if (_value?.envCodeList?.length === 0 ||
-                            (_value?.envCodeList?.includes('all') && _value?.envCodeList?.length > enviroments?.length)
-                        ) _value = {..._value, envCodeList: undefined}
+                        let environment = {};
+                        for (let key in enviroments) {
+                            environment[enviroments[key].code] = enviroments[key].libelle;  
+                        }
 
-                        if (_value?.envCodeList?.includes('all')) _value = {..._value, envCodeList: enviroments?.map(({code})=>code)}
+                        const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
+                        _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
 
                         return _value
 
@@ -212,7 +216,7 @@ export default function SearchAccordion(props) {
                                 variant="contained"
                                 type="submit"
                                 size="medium" className='RoundedEl'
-                                disabled={!checker(values)} >
+                                disabled={!allowSearch(values)} >
                                 <SearchIcon/>Rechercher
                             </Button>
                         </div>}
@@ -377,14 +381,14 @@ export default function SearchAccordion(props) {
                                         form.reset()
                                     }}
                                     className="RoundedEl"
-                                    disabled={!checker(values)}
+                                    disabled={!allowSearch(values)}
                                     style={{marginRight: '15px'}}
                                 >
                                     Effacer
                                 </Button>
                                 <Button variant="contained"
                                         type="submit" size="medium"
-                                        disabled={!checker(values) || error || pristine}
+                                        disabled={!allowSearch(values) || error || pristine}
                                         className="RoundedEl">
                                     <SearchIcon/>Rechercher
                                 </Button>

@@ -5,9 +5,9 @@ import {columns} from "./facturesAssociessGridColumns";
 import './rocEnLigneGrid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
 import {useGetFacturesQuery} from "../../factures/services/facturesApi";
-import {checker} from "../../factures/utils/utils";
 import Pagination from "@mui/material/Pagination";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
+import { allowSearch } from '../../../utils/validator-utils';
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
@@ -21,7 +21,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
 
     const size = 20;
 
-    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

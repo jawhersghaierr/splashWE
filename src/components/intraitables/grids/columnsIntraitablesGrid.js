@@ -2,7 +2,7 @@ import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {env_IP, ports} from '../../../../env-vars'
 import {Link} from "@material-ui/core";
-import {convertDate} from "../../../utils/utils";
+import {convertDate} from "../../../utils/convertor-utils";
 import download from '../../../../assets/download-blue.svg'
 
 export const columns = () => [

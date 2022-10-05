@@ -25,9 +25,8 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/TextMaskCustom";
-import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
+import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {
-    checker,
     checkInsidePanels,
     reshapeMotifFromStatus,
     reshapeStatusFromTypes, reshapeSubMotifsFromMotif,
@@ -133,27 +132,20 @@ export default function SearchAccordion(props) {
 
                                     break
 
-                                    case 'amc':
-                                        //Object.keys(nomRefs.CLIENT)
-                                        if (_value?.amc?.length === 0 ||
-                                            (_value?.amc?.includes('all') && _value?.amc?.length > Object.keys(nomRefs?.CLIENT).length)
-                                        ) _value = {..._value, amc: undefined}
-                                        if (_value?.amc?.includes('all')) _value = {..._value, amc: Object.keys(nomRefs?.CLIENT)}
+                                    case 'amc': //Object.keys(nomRefs.CLIENT)
+                                        const amcObj = selectDeselectAllValues(value, nomRefs.CLIENT, field.active);
+                                        _value.amc = amcObj ? amcObj[field.active] : value[field.active];
                                     break
 
                                     case 'domaine':
-                                        if (_value?.domaine?.length === 0 ||
-                                            (_value?.domaine?.includes('all') && _value?.domaine?.length > Object.keys(nomRefs?.ROC_DOMAINS).length)
-                                        ) _value = {..._value, domaine: undefined}
-                                        if (_value?.domaine?.includes('all')) _value = {..._value, domaine: Object.keys(nomRefs?.ROC_DOMAINS)}
+                                        const domainObj = selectDeselectAllValues(value, nomRefs.ROC_DOMAINS, field.active);
+                                        _value.domaine = domainObj ? domainObj[field.active] : value[field.active];
                                     break
 
-                                    case 'type':
-                                        //Object.keys(nomRefs.ROC_TYPES)
-                                        if (_value?.type?.length === 0 ||
-                                            (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
-                                        ) _value = {..._value, type: undefined}
-                                        if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
+                                    case 'type': //Object.keys(nomRefs.ROC_TYPES)
+                                        const typeObj = selectDeselectAllValues(value, nomRefs.ROC_TYPES, field.active);
+                                        _value.type = typeObj ? typeObj[field.active] : value[field.active];
+
                                         if (_value.statut !== undefined) {
                                             _value = {..._value, statut: undefined}
                                         }
@@ -165,12 +157,9 @@ export default function SearchAccordion(props) {
                                         }
                                     break
 
-                                    case 'statut':
-                                        //Object.keys(nomRefs.ROC_STATUSES)
-                                        if (_value?.statut?.length === 0 ||
-                                            (_value?.statut?.includes('all') && _value?.statut?.length > Object.keys(localStatus).length)
-                                        ) _value = {..._value, statut: undefined}
-                                        if (_value?.statut?.includes('all')) _value = {..._value, statut: Object.keys(localStatus)}
+                                    case 'statut': //Object.keys(nomRefs.ROC_STATUSES)
+                                        const statutObj = selectDeselectAllValues(value, localStatus, field.active);
+                                        _value.statut = statutObj ? statutObj[field.active] : value[field.active];
 
                                         if (_value.motif !== undefined) {
                                             _value = {..._value, motif: undefined}
@@ -181,10 +170,8 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'motif':
-                                        if (_value?.motif?.length === 0 ||
-                                            (_value?.motif?.includes('all') && _value?.motif?.length > Object.keys(localMotif).length)
-                                        ) _value = {..._value, motif: undefined}
-                                        if (_value?.motif?.includes('all')) _value = {..._value, motif: Object.keys(localMotif)}
+                                        const motifObj = selectDeselectAllValues(value, localMotif, field.active);
+                                        _value.motif = motifObj ? motifObj[field.active] : value[field.active];
 
                                         if (_value.sousMotif !== undefined) {
                                             _value = {..._value, sousMotif: undefined}
@@ -192,10 +179,8 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'sousMotif':
-                                        if (_value?.sousMotif?.length === 0 ||
-                                            (_value?.sousMotif?.includes('all') && _value?.sousMotif?.length > Object.keys(localSubMotif).length)
-                                        ) _value = {..._value, sousMotif: undefined}
-                                        if (_value?.sousMotif?.includes('all')) _value = {..._value, sousMotif: Object.keys(localSubMotif)}
+                                        const sousMotifObj = selectDeselectAllValues(value, localSubMotif, field.active);
+                                        _value.sousMotif = sousMotifObj ? sousMotifObj[field.active] : value[field.active];
                                     break
 
 
@@ -303,7 +288,7 @@ export default function SearchAccordion(props) {
                                                       <Button
                                                           variant="contained"
                                                           type="submit"
-                                                          // disabled={!checker(values)}
+                                                          // disabled={!allowSearch(values)}
                                                           size="medium" className='RoundedEl' >
                                                           <SearchIcon/>Rechercher
                                                       </Button>
@@ -799,14 +784,14 @@ export default function SearchAccordion(props) {
                                                           form.reset()
                                                       }}
                                                       className="RoundedEl"
-                                                      disabled={!checker(values)}
+                                                      disabled={!allowSearch(values)}
                                                       style={{marginRight: '15px'}}
                                                   >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          // disabled={!checker(values)}
+                                                          // disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>

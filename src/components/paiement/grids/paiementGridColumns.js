@@ -2,13 +2,8 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {
-    convertDate,
-    dateConvertNaissance,
-    currencyFormatter,
-    facturesStatus,
-    paiementsStatus, factureConfigurationStatus
-} from "../../../utils/utils";
+import {paiementsStatus, facturesStatus} from "../../../utils/status-utils";
+import {convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
 export const columns = disciplines => [
     { field: 'numAdhInd', headerName: 'N° adhérent Nom et prénom', sortable: false, flex: 3, minWidth: '200px', renderCell: (params) => {

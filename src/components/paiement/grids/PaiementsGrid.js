@@ -6,12 +6,12 @@ import {Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../paiementSlice'
 import {columns} from "./paiementGridColumns";
-import {checker} from '../utils/utils'
-import {usePrevious} from '../../../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
 import {useGetPaiementsQuery} from "../services/paiementsApi";
 
 import './paiementsGrid.scss';
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const PaiementsGrid = ({disciplines}) => {
 
@@ -25,7 +25,7 @@ export const PaiementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias)});
+    const {data} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)

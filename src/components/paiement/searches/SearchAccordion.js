@@ -30,8 +30,9 @@ import {ListItemText} from "@material-ui/core";
 import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { validators, isValidDate, calcCleFromNir } from '../../../utils/utils';
-import { checker, checkInsidePanels } from '../utils/utils'
+import { isValidDate } from '../../../utils/convertor-utils';
+import { validators, calcCleFromNir, selectDeselectAllValues, allowSearch } from '../../../utils/validator-utils';
+import { checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { ConfirmNir } from "../../shared/ConfirmNir";
@@ -116,41 +117,29 @@ export default function SearchAccordion(props) {
                                         if (value?.numJur?.length < 8) console.log(value.numJur, field)
                                     break
 
-                                    case 'numEnv':
-                                        //Object.keys(nomRefs.ENVIRONMENT)
-                                        if (_value?.numEnv?.length === 0 ||
-                                            (_value?.numEnv?.includes('all') && _value?.numEnv?.length > Object.keys(nomRefs?.ENVIRONMENT).length)
-                                        ) _value = {..._value, numEnv: undefined}
-                                        if (_value?.numEnv?.includes('all')) _value = {..._value, numEnv: Object.keys(nomRefs?.ENVIRONMENT)}
+                                    case 'numEnv': //Object.keys(nomRefs.ENVIRONMENT)
+                                        const numEnvObj = selectDeselectAllValues(value, nomRefs.ENVIRONMENT, field.active);
+                                        _value.numEnv = numEnvObj ? numEnvObj[field.active] : value[field.active];
                                     break
 
-                                    case 'status':
-                                        //Object.keys(nomRefs.PAIEMENT_STATUS)
-                                        if (_value?.status?.length === 0 ||
-                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.PAIEMENT_STATUS).length)
-                                        ) _value = {..._value, status: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.PAIEMENT_STATUS)}
+                                    case 'status': //Object.keys(nomRefs.PAIEMENT_STATUS)
+                                        const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_STATUS, field.active);
+                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
                                     break
 
-                                    case 'grоupDisciplines': // nomRefs?.DISCIPLINE_GROUP
-                                        if (_value?.grоupDisciplines?.length === 0 ||
-                                            (_value?.grоupDisciplines?.includes('all') && _value?.grоupDisciplines?.length > Object.keys(nomRefs?.DISCIPLINE_GROUP).length)
-                                        ) _value = {..._value, grоupDisciplines: undefined}
-                                        if (_value?.grоupDisciplines?.includes('all')) _value = {..._value, grоupDisciplines: Object.keys(nomRefs?.DISCIPLINE_GROUP)}
+                                    case 'groupDisciplines': // nomRefs?.DISCIPLINE_GROUP
+                                        const groupDisciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE_GROUP, field.active);
+                                        _value.groupDisciplines = groupDisciplinesObj ? groupDisciplinesObj[field.active] : value[field.active];
                                     break
 
                                     case 'disciplines': // nomRefs?.DISCIPLINE
-                                        if (_value?.disciplines?.length === 0 ||
-                                            (_value?.disciplines?.includes('all') && _value?.disciplines?.length > Object.keys(nomRefs?.DISCIPLINE).length)
-                                        ) _value = {..._value, disciplines: undefined}
-                                        if (_value?.disciplines?.includes('all')) _value = {..._value, disciplines: Object.keys(nomRefs?.DISCIPLINE)}
+                                        const disciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
+                                        _value.disciplines = disciplinesObj ? disciplinesObj[field.active] : value[field.active];
                                     break
 
                                     case 'provenance': // nomRefs?.PROVENANCE
-                                        if (_value?.provenance?.length === 0 ||
-                                            (_value?.provenance?.includes('all') && _value?.provenance?.length > Object.keys(nomRefs?.PROVENANCE).length)
-                                        ) _value = {..._value, provenance: undefined}
-                                        if (_value?.provenance?.includes('all')) _value = {..._value, provenance: Object.keys(nomRefs?.PROVENANCE)}
+                                        const provenanceObj = selectDeselectAllValues(value, nomRefs.PROVENANCE, field.active);
+                                        _value.provenance = provenanceObj ? provenanceObj[field.active] : value[field.active];
                                     break
 
                                 }
@@ -250,7 +239,7 @@ export default function SearchAccordion(props) {
                                                           variant="contained"
                                                           type="submit"
                                                           size="medium" className='RoundedEl'
-                                                          disabled={!checker(values)} >
+                                                          disabled={!allowSearch(values)} >
                                                           <SearchIcon/>Rechercher
                                                       </Button>
                                                   </div>}
@@ -900,14 +889,14 @@ export default function SearchAccordion(props) {
                                                           form.reset()
                                                       }}
                                                       className="RoundedEl"
-                                                      disabled={!checker(values)}
+                                                      disabled={!allowSearch(values)}
                                                       style={{marginRight: '15px'}}
                                                   >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!checker(values)}
+                                                          disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>

@@ -24,8 +24,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/TextMaskCustom";
-import {validators, isValidDate, calcCleFromNir, usePrevious} from '../../../utils/utils';
-import {checker, checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
+import {isValidDate} from '../../../utils/convertor-utils';
+import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
+import {usePrevious} from '../../../utils/status-utils';
+import { checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 import { ConfirmNir } from "../../shared/ConfirmNir";
 import PanelNIR from '../../shared/PanelNIR';
@@ -121,28 +123,19 @@ export default function SearchAccordion(props) {
 
                                     break
 
-                                    case 'numClient':
-                                        //Object.keys(nomRefs.CLIENT)
-                                        if (_value?.numClient?.length === 0 ||
-                                            (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
-                                        ) _value = {..._value, numClient: undefined}
-                                        if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
+                                    case 'numClient': //Object.keys(nomRefs.CLIENT)
+                                        const numClientObj = selectDeselectAllValues(value, nomRefs.CLIENT, field.active);
+                                        _value.numClient = numClientObj ? numClientObj[field.active] : value[field.active];
                                     break
 
-                                    case 'errorCode':
-                                        //Object.keys(nomRefs.FACTURE_ERROR) actualy from state -> motif
-                                        if (_value?.errorCode?.length === 0 ||
-                                            (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(motif).length)
-                                        ) _value = {..._value, errorCode: undefined}
-                                        if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(motif)}
+                                    case 'errorCode': //Object.keys(nomRefs.FACTURE_ERROR) actually from state -> motif
+                                        const errorCodeObj = selectDeselectAllValues(value, motif, field.active);
+                                        _value.errorCode = errorCodeObj ? errorCodeObj[field.active] : value[field.active];
                                     break
 
-                                    case 'status':
-                                        //Object.keys(nomRefs.FACTURE_STATUS)
-                                        if (_value?.status?.length === 0 ||
-                                            (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs?.FACTURE_STATUS).length)
-                                        ) _value = {..._value, status: undefined}
-                                        if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs?.FACTURE_STATUS)}
+                                    case 'status': //Object.keys(nomRefs.FACTURE_STATUS)
+                                        const statusObj = selectDeselectAllValues(value, nomRefs.FACTURE_STATUS, field.active);
+                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
                                         if (_value.errorCode !== undefined) {
                                             _value = {..._value, errorCode: undefined}
                                         }
@@ -150,6 +143,7 @@ export default function SearchAccordion(props) {
                                         break
 
                                 }
+
 
                               return _value
 
@@ -242,7 +236,7 @@ export default function SearchAccordion(props) {
                                                           variant="contained"
                                                           type="submit"
                                                           size="medium" className='RoundedEl'
-                                                          disabled={!checker(values)} >
+                                                          disabled={!allowSearch(values)} >
                                                           <SearchIcon/>Rechercher
                                                       </Button>
                                                   </div>}
@@ -697,14 +691,14 @@ export default function SearchAccordion(props) {
                                                           form.reset()
                                                       }}
                                                       className="RoundedEl"
-                                                      disabled={!checker(values)}
+                                                      disabled={!allowSearch(values)}
                                                       style={{marginRight: '15px'}}
                                                   >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!checker(values)}
+                                                          disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>

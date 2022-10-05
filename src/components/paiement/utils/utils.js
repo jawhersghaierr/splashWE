@@ -1,37 +1,4 @@
-import {statusesRIB} from "../../../utils/utils";
-
-export const checker = (values) => {
-    const {
-        numeroFacture,
-        numIdPs,
-        numAdhInd,
-        dateDebutSoin, dateDebutSoinFin,
-        grоupDisciplines, disciplines,
-        numeroPsJuridique,
-        complNumTitre,
-        dateDebutHospitalisation, dateDebutHospitalisationFin,
-        status,
-        totalRc,
-        dateFacture, dateFactureFin,
-        receivedDate, receivedDateFin,
-        creationDate, creationDateFin,
-        factureRc,
-        numEnv,
-        provenance,
-        nom, prenom,
-        dateDeNaissance, birdDate,
-        nir, cle
-    } = values || {};
-
-    if(numeroFacture || numIdPs || numAdhInd || dateDebutSoin || dateDebutSoinFin || grоupDisciplines || disciplines || numeroPsJuridique || complNumTitre || dateDebutHospitalisation ||
-        dateDebutHospitalisationFin || status || totalRc || dateFacture || dateFactureFin || receivedDate || receivedDateFin || creationDate ||
-        creationDateFin || factureRc || numEnv || provenance || nom || prenom || dateDeNaissance || birdDate || nir || cle
-    ) {
-        return true
-    } else {
-        return false
-    }
-}
+import {statusesRIB} from "../../../utils/status-utils";
 
 export const checkInsidePanels = (values) => {
 

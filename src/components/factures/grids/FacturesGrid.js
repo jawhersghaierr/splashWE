@@ -9,10 +9,10 @@ import {DataGrid} from '@mui/x-data-grid';
 
 import { selectCriterias } from '../facturesSlice'
 import {columns} from "./facturesGridColumns";
-import {usePrevious} from '../../../utils/utils'
-import {checker} from '../utils/utils'
+import {usePrevious} from '../../../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
 import './facturesGrid.scss';
+import { allowSearch } from '../../../utils/validator-utils';
 
 export const FacturesGrid = ({disciplines}) => {
 
@@ -26,7 +26,7 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const { data } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !checker(criterias), forceRefetch: true });
+    const { data } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
 
     const handlePageChange = (event, value) => {

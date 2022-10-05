@@ -1,4 +1,4 @@
-import {statusesRIB} from "../../../utils/utils";
+import {statusesRIB} from "../../../utils/status-utils";
 
 export const statusRow = (formattedValue) => {
 
@@ -22,15 +22,6 @@ export const statusRow = (formattedValue) => {
     if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
 
     return res;
-}
-
-export const checker = (values) => {
-    const {numPartenaire, raisonSociale, disciplines, statutRibs, codePostal, ville} = values || {};
-    if(numPartenaire || raisonSociale || disciplines || statutRibs || codePostal || ville) {
-        return true
-    } else {
-        return false
-    }
 }
 
 export const checkInsidePanels = (values) => {

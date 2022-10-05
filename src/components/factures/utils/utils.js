@@ -1,27 +1,5 @@
 import {useEffect, useRef} from "react";
-import {statusesRIB} from "../../../utils/utils";
-
-export const checker = (values) => {
-    const {
-        numFact, numEng, numAdh,
-        domaine, dateDeSoins,
-        dateReceivedStart, dateReceivedEnd,
-        idPeriodeFact, dateFact,
-        status, errorCode,
-        numId, numJur,
-        raisonSociale,
-        department, numClient,
-        nom, prenom, dateDeNaissance, birdDate,
-        nir, cle
-    } = values || {};
-    if(numFact || numEng || numAdh || domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-        errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
-        birdDate || nir || cle) {
-        return true
-    } else {
-        return false
-    }
-}
+import {statusesRIB} from "../../../utils/status-utils";
 
 export const checkInsidePanels = (values) => {
 

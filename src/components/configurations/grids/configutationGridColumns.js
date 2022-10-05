@@ -2,7 +2,8 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
-import {convertDate, factureConfigurationStatus, facturesStatus} from "../../../utils/utils";
+import {factureConfigurationStatus} from "../../../utils/status-utils";
+import {convertDate} from "../../../utils/convertor-utils";
 
 export const columns = ({nomRefs, configurations, domain, code}) => [
     { field: 'id', headerName: 'Code', flex: 2, renderCell: (params) => {

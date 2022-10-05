@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
-import {IntlDateWithHHMM} from "../../../utils/utils";
+import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const rocEnLigneApi = createApi({
     reducerPath: 'rocEnLigneApi',

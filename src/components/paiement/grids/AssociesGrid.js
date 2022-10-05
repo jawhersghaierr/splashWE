@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './paiementsGrid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
-import PaiementDetailsById from "../PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
 

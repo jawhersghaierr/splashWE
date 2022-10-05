@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import Chip from '@mui/material/Chip';
 import {Typography} from "@mui/material";
 import Box from "@mui/material/Box";
-import {convertDate, factureConfigurationStatus} from "../../../utils/utils";
+import {convertDate} from "../../../utils/convertor-utils";
+import {factureConfigurationStatus} from "../../../utils/status-utils";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {RulesOfConfigGrid} from "../grids/RulesOfConfigGrid";
