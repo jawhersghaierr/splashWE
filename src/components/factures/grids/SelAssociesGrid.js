@@ -7,10 +7,11 @@ import {CircularProgress} from "@mui/material";
 import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
 import './facturesGrid.scss';
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const SelAssociesGrid = ({numEng}) => {
 
-    let {data, isFetching, isSuccess} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
+    let {data, isFetching, isSuccess, error} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -53,6 +54,7 @@ export const SelAssociesGrid = ({numEng}) => {
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
             {openModal?.data?.id && <RocEnLigneDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

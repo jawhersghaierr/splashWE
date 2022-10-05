@@ -5,12 +5,11 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetEtsByIdQuery} from "./services/psApi";
 import {statusRow} from "./utils/utils";
-import {useEffect} from "react";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {matchPath} from "react-router-dom";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import Tooltip, {tooltipClasses} from '@mui/material/Tooltip';
+import Tooltip from '@mui/material/Tooltip';
 
 
 
@@ -54,21 +53,14 @@ export default function PsDetailsById(props) {
     });
 
     const [value, setValue] = React.useState(0);
-    const handleChange = (event, newValue) => { setValue(newValue) };
-
-    const {data = null} = useGetEtsByIdQuery(match?.params?.id);
-
+    const {data = null, isFetching, isSuccess} = useGetEtsByIdQuery(match?.params?.id);
     const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
-
-    const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
-
-    // useEffect(() => {
-    //     console.log(resultData);
-    // }, [resultData]);
-
+    const {data: resultData, isFetching: DisciplineIsFetching, isSuccess: DisciplineIsSuccess} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
+    const handleChange = (event, newValue) => { setValue(newValue) };
     const reShapeDiscipline = (_discipline) => resultData.find(item => item.code.toString() === _discipline)?.libelle || ''
 
+    if ( isFetching || DisciplineIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return (
 

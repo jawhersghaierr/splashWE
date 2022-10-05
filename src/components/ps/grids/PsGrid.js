@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetEtsQuery} from "../services/psApi";
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../psSlice'
 import {columns} from "./psGridColumns";
@@ -14,8 +14,9 @@ import './psGrid.scss';
 
 import mainPS from "../../../../assets/PS.png";
 import { allowSearch } from '../../../utils/validator-utils';
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
-export const PsGrid = ({disciplines}) => {
+export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -25,7 +26,7 @@ export const PsGrid = ({disciplines}) => {
         sortProperty: null
     });
 
-    const {data} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
+    const {data, isFetching, isSuccess, error} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -45,13 +46,14 @@ export const PsGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
+    if (isFetching || disciplinesIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">
 
-        {(data && disciplines) && <div>
+        {(isSuccess && disciplines) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-                    {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*10 : 10)} sur {data.totElements} résultats
+                    {currentPage*10+1} - {currentPage*10 + ((Number(currentPage + 1) == Number(data?.totPages))? Number(data?.totElements) - currentPage*10 : 10)} sur {data?.totElements} résultats
                 </Typography>
             </div>
             <DataGrid
@@ -102,6 +104,8 @@ export const PsGrid = ({disciplines}) => {
                 onChange={handlePageChange}
             />
         </Stack>}
+
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

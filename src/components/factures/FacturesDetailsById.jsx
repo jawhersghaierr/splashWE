@@ -233,14 +233,13 @@ export default function FacturesDetailsById({location, modialId = null}) {
                 { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
             </TabPanel>
 
-            <ConfirmFactureRecyclage agreed={()=> {
-                setOpenMsg({...openMsg, open: true})
-             }} disagreed={()=> {
-                setOpenMsg({...openMsg, open: true})
-                setOpenRecyclageDialog(false)
-             }}
-             data={data}
-             opened={openRecyclageDialog}/>
+            <ConfirmFactureRecyclage data={data}
+                 agreed={()=> { setOpenMsg({...openMsg, open: true}) }}
+                 disagreed={()=> {
+                    setOpenMsg({...openMsg, open: true})
+                    setOpenRecyclageDialog(false)
+                 }}
+                 opened={openRecyclageDialog}/>
 
             {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
                 data={data}
@@ -266,7 +265,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
             <Snackbar open={openMsg.open}
                       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      autoHideDuration={6000}
+                      autoHideDuration={3000}
                       onClose={handleMsgClose}
                       key={'bottom' + 'right'}>
 

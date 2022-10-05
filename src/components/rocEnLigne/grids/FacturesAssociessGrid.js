@@ -9,6 +9,7 @@ import Pagination from "@mui/material/Pagination";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
 import {CircularProgress} from "@mui/material";
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
@@ -20,7 +21,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -83,10 +84,11 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
             />
         </Stack>}
 
-
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
             {(openModal?.data) && <FacturesDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
+
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef, useState, forwardRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
@@ -10,9 +10,11 @@ import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../facturesSlice'
 import {columns} from "./facturesGridColumns";
 import {usePrevious} from '../../../utils/status-utils';
+import { allowSearch } from '../../../utils/validator-utils';
+import MoreThan200Results from "../../shared/MoreThan200Results";
 import mainPS from "../../../../assets/PS.png";
 import './facturesGrid.scss';
-import { allowSearch } from '../../../utils/validator-utils';
+
 
 export const FacturesGrid = ({disciplines}) => {
 
@@ -26,8 +28,7 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const { data, isFetching, isSuccess } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
-
+    const { data, isFetching, isSuccess, error } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -40,11 +41,9 @@ export const FacturesGrid = ({disciplines}) => {
     };
 
     useEffect(() => {
-
-            if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-                setCurrentPage(0)
-            }
-
+        if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
+            setCurrentPage(0)
+        }
     }, [criterias, currentPage]);
 
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
@@ -103,6 +102,8 @@ export const FacturesGrid = ({disciplines}) => {
                 onChange={handlePageChange}
             />
         </Stack>}
+
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

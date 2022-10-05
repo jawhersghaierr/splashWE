@@ -13,6 +13,7 @@ import {usePrevious} from '../../../utils/status-utils'
 import mainPS from "../../../../assets/PS.png";
 import './rocEnLigneGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const RocEnLigneGrid = ({disciplines}) => {
 
@@ -26,7 +27,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data, isFetching, isSuccess} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
+    const {data, isFetching, isSuccess, error} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {
@@ -103,6 +104,8 @@ export const RocEnLigneGrid = ({disciplines}) => {
                 onChange={handlePageChange}
             />
         </Stack>}
+
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

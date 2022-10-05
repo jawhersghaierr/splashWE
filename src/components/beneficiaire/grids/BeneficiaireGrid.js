@@ -10,6 +10,7 @@ import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
 import mainPS from "../../../../assets/PS.png";
 import './beneficiaireGrid.scss';
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const BeneficiaireGrid = ({ enviroments }) => {
 
@@ -21,7 +22,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, error} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -93,6 +94,8 @@ export const BeneficiaireGrid = ({ enviroments }) => {
                 onChange={handlePageChange}
             />
         </Stack>}
+
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }

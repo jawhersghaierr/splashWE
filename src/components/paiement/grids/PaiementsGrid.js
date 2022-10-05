@@ -12,6 +12,7 @@ import {useGetPaiementsQuery} from "../services/paiementsApi";
 
 import './paiementsGrid.scss';
 import { allowSearch } from '../../../utils/validator-utils';
+import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const PaiementsGrid = ({disciplines}) => {
 
@@ -25,7 +26,7 @@ export const PaiementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data, isFetching, isSuccess} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, error} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -38,11 +39,9 @@ export const PaiementsGrid = ({disciplines}) => {
     };
 
     useEffect(() => {
-
-            if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-                setCurrentPage(0)
-            }
-
+        if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
+            setCurrentPage(0)
+        }
     }, [criterias, currentPage]);
 
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
@@ -102,6 +101,7 @@ export const PaiementsGrid = ({disciplines}) => {
             </h2>
         </div>}
 
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
 
     </div>
 }
