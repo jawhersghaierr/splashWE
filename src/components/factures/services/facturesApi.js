@@ -13,11 +13,11 @@ export const facturesApi = createApi({
 
             return headers
         },
-
     }),
     refetchOnFocus: true,
     refetchOnReconnect: true,
     keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getFactures: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {

@@ -1,22 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-
-import Pagination from '@mui/material/Pagination';
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
+import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Stack from '@mui/material/Stack'
-import {useGetBenefQuery} from "../services/beneficiaireApi";
-import {CircularProgress, Typography} from "@mui/material";
-import {DataGrid, gridClasses } from '@mui/x-data-grid';
-
+import { useGetBenefQuery } from "../services/beneficiaireApi";
+import { DataGrid } from '@mui/x-data-grid';
 import { selectCriterias } from '../beneficiaireSlice'
-
-import {columns} from "./beneficiaireGridColumns";
+import { columns } from "./beneficiaireGridColumns";
+import { usePrevious } from '../../../utils/status-utils';
+import { allowSearch } from '../../../utils/validator-utils';
+import mainPS from "../../../../assets/PS.png";
 import './beneficiaireGrid.scss';
 
-import {usePrevious} from '../../../utils/status-utils';
-import mainPS from "../../../../assets/PS.png";
-import { allowSearch } from '../../../utils/validator-utils';
-
-export const BeneficiaireGrid = ({enviroments}) => {
+export const BeneficiaireGrid = ({ enviroments }) => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)

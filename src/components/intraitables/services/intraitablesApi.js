@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
-
-// http://10.241.25.10:8014/api/v1/untreatable/files?periodFrom=2022-01-01&pageSize=20&pageNumber=0
+import { env_IP, ports } from '../../../../env-vars'
 
 export const intraitablesApi = createApi({
     reducerPath: 'intraitablesApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8014/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.intraitables}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -15,8 +13,11 @@ export const intraitablesApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
 
         getIntraitables: builder.query({

@@ -17,8 +17,8 @@ import {
     InputAdornment,
     IconButton,
     Typography,
-    TextField
-}  from "@mui/material";
+    TextField, CircularProgress
+} from "@mui/material";
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -60,6 +60,7 @@ export default function SearchAccordion(props) {
 
         await sleep(300);
         dispatch(setCriterias({...values, cashe: Math.random()}));
+        setPanelExpanded(false);
     };
 
     const [expanded, setExpanded] = useState({
@@ -90,7 +91,7 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
-
+    if (nomRefsIsFetching) return <div className={'formContent'} style={{height: '30%'}}><CircularProgress style={{margin: '100px 50%'}}/></div>
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}

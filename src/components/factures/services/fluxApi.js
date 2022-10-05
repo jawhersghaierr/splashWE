@@ -1,13 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { env_IP } from '../../../../env-vars'
+import { env_IP, ports } from '../../../../env-vars'
 
 export const fluxApi = createApi({
     reducerPath: 'fluxApi',
     baseQuery: fetchBaseQuery({
 
-        // http://10.241.25.10:8014/api/v1/facture/flux/15180
-
-        baseUrl: `http://${env_IP}:8014/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.intraitables}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -16,10 +14,11 @@ export const fluxApi = createApi({
 
             return headers
         },
-
     }),
-    // refetchOnFocus: true,
+    refetchOnFocus: true,
     refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getFluxById: builder.query({
             query: (numFac) => {

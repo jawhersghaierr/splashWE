@@ -130,19 +130,6 @@ export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
 
     if (statut) {
 
-
-        let avialbleTypes = []
-        // nomRefs.ROC_RLTN_STATUSES_TYPES?.forEach( tm => {
-        //
-        //     console.log(' ROC_RLTN_STATUSES_TYPES > ', tm)
-        // })
-        //
-        // nomRefs.ROC_RLTN_TYPES_MOTIFS?.forEach( tm => {
-        //
-        //     console.log(' ROC_RLTN_TYPES_MOTIFS > ', tm)
-        // })
-
-
         let _motif = {}
         if (nomRefs && statut.length > 0) {
             statut?.forEach(stat => {

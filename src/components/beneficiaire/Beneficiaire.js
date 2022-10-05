@@ -3,7 +3,6 @@ import {Typography, CircularProgress} from "@mui/material";
 import SearchAccordion from "../beneficiaire/searches/SearchAccordion";
 import { useGetEnvironmentsQuery } from "../../services/referentielApi";
 import {BeneficiaireGrid} from './grids/BeneficiaireGrid'
-// import CircularProgress from '@mui/material/CircularProgress';
 import './beneficiaire.scss'
 import {matchPath} from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
 import {PaiementsGrid} from "./grids/PaiementsGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
@@ -13,6 +13,7 @@ export const Paiement = (props) => {
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
             <b>Paiement</b>
         </Typography>
+        {disciplinesIsFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
         <SearchAccordion
             disciplines={disciplines}
             disciplinesIsFetching={disciplinesIsFetching}

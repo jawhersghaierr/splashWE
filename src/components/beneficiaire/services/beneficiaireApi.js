@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
-
-// http://10.241.25.10:8007/v1/droitsBeneficiaires/
+import {env_IP, ports} from '../../../../env-vars'
 
 export const beneficiaireApi = createApi({
     reducerPath: 'beneficiaireApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8007/api/v1`,
+        baseUrl: `http://${env_IP}:${ports?.beneficiaire}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -15,8 +13,11 @@ export const beneficiaireApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
 
         getBenef: builder.query({

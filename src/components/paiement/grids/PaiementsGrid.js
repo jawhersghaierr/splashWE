@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../paiementSlice'
 import {columns} from "./paiementGridColumns";
@@ -25,7 +25,7 @@ export const PaiementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -45,7 +45,7 @@ export const PaiementsGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
-
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
     return <div className="gridContent">
 
         {(data && data?.results) && <div>
@@ -87,13 +87,6 @@ export const PaiementsGrid = ({disciplines}) => {
             />
         </div>}
 
-        {!data && <div>
-            <img  src={mainPS} alt="mainPS" className={'imgContext'}/>
-            <h2 style={{color: '#003154', position: 'relative', width: '400px', left: '605px', bottom: '545px'}}>
-                Vous y trouverez toutes les informations pertinentes pour les professionnels de la santé du système.
-            </h2>
-        </div>}
-
         {data && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totalPages}
@@ -101,6 +94,14 @@ export const PaiementsGrid = ({disciplines}) => {
                 onChange={handlePageChange}
             />
         </Stack>}
+
+        {!data && <div>
+            <img  src={mainPS} alt="mainPS" className={'imgContext'}/>
+            <h2 style={{color: '#003154', position: 'relative', width: '400px', left: '605px', bottom: '545px'}}>
+                Vous y trouverez toutes les informations pertinentes pour les professionnels de la santé du système.
+            </h2>
+        </div>}
+
 
     </div>
 }

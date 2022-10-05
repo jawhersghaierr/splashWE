@@ -400,15 +400,11 @@ export default function SearchAccordion(props) {
                {<FormSpy onChange={(values) => {
                    form.mutators.setValue(values)
                    const {
-                       prenom,
-                       nom,
-                       numeroAdherent,
-                       birdDate,
+                       prenom, nom, numeroAdherent,
                        envCodeList,
-                       dateDeNaissance,
+                       birdDate, dateDeNaissance,
                        numAdherentFamillial,
-                       dateDebutSoins,
-                       dateFinSoins
+                       dateDebutSoins, dateFinSoins
                    } = values?.values;
 
                     if(birdDate || envCodeList || dateDeNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {

@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { env_IP } from '../../../../env-vars'
+import { env_IP, ports } from '../../../../env-vars'
 
 export const paiementsApi = createApi({
     reducerPath: 'paiementsApi',
     baseQuery: fetchBaseQuery({
 
-        baseUrl: `http://${env_IP}:8003/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.paiements}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -14,8 +14,11 @@ export const paiementsApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getPaiements: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {

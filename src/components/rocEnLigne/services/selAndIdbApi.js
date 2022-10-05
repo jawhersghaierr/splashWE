@@ -1,13 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { env_IP } from '../../../../env-vars'
+import { env_IP, ports } from '../../../../env-vars'
 
 export const selAndIdbApi = createApi({
     reducerPath: 'selAndIdbApi',
     baseQuery: fetchBaseQuery({
 
-        // http://10.241.25.10:8001/api/v1/sel/details?type=assosiete
-
-        baseUrl: `http://${env_IP}:8001/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.selAndIdb}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -16,8 +14,11 @@ export const selAndIdbApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getSelsAndIdbOfFactureEngN: builder.query({
             query: (numEng) => {

@@ -10,7 +10,6 @@ export const entityApi = createApi({
         getUsers: builder.query({
             query: () => ({
                 responseHandler: (response) => {
-                    // debugger
                     return response.text()
                 }, // This is the same as passing 'text'
             }),

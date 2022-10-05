@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../../../env-vars'
+import {env_IP, ports} from '../../../../env-vars'
 
 export const psApi = createApi({
     reducerPath: 'psApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8002/api/v1`,
+        baseUrl: `http://${env_IP}:${ports.ps}/api/v1`,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -13,8 +13,11 @@ export const psApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getEtsroc: builder.query({
             query: (

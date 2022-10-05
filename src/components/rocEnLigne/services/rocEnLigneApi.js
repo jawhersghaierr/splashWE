@@ -14,8 +14,11 @@ export const rocEnLigneApi = createApi({
 
             return headers
         },
-
     }),
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+    keepUnusedDataFor: 1,
+
     endpoints: (builder) => ({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
