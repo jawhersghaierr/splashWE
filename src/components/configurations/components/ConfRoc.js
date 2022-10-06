@@ -55,11 +55,10 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
     const handleChange = (event, newValue) => { setValue(newValue) };
 
 
-    let RLTN_CLIENT_ENV = nomRefs?.RLTN_CLIENT_ENV
     let environnements = null
 
-    if (code == 'amc' && RLTN_CLIENT_ENV[data?.content]) {
-        if (RLTN_CLIENT_ENV[data?.content].length > 1) {
+    if (code == 'amc' && nomRefs?.RLTN_CLIENT_ENV[data?.content]) {
+        if (nomRefs?.RLTN_CLIENT_ENV[data?.content].length > 1) {
             environnements = <span><LightTooltip
                 title={<div style={{whiteSpace: 'pre-line'}}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
@@ -67,14 +66,14 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                         <div style={{
                             minWidth: '225px',
                             paddingLeft: '5px'
-                        }}> {RLTN_CLIENT_ENV[data?.content].join('\n')} </div>
+                        }}> {nomRefs?.RLTN_CLIENT_ENV[data?.content].join('\n')} </div>
                     </div>
                 </div>}
                 placement="top"
                 arrow>
-                <Chip label={RLTN_CLIENT_ENV[data?.content].length}/>
+                <Chip label={nomRefs?.RLTN_CLIENT_ENV[data?.content].length}/>
             </LightTooltip>&nbsp;environnements</span>
-        } else if(RLTN_CLIENT_ENV[data?.content].length == 1) environnements = RLTN_CLIENT_ENV[data?.content][0]
+        } else if(nomRefs?.RLTN_CLIENT_ENV[data?.content].length == 1) environnements = nomRefs?.RLTN_CLIENT_ENV[data?.content][0]
     }
 
     return <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
@@ -104,7 +103,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
             {/*// data?.content =>RLTN_CLIENT_GROUP  */}
 
             {code == 'amc' && <RowInfo label={'Environnements'} value={environnements} justify={true} border={false}/>}
-            {/*// data?.content =>RLTN_CLIENT_ENV  */}
+            {/*// data?.content =>nomRefs?.RLTN_CLIENT_ENV  */}
 
             {domainForPanel !== 'delai' && domain !== 'roc' &&
                 <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} border={false}/>}
@@ -138,6 +137,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                 }}>
                     <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} </div>} />
                 </Box>}
+            {/*{JSON.stringify(data)}*/}
         </TabPanel>
 
     </Box>

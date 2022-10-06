@@ -6,6 +6,7 @@ import {factureConfigurationStatus} from "../../utils/status-utils";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {ConfFacturation} from "./components/ConfFacturation";
 import {ConfRoc} from "./components/ConfRoc";
+import {CircularProgress} from "@mui/material";
 
 export default function ConfigurationDetailsById(props) {
 
@@ -58,8 +59,7 @@ export default function ConfigurationDetailsById(props) {
 
     }, [domain, code, id, LOCIsSuccess])
 
-    if (!isLoaded && nomRefsIsSuccess && nomRefs) return 'Loading ...'
-
+    if ((LOCIsFetching || nomRefsIsFetching) && !nomRefs && !domain) return <CircularProgress style={{margin: '100px 50%'}}/>
     switch (domain) {
         case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
         case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
