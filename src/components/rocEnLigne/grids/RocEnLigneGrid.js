@@ -27,7 +27,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data, isFetching, isSuccess, error} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
+    const {data, isFetching, isSuccess, isError, error} = useGetRocEnLigneQuery({currentPage, criterias, sortProperties});
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     const handlePageChange = (event, value) => {
@@ -48,9 +48,10 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
+    if (isFetching || nomRefsIsFetching) return  <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">
-        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+
         {(isSuccess && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
@@ -97,15 +98,14 @@ export const RocEnLigneGrid = ({disciplines}) => {
             </h2>
         </div>}
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+        {isSuccess && data?.results && nomRefs && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totalPages}
                 page={currentPage+1}
                 onChange={handlePageChange}
             />
         </Stack>}
-
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

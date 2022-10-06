@@ -131,7 +131,6 @@ export default function SearchAccordion(props) {
                                                                   <TextField
                                                                       id="NumVirement"
                                                                       variant="standard"
-                                                                      type={'number'}
                                                                       error={meta.invalid}
                                                                       placeholder={'Nº virement'}
                                                                       sx={{width: '100%'}}

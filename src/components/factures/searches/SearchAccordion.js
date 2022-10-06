@@ -119,7 +119,7 @@ export default function SearchAccordion() {
                                     break
 
                                     case 'numJur':
-                                        if (value?.numJur?.length < 8) console.log(value.numJur, field)
+                                        // if (value?.numJur?.length < 8) console.log(value.numJur, field)
 
                                     break
 

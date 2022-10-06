@@ -7,7 +7,7 @@ const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function MoreThan200Results({ isSuccess, data, error }) {
+export default function MoreThan200Results({ isSuccess, data, isError, error }) {
     const [openMsg, setOpenMsg] = useState({
         open: false,
         success: null,
@@ -20,8 +20,8 @@ export default function MoreThan200Results({ isSuccess, data, error }) {
 
     useEffect(() => {
         if (isSuccess && data && data.moreExist) setOpenMsg({success: true, open: true, data: 'La recherche est limitee aux 200 premiers éléments, merci d\'affiner votre recherche.'});
-        if (!isSuccess && error) setOpenMsg({success: false, open: true, error});
-    }, [data, isSuccess, error]);
+        if (isError) setOpenMsg({success: false, open: true, error: error?.data?.error || 'Quelque chose s\'est mal passé!'});
+    }, [data, isSuccess, isError, error]);
 
 
   return (

@@ -53,17 +53,23 @@ export const reshapeMotifVsStatus = ({status, nomRefs}) => {
      */
     if (!status && !nomRefs) return null
 
+    let selectedStatusesForFactureError = {}
+    Object.keys(nomRefs.FACTURE_RLTN_FACTURE_ERROR).forEach( el => {
+        if (!selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]]) selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]] = []
+        selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]].push(el)
+
+    })
+
     if (status) {
         let _motif = {}
         if (nomRefs && status.length > 0) {
             status?.forEach(stat => {
-
-                nomRefs.FACTURE_RLTN_FACTURE_ERROR?.filter(ee => {
-                    if (Object.values(ee).find(e => e == stat)) return Object.keys(ee)
-                }).map(code=>_motif[Object.keys(code)[0]] =  nomRefs.FACTURE_ERROR[Object.keys(code)[0]])
-
+                if (selectedStatusesForFactureError[stat]) {
+                    selectedStatusesForFactureError[stat].forEach(facErr => _motif[facErr] = nomRefs.FACTURE_ERROR[facErr])
+                }
             })
         }
+
         return _motif || null;
     }
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

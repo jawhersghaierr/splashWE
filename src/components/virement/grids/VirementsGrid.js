@@ -46,7 +46,6 @@ export const VirementsGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
-
     return <div className="gridContent">
         {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
         {(isSuccess && data?.results && nomRefs) && <div>
@@ -96,7 +95,7 @@ export const VirementsGrid = ({disciplines}) => {
             </h2>
         </div>}
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+        {isSuccess && data?.results && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totalPages}
                 page={currentPage+1}

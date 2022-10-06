@@ -63,6 +63,10 @@ export const virementsApi = createApi({
                     }
                 })
 
+            },
+            transformResponse: (response, meta) => {
+                if (meta.response.status == 204) return {meta: {status: meta.response.status}}
+                return response
             }
         }),
 
@@ -80,6 +84,7 @@ export const virementsApi = createApi({
                 })
             },
             transformResponse: (response, meta, arg) => {
+                if (meta.response.status == 204) return {meta: {status: meta.response.status}}
                 response?.historyElements?.forEach((el, id)=>el.id = id)
                 return response;
             }

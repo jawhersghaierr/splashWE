@@ -11,7 +11,7 @@ import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const SelAssociesGrid = ({numEng}) => {
 
-    let {data, isFetching, isSuccess, error} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
+    let {data, isFetching, isSuccess, isError, error} = useGetSelsAndIdbOfFactureEngNQuery(numEng)
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -54,7 +54,7 @@ export const SelAssociesGrid = ({numEng}) => {
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
             {openModal?.data?.id && <RocEnLigneDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

@@ -26,7 +26,7 @@ export const PaiementsGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const {data, isFetching, isSuccess, error} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, isError, error} = useGetPaiementsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -47,7 +47,7 @@ export const PaiementsGrid = ({disciplines}) => {
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
     return <div className="gridContent">
 
-        {(data && data?.results) && <div>
+        {(isSuccess && data?.results) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
@@ -86,7 +86,7 @@ export const PaiementsGrid = ({disciplines}) => {
             />
         </div>}
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+        {isSuccess && data?.results && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totalPages}
                 page={currentPage+1}
@@ -101,7 +101,7 @@ export const PaiementsGrid = ({disciplines}) => {
             </h2>
         </div>}
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

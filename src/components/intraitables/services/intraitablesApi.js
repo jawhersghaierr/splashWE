@@ -51,6 +51,7 @@ export const intraitablesApi = createApi({
                     }})
             },
             transformResponse: (response, meta, arg) => {
+                if (meta.response.status == 204) return {meta: {status: meta.response.status}}
                 response?.data?.forEach(el=>el.id = el.fileId)
                 return response;
             }
@@ -66,6 +67,10 @@ export const intraitablesApi = createApi({
                     }
                 })
             },
+            transformResponse: (response, meta) => {
+                if (meta.response.status == 204) return {meta: {status: meta.response.status}}
+                return response
+            }
         }),
 
     }),

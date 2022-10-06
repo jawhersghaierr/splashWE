@@ -21,7 +21,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, isError, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -88,7 +88,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
             {(openModal?.data) && <FacturesDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

@@ -26,7 +26,7 @@ export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess, error} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
+    const {data, isFetching, isSuccess, isError, error} = useGetEtsQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -105,7 +105,7 @@ export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
             />
         </Stack>}
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

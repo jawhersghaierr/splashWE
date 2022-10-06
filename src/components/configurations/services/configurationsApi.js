@@ -30,6 +30,10 @@ export const configurationsApi = createApi({
                     }
                 })
 
+            },
+            transformResponse: (response, meta) => {
+                if (meta.response.status == 204) return {meta: {status: meta.response.status}}
+                return response
             }
         }),
 

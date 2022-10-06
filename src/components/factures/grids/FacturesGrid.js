@@ -28,7 +28,7 @@ export const FacturesGrid = ({disciplines}) => {
 
     const size = 20;
 
-    const { data, isFetching, isSuccess, error } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
+    const { data, isFetching, isSuccess, isError, error } = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias), forceRefetch: true });
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -95,7 +95,7 @@ export const FacturesGrid = ({disciplines}) => {
             </h2>
         </div>}
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+        {(isSuccess && data?.results) && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totalPages}
                 page={currentPage+1}
@@ -103,7 +103,7 @@ export const FacturesGrid = ({disciplines}) => {
             />
         </Stack>}
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

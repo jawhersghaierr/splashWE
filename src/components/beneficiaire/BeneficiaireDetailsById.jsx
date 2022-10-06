@@ -126,9 +126,10 @@ export default function BeneficiaireDetailsById(props) {
                 {data?.lienFamillialLabel}
             </Typography>
 
-            <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                <Chip label={benefStatuses[data?.status]?.label} sx={{bgcolor: benefStatuses[data?.status]?.color, margin: '5px'}}/>
-            </Typography>
+            {isSuccess && <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+                <Chip label={benefStatuses[data?.status]?.label}
+                      sx={{bgcolor: benefStatuses[data?.status]?.color, margin: '5px'}}/>
+            </Typography>}
 
             {isFetching && <CircularProgress/>}
             {!isFetching && isSuccess && <div style={{
@@ -297,17 +298,6 @@ export default function BeneficiaireDetailsById(props) {
             <TabPanel value={value} index={4} data={data}>
                 <div>History Tab</div>
             </TabPanel>
-            {/*<div style={{minHeight: '300px', background: 'white', padding: '15px', maxWidth: '600px'}}>*/}
-            {/*    {data && <pre style={{*/}
-            {/*        whiteSpace: 'pre-wrap',*/}
-            {/*        overflowWrap: 'break-word',*/}
-            {/*        background: 'white',*/}
-            {/*        margin: 0,*/}
-            {/*        padding: 0*/}
-            {/*    }}>*/}
-            {/*        {JSON.stringify(data)}*/}
-            {/*    </pre>}*/}
-            {/*</div>*/}
         </Box>
     );
 }

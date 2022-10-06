@@ -141,7 +141,7 @@ export default function VirementDetailsById({location, modialId = null}) {
                             </div>
                             <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaire} border={true}
                                      justify={true}/>
-                            <RowInfo label={'Date d émission'}
+                            <RowInfo label={'Date d\'émission'}
                                      value={convertDate(data?.virementGeneralInfo?.dateTraitement) || ''} border={true}
                                      justify={true}/>
                         </div>

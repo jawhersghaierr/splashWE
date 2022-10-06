@@ -81,6 +81,11 @@ export const beneficiaireApi = createApi({
                     }
                 })
             },
+            transformResponse: (response, meta) => {
+                if (meta.response.status == 204) return {...response, meta: {status: meta.response.status}}
+                return response
+            }
+
         }),
 
         getBenefById: builder.query({
@@ -93,6 +98,10 @@ export const beneficiaireApi = createApi({
                     }
                 })
             },
+            transformResponse: (response, meta) => {
+                if (meta.response.status == 204) return {...response, meta: {status: meta.response.status}}
+                return response
+            }
         }),
 
     }),

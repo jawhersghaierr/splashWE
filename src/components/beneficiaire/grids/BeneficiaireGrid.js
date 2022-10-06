@@ -22,7 +22,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess, error} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, isError, error} = useGetBenefQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -87,7 +87,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
 
         {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
+        {!isFetching && isSuccess && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totPages}
                 page={currentPage+1}
@@ -95,7 +95,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
             />
         </Stack>}
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
     </div>
 }

@@ -55,10 +55,8 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
     const handleChange = (event, newValue) => { setValue(newValue) };
 
 
-    let RLTN_CLIENT_ENV = {}
+    let RLTN_CLIENT_ENV = nomRefs?.RLTN_CLIENT_ENV
     let environnements = null
-
-        nomRefs?.RLTN_CLIENT_ENV.forEach(nom => RLTN_CLIENT_ENV = {...RLTN_CLIENT_ENV, ...nom})
 
     if (code == 'amc' && RLTN_CLIENT_ENV[data?.content]) {
         if (RLTN_CLIENT_ENV[data?.content].length > 1) {
@@ -140,7 +138,6 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                 }}>
                     <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} </div>} />
                 </Box>}
-            {/*{JSON.stringify(data)}*/}
         </TabPanel>
 
     </Box>

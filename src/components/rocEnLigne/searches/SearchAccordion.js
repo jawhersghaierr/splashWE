@@ -27,9 +27,9 @@ import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/TextMaskCustom";
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {
-    checkInsidePanels,
-    reshapeMotifFromStatus,
-    reshapeStatusFromTypes, reshapeSubMotifsFromMotif,
+    checkInsidePanels, getAvailableTypesFromStatuses,
+    reshapeMotifFromStatus, getMotifsFromTypes,
+    getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromMotifs,
 } from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice';
 import { ConfirmNir } from "../../shared/ConfirmNir";
@@ -70,9 +70,15 @@ export default function SearchAccordion(props) {
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
-    const [localStatus, setLocalStatus] = useState([]);
-    const [localMotif, setLocalMotif] = useState([]);
-    const [localSubMotif, setLocalSubMotif] = useState([]);
+    const [localStatus, setLocalStatus] = useState({});
+    const [localMotif, setLocalMotif] = useState({});
+    const [localSubMotif, setLocalSubMotif] = useState({});
+    // const [availableDep, setAvailableDep] = useState({
+    //     types: [],
+    //     status: [],
+    //     motif: [],
+    //     subMotif: [],
+    // });
 
 
     useEffect(() => {
@@ -80,8 +86,19 @@ export default function SearchAccordion(props) {
             setLocalStatus(nomRefs.ROC_STATUSES)
             setLocalMotif(nomRefs.ROC_MOTIFS)
             setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
+            // setAvailableDep({
+            //     types: Object.keys( nomRefs.ROC_TYPES ),
+            //     status: Object.keys( nomRefs.ROC_STATUSES ),
+            //     motif:  Object.keys( nomRefs.ROC_MOTIFS ),
+            //     subMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
+            // })
+
         }
     }, [nomRefsIsSuccess]);
+    //
+    // useEffect(() => {
+    //     console.log('availableDep > ', availableDep)
+    // }, [availableDep]);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -111,6 +128,8 @@ export default function SearchAccordion(props) {
                       setValue: ([field, value], state, utils) => {
 
                           utils.changeValue(state, field, (value) => {
+
+                              // console.log('touched ', value)
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateNaiss = null}
 
@@ -125,7 +144,7 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'finessJur':
-                                        if (value?.finessJur?.length < 8) console.log(value.finessJur, field)
+                                        // if (value?.finessJur?.length < 8) console.log(value.finessJur, field)
 
                                     break
 
@@ -471,12 +490,6 @@ export default function SearchAccordion(props) {
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.ROC_MOTIFS).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ROC_MOTIFS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
                                                                       {Object.keys(localMotif).map(code => (<MenuItem key={code} value={code}>
                                                                           {localMotif[code]}
                                                                       </MenuItem>))}
@@ -798,7 +811,6 @@ export default function SearchAccordion(props) {
                                       </Collapse>
                                   </StyledCard>
                                   {<FormSpy onChange={(values) => {
-                                      form.mutators.setValue(values)
                                       const {
                                           type, numEng, numAdh,
                                           domaine,
@@ -814,37 +826,101 @@ export default function SearchAccordion(props) {
                                           nir, cle
                                       } = values?.values;
 
+                                      form.mutators.setValue(values)
+
                                       /**
                                        * TODO MUST BE FIXED
                                        * ****************************************************************
                                        */
                                       if (type){
-                                          let _typeStat = reshapeStatusFromTypes({nomRefs, type})
-                                          let _statut = {}
+                                          // console.log('choosen types ', type)
+                                          // setAvailableDep({
+                                          //     types: (type?.length > 0)? type : Object.keys( nomRefs.ROC_STATUSES ),
+                                          //     status: getStatusFromTypes({type, nomRefs}), // Object.keys( nomRefs.ROC_STATUSES ),
+                                          //     motif: getMotifsFromTypes({type, nomRefs}), // Object.keys( nomRefs.ROC_MOTIFS ),
+                                          //     subMotif: getSubMotifsFromMotif({motif: getMotifsFromTypes({type, nomRefs}), nomRefs}) // Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
+                                          // })
+
+                                          let statusFromTypes = getStatusFromTypes({nomRefs, type})
+                                          let tmpStatut = {}
                                           Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
-                                              if (_typeStat.includes(stat)) _statut[stat] = nomRefs.ROC_STATUSES[stat]
+                                              if (statusFromTypes.includes(stat)) {
+                                                  tmpStatut[stat] = nomRefs.ROC_STATUSES[stat]
+                                              }
                                           })
-                                          if (Object.keys(_statut).length == 0 ) _statut = nomRefs.ROC_STATUSES
-                                          setLocalStatus(_statut)
+                                          if (Object.keys(tmpStatut).length == 0 ) tmpStatut = nomRefs.ROC_STATUSES
+                                          setLocalStatus(tmpStatut)
+
+                                          let motifsFromTypes = getMotifsFromTypes({type, nomRefs})
+                                          let tmpMotif = {}
+                                          Object.keys(nomRefs.ROC_MOTIFS).forEach( stat => {
+                                              if (motifsFromTypes.includes(stat)) {
+                                                  tmpMotif[stat] = nomRefs.ROC_MOTIFS[stat]
+                                              }
+                                          })
+                                          if (Object.keys(tmpMotif).length == 0 ) tmpMotif = nomRefs.ROC_MOTIFS
+                                          setLocalMotif(tmpMotif)
+
+                                          let tmpSubMotif = {}
+                                          getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                              .forEach(subCode => {
+                                                  // console.log(nomRefs.ROC_SOUS_MOTIFS[subCode])
+                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
+                                              })
+                                          if (Object.keys(tmpMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
+                                          setLocalSubMotif(tmpSubMotif)
+
                                       }
 
                                       if (statut) {
-                                          let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
+                                          // console.log('choosen statuses ', statut)
+                                          // setAvailableDep({
+                                          //     types: availableDep.types,
+                                          //     status: (statut?.length > 0)? statut:  getStatusFromTypes({types: availableDep.types, nomRefs}),
+                                          //     motif: (statut?.length > 0)? getMotifsFromTypes({
+                                          //         type: getAvailableTypesFromStatuses({statut, nomRefs}),
+                                          //         nomRefs}): Object.keys( nomRefs.ROC_MOTIFS ),
+                                          //     subMotif: getSubMotifsFromMotif({motif: getMotifsFromTypes({type, nomRefs}), nomRefs}) // Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
+                                          // })
 
-                                          // console.log('statut > ', statut)
+                                          // let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
+                                          // getAvailableTypesFromStatuses({nomRefs, statut})
                                           // console.log('tmpMotifs > ', tmpMotifs)
-                                          setLocalMotif(nomRefs.ROC_MOTIFS);
+
+                                          let motifsFromTypes = getMotifsFromTypes({type, nomRefs})
+                                          let tmpMotif = {}
+
+                                          if (statut?.length > 0) {
+                                              getMotifsFromTypes({ type: getAvailableTypesFromStatuses({ statut,  nomRefs }), nomRefs })
+                                                  .forEach(code => tmpMotif[code] = nomRefs.ROC_MOTIFS[code])
+                                          } else getMotifsFromTypes({type, nomRefs}).forEach(code => tmpMotif[code] = nomRefs.ROC_MOTIFS[code])
+
+                                          if (Object.keys(tmpMotif).length == 0 ) tmpMotif = nomRefs.ROC_MOTIFS
+                                          setLocalMotif(tmpMotif)
+
+                                          let tmpSubMotif = {}
+                                          getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                              .forEach(subCode => {
+                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
+                                              })
+                                          if (Object.keys(tmpMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
+                                          setLocalSubMotif(tmpSubMotif)
+
+                                          // setLocalMotif(nomRefs.ROC_MOTIFS);
 
                                       }
                                       if (motif) {
-                                          let tmpSubIds = reshapeSubMotifsFromMotif({motif, nomRefs})
-                                          if (tmpSubIds) {
-                                              setLocalSubMotif(tmpSubIds)
-                                          } else setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
+
+                                              // setLocalSubMotif( getSubMotifsFromMotif({motif, nomRefs}) )
+                                          let tmpSubMotif = {}
+                                          getSubMotifsFromMotif({motif, nomRefs})
+                                              .forEach(subCode => {
+                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
+                                              })
+                                          if (Object.keys(tmpSubMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
+                                          setLocalSubMotif(tmpSubMotif)
                                       }
-                                      if (sousMotif) {
-                                          // console.log('sousMotif > ', sousMotif)
-                                      }
+
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                                       if(
@@ -856,6 +932,7 @@ export default function SearchAccordion(props) {
                                       } else {
                                           setDotShow(false)
                                       }
+
                                   }}/>}
 
                               </LocalizationProvider></form>)}/>

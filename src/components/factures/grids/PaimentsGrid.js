@@ -13,7 +13,7 @@ import MoreThan200Results from "../../shared/MoreThan200Results";
 
 export const PaimentsGrid = ({factId, nomRefs}) => {
 
-    let {data, isFetching, isSuccess, error} = useGetPaiementsFacturesByIdQuery(factId)
+    let {data, isFetching, isSuccess, isError, error} = useGetPaiementsFacturesByIdQuery(factId)
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
@@ -60,8 +60,7 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
             {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}
         </ModalInfo>
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
-
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
     </div>
 }
 

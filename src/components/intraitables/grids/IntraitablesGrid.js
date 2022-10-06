@@ -27,7 +27,7 @@ export const IntraitablesGrid = () => {
         sortProperty: null
     });
 
-    const {data, isFetching, isSuccess, error} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+    const {data, isFetching, isSuccess, isError, error} = useGetIntraitablesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value-1)
@@ -96,8 +96,7 @@ export const IntraitablesGrid = () => {
             />
         </Stack>}
 
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess}/>
-
+        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
         {!isSuccess && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
     </div>
 }
