@@ -149,7 +149,6 @@ const HostMenu = () => {
     const classes = useStyles()
     return (
         <List component="nav" className={classes.hostMenu} disablePadding>
-            {/* <HostMenuItem {...appMenuItems[0]} /> */}
 
             {/*{hostMenuItems.map((item, index) => (*/}
             {/*    <HostMenuItem {...item} key={index} />*/}
