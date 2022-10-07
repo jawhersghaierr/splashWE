@@ -17,7 +17,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {env_IP, ports} from "../../../env-vars";
 import {reshapeMotifVsStatus} from "../factures/utils/utils";
 
-export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg}) => {
+export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {
 
 	const [motif, setMotif] = useState('');
 	const [comment, setComment] = useState('');
@@ -57,6 +57,7 @@ export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg}) 
 						(data) => {
 							setIsLoaded(true);
 							setOpenMsg({success:true, open: true, data});
+							reload()
 						},
 						(error) => {
 							setIsLoaded(true);

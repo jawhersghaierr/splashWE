@@ -91,12 +91,16 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    let {data = null, isFetching} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
-
+    let {refetch, data = null, isFetching} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
+    const reload = () => {
+        refetch()
+    }
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     let factLines = []
     if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
+
+
 
     return (
 
@@ -234,12 +238,14 @@ export default function FacturesDetailsById({location, modialId = null}) {
 
             {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
                 data={data}
+                reload={reload}
                 setOpenMsg={setOpenMsg}
                 close={()=>setOpenRejeteDialog(false)}
                 opened={openRejeteDialog}/>}
 
             {nomRefs && <ConfirmFactureAnule nomRefs={nomRefs}
                 data={data}
+                reload={reload}
                 setOpenMsg={setOpenMsg}
                 close={()=>setOpenAnuleDialog(false)}
                 opened={openAnuleDialog}/>}

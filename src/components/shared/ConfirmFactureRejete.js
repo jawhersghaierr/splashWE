@@ -19,7 +19,7 @@ import {env_IP, ports} from "../../../env-vars";
 
 
 
-export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg}) => {
+export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {
 
 	const [motif, setMotif] = React.useState('');
 	const [comment, setComment] = React.useState('');
@@ -58,6 +58,7 @@ export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg})
 						(data) => {
 							setIsLoaded(true);
 							setOpenMsg({success:true, open: true, data});
+							reload()
 						},
 						(error) => {
 							setIsLoaded(true);
