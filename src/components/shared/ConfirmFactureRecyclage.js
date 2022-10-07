@@ -30,7 +30,7 @@ export const ConfirmFactureRecyclage = ({data, opened, setOpenMsg, close}) => {
 				.then(
 					(data) => {
 						setIsFetching(false);
-						setOpenMsg({success:true, open: true, data});
+						setOpenMsg({success:true, open: true, data: 'Votre facture a été recyclée avec succès'});
 						close()
 					},
 					(error) => {

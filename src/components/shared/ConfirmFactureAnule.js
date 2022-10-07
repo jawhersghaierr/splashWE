@@ -56,7 +56,7 @@ export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, r
 					.then(
 						(data) => {
 							setIsLoaded(true);
-							setOpenMsg({success:true, open: true, data});
+							setOpenMsg({success:true, open: true, data: 'Votre facture a été annulée avec succès'});
 							reload()
 						},
 						(error) => {

@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles, createStyles} from "@mui/styles";
-
-// import { SvgIconProps } from '@mui/material/SvgIcon'
-
 import List from '@mui/material/List'
-
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
@@ -15,8 +11,6 @@ import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
 
 import HostMenuItemComponent from './HostMenuItemComponent'
-import {Popover} from "@material-ui/core";
-import {bindHover} from "material-ui-popup-state/core";
 
 // React runtime PropTypes
 export const HostMenuItemPropTypes = {
@@ -35,7 +29,6 @@ const HostMenuItem = props => {
     function handleClick() {
         setOpen(!open)
     }
-
 
     const MenuItemRoot = (
         <HostMenuItemComponent className={classes.menuItem} key={link} link={link} onClick={handleClick} popItems={popItems}>

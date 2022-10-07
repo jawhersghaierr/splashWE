@@ -263,7 +263,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
                     {openMsg.success && <AlertTitle><b>Succès</b></AlertTitle>}
                     {!openMsg.success && <AlertTitle><b>Error</b></AlertTitle>}
                     {openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
-                        Votre facture a été rejetée avec succès
+                        {openMsg.data}
                     </div>}
                     {!openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
                         {openMsg.error}

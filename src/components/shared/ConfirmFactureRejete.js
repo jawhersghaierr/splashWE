@@ -57,7 +57,7 @@ export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, 
 					.then(
 						(data) => {
 							setIsLoaded(true);
-							setOpenMsg({success:true, open: true, data});
+							setOpenMsg({success:true, open: true, data: 'Votre facture a été rejetée avec succès'});
 							reload()
 						},
 						(error) => {
@@ -70,7 +70,7 @@ export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, 
 			}
 
 		} else {
-			setRequired('Un motif d\'annulation doit être sélectionné *')
+			setRequired('Un motif de rejet doit être sélectionné *')
 		}
 	}
 
@@ -104,10 +104,11 @@ export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, 
 						value={motif}
 						input={<OutlinedInput className="RoundedEl" label="Motif de rejet" sx={{minWidth: 200}}/>}
 						id="motif">
-						{Object.keys(nomRefs.FACTURE_ERROR).map(code => (<MenuItem key={code} value={code}>
-							{nomRefs.FACTURE_ERROR[code]}
+						{Object.keys(motifOptions).map(code => (<MenuItem key={code} value={code}>
+							{motifOptions[code]}
 						</MenuItem>))}
 					</Select>
+					<span style={{padding: '0 10px'}}>{required || ''}</span>
 				</FormControl>
 
 				<FormControl sx={{flex: 2, margin: '15px'}}>

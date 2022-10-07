@@ -1,24 +1,21 @@
-import React, {useRef, useState} from 'react'
+import React, {forwardRef, useRef, useState} from 'react'
 import makeStyles from '@mui/styles/makeStyles';
 import createStyles from '@mui/styles/createStyles';
 
 import List from '@mui/material/List'
-
 import IconDashboard from '@mui/icons-material/Dashboard'
-import AccountBalance from '@mui/icons-material/AccountBalance'
 import IconPeople from '@mui/icons-material/People'
 import IconBarChart from '@mui/icons-material/BarChart'
 import IconLibraryBooks from '@mui/icons-material/LibraryBooks'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
 import {drawerWidth} from '../utils/consts'
 import HostMenuItem from './HostMenuItem'
-import {ListItemIcon, ListItemText, MenuList, Paper, Popover, Popper, Typography} from "@material-ui/core";
-import PopupState, {bindPopover, bindTrigger} from "material-ui-popup-state";
-import Box from "@mui/material/Box";
-import {bindHover} from "material-ui-popup-state/core";
+import {MenuList, Popper} from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
-import PaiementDetailsById from "../components/paiement/PaiementDetailsById";
+import './menu.scss'
+import ListItem from "@mui/material/ListItem";
+import {NavLink} from "react-router-dom";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 const hostMenuItems = [
     {
@@ -47,45 +44,45 @@ const hostMenuItems = [
         Icon: IconPeople,
     },
     {
-        name: 'Paiements',
+        name: 'Paiements', Icon: IconBarChart,
         popItems: [
             {name: 'Paiements',Icon: IconBarChart, link: '/paiement'},
             {name: 'Virements',Icon: IconBarChart, link: '/virements'},
         ]
     },
+    // {
+    //     Icon: IconBarChart,
+    //     name: 'Paiements',
+    //     link: '/paiement'
+    // },
+    // {
+    //     Icon: IconBarChart,
+    //     name: 'Virements',
+    //     link: '/virements'
+    // },
     {
-        Icon: IconBarChart,
-        name: 'Paiements',
-        link: '/paiement'
-    },
-    {
-        Icon: IconBarChart,
-        name: 'Virements',
-        link: '/virements'
-    },
-    {
-        name: 'ROC',
+        name: 'ROC', Icon: IconBarChart,
         popItems: [
             {name: 'Services en ligne',Icon: IconLibraryBooks, link: '/serviceEnLigne'},
             {name: 'Factures',Icon: IconPeople, link: '/factures'},
             {name: 'Configuration Intraiteables',Icon: IconBarChart, link: '/intraitables'},
         ]
     },
-    {
-        Icon: IconLibraryBooks,
-        name: 'Services en ligne',
-        link: '/serviceEnLigne'
-    },
-    {
-        Icon: IconPeople,
-        name: 'Factures',
-        link: '/factures'
-    },
-    {
-        name: 'Intraitables',
-        link: '/intraitables',
-        Icon: IconBarChart,
-    },
+    // {
+    //     Icon: IconLibraryBooks,
+    //     name: 'Services en ligne',
+    //     link: '/serviceEnLigne'
+    // },
+    // {
+    //     Icon: IconPeople,
+    //     name: 'Factures',
+    //     link: '/factures'
+    // },
+    // {
+    //     name: 'Intraitables',
+    //     link: '/intraitables',
+    //     Icon: IconBarChart,
+    // },
 
     // {
     //     name: 'Remote test App',
@@ -101,13 +98,13 @@ const hostMenuItems = [
 
 
 const RecursiveMenuItem = (props) => {
+    const { name, link, Icon, items = [] , popItems = [] } = props
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const ref = useRef();
 
-    const Icon = props.icon
     return (
-        <div style={{background: '#1A4565', color: '#fff', border: 0, borderTopRightRadius: '15px'}}>
+        <div className={'menuItem'}>
             <MenuItem {...props}
                 ref={ref}
                 className={open ? classes.active : ""}
@@ -115,8 +112,35 @@ const RecursiveMenuItem = (props) => {
                 onMouseLeave={() => setOpen(false)}
                 onClick={() => setOpen(false)}>
 
-                {props.icon && <Icon style={{marginRight: '5px'}}/>}
-                <span>{props.label}</span>
+                {link && <ListItem
+                    button
+                    component={forwardRef((props, ref) => <NavLink
+                        exact {...props}
+                        innerRef={ref}
+                        key={`navlink${link}`}
+                    />)}
+                    to={link}
+                    key={`listItem${link}`}>
+                        {!!Icon && (
+                            <ListItemIcon className={classes.menuItemIcon}>
+                                <Icon/>
+                            </ListItemIcon>
+                        )}
+                        <ListItemText primary={name} />
+                </ListItem>}
+                {!link && <ListItem
+                    button
+                    to={link}
+                    key={`listItem${link}`}>
+                        {!!Icon && (
+                            <ListItemIcon className={classes.menuItemIcon}>
+                                <Icon/>
+                            </ListItemIcon>
+                        )}
+                        <ListItemText primary={name} />
+                </ListItem>}
+
+
                 {props?.popItems && <Popper
                     anchorEl={ref.current}
                     open={open}
@@ -129,16 +153,15 @@ const RecursiveMenuItem = (props) => {
                             enabled: true,
                             boundariesElement: "viewport"
                         }
-                    }}>
+                    }} className={'poperStyle'}>
                     {props?.popItems.map((item, index) => {
-                        console.log(item?.popItems)
+
                         return <RecursiveMenuItem
                             autoFocus={false}
-                            popItems={item?.popItems}
-                            label={item.name}
                             key={`it_${index}`}
-                            icon={item.Icon}/>
+                            {...item}/>
                     })}
+
                 </Popper>}
             </MenuItem>
         </div>
@@ -158,10 +181,8 @@ const HostMenu = () => {
                 {hostMenuItems.map((item, index) =>
                     <RecursiveMenuItem
                         autoFocus={false}
-                        popItems={item?.popItems}
-                        label={item.name}
                         key={`it_${index}`}
-                        icon={item.Icon}/>
+                        {...item}/>
                 )}
             </MenuList>
         </List>
@@ -178,13 +199,13 @@ const useStyles = makeStyles(theme =>
         },
         menuItem: {
             width: drawerWidth,
+            // '&:hover': { backgroundColor: theme.palette.primary.main },
         },
         menuItemIcon: {
             color: '#1976d2',
         },
     }),
 )
-
 
 
 export default HostMenu
