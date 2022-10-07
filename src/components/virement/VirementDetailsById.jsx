@@ -148,7 +148,7 @@ export default function VirementDetailsById({location, modialId = null}) {
                         <div style={{flex: 1}}>
                             <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true}
                                      justify={true}/>
-                            <RowInfo label={'Nº de facturation PS'} value={data?.virementGeneralInfo?.numPsAPayer}
+                            <RowInfo label={'Nº PS à payer'} value={data?.virementGeneralInfo?.numPsAPayer}
                                      border={true} justify={true}/>
                             <RowInfo label={'Date de rapprochement bancaire'}
                                      value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)}

@@ -64,10 +64,14 @@ export const rocEnLigneApi = createApi({
                         filters.idPerFact = idPerFact[0]
                     }
                 }
-
-                if (nir && nir != undefined && cle && cle != undefined) {
+                /**
+                 * just for Facturation
+                 *
+                    if (nir && nir != undefined && cle && cle != undefined) {
                     filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
                 }
+
+                 */
 
                 filters.cashe = null
 

@@ -13,8 +13,8 @@ export const columns = nomRefs => [
 
     { field: 'numVirement', headerName: 'N° virement', flex: 1, width: 175, type: "number" },
     { field: 'numDecompte', headerName: 'N° décompte', flex: 1, minWidth: '175px', type: "number" },
-    { field: 'numPsAPayer', headerName: 'N° de facturation PS', flex: 2, minWidth: '175px' },
-    { field: 'iban', headerName: 'IBAN \n BIC', flex: 3, sortable: false, renderCell: (params) => {
+    { field: 'numPsAPayer', headerName: 'Nº PS à payer', flex: 2, minWidth: '175px' },
+    { field: 'iban', headerName: 'IBAN\nBIC', flex: 3, sortable: false, renderCell: (params) => {
             return <span>{params.value}<br/>{params.row?.bic}</span>;
     }},
     { field: 'mntVirement', headerName: 'Montant', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
