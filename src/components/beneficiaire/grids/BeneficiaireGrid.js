@@ -49,7 +49,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
                     {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
                 </Typography>
             </div>
-            {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
             {!isFetching && isSuccess && <DataGrid
                 rows={data?.result || []}
                 columns={columns(enviroments)}

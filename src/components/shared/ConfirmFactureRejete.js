@@ -16,7 +16,10 @@ import FormControl from '@mui/material/FormControl';
 import {useEffect, useState} from "react";
 import {reshapeMotifVsStatus} from "../factures/utils/utils";
 import {env_IP, ports} from "../../../env-vars";
-export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
+
+
+
+export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg}) => {
 
 	const [motif, setMotif] = React.useState('');
 	const [comment, setComment] = React.useState('');
@@ -33,12 +36,11 @@ export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, 
 	};
 
 	let motifOptions = reshapeMotifVsStatus({status: ['REJETEE'], nomRefs})
+
 	const confirme = () => {
 		if(motif){
 			console.log('confirme > ', motif, comment)
-			agreed();
-			disagreed()
-
+			close()
 			if (url && data && data?.id) {
 				fetch(url,{
 					method: 'PATCH',
@@ -88,7 +90,7 @@ export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, 
 				<Typography variant="h5" noWrap component="div">
 					<b>Rejeter la facture</b>
 				</Typography>
-				<CancelIcon style={{width: 30, height: 30,color: '#003154', cursor: 'pointer'}} onClick={disagreed}/>
+				<CancelIcon style={{width: 30, height: 30,color: '#003154', cursor: 'pointer'}} onClick={close}/>
 			</DialogTitle>
 
 			<DialogContent sx={{display: 'flex', flexDirection: 'row'}}>
@@ -119,7 +121,7 @@ export const ConfirmFactureRejete = ({opened, agreed, disagreed, nomRefs, data, 
 			</DialogContent>
 
 			<DialogActions>
-				<Button onClick={disagreed} autoFocus className="RoundedEmptyButt" >
+				<Button onClick={close} autoFocus className="RoundedEmptyButt" >
 					Annuler
 				</Button>
 				<Button onClick={confirme} className="RoundedEl" >

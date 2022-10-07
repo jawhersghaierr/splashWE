@@ -42,7 +42,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
     };
 
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
         {isSuccess && <DataGrid
             rows={data?.results || []}
             columns={columns({nomRefs, handleModalOpen})}

@@ -22,7 +22,7 @@ export const SelAssociesGrid = ({numEng}) => {
     };
 
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
         {isSuccess && data && <DataGrid
                     rows={data.assosiete || []}
                     columns={columns({handleModalOpen})}

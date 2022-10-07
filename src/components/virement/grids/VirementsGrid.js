@@ -47,7 +47,7 @@ export const VirementsGrid = ({disciplines}) => {
     }, [criterias, currentPage]);
 
     return <div className="gridContent">
-        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
         {(isSuccess && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>

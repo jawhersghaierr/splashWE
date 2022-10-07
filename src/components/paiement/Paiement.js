@@ -13,7 +13,7 @@ export const Paiement = (props) => {
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
             <b>Paiement</b>
         </Typography>
-        {disciplinesIsFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {disciplinesIsFetching && <CircularProgress style={{margin: '100px auto'}}/>}
         <SearchAccordion
             disciplines={disciplines}
             disciplinesIsFetching={disciplinesIsFetching}

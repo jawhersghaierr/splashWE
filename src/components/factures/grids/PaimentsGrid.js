@@ -25,7 +25,7 @@ export const PaimentsGrid = ({factId, nomRefs}) => {
 
 
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
 
         {isSuccess && <DataGrid
             rows={data?.elements || []}

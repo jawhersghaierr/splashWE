@@ -17,7 +17,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {env_IP, ports} from "../../../env-vars";
 import {reshapeMotifVsStatus} from "../factures/utils/utils";
 
-export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, setOpenMsg}) => {
+export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg}) => {
 
 	const [motif, setMotif] = useState('');
 	const [comment, setComment] = useState('');
@@ -38,8 +38,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 	const confirme = () => {
 		if(motif){
 			console.log('confirme > ', motif, comment)
-			agreed();
-			disagreed()
+			close();
 
 			if (url && data && data?.id) {
 				fetch(url,{
@@ -90,7 +89,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 				<Typography variant="h5" noWrap component="div">
 					<b>Annuler la facture</b>
 				</Typography>
-				<CancelIcon style={{width: 30, height: 30,color: '#003154', cursor: 'pointer'}} onClick={disagreed}/>
+				<CancelIcon style={{width: 30, height: 30,color: '#003154', cursor: 'pointer'}} onClick={close}/>
 			</DialogTitle>
 
 			<DialogContent sx={{display: 'flex', flexDirection: 'row'}}>
@@ -124,7 +123,7 @@ export const ConfirmFactureAnule = ({opened, agreed, disagreed, nomRefs, data, s
 			</DialogContent>
 
 			<DialogActions>
-				<Button onClick={disagreed} autoFocus className="RoundedEmptyButt" >
+				<Button onClick={close} autoFocus className="RoundedEmptyButt" >
 					Annuler
 				</Button>
 				<Button onClick={confirme} className="RoundedEl" >

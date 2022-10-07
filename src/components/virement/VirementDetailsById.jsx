@@ -84,7 +84,7 @@ export default function VirementDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détails du virement</b>
             </Typography>
-            {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.idFacture}
             </Typography>
@@ -128,7 +128,7 @@ export default function VirementDetailsById({location, modialId = null}) {
                     <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                         <b>Détail</b>
                     </Typography>
-                    {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+                    {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
                     {isSuccess && <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
                             <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -161,7 +161,7 @@ export default function VirementDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
-                {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+                {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
                 {data && oneRowHeader(data)}
                 {(data?.associatedElements && data?.associatedElements.length > 0 && nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs}/>}
             </TabPanel>

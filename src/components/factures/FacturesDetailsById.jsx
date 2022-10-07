@@ -104,7 +104,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détails de la facture</b>
             </Typography>
-            {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}
             </Typography>
@@ -117,8 +117,6 @@ export default function FacturesDetailsById({location, modialId = null}) {
                              size="medium"
                              onClick={(e) => {
                                  setOpenRejeteDialog(true)
-                                 console.log(e)
-                                 console.log(data)
                              }}
                              className="RoundedEmptyButt" style={{marginRight: '10px'}}>
                         Confirm le rejet
@@ -127,8 +125,6 @@ export default function FacturesDetailsById({location, modialId = null}) {
                     {data?.status == 'A_RECYCLER' && <Button variant="contained" size="medium"
                             onClick={(e)=>{
                                 setOpenRecyclageDialog(true)
-                                console.log(e)
-                                console.log(data)
                             }}
                             style={{marginRight: '10px'}} className="RoundedEl">
                         Recycler
@@ -138,8 +134,6 @@ export default function FacturesDetailsById({location, modialId = null}) {
                             size="medium"
                             onClick={(e)=>{
                                 setOpenAnuleDialog(true)
-                                console.log(e)
-                                console.log(data)
                             }}
                             className="RoundedEl" style={{marginRight: '10px'}} >
                         Annuler
@@ -234,33 +228,20 @@ export default function FacturesDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <ConfirmFactureRecyclage data={data}
-                 agreed={()=> { setOpenMsg({...openMsg, open: true}) }}
-                 disagreed={()=> {
-                    setOpenMsg({...openMsg, open: true})
-                    setOpenRecyclageDialog(false)
-                 }}
+                 setOpenMsg={setOpenMsg}
+                 close={()=>setOpenRecyclageDialog(false)}
                  opened={openRecyclageDialog}/>
 
             {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
                 data={data}
                 setOpenMsg={setOpenMsg}
-                agreed={() => {
-                    setOpenMsg({...openMsg, open: true})
-                }}
-                disagreed={() => {
-                    setOpenRejeteDialog(false)
-                }}
+                close={()=>setOpenRejeteDialog(false)}
                 opened={openRejeteDialog}/>}
 
             {nomRefs && <ConfirmFactureAnule nomRefs={nomRefs}
                 data={data}
                 setOpenMsg={setOpenMsg}
-                agreed={()=> {
-                    setOpenMsg({...openMsg, open: true})
-                }}
-                disagreed={()=> {
-                    setOpenAnuleDialog(false)
-                }}
+                close={()=>setOpenAnuleDialog(false)}
                 opened={openAnuleDialog}/>}
 
             <Snackbar open={openMsg.open}

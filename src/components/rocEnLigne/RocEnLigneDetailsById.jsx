@@ -79,7 +79,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                 <b>Détail de la demande {data?.common && data?.common?.typeDemande}</b>
             </Typography>
-            {isFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+            {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
             {isSuccess && <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.common?.numeroEngagement}
             </Typography>}
@@ -141,7 +141,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
                         <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                             <b>Informations demande</b>
                         </Typography>
-                        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+                        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
                         {isSuccess && nomRefsIsSuccess && <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
                             <div style={{flex: 1, marginRight: '5%'}}>
                                 <RowInfo label={'Date de réception'}
@@ -202,17 +202,17 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
 
             <TabPanel value={value} index={1} data={data}>
                 {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
-                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
                 {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
-                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
                 {engagements && nomRefsIsSuccess && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs}/>}
-                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px 50%'}}/>}
+                {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
