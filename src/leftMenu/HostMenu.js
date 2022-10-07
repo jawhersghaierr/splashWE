@@ -48,6 +48,10 @@ const hostMenuItems = [
     },
     {
         name: 'Paiements',
+        popItems: [
+            {name: 'Paiements',Icon: IconBarChart, link: '/paiement'},
+            {name: 'Virements',Icon: IconBarChart, link: '/virements'},
+        ]
     },
     {
         Icon: IconBarChart,
@@ -61,6 +65,11 @@ const hostMenuItems = [
     },
     {
         name: 'ROC',
+        popItems: [
+            {name: 'Services en ligne',Icon: IconLibraryBooks, link: '/serviceEnLigne'},
+            {name: 'Factures',Icon: IconPeople, link: '/factures'},
+            {name: 'Configuration Intraiteables',Icon: IconBarChart, link: '/intraitables'},
+        ]
     },
     {
         Icon: IconLibraryBooks,
@@ -76,11 +85,6 @@ const hostMenuItems = [
         name: 'Intraitables',
         link: '/intraitables',
         Icon: IconBarChart,
-        popItems: [
-            {name: 'Services en ligne', link: '/ligne'},
-            {name: 'Factures', link: '/factures'},
-            {name: 'Configuration Intraiteables', link: '/intraitFactures'},
-        ]
     },
 
     // {
@@ -99,36 +103,45 @@ const hostMenuItems = [
 const RecursiveMenuItem = (props) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const ref = useRef(null);
+    const ref = useRef();
 
     const Icon = props.icon
     return (
-        <MenuItem
-            {...props}
-            ref={ref}
-            className={open ? classes.active : ""}
-            onMouseEnter={() => setOpen(true)}
-            onMouseLeave={() => setOpen(false)}
-        >
-            <Icon/>
-            <span>{props.label}</span>
-            <Popper
-                anchorEl={ref.current}
-                open={open}
-                placement={props.placement ?? "right"}
-                modifiers={{
-                    flip: {
-                        enabled: true
-                    },
-                    preventOverflow: {
-                        enabled: true,
-                        boundariesElement: "viewport"
-                    }
-                }}
-            >
-                children
-            </Popper>
-        </MenuItem>
+        <div style={{background: '#1A4565', color: '#fff', border: 0, borderTopRightRadius: '15px'}}>
+            <MenuItem {...props}
+                ref={ref}
+                className={open ? classes.active : ""}
+                onMouseEnter={() => setOpen(true)}
+                onMouseLeave={() => setOpen(false)}
+                onClick={() => setOpen(false)}>
+
+                {props.icon && <Icon style={{marginRight: '5px'}}/>}
+                <span>{props.label}</span>
+                {props?.popItems && <Popper
+                    anchorEl={ref.current}
+                    open={open}
+                    placement={props.placement ?? "right-start"}
+                    modifiers={{
+                        flip: {
+                            enabled: true
+                        },
+                        preventOverflow: {
+                            enabled: true,
+                            boundariesElement: "viewport"
+                        }
+                    }}>
+                    {props?.popItems.map((item, index) => {
+                        console.log(item?.popItems)
+                        return <RecursiveMenuItem
+                            autoFocus={false}
+                            popItems={item?.popItems}
+                            label={item.name}
+                            key={`it_${index}`}
+                            icon={item.Icon}/>
+                    })}
+                </Popper>}
+            </MenuItem>
+        </div>
     );
 };
 
@@ -137,15 +150,21 @@ const HostMenu = () => {
     return (
         <List component="nav" className={classes.hostMenu} disablePadding>
             {/* <HostMenuItem {...appMenuItems[0]} /> */}
-            {hostMenuItems.map((item, index) => (
-                <HostMenuItem {...item} key={index} />
-            ))}
 
-            {/*<MenuList>*/}
-            {/*    {hostMenuItems.map((item, index) =>*/}
-            {/*        <RecursiveMenuItem autoFocus={false} label={item.name} key={`it_${index}`} icon={item.Icon}/>*/}
-            {/*    )}*/}
-            {/*</MenuList>*/}
+            {/*{hostMenuItems.map((item, index) => (*/}
+            {/*    <HostMenuItem {...item} key={index} />*/}
+            {/*))}*/}
+
+            <MenuList>
+                {hostMenuItems.map((item, index) =>
+                    <RecursiveMenuItem
+                        autoFocus={false}
+                        popItems={item?.popItems}
+                        label={item.name}
+                        key={`it_${index}`}
+                        icon={item.Icon}/>
+                )}
+            </MenuList>
         </List>
     )
 }
