@@ -37,6 +37,7 @@ import PanelNIR from '../../shared/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'
+import {isValidDate} from "../../../utils/convertor-utils";
 
 const StyledCard = styled(Card)(({ theme }) => ({
     "&.MuiPaper-rounded": {
