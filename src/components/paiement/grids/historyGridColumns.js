@@ -13,7 +13,7 @@ export const columns = nomRefs => [
     { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => {
         return <Chip label={paiementsStatus[params.value]?.label}  sx={{color: 'black', bgcolor: paiementsStatus[params.value]?.color }}/>
     }},
-    { field: 'label', headerName: 'Libellé', flex: 1, renderCell: (params) => {
+    { field: 'label', headerName: 'Détails', flex: 1, renderCell: (params) => {
         return (nomRefs?.PAIEMENT_DETAILS[params.value] || params.value)
     }},
 
