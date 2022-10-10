@@ -12,7 +12,7 @@ import {CircularProgress} from "@mui/material";
 import MoreThan200Results from "../../shared/MoreThan200Results";
 
 
-export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
+export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
 
     const criterias = {numEng: engagements.join()}
     const [currentPage, setCurrentPage] = useState( 0);
@@ -20,6 +20,8 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
         sortDirection: null,
         sortProperty: null
     });
+
+    let shouldShowEmptyGrid = (engagements & engagements.length > 0)? false : true;
 
     const {data, isFetching, isSuccess, isError, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
@@ -35,7 +37,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        if (data) setOpenModal({open: true, data});
+        if (data && noModal) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -43,7 +45,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
 
     return <div style={{margin: 0}}>
         {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
-        {isSuccess && <DataGrid
+        {(isSuccess || shouldShowEmptyGrid) && <DataGrid
             rows={data?.results || []}
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
@@ -85,7 +87,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs}) => {
         </Stack>}
 
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {(openModal?.data) && <FacturesDetailsById modialId={openModal?.data?.id} />}
+            {(openModal?.data) && <FacturesDetailsById modalId={openModal?.data?.id} />}
         </ModalInfo>
 
         <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>

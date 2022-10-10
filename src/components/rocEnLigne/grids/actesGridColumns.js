@@ -47,10 +47,9 @@ export const columns = nomRefs => [
     { field: 'depenseReelle', headerName: 'DR', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value|| 0), cellClassName: 'boldValue'},
     { field: 'montantRC', headerName: 'MNT RC', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue'},
     { field: 'montantRAC', headerName: 'RAC', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue' },
-    { field: 'statut', headerName: '', flex: 1, renderCell: (params) => {
+    { field: 'statut', headerName: '',width: 15, renderCell: (params) => {
             return (params.value && params.value !== undefined ) && <LightTooltip title={params.value} placement="top" arrow>
                 <ErrorOutlineOutlinedIcon sx={{verticalAlign: 'top', width: 30, height: 30, margin: '0 5px', cursor: 'pointer'}}/>
             </LightTooltip> || ''
     }},
 ];
-

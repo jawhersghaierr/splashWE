@@ -27,7 +27,7 @@ export const beneficiaireApi = createApi({
                     nom,
                     numeroAdherent,
                     birdDate,
-                    dateDeNaissance,
+                    dateNaissance,
                     numAdherentFamillial,
                     envCodeList,
                     dateDebutSoins,
@@ -46,14 +46,14 @@ export const beneficiaireApi = createApi({
                     dateFinSoins = new Date(dateFinSoins).toLocaleDateString('sv');
                 }
 
-                if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
-                    dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+                if (dateNaissance && dateNaissance != '' && dateNaissance != undefined) {
+                    dateNaissance = new Date(dateNaissance).toLocaleDateString('sv').replaceAll('-', '');
                 }
 
                 if (birdDate && birdDate != '' && birdDate != undefined) {
                     if (birdDate instanceof Date && !isNaN(birdDate)){
-                        dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else dateDeNaissance = birdDate.split('/').reverse().join('');
+                        dateNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+                    } else dateNaissance = birdDate.split('/').reverse().join('');
                 }
 
                 const size = 20;
@@ -64,7 +64,7 @@ export const beneficiaireApi = createApi({
                 if (prenom) url += `&prenom=${prenom}`;
                 if (nom) url += `&nom=${nom}`;
                 if (numeroAdherent) url += `&numeroAdherent=${numeroAdherent}`;
-                if (dateDeNaissance) url += `&dateDeNaissance=${dateDeNaissance}`;
+                if (dateNaissance) url += `&dateNaissance=${dateNaissance}`;
                 if (numAdherentFamillial) url += `&numAdherentFamillial=${numAdherentFamillial}`;
                 if (envCodeList) url += `&envCodeList=${envCodeList}`;
                 if (dateDebutSoins) url += `&dateDebutSoins=${dateDebutSoins}`;

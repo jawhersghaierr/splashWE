@@ -22,7 +22,7 @@ export const columns = ({nomRefs, configurations, domain, code}) => [
     { field: 'user', headerName: 'Utilisateur', flex: 1,renderCell: (params) => {
         return (params.value);
     }},
-    { field: 'details', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
+    { field: 'details', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/configuration/${domain}/${code}/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

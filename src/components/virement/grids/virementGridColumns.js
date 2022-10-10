@@ -21,7 +21,7 @@ export const columns = nomRefs => [
     { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => {
             return <Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[params.value]} sx={{color: 'black', bgcolor: paiementsVirementStatus[params.value].color}}/>
     }},
-    { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
+    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/virements/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

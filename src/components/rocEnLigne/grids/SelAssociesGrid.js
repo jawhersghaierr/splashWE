@@ -6,11 +6,11 @@ import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
 import './rocEnLigneGrid.scss';
 
-export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {
+export const SelAssociesGrid = ({selAssosiete, nomRefs, noModal}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        setOpenModal({open: true, data});
+        if (noModal) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -47,7 +47,7 @@ export const SelAssociesGrid = ({selAssosiete, nomRefs}) => {
 
         />
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {openModal?.data?.id && <RocEnLigneDetailsById modialId={openModal?.data?.id} />}
+            {openModal?.data?.id && <RocEnLigneDetailsById modalId={openModal?.data?.id} />}
         </ModalInfo>
 
     </div>

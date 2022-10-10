@@ -7,11 +7,11 @@ import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../VirementDetailsById";
 
-export const AssociesGrid = ({data, nomRefs}) => {
+export const AssociesGrid = ({data, nomRefs, noModal}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        setOpenModal({open: true, data});
+        if (noModal) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -47,8 +47,8 @@ export const AssociesGrid = ({data, nomRefs}) => {
                     }}
         />}
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modialId={openModal?.data?.id} />}
-            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}
+            {(openModal?.data?.type == 'PAIEMENT') && <PaiementDetailsById modalId={openModal?.data?.id} />}
+            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modalId={openModal?.data?.id} />}
         </ModalInfo>
     </div>
 }

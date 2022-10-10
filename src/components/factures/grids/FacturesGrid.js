@@ -78,6 +78,7 @@ export const FacturesGrid = ({disciplines}) => {
 
                 sortingMode="server"
                 onSortModelChange={handleOrdering}
+
                 sx={{ '& .boldValue': { fontWeight: 'bold', },
                     '& .MuiDataGrid-columnHeaderTitle': {
                         textOverflow: "clip",

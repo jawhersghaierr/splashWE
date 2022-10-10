@@ -30,8 +30,8 @@ export const columns = ({nomRefs}) => [
     { field: 'nom', headerName: 'Nom et date de naissance bénéficiaire', flex: 1, minWidth: '200px', sortable: false, renderCell: (params) => {
         return <span><b>{params.row.nom}</b>&nbsp;{params.row.prenom}<br/>{dateConvertNaissance(params.row.dateNaiss)}</span>
     }},
-    { field: 'montantRc', headerName: 'Montant RC', type: 'number', flex: 1, sortable: false, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
-    { field: 'id', headerName: '',flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
-            return <Link to={`/serviceEnLigne/${params?.value}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
+    { field: 'montantRc', headerName: 'Montant RC', type: 'number', flex: 1, sortable: false, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue' },
+    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
+        return <Link to={`/serviceEnLigne/${params?.value}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

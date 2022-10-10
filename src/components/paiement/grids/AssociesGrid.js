@@ -7,11 +7,11 @@ import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
 import './paiementsGrid.scss';
 
-export const AssociesGrid = ({data}) => {
+export const AssociesGrid = ({data, noModal}) => {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        setOpenModal({open: true, data});
+        if (noModal) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -20,7 +20,7 @@ export const AssociesGrid = ({data}) => {
 
     return <div style={{margin: 0}}>
 
-        {data && nomRefs && <DataGrid
+        {nomRefs && <DataGrid
                     rows={data || []}
                     columns={columns({nomRefs, handleModalOpen})}
                     pageSize={20}
@@ -49,7 +49,7 @@ export const AssociesGrid = ({data}) => {
         />}
 
         <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modialId={openModal?.data?.id} />}
+            {(openModal?.data?.type == 'VIREMENT') && <VirementDetailsById modalId={openModal?.data?.id} />}
         </ModalInfo>
     </div>
 }

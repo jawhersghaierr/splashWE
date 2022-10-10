@@ -40,6 +40,10 @@ export const facturesApi = createApi({
                     filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
                 }
 
+                if (dateFact && dateFact != '' && dateFact != undefined) {
+                    filters.dateFact = new Date(dateFact).toLocaleDateString('sv');//.toISOString()
+                }
+
                 if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
                     filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
                 }

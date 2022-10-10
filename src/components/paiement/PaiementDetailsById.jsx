@@ -66,11 +66,11 @@ const oneRowHeader = ({ dateCreation, dateModification}) => {
     </div>
 }
 
-export default function PaiementDetailsById({location, modialId = null}) {
+export default function PaiementDetailsById({location, modalId = null}) {
 
     const [openModal, setOpenModal] = useState({open: false, data: null});
     const handleModalOpen = (data = null) => {
-        setOpenModal({open: true, data});
+        if (!modalId) setOpenModal({open: true, data});
     };
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
@@ -82,7 +82,7 @@ export default function PaiementDetailsById({location, modialId = null}) {
         exact: true,
         strict: false
     });
-    const paiementID = (modialId)? modialId: match?.params?.id;
+    const paiementID = (modalId)? modalId: match?.params?.id;
 
     const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -92,6 +92,7 @@ export default function PaiementDetailsById({location, modialId = null}) {
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     if (isFetching || nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+    // debugger
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
@@ -111,7 +112,9 @@ export default function PaiementDetailsById({location, modialId = null}) {
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
                     <RowInfo label={'Facture'} value={
                         <Link href={`#`} sx={{cursor: 'pointer'}}
-                            onClick={()=>handleModalOpen({id: data.idFacture})}>
+                            onClick={()=> {
+                                handleModalOpen({id: data?.idFacture})
+                            }}>
                             {data?.numFacture || ' '}
                     </Link>}/>
                 </div>
@@ -132,7 +135,7 @@ export default function PaiementDetailsById({location, modialId = null}) {
 
             <TabPanel value={value} index={0} data={data}>
                 {data && oneRowHeader(data)}
-                {(data?.associatedElements && data?.associatedElements.length > 0) && <AssociesGrid data={data?.associatedElements}/>}
+                <AssociesGrid data={data?.associatedElements} noModal={!!!modalId}/>
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
@@ -141,7 +144,7 @@ export default function PaiementDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-facture-${openModal?.data?.id}`}>
-                {data && openModal?.data?.id  && <FacturesDetailsById modialId={openModal?.data?.id} />}
+                {data && openModal?.data?.id  && <FacturesDetailsById modalId={openModal?.data?.id} />}
             </ModalInfo>
 
         </Box>

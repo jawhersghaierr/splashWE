@@ -120,7 +120,7 @@ export default function SearchAccordion(props) {
                                       }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                              <Field name="c">
+                                              <Field name="label">
                                                   {({ input, meta }) => (
                                                       <div style={{flex: 2, marginRight: '20px'}}>
                                                           <TextField

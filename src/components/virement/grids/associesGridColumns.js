@@ -23,8 +23,7 @@ export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'details', headerName: 'Détails', flex: 3, renderCell: (params) => {
             return nomRefs.PAIEMENT_DETAILS[params.value] || params.value
         }},
-
-    { field: 'id', headerName: '', maxWidth: '15px', flex: 1, sortable: false, type: 'number', renderCell: (params) => {
+    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(params.row)}/>
             // return <Link to={`#`} onClick={()=>console.log(params?.row)} ><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
         }},

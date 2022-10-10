@@ -63,7 +63,7 @@ function a11yProps(index) {
 }
 
 
-export default function FacturesDetailsById({location, modialId = null}) {
+export default function FacturesDetailsById({location, modalId = null}) {
 
     const match = matchPath(location?.pathname, {
         path: "/factures/:id",
@@ -71,7 +71,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
         strict: false
     });
 
-    const factureID = (modialId)? modialId: match?.params?.id;
+    const factureID = (modalId)? modalId: match?.params?.id;
 
     const [openMsg, setOpenMsg] = useState({
         open: false,
@@ -81,7 +81,7 @@ export default function FacturesDetailsById({location, modialId = null}) {
     })
 
     const handleMsgClose = () => {
-        setOpenMsg({...openMsg, open: false})
+        if (!modalId) setOpenMsg({...openMsg, open: false})
     };
 
     const [value, setValue] = React.useState(0);
@@ -116,34 +116,35 @@ export default function FacturesDetailsById({location, modialId = null}) {
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
 
-                <div>
+                {!modalId && <div>
                     {data?.status == 'A_RECYCLER' && <Button variant="contained"
-                             size="medium"
-                             onClick={(e) => {
-                                 setOpenRejeteDialog(true)
-                             }}
-                             className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                                                             size="medium"
+                                                             onClick={(e) => {
+                                                                 setOpenRejeteDialog(true)
+                                                             }}
+                                                             className="RoundedEmptyButt" style={{marginRight: '10px'}}>
                         Confirm le rejet
                     </Button>}
 
                     {data?.status == 'A_RECYCLER' && <Button variant="contained" size="medium"
-                            onClick={(e)=>{
-                                setOpenRecyclageDialog(true)
-                            }}
-                            style={{marginRight: '10px'}} className="RoundedEl">
+                                                             onClick={(e) => {
+                                                                 setOpenRecyclageDialog(true)
+                                                             }}
+                                                             style={{marginRight: '10px'}} className="RoundedEl">
                         Recycler
                     </Button>}
 
                     {['BAP', 'PAYEE', 'REJETEE', 'REMBOURSEE'].includes(data?.status) && <Button variant="contained"
-                            size="medium"
-                            onClick={(e)=>{
-                                setOpenAnuleDialog(true)
-                            }}
-                            className="RoundedEl" style={{marginRight: '10px'}} >
+                                                                                                 size="medium"
+                                                                                                 onClick={(e) => {
+                                                                                                     setOpenAnuleDialog(true)
+                                                                                                 }}
+                                                                                                 className="RoundedEl"
+                                                                                                 style={{marginRight: '10px'}}>
                         Annuler
                     </Button>}
 
-                </div>
+                </div>}
 
             </div>
 
@@ -220,11 +221,11 @@ export default function FacturesDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng}/>}
+                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
-                {factureID && nomRefs && <PaimentsGrid factId={factureID} nomRefs={nomRefs}/>}
+                {factureID && nomRefs && <PaimentsGrid factId={factureID} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

@@ -47,7 +47,7 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
-export default function RocEnLigneDetailsById({location, modialId = null}) {
+export default function RocEnLigneDetailsById({location, modalId = null}) {
 
     const match = matchPath(location?.pathname, {
         path: "/serviceEnLigne/:id",
@@ -55,7 +55,7 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
         strict: false
     });
 
-    const rocID = (modialId)? modialId: match?.params?.id;
+    const rocID = (modalId)? modalId: match?.params?.id;
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -201,18 +201,18 @@ export default function RocEnLigneDetailsById({location, modialId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
-                {(data?.actes && actes.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
+                {(actes?.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
                 {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs}/>}
                 {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
+                {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
-                {engagements && nomRefsIsSuccess && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs}/>}
                 {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
+                {isSuccess && nomRefsIsSuccess && <FacturesAssociessGrid engagements={engagements} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

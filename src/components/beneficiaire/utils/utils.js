@@ -1,9 +1,9 @@
 
 export const checkInsidePanels = (values) => {
 
-    const {birdDate, prenom, nom, numeroAdherent, dateDeNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins} = values || {};
+    const {birdDate, prenom, nom, numeroAdherent, dateNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins} = values || {};
     let result =  {
-        panelBeneficiaires: (dateDeNaissance || birdDate)? true: false,
+        panelBeneficiaires: (dateNaissance || birdDate)? true: false,
         panelInfoOMC: (numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins)? true: false,
     }
     console.log(result)

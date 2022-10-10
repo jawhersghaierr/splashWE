@@ -34,8 +34,7 @@ export const columns = disciplines => [
             )}},
 
     { field: 'totalRc', headerName: 'RC paiement', type: 'number', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
-
-    { field: 'id', headerName: '', flex: 1, width: 15, type: 'number', sortable: false, renderCell: (params) => {
+    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/paiement/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];

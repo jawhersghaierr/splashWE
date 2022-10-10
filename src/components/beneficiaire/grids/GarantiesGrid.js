@@ -2,11 +2,10 @@ import React from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid, gridClasses } from '@mui/x-data-grid';
 import {simpleGarantieColumns, complexGarantieColumns} from "./gridGarantiesColumns";
-import './beneficiaireGrid.scss';
 
 export const GarantiesGrid = ({garanties, nom, simple = true}) => {
 
-    return <div className="gridContent">
+    return <div >
 
         {(garanties && nom) &&
             <DataGrid

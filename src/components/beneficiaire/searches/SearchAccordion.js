@@ -126,7 +126,7 @@ export default function SearchAccordion(props) {
 
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-                        if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
+                        if(field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
 
                         let environment = {};
                         for (let key in enviroments) {
@@ -234,7 +234,7 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails>
 
-                                    <Field name="dateDeNaissance">
+                                    <Field name="dateNaissance">
                                         {({ input: {onChange, value, ...rest}, meta }) => (
                                             <div className={"RoundDate"}>
                                                 <DatePicker
@@ -402,12 +402,12 @@ export default function SearchAccordion(props) {
                    const {
                        prenom, nom, numeroAdherent,
                        envCodeList,
-                       birdDate, dateDeNaissance,
+                       birdDate, dateNaissance,
                        numAdherentFamillial,
                        dateDebutSoins, dateFinSoins
                    } = values?.values;
 
-                    if(birdDate || envCodeList || dateDeNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
+                    if(birdDate || envCodeList || dateNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
                         setDotShow(true)
                     } else {
                         setDotShow(false)

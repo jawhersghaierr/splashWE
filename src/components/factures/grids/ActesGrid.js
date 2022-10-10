@@ -5,9 +5,24 @@ import {columns} from "./actesGridColumns";
 import './facturesGrid.scss';
 
 export const ActesGrid = ({data, nomRefs}) => {
+    let _data = {
+        id: 'total',
+        ligne: <b>Totaux</b>,
+        ro: 0,
+        depense: 0,
+        rc: 0,
+        rac: 0,
+    }
+
+    data.forEach(el => {
+        _data.ro += el.ro
+        _data.depense += el.depense
+        _data.rc += el.rc
+        _data.rac += el.rac
+    })
 
     return <DataGrid
-                    rows={data || []}
+                    rows={[...data, _data] || []}
                     columns={columns(nomRefs)}
                     pageSize={20}
                     autoHeight

@@ -196,40 +196,17 @@ export default function BeneficiaireDetailsById(props) {
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Information</h2>
                         {isFetching && <CircularProgress/>}
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            Environnement <br/>
-                            {nomEnviroments && <b>{nomEnviroments.find(e=>e.code == data?.environmentCode)?.libelle}</b>}
-                        </Typography>
+                        {nomEnviroments && <RowInfo label={'Environnement'}
+                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.libelle}/>}
 
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            N° Client Viamedis <br/>
-                            {nomEnviroments && <b>{nomEnviroments.find(e=>e.code == data?.environmentCode)?.numero}</b>}
-                        </Typography>
+                        {nomEnviroments && <RowInfo label={'N° Client Viamedis'}
+                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.numero}/>}
 
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            Type de contrat<br/>
-                            <b>{data?.contratIndividuelCollectifLabel}</b>
-                        </Typography>
-
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            N° de contrat<br/>
-                            <b>{data?.numeroContratClient}</b>
-                        </Typography>
-
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            Contrat résponsable<br/>
-                            <b>{(data?.contratResponsable)? 'OUI' : 'NON'}</b>
-                        </Typography>
-
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            Partenaire<br/>
-                            <b>{data?.nomPartenaire}</b>
-                        </Typography>
-
-                        <Typography variant="subtitle1" noWrap component="div" sx={{color: '#003154', marginBottom: '25px'}}>
-                            Centre de gestion<br/>
-                            <b>{data?.nomCentre}</b>
-                        </Typography>
+                        <RowInfo label={'Type de contrat'} value={data?.contratIndividuelCollectifLabel}/>
+                        <RowInfo label={'N° de contrat'} value={data?.numeroContratClient}/>
+                        <RowInfo label={'Contrat résponsable'} value={(data?.contratResponsable)? 'OUI' : 'NON'}/>
+                        <RowInfo label={'Partenaire'} value={data?.nomPartenaire}/>
+                        <RowInfo label={'Centre de gestion'} value={data?.nomCentre}/>
                     </Box>
 
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
@@ -238,10 +215,16 @@ export default function BeneficiaireDetailsById(props) {
                         {(data?.reseauSoins && nomReseaux) && data?.reseauSoins.map( (reseau, i) => {
                             let objReseau = nomReseaux.find(e=>e.code === reseau.reseauSoins)
                             return <div key={`reseau_${i}`} style={{margin: '25px 0 '}}>
-                                <b>{objReseau.libelle}</b>
-                                {(nomGaranties && objReseau?.codesGarantie) && objReseau.codesGarantie.map((garant, i) => <div key={`garant_${i}`} style={{margin: '15px'}}>
-                                    {nomGaranties.find(e => e.code === garant).libelle}
-                                </div>)}
+                                <b>{objReseau?.libelle}</b>
+                                {(nomGaranties && objReseau?.codesGarantie) &&
+                                    reseau.garanties.map((resoGarant, i) =>
+                                        <div key={`garant_${i}`} style={{margin: '15px'}}>
+                                            {nomGaranties.find(e => e.code === resoGarant)?.libelle}
+                                        </div>)}
+                                {/*{(nomGaranties && objReseau?.codesGarantie) && objReseau.codesGarantie.map((garant, i) =>*/}
+                                {/*    <div key={`garant_${i}`} style={{margin: '15px'}}>*/}
+                                {/*        {nomGaranties.find(e => e.code === garant)?.libelle}*/}
+                                {/*    </div>)}*/}
 
                             </div>
                         })}
@@ -266,12 +249,12 @@ export default function BeneficiaireDetailsById(props) {
                         </div>
                     </div>
                     {(garanties && nomRefs) &&<div style={{display: 'flex', width: '100%'}}>
-                        <div style={{flex: 1, margin: '15px'}}>
+                        <div style={{flex: 1, margin: '15px 15px 15px 0'}}>
                             <h3>Garanties Tiers Payant simple</h3>
                             {isFetching && <CircularProgress/>}
                             <GarantiesGrid garanties={garanties} nom={nomRefs}/>
                         </div>
-                        <div style={{flex: 1, margin: '15px'}}>
+                        <div style={{flex: 1, margin: '15px 0 15px 0'}}>
                             <h3>Garanties Tiers Payant complexes</h3>
                             <GarantiesGrid garanties={garantiesComplex} nom={nomRefs} simple={false}/>
                         </div>

@@ -87,7 +87,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
 
         {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
 
-        {!isFetching && isSuccess && <Stack spacing={2} sx={{margin: '25px'}}>
+        {!isFetching && isSuccess && data?.totPages > 1 && <Stack spacing={2} sx={{margin: '25px'}}>
             <Pagination
                 count={data.totPages}
                 page={currentPage+1}

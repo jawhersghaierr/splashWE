@@ -65,7 +65,7 @@ const hostMenuItems = [
         popItems: [
             {name: 'Services en ligne',Icon: IconLibraryBooks, link: '/serviceEnLigne'},
             {name: 'Factures',Icon: IconPeople, link: '/factures'},
-            {name: 'Configuration Intraiteables',Icon: IconBarChart, link: '/intraitables'},
+            {name: 'Factures intraitables',Icon: IconBarChart, link: '/intraitables'},
         ]
     },
     // {

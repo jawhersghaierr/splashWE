@@ -62,7 +62,7 @@ const oneRowHeader = ({ creationDate, statusDate}) => {
 
 
 
-export default function VirementDetailsById({location, modialId = null}) {
+export default function VirementDetailsById({location, modalId = null}) {
 
     const match = matchPath(location?.pathname, {
         path: "/virements/:id",
@@ -70,7 +70,7 @@ export default function VirementDetailsById({location, modialId = null}) {
         strict: false
     });
 
-    const virementID = (modialId)? modialId: match?.params?.id;
+    const virementID = (modalId)? modalId: match?.params?.id;
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -131,10 +131,10 @@ export default function VirementDetailsById({location, modialId = null}) {
                     {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
                     {isSuccess && <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', maxHeight: '55px'}}>
                                 <RowInfo label={'IBAN'} value={data?.virementGeneralInfo?.iban} border={true}
                                          justify={true}/>
-                                <div style={{marginLeft: '35px', maxWidth: '300px'}}>
+                                <div style={{margin: '0 0 0 35px', maxWidth: '300px'}}>
                                     <RowInfo label={'BIC'} value={data?.virementGeneralInfo?.bic} border={true}
                                              justify={true}/>
                                 </div>
@@ -163,7 +163,7 @@ export default function VirementDetailsById({location, modialId = null}) {
             <TabPanel value={value} index={1} data={data}>
                 {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
                 {data && oneRowHeader(data)}
-                {(data?.associatedElements && data?.associatedElements.length > 0 && nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs}/>}
+                {(nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
         </Box>
