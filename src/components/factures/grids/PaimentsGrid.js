@@ -32,6 +32,7 @@ export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
             autoHeight
+            disableColumnMenu={true}
             disableColumnResize={false}
             components={{
                 NoRowsOverlay: () => (

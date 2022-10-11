@@ -62,6 +62,7 @@ export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
                 pageSize={10}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

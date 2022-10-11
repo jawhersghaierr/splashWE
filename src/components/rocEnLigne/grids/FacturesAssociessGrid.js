@@ -50,6 +50,7 @@ export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
             autoHeight
+            disableColumnMenu={true}
             disableColumnResize={false}
             components={{
                 NoRowsOverlay: () => (

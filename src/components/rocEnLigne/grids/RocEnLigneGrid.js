@@ -64,6 +64,7 @@ export const RocEnLigneGrid = ({disciplines}) => {
                 pageSize={size}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

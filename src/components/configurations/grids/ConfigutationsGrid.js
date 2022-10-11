@@ -26,6 +26,7 @@ export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {
                 columns={columns({nomRefs, configurations, domain, code})}
                 pageSize={20}
                 autoHeight
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

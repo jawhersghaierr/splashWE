@@ -61,6 +61,7 @@ export const FacturesGrid = ({disciplines}) => {
                 pageSize={size}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

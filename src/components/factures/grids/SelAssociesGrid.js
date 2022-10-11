@@ -28,6 +28,7 @@ export const SelAssociesGrid = ({numEng, noModal}) => {
                     columns={columns({handleModalOpen})}
                     pageSize={20}
                     autoHeight
+                    disableColumnMenu={true}
                     disableColumnResize={false}
                     components={{
                         NoRowsOverlay: () => (

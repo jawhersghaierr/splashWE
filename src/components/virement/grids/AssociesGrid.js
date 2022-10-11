@@ -24,6 +24,7 @@ export const AssociesGrid = ({data, nomRefs, noModal}) => {
                     columns={columns({nomRefs, handleModalOpen})}
                     pageSize={20}
                     autoHeight
+                    disableColumnMenu={true}
                     disableColumnResize={false}
                     components={{
                         NoRowsOverlay: () => (

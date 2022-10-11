@@ -14,6 +14,7 @@ export const GarantiesGrid = ({garanties, nom, simple = true}) => {
                 pageSize={10}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

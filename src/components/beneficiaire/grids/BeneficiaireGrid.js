@@ -56,6 +56,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
                 pageSize={20}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (

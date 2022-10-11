@@ -27,6 +27,7 @@ export const ActesGrid = ({data, nomRefs}) => {
                     columns={columns(nomRefs)}
                     pageSize={20}
                     autoHeight
+                    disableColumnMenu={true}
                     disableColumnResize={false}
                     components={{
                         NoRowsOverlay: () => (

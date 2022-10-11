@@ -59,6 +59,7 @@ export const PaiementsGrid = ({disciplines}) => {
                 pageSize={size}
                 autoHeight
                 hideFooter={true}
+                disableColumnMenu={true}
                 disableColumnResize={false}
                 components={{
                     NoRowsOverlay: () => (
