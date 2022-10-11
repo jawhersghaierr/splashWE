@@ -70,8 +70,8 @@ export const getStatusFromTypes = ({type = [], nomRefs}) => {
         tmpStatus = [...new Set(tmpStatus)]
     } else tmpStatus = Object.keys( nomRefs.ROC_STATUSES )
 
-    console.log('available types >', type)
-    console.log('getStatusFromTypes >', tmpStatus)
+    // console.log('available types >', type)
+    // console.log('getStatusFromTypes >', tmpStatus)
     return tmpStatus
 }
 

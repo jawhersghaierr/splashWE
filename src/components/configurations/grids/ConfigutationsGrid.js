@@ -21,7 +21,7 @@ export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {
 
     return <div className="gridContent">
 
-        {data && <DataGrid
+        <DataGrid
                 rows={data.results || []}
                 columns={columns({nomRefs, configurations, domain, code})}
                 pageSize={20}
@@ -48,7 +48,7 @@ export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {
                     },
                     '& .boldValue': { fontWeight: 'bold' }
                 }}
-            />}
+            />
 
     </div>
 }

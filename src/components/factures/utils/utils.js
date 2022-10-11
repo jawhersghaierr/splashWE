@@ -5,18 +5,18 @@ export const checkInsidePanels = (values) => {
 
     const {
         numFact, numEng, numAdh,
-        domaine, dateDeSoins,
+        domaine, dateEntree,
         dateReceivedStart, dateReceivedEnd,
         idPeriodeFact, dateFact, status, errorCode,
         numId, numJur, raisonSociale,
         department, numClient,
-        nom, prenom, dateDeNaissance, birdDate,
+        nom, prenom, dateNai, birdDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: true,
+        panelInformationGenerales: (domaine || dateEntree || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: true,
         panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: true,
-        panelInformationsBeneficiaires: (numClient || nom || prenom || dateDeNaissance || birdDate)? true: true,
+        panelInformationsBeneficiaires: (numClient || nom || prenom || dateNai || birdDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     return result

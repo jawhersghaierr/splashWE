@@ -19,7 +19,7 @@ export const columns = ({nomRefs, handleModalOpen}) => [
             }
             return result
     }},
-    { field: 'numero', headerName: 'N° Numero', type: 'number', flex: 1},
+    { field: 'numero', headerName: 'N° virement', type: 'number', flex: 1},
     { field: 'montant', headerName: 'Montant', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: 'Statut', flex: 1, renderCell: (params) => {
         let statusType = {status: params.value, type: params.row.type}

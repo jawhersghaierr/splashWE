@@ -17,7 +17,9 @@ export const dateConvertNaissanceRAW = (dat) => {
  * @returns {string} dd/mm/yyyy
  */
 export const dateConvertNaissance = (dat) => {
+
   if (dat == undefined) return "";
+  if (String(dat)?.length !== 8 ) return dat;
 
   let pattern = /^(\d{4})(\d{2})(\d{2})/i;
   let match = pattern.exec(dat);

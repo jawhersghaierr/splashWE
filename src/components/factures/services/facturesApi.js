@@ -22,14 +22,14 @@ export const facturesApi = createApi({
         getFactures: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
                 let {
-                    dateDeSoins, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
-                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateDeNaissance, birdDate, nir, cle
+                    dateEntree, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
+                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNai, birdDate, nir, cle
                 } = criterias;
 
                 let filters = {...criterias}
 
-                if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
-                    filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
+                if (dateEntree && dateEntree != '' && dateEntree != undefined) {
+                    filters.dateEntree = new Date(dateEntree).toLocaleDateString('sv');
                 }
 
                 if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
@@ -44,14 +44,14 @@ export const facturesApi = createApi({
                     filters.dateFact = new Date(dateFact).toLocaleDateString('sv');//.toISOString()
                 }
 
-                if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
-                    filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+                if (dateNai && dateNai != '' && dateNai != undefined) {
+                    filters.dateNai = new Date(dateNai).toLocaleDateString('sv').replaceAll('-', '');
                 }
 
                 if (birdDate && birdDate != '' && birdDate != undefined) {
                     if (birdDate instanceof Date && !isNaN(birdDate)){
-                        filters.dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
+                        filters.dateNai = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+                    } else filters.dateNai = birdDate.split('/').reverse().join('');
                 }
 
                 if (nir && nir != undefined && cle && cle != undefined) {

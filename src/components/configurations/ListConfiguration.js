@@ -23,6 +23,7 @@ export const ListConfiguration = (props) => {
     const {domain, code} = match?.params
     const [items, setItems] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [error, setError] = useState(false);
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
@@ -55,16 +56,22 @@ export const ListConfiguration = (props) => {
                 })
             }
             fetch(url)
-                .then(res => res.json())
-                .then(
-                    (result) => {
+                .then(res => {
+                    console.log('ar0rived res > ', res)
+                    if (res.ok && res.status == 204) return []
+                    return res.json()
+                })
+                .then((result) => {
+                        console.log('ar1rived result > ', result)
                         setIsLoaded(true);
-                        setItems(result);
-                    },
-                    (error) => {
-                        setIsLoaded(true);
-                        setError(error);
+                        setItems(result || []);
                     }
+                    // },
+                    // (error, meta) => {
+                    //     console.log('ar2rived error > ', meta)
+                    //     setIsLoaded(true);
+                    //     setError(error);
+                    // }
                 )
         }
 

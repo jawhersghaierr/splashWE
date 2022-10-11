@@ -106,7 +106,7 @@ export default function SearchAccordion() {
 
                           utils.changeValue(state, field, (value) => {
                               let _value = value;
-                              if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
+                              if(field?.modified?.birdDate && value == null) { _value.dateNai = null}
 
                                 switch (field.active) {
                                     case 'nir':
@@ -277,7 +277,7 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="dateDeSoins">
+                                                      <Field name="dateEntree">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -563,7 +563,7 @@ export default function SearchAccordion() {
 
                                                       <Field name="nom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['prenom', 'dateDeNaissance'], 'Nom')
+                                                          validators.associated(values, ['prenom', 'dateNai'], 'Nom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -581,7 +581,7 @@ export default function SearchAccordion() {
 
                                                       <Field name="prenom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['nom', 'dateDeNaissance'], 'Prénom')
+                                                          validators.associated(values, ['nom', 'dateNai'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -597,7 +597,7 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateDeNaissance" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
+                                                      <Field name="dateNai" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
                                                           {({ input: {onChange, value, ...rest}, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -712,7 +712,7 @@ export default function SearchAccordion() {
                                       const {
                                           numFact, numEng, numAdh,
                                           domaine,
-                                          dateDeSoins,
+                                          dateEntree,
                                           dateReceivedStart, dateReceivedEnd,
                                           idPeriodeFact, dateFact,
                                           status, errorCode,
@@ -720,7 +720,7 @@ export default function SearchAccordion() {
                                           raisonSociale,
                                           department, numClient,
                                           nom, prenom,
-                                          dateDeNaissance, birdDate,
+                                          dateNai, birdDate,
                                           nir, cle
                                       } = values?.values;
 
@@ -729,8 +729,8 @@ export default function SearchAccordion() {
                                       if (_motif) setMotif(_motif)
 
                                       if(
-                                          domaine || dateDeSoins || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateDeNaissance ||
+                                          domaine || dateEntree || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
+                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateNai ||
                                           birdDate || nir || cle
                                       ) {
                                           setDotShow(true)

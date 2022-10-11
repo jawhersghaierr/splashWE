@@ -159,6 +159,18 @@ export default function SearchAccordion(props) {
                                         _value.domaine = domainObj ? domainObj[field.active] : value[field.active];
                                     break
 
+
+                                    // case 'type':
+                                    //     if (_value?.type?.length === 0 ||
+                                    //         (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
+                                    //     ) _value = {..._value, type: undefined}
+                                    //     if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
+                                    //     if (_value.errorCode !== undefined) {
+                                    //         _value = {..._value, errorCode: undefined}
+                                    //     }
+                                    //
+                                    //     break
+
                                     case 'type': //Object.keys(nomRefs.ROC_TYPES)
                                         const typeObj = selectDeselectAllValues(value, nomRefs.ROC_TYPES, field.active);
                                         _value.type = typeObj ? typeObj[field.active] : value[field.active];
@@ -178,11 +190,13 @@ export default function SearchAccordion(props) {
                                         const statutObj = selectDeselectAllValues(value, localStatus, field.active);
                                         _value.statut = statutObj ? statutObj[field.active] : value[field.active];
 
-                                        if (_value.motif !== undefined) {
-                                            _value = {..._value, motif: undefined}
-                                        }
-                                        if (_value.sousMotif !== undefined) {
-                                            _value = {..._value, sousMotif: undefined}
+                                        if ( _value?.statut?.length > 0 && !( _value?.statut?.includes('REJETEE') || _value?.statut?.includes('INVALIDE') )) {
+                                            if (_value.motif !== undefined) {
+                                                _value = {..._value, motif: undefined}
+                                            }
+                                            if (_value.sousMotif !== undefined) {
+                                                _value = {..._value, sousMotif: undefined}
+                                            }
                                         }
                                     break
 
@@ -834,13 +848,6 @@ export default function SearchAccordion(props) {
                                        * ****************************************************************
                                        */
                                       if (type){
-                                          // console.log('choosen types ', type)
-                                          // setAvailableDep({
-                                          //     types: (type?.length > 0)? type : Object.keys( nomRefs.ROC_STATUSES ),
-                                          //     status: getStatusFromTypes({type, nomRefs}), // Object.keys( nomRefs.ROC_STATUSES ),
-                                          //     motif: getMotifsFromTypes({type, nomRefs}), // Object.keys( nomRefs.ROC_MOTIFS ),
-                                          //     subMotif: getSubMotifsFromMotif({motif: getMotifsFromTypes({type, nomRefs}), nomRefs}) // Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
-                                          // })
 
                                           let statusFromTypes = getStatusFromTypes({nomRefs, type})
                                           let tmpStatut = {}
@@ -863,6 +870,7 @@ export default function SearchAccordion(props) {
                                           setLocalMotif(tmpMotif)
 
                                           let tmpSubMotif = {}
+
                                           getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
                                               .forEach(subCode => {
                                                   // console.log(nomRefs.ROC_SOUS_MOTIFS[subCode])
@@ -873,43 +881,6 @@ export default function SearchAccordion(props) {
 
                                       }
 
-                                      if (statut) {
-                                          // console.log('choosen statuses ', statut)
-                                          // setAvailableDep({
-                                          //     types: availableDep.types,
-                                          //     status: (statut?.length > 0)? statut:  getStatusFromTypes({types: availableDep.types, nomRefs}),
-                                          //     motif: (statut?.length > 0)? getMotifsFromTypes({
-                                          //         type: getAvailableTypesFromStatuses({statut, nomRefs}),
-                                          //         nomRefs}): Object.keys( nomRefs.ROC_MOTIFS ),
-                                          //     subMotif: getSubMotifsFromMotif({motif: getMotifsFromTypes({type, nomRefs}), nomRefs}) // Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
-                                          // })
-
-                                          // let tmpMotifs = reshapeMotifFromStatus({statut, nomRefs});
-                                          // getAvailableTypesFromStatuses({nomRefs, statut})
-                                          // console.log('tmpMotifs > ', tmpMotifs)
-
-                                          let motifsFromTypes = getMotifsFromTypes({type, nomRefs})
-                                          let tmpMotif = {}
-
-                                          if (statut?.length > 0) {
-                                              getMotifsFromTypes({ type: getAvailableTypesFromStatuses({ statut,  nomRefs }), nomRefs })
-                                                  .forEach(code => tmpMotif[code] = nomRefs.ROC_MOTIFS[code])
-                                          } else getMotifsFromTypes({type, nomRefs}).forEach(code => tmpMotif[code] = nomRefs.ROC_MOTIFS[code])
-
-                                          if (Object.keys(tmpMotif).length == 0 ) tmpMotif = nomRefs.ROC_MOTIFS
-                                          setLocalMotif(tmpMotif)
-
-                                          let tmpSubMotif = {}
-                                          getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
-                                              .forEach(subCode => {
-                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
-                                              })
-                                          if (Object.keys(tmpMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
-                                          setLocalSubMotif(tmpSubMotif)
-
-                                          // setLocalMotif(nomRefs.ROC_MOTIFS);
-
-                                      }
                                       if (motif) {
 
                                               // setLocalSubMotif( getSubMotifsFromMotif({motif, nomRefs}) )
