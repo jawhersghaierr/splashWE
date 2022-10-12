@@ -12,6 +12,7 @@ import {useGetRefsQuery} from "../../../services/refsApi";
 import MoreThan200Results from "../../shared/MoreThan200Results";
 import mainPS from "../../../../assets/PS.png";
 import './rocEnLigneGrid.scss';
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
 export const RocEnLigneGrid = ({disciplines}) => {
 
@@ -46,6 +47,8 @@ export const RocEnLigneGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
+    console.log('data > ', data)
+    if (!isFetching && isSuccess  && (!data?.results || data?.results?.length == 0)) return <NoSearchResultsAlert/>
     if (isFetching || nomRefsIsFetching) return  <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">

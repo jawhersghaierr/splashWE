@@ -15,6 +15,7 @@ import {usePrevious, benefStatuses} from "../../utils/status-utils";
 import {dateConvertNaissanceRAW, convertDate} from "../../utils/convertor-utils";
 
 import {useEffect} from "react";
+import {NoGridResultsAlert} from "../shared/NoGridResultsAlert";
 
 
 function TabPanel(props) {
@@ -263,19 +264,21 @@ export default function BeneficiaireDetailsById(props) {
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data} sx={{display: 'flex'}}>
-                {(data?.ouvrantDroit)?
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {data?.ouvrantDroit && <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         <DoritInfoBox droit={data?.ouvrantDroit} />
                         {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => {
                             if (ouvrantDroit.id !== data.id) {
                                 return <DoritInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
                             } else return ''
                         })}
-                    </div> :
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
-                    </div>
-                }
+                    </div>}
+                {(data?.ayantDroit && data?.ayantDroit?.length > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
+                </div>}
+
+                {(!data?.ouvrantDroit || data?.ouvrantDroit?.length == 0)
+                && (!data?.ayantDroit || data?.ayantDroit?.length == 0) && <NoGridResultsAlert/>}
+
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>

@@ -9,7 +9,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 export const NoGridResultsAlert = () => {
 
 	return (
-		<Alert severity={'info'} sx={{ bgcolor: '#a5ecf7', color: '#001c41', boxShadow: 0 }}>
+		<Alert severity={'info'} sx={{ bgcolor: '#a5ecf7', color: '#001c41', boxShadow: 0, width: '100%' }}>
 			<AlertTitle sx={{margin: 0}}>Il n'y a pas d'éléments associés trouvés</AlertTitle>
 		</Alert>
 	);

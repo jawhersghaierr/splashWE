@@ -538,7 +538,7 @@ export default function SearchAccordion(props) {
 
                                                                       {localSubMotif && <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.motif?.length == Object.keys(localSubMotif).length) ?
+                                                                              primary={(values?.sousMotif?.length == Object.keys(localSubMotif).length) ?
                                                                                   <b>Désélectionner tout</b> :
                                                                                   <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>}
