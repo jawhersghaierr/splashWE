@@ -114,14 +114,14 @@ export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
 
 export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
     let tmpSubCode = []
-    if (motif.length > 0) {
+    if (motif && motif.length > 0) {
         motif.forEach(_motif => {
             if (_motif !== 'all') {
                 tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
             }
         })
         tmpSubCode = [...new Set(tmpSubCode)]
-    } else return nomRefs.ROC_SOUS_MOTIFS
+    } else return []
 
     return tmpSubCode
 }

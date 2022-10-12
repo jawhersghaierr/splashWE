@@ -870,9 +870,8 @@ export default function SearchAccordion(props) {
                                           setLocalMotif(tmpMotif)
 
                                           let tmpSubMotif = {}
-                                          getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
-                                              .forEach(subCode => {
-                                                  // console.log(nomRefs.ROC_SOUS_MOTIFS[subCode])
+                                          let tmpSubMotifsFromMotif =  getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                          tmpSubMotifsFromMotif.forEach(subCode => {
                                                   tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
                                               })
                                           if (Object.keys(tmpMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
