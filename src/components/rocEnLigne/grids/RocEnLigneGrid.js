@@ -1,19 +1,17 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetRocEnLigneQuery} from "../services/rocEnLigneApi";
 import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
-
 import { selectCriterias } from '../rocEnLigneSlice'
 import {columns} from "./rocEnLigneGridColumns";
 import {usePrevious} from '../../../utils/status-utils'
-import mainPS from "../../../../assets/PS.png";
-import './rocEnLigneGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import mainPS from "../../../../assets/PS.png";
+import './rocEnLigneGrid.scss';
 
 export const RocEnLigneGrid = ({disciplines}) => {
 

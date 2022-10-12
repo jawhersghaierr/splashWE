@@ -14,6 +14,7 @@ import { allowSearch } from '../../../utils/validator-utils';
 import MoreThan200Results from "../../shared/MoreThan200Results";
 import mainPS from "../../../../assets/PS.png";
 import './facturesGrid.scss';
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
 
 export const FacturesGrid = ({disciplines}) => {
@@ -46,6 +47,7 @@ export const FacturesGrid = ({disciplines}) => {
         }
     }, [criterias, currentPage]);
 
+    if (!isFetching && isSuccess  && !data?.results) return <NoSearchResultsAlert/>
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">

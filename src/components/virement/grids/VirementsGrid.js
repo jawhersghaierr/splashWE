@@ -12,6 +12,7 @@ import {useGetVirementsQuery} from "../services/virementsApi";
 import './virementsGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
 import { allowSearch } from '../../../utils/validator-utils';
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
 export const VirementsGrid = ({disciplines}) => {
 
@@ -46,8 +47,10 @@ export const VirementsGrid = ({disciplines}) => {
 
     }, [criterias, currentPage]);
 
+    if (!isFetching && isSuccess  && !data?.results) return <NoSearchResultsAlert/>
+    if (isFetching || nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+
     return <div className="gridContent">
-        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
         {(isSuccess && data?.results && nomRefs) && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>

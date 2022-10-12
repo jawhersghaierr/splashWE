@@ -16,6 +16,7 @@ import {usePrevious} from '../../../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
 import { allowSearch } from '../../../utils/validator-utils';
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
 export const IntraitablesGrid = () => {
 
@@ -46,6 +47,9 @@ export const IntraitablesGrid = () => {
         }
     }, [criterias, currentPage]);
 
+    console.log('data > ', data)
+    if (!isFetching && isSuccess  && (!data || data?.meta?.status == 204)) return <NoSearchResultsAlert/>
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">
         {isSuccess && <div style={{margin: '25px'}}>
@@ -53,7 +57,6 @@ export const IntraitablesGrid = () => {
                     {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data?.totalPages))? Number(data?.totalElements) - currentPage*20 : 20)} sur {data?.totallements} résultats
                 </Typography>
             </div>}
-        {isFetching && <CircularProgress style={{margin: '0 50%'}}/>}
         {isSuccess && <DataGrid
                 rows={data?.data || []}
                 columns={columns()}

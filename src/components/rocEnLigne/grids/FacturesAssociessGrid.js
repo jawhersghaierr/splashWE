@@ -10,6 +10,7 @@ import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
 import {CircularProgress} from "@mui/material";
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
@@ -21,7 +22,6 @@ export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
         sortProperty: null
     });
 
-    let shouldShowEmptyGrid = (engagements & engagements.length > 0)? false : true;
 
     const {data, isFetching, isSuccess, isError, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
 
@@ -42,10 +42,14 @@ export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
     };
+    console.log('engagements > ', engagements)
+    console.log('data > ', data)
+
+    if ((isSuccess && data?.meta?.status == 204) || !engagements || engagements?.length == 0) return <NoGridResultsAlert/>
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
-        {(isSuccess || shouldShowEmptyGrid) && <DataGrid
+        {isSuccess && <DataGrid
             rows={data?.results || []}
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}

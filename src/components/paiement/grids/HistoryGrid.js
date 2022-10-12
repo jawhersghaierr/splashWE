@@ -3,8 +3,11 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./historyGridColumns";
 import './paiementsGrid.scss';
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 export const HistoryGrid = ({data, nomRefs}) => {
+
+    if (!data || data?.length == 0) return <NoGridResultsAlert/>
 
     return <DataGrid
                     rows={data || []}

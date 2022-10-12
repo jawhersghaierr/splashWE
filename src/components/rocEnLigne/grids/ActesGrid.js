@@ -2,6 +2,7 @@ import React from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./actesGridColumns";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 import './rocEnLigneGrid.scss';
 
 export const ActesGrid = ({data, nomRefs}) => {
@@ -21,6 +22,8 @@ export const ActesGrid = ({data, nomRefs}) => {
         _data.montantRC += el.montantRC
         _data.montantRAC += el.montantRAC
     })
+
+    if (!data) return <NoGridResultsAlert/>
 
     return <DataGrid
                     rows={[...data, _data] || []}
@@ -49,8 +52,6 @@ export const ActesGrid = ({data, nomRefs}) => {
                             lineHeight: 1
                         },
                     }}
-
-
     />
 }
 

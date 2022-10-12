@@ -13,8 +13,9 @@ import {useGetPaiementsQuery} from "../services/paiementsApi";
 import './paiementsGrid.scss';
 import { allowSearch } from '../../../utils/validator-utils';
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
-export const PaiementsGrid = ({disciplines}) => {
+export const PaiementsGrid = () => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -44,7 +45,9 @@ export const PaiementsGrid = ({disciplines}) => {
         }
     }, [criterias, currentPage]);
 
+    if (!isFetching && isSuccess  && !data?.results) return <NoSearchResultsAlert/>
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+
     return <div className="gridContent">
 
         {(isSuccess && data?.results) && <div>

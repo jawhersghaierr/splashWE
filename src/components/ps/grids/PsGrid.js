@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
 import {useGetEtsQuery} from "../services/psApi";
@@ -8,13 +8,11 @@ import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../psSlice'
 import {columns} from "./psGridColumns";
 import {usePrevious} from '../../../utils/status-utils';
-
-import './psGrid.scss';
-
-
-import mainPS from "../../../../assets/PS.png";
 import { allowSearch } from '../../../utils/validator-utils';
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import './psGrid.scss';
+import mainPS from "../../../../assets/PS.png";
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 
 export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
 
@@ -46,6 +44,7 @@ export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
 
     }, [criterias, currentPage]);
 
+    if (isSuccess && (!data || data.totElements == 0)) return <NoSearchResultsAlert/>
     if (isFetching || disciplinesIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">

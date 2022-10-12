@@ -44,8 +44,8 @@ const ribLabel = (discipl, disciplines) => {
 }
 
 export const columns = disciplines => [
-    { field: 'numPartenaire', headerName: 'N° de partenaire', width: 150 },
-    { field: 'statutRibs', headerName: 'Statut(s) RIB', width: 125, sortable: false, renderCell: (params) => {
+    { field: 'numPartenaire', headerName: 'N° de partenaire', flex: 1 },
+    { field: 'statutRibs', headerName: 'Statut(s) RIB', flex: 1, sortable: false, renderCell: (params) => {
             const statRow = statusRow(params.formattedValue)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (
@@ -54,8 +54,8 @@ export const columns = disciplines => [
                 </LightTooltip>
             )
         }},
-    { field: 'raisonSociale', headerName: 'Raison Sociale', minWidth: 200, flex: 1 },
-    { field: 'disciplines', headerName: 'Discipline(s)', width: 175, sortable: false, renderCell: (params) => {
+    { field: 'raisonSociale', headerName: 'Raison Sociale', flex: 2 },
+    { field: 'disciplines', headerName: 'Discipline(s)', flex: 2, sortable: false, renderCell: (params) => {
             const discipl = params.formattedValue || null;
 
             let _RibLabel = ribLabel(discipl, disciplines);
@@ -79,8 +79,8 @@ export const columns = disciplines => [
                 </div>
             )
         }},
-    { field: 'ville', headerName: 'Ville', width: 300, renderCell: (params) => ( params.formattedValue )},
-    { field: 'codePostal', headerName: 'Code postal', width: 150 },
+    { field: 'ville', headerName: 'Ville', flex: 1, renderCell: (params) => ( params.formattedValue )},
+    { field: 'codePostal', headerName: 'Code postal', flex: 1 },
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
             return <Link to={`/PS/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},

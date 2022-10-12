@@ -6,6 +6,8 @@ import './virementsGrid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../VirementDetailsById";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import {CircularProgress} from "@mui/material";
 
 export const AssociesGrid = ({data, nomRefs, noModal}) => {
 
@@ -16,6 +18,8 @@ export const AssociesGrid = ({data, nomRefs, noModal}) => {
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
     };
+
+    if (!data) return <NoGridResultsAlert/>
 
     return <div style={{margin: 0}}>
 

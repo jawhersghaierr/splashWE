@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
-import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Stack from '@mui/material/Stack'
-import { useGetBenefQuery } from "../services/beneficiaireApi";
 import { DataGrid } from '@mui/x-data-grid';
+import { CircularProgress, Pagination, Typography } from "@mui/material";
+import { useGetBenefQuery } from "../services/beneficiaireApi";
 import { selectCriterias } from '../beneficiaireSlice'
 import { columns } from "./beneficiaireGridColumns";
 import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import mainPS from "../../../../assets/PS.png";
-import './beneficiaireGrid.scss';
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
+import './beneficiaireGrid.scss';
+import mainPS from "../../../../assets/PS.png";
 
 export const BeneficiaireGrid = ({ enviroments }) => {
 
@@ -40,17 +41,18 @@ export const BeneficiaireGrid = ({ enviroments }) => {
         }
     }, [criterias, currentPage]);
 
+    if (!isFetching && isSuccess && data && data?.result?.length == 0) return <NoSearchResultsAlert/>
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div className="gridContent">
 
-        {(data && enviroments) && <div>
+        {!isFetching && isSuccess && data?.totPages && data?.totElements && <div>
             <div style={{margin: '25px'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
                 </Typography>
             </div>
-            {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
-            {!isFetching && isSuccess && <DataGrid
+            <DataGrid
                 rows={data?.result || []}
                 columns={columns(enviroments)}
                 pageSize={20}
@@ -83,7 +85,7 @@ export const BeneficiaireGrid = ({ enviroments }) => {
                     '& .boldValue': {fontWeight: 'bold',},
                 }}
                 rowHeight={85}
-            />}
+            />
         </div>}
 
         {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}

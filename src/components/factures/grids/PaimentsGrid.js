@@ -9,6 +9,7 @@ import VirementDetailsById from "../../virement/VirementDetailsById";
 import './facturesGrid.scss';
 import {CircularProgress} from "@mui/material";
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 
 export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
@@ -23,9 +24,10 @@ export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
         setOpenModal({open: false, data: null});
     };
 
+    if (isSuccess && !data?.elements) return <NoGridResultsAlert/>
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
 
         {isSuccess && <DataGrid
             rows={data?.elements || []}

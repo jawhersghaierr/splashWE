@@ -322,7 +322,7 @@ export default function SearchAccordion(props) {
 
                                                     <MenuItem value="all" key='selectAll'>
                                                         <ListItemText
-                                                            primary={(values?.enviroments?.length == enviroments.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                            primary={(values?.envCodeList?.length == enviroments.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
 
                                                     {enviroments.map(({code, libelle}) => (

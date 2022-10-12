@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./actesGridColumns";
 import './facturesGrid.scss';
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 export const ActesGrid = ({data, nomRefs}) => {
     let _data = {
@@ -20,6 +21,8 @@ export const ActesGrid = ({data, nomRefs}) => {
         _data.rc += el.rc
         _data.rac += el.rac
     })
+
+    if (!data) return <NoGridResultsAlert/>
 
     return <DataGrid
                     rows={[...data, _data] || []}

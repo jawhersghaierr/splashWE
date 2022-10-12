@@ -8,6 +8,7 @@ import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
 import './facturesGrid.scss';
 import MoreThan200Results from "../../shared/MoreThan200Results";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 export const SelAssociesGrid = ({numEng, noModal}) => {
 
@@ -21,8 +22,10 @@ export const SelAssociesGrid = ({numEng, noModal}) => {
         setOpenModal({open: false, data: null});
     };
 
+    if (isSuccess && !data?.assosiete) return <NoGridResultsAlert/>
+    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+
     return <div style={{margin: 0}}>
-        {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
         {isSuccess && data && <DataGrid
                     rows={data.assosiete || []}
                     columns={columns({handleModalOpen})}

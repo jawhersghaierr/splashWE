@@ -6,6 +6,7 @@ import {ModalInfo} from "../../shared/ModalInfo";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
 import './paiementsGrid.scss';
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 export const AssociesGrid = ({data, noModal}) => {
 
@@ -17,6 +18,8 @@ export const AssociesGrid = ({data, noModal}) => {
         setOpenModal({open: false, data: null});
     };
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+
+    if (!data) return <NoGridResultsAlert/>
 
     return <div style={{margin: 0}}>
 

@@ -2,10 +2,14 @@ import React from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid, gridClasses } from '@mui/x-data-grid';
 import {simpleGarantieColumns, complexGarantieColumns} from "./gridGarantiesColumns";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+
 
 export const GarantiesGrid = ({garanties, nom, simple = true}) => {
 
-    return <div >
+    if (garanties == 0) return <NoGridResultsAlert/>
+
+    return <div>
 
         {(garanties && nom) &&
             <DataGrid
