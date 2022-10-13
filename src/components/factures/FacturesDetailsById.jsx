@@ -200,14 +200,14 @@ export default function FacturesDetailsById({location, modalId = null}) {
                     </Typography>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData.numEng} border={true} justify={true}/>
+                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true}/>
                             <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
                             <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
                             <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
                         </div>
                         <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData.idPeriodeFact} - ${data?.factData.occId}`} border={true} justify={true}/>
+                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true}/>
+                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
                             <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
                             <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
                         </div>
@@ -221,7 +221,7 @@ export default function FacturesDetailsById({location, modalId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={2} data={data}>
-                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData.numEng} noModal={!!!modalId}/>}
+                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData?.numEng} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>
