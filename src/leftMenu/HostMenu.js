@@ -63,9 +63,9 @@ const hostMenuItems = [
     {
         name: 'ROC', icon: IconBarChart,
         popitems: [
-            {name: 'Services en ligne', icon: IconLibraryBooks, link: '/serviceEnLigne'},
-            {name: 'Factures', icon: IconPeople, link: '/factures'},
-            {name: 'Factures intraitables', icon: IconBarChart, link: '/intraitables'},
+            {name: 'Services en ligne',icon: IconLibraryBooks, link: '/serviceEnLigne'},
+            {name: 'Factures',icon: IconPeople, link: '/factures'},
+            {name: 'Factures intraitables',icon: IconBarChart, link: '/intraitables'},
         ]
     },
     // {
@@ -94,11 +94,10 @@ const hostMenuItems = [
     //     link: '/Hospi',
     //     icon: AccountBalance,
     // },
-]
-
+];
 
 const RecursiveMenuItem = (props) => {
-    const { name, link, icon, items = [] , popitems = [] } = props
+    const { name, link, icon: Icon } = props
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const ref = useRef();
@@ -121,9 +120,9 @@ const RecursiveMenuItem = (props) => {
                     />)}
                     to={link}
                     key={`listItem${link}`}>
-                        {!!icon && (
+                        {!!Icon && (
                             <ListItemIcon className={classes.menuItemIcon}>
-                                icon
+                                <Icon/>
                             </ListItemIcon>
                         )}
                         <ListItemText primary={name} />
@@ -132,9 +131,9 @@ const RecursiveMenuItem = (props) => {
                     button
                     to={link}
                     key={`listItem${link}`}>
-                        {!!icon && (
+                        {!!Icon && (
                             <ListItemIcon className={classes.menuItemIcon}>
-                                icon
+                                <Icon/>
                             </ListItemIcon>
                         )}
                         <ListItemText primary={name} />

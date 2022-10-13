@@ -154,7 +154,7 @@ export default function SearchAccordion() {
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
-                              <LocalizationProvider locale={fr} dateAdapter={AdapterDateFns}>
+                              <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
                                   <StyledCard sx={{ display: 'block', minWidth: 775 }} id="FacturesSearchForm" variant="outlined">
                                       <CardHeader
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}

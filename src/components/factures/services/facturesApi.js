@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
-import { actesGridMapper } from '../../shared/grids/mapper'
+import { actesGridMapper } from '../../../utils/reshaper-utils'
 
 export const facturesApi = createApi({
     reducerPath: 'facturesApi',

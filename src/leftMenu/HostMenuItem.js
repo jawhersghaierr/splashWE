@@ -16,12 +16,12 @@ import HostMenuItemComponent from './HostMenuItemComponent'
 export const HostMenuItemPropTypes = {
     name: PropTypes.string.isRequired,
     link: PropTypes.string,
-    Icon: PropTypes.elementType,
+    icon: PropTypes.elementType,
     items: PropTypes.array,
 }
 
 const HostMenuItem = props => {
-    const { name, link, Icon, items = [] , popitems = [] } = props
+    const { name, link, icon, items = [] , popItems = [] } = props
     const classes = useStyles()
     const isExpandable = items && items.length > 0
     const [open, setOpen] = React.useState(true)
@@ -31,13 +31,13 @@ const HostMenuItem = props => {
     }
 
     const MenuItemRoot = (
-        <HostMenuItemComponent className={classes.menuItem} key={link} link={link} onClick={handleClick} popitems={popitems}>
-            {!!Icon && (
+        <HostMenuItemComponent className={classes.menuItem} key={link} link={link} onClick={handleClick} popitems={popItems}>
+            {!!icon && (
                 <ListItemIcon className={classes.menuItemIcon}>
-                    <Icon/>
+                    {icon}
                 </ListItemIcon>
             )}
-            <ListItemText primary={name} inset={!Icon} />
+            <ListItemText primary={name} inset={!icon} />
             {isExpandable && !open && <IconExpandMore />}
             {isExpandable && open && <IconExpandLess />}
 
