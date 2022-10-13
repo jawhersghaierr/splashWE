@@ -57,6 +57,18 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
 
     let environnements = null
 
+    if (code == 'limit-sim' && data && data?.environments && data?.environments.length > 0 && nomRefs?.RLTN_CLIENT_ENV) {
+
+        let tmpEnv = []
+        data.environments.forEach( env => tmpEnv.push(nomRefs?.RLTN_ENV_CLIENT[env]) )
+        tmpEnv = [...new Set(tmpEnv)]
+
+        if (tmpEnv.length > 0) {
+            environnements = []
+            tmpEnv.forEach( env => environnements.push(nomRefs?.CLIENT[env]))
+        }
+    }
+
     if (code == 'amc' && nomRefs?.RLTN_CLIENT_ENV[data?.content]) {
         if (nomRefs?.RLTN_CLIENT_ENV[data?.content].length > 1) {
             environnements = <span><LightTooltip
@@ -88,10 +100,16 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
 
         <div style={{display: 'flex', flexDirection: 'row', margin: '25px 0', maxWidth: '1280px'}}>
             <RowInfo label={'Code'} value={data?.id} border={false}/>
-            {code == 'delai' || code == 'limit-sim' &&
+            {(code == 'delai' || code == 'limit-sim') &&
             <RowInfo
                 label={'Période de validité'}
                 value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`}
+                styles={{flex: 2}} border={false}/>}
+
+            {code == 'limit-sim' &&
+            <RowInfo
+                label={'AMC'}
+                value={environnements && <div style={{whiteSpace: 'pre-line'}}>{environnements.join('\n')}</div> || ''}
                 styles={{flex: 2}} border={false}/>}
 
             {code == 'type-convention' &&
@@ -100,13 +118,11 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                       border={false} styles={{flex: 2}}/>}
 
             {nomRefs && code == 'amc' && <RowInfo label={'Groupement clients'} value={nomRefs.RLTN_CLIENT_GROUP[data?.content] || data?.content} border={false}/>}
-            {/*// data?.content =>RLTN_CLIENT_GROUP  */}
 
             {code == 'amc' && <RowInfo label={'Environnements'} value={environnements} justify={true} border={false}/>}
-            {/*// data?.content =>nomRefs?.RLTN_CLIENT_ENV  */}
 
             {domainForPanel !== 'delai' && domain !== 'roc' &&
-                <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} border={false}/>}
+                <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} border={false}/>}
         </div>
 
         <Tabs
@@ -128,14 +144,14 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
                     backgroundColor: '#F6F8FC', flex: 1,
                     minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
                 }}>
-                    <RowInfo label={'Détails du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>}/>
+                    <RowInfo label={'Type de convention'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content}</div>}/>
                 </Box>}
             {code == 'delai' &&
                 <Box style={{
                     backgroundColor: '#F6F8FC', flex: 1,
                     minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
                 }}>
-                    <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} </div>} />
+                    <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} {data?.contentType} </div>} />
                 </Box>}
             {/*{JSON.stringify(data)}*/}
         </TabPanel>
