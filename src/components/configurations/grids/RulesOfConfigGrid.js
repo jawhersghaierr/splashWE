@@ -5,9 +5,7 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./rulesOfConfigGridColumns";
 import './configutationGrid.scss';
 
-
 export const RulesOfConfigGrid = ({data, nomRefs}) => {
-
 
     return <DataGrid
                 rows={data || []}

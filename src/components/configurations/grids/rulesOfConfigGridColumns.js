@@ -38,11 +38,11 @@ const tip = (value, label) => {
 
 
 export const columns = nomRefs => [
-    { field: 'id', headerName: 'N°', flex: 1, maxWidth: 25, renderCell: (params) => {
+    { field: 'id', headerName: 'N°', flex: 1, width: 15, renderCell: (params) => {
         return (params.value);
     }},
 
-    { field: 'environmentSet', headerName: 'Environnement', flex: 2, renderCell: (params) => {
+    { field: 'environmentSet', headerName: 'Environnement', flex: 1, renderCell: (params) => {
         return tip(params.value, 'Environnement')
     }},
 
@@ -68,7 +68,7 @@ export const columns = nomRefs => [
         return (dcs?.join(', ') || params.value);
     }},
 
-    { field: 'type', headerName: 'Type de règle', width: 15, type: 'number', sortable: false, renderCell: (params) => {
+    { field: 'type', headerName: 'Type de règle', flex: 1, type: 'number', sortable: false, renderCell: (params) => {
             return (params.value);
     }},
 ];
