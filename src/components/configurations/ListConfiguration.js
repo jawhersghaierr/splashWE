@@ -10,7 +10,14 @@ import './configuration.scss'
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import SearchAccordion from "./searches/SearchAccordion";
 import {selectCriterias} from './configurationsSlice'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle';
 
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export const ListConfiguration = (props) => {
 
@@ -24,6 +31,17 @@ export const ListConfiguration = (props) => {
     const [items, setItems] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(false);
+
+    const [openMsg, setOpenMsg] = useState({
+        open: false,
+        success: null,
+        error: null,
+        data: null,
+    })
+
+    const handleMsgClose = () => {
+        setOpenMsg({...openMsg, open: false})
+    };
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
@@ -63,8 +81,11 @@ export const ListConfiguration = (props) => {
                 })
                 .then((result) => {
                         console.log('ar1rived result > ', result)
+                        setOpenMsg({success: false, open: true, error: result.error});
                         setIsLoaded(true);
-                        setItems(result || []);
+                        setItems({
+                            result: []
+                        });
                     }
                     // },
                     // (error, meta) => {
@@ -77,14 +98,34 @@ export const ListConfiguration = (props) => {
 
     }, [domain, code, LOC, nomRefs, criterias])
 
+    // if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+
 
     return <div style={{padding: '0', margin: 0}}>
+
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
             <b>Configuration List</b> &nbsp;
         </Typography>
+
         {code && <SearchAccordion code={code} nomRefs={nomRefs} moreCriterias={moreCriterias}/>}
 
-        {items && nomRefs && <ConfigutationsGrid data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
+        {nomRefs && <ConfigutationsGrid data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
+
+        <Snackbar open={openMsg.open}
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  autoHideDuration={3000}
+                  onClose={handleMsgClose}
+                  key={'bottom' + 'right'}>
+
+            <Alert onClose={handleMsgClose}
+                   severity={(openMsg.success)? 'success': 'error'}
+                   sx={{ width: '100%' }}>
+                {!openMsg.success && <AlertTitle><b>Error</b></AlertTitle>}
+                {!openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
+                    {openMsg.error}
+                </div>}
+            </Alert>
+        </Snackbar>
 
     </div>
 }

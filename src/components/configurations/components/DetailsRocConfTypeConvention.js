@@ -19,7 +19,7 @@ export const DetailsRocConfTypeConvention = ({data, nomRefs}) => {
             backgroundColor: '#F6F8FC', flex: 1,
             minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
         }}>
-            <b>Velur</b>
+            <b>Valeur</b>
             <RowInfo label={'Limite'} value={data?.content} justify={true}/>
         </Box>
 

@@ -138,15 +138,15 @@ export default function SearchAccordion(props) {
                                                   )}
                                               </Field>
 
-                                              <Field name="referenceDate" validate={validators.composeValidators(validators.noFutureDate())} >
+                                              <Field name="referenceDate" >
                                                   {({ input, meta }) => (
                                                       <FormControl className="RoundDate" style={{ flex: '1 0 21%', marginRight: '15px'}}>
                                                           <DatePicker
                                                               label={'Date de référence'}
                                                               inputFormat="dd/MM/yyyy"
+                                                              disabled={!!values.status}
                                                               value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                               onChange={input?.onChange || null}
-                                                              maxDate={new Date()}
                                                               renderInput={(params) =>
                                                                   <TextField
                                                                       className="RoundedEl"
