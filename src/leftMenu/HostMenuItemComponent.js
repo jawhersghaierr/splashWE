@@ -1,11 +1,10 @@
 import React, {forwardRef, useState} from 'react'
 import ListItem from '@mui/material/ListItem'
-import { NavLink, NavLinkProps } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const HostMenuItemComponent = props => {
 
-    const { className, onClick, onMouseEnter, onMouseLeave, link, children, popItems} = props
-    const [isShown, setIsShown] = useState(false);
+    const { className, onClick, onMouseEnter, onMouseLeave, link, children} = props
 
     if (!link || typeof link !== 'string') {
         return (<ListItem

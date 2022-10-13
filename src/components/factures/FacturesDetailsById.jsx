@@ -8,7 +8,7 @@ import {useGetFactureByIdQuery} from "./services/facturesApi";
 import {matchPath} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "./grids/ActesGrid";
+import {ActesGrid} from "../shared/grids/ActesGrid";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {PaimentsGrid} from "./grids/PaimentsGrid";
 

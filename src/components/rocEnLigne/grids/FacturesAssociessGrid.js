@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./facturesAssociessGridColumns";
-import './rocEnLigneGrid.scss';
+import '../../shared/styles/grid.scss';
 import {ModalInfo} from "../../shared/ModalInfo";
 import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import Pagination from "@mui/material/Pagination";

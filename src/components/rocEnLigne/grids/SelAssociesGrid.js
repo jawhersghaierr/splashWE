@@ -5,7 +5,7 @@ import {columns} from "./selAssociesGridColumns";
 import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
 import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
-import './rocEnLigneGrid.scss';
+import '../../shared/styles/grid.scss';
 
 export const SelAssociesGrid = ({selAssosiete, nomRefs, noModal}) => {
 

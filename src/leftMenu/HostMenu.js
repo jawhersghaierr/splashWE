@@ -21,84 +21,84 @@ const hostMenuItems = [
     {
         name: 'Dashboard',
         link: '/',
-        Icon: IconDashboard,
+        icon: IconDashboard,
     },
     {
-        Icon: IconBarChart,
+        icon: IconBarChart,
         name: 'Configuration',
         link: '/configuration'
     },
     {
         name: 'PS',
         link: '/PS',
-        Icon: IconPeople,
+        icon: IconPeople,
     },
     // {
     //     name: 'PS Remote',
     //     link: '/PSremote',
-    //     Icon: IconPeople,
+    //     icon: IconPeople,
     // },
     {
         name: 'Beneficiaire',
         link: '/beneficiaire',
-        Icon: IconPeople,
+        icon: IconPeople,
     },
     {
-        name: 'Paiements', Icon: IconBarChart,
-        popItems: [
-            {name: 'Paiements',Icon: IconBarChart, link: '/paiement'},
-            {name: 'Virements',Icon: IconBarChart, link: '/virements'},
+        name: 'Paiements', icon: IconBarChart,
+        popitems: [
+            {name: 'Paiements',icon: IconBarChart, link: '/paiement'},
+            {name: 'Virements',icon: IconBarChart, link: '/virements'},
         ]
     },
     // {
-    //     Icon: IconBarChart,
+    //     icon: IconBarChart,
     //     name: 'Paiements',
     //     link: '/paiement'
     // },
     // {
-    //     Icon: IconBarChart,
+    //     icon: IconBarChart,
     //     name: 'Virements',
     //     link: '/virements'
     // },
     {
-        name: 'ROC', Icon: IconBarChart,
-        popItems: [
-            {name: 'Services en ligne',Icon: IconLibraryBooks, link: '/serviceEnLigne'},
-            {name: 'Factures',Icon: IconPeople, link: '/factures'},
-            {name: 'Factures intraitables',Icon: IconBarChart, link: '/intraitables'},
+        name: 'ROC', icon: IconBarChart,
+        popitems: [
+            {name: 'Services en ligne', icon: IconLibraryBooks, link: '/serviceEnLigne'},
+            {name: 'Factures', icon: IconPeople, link: '/factures'},
+            {name: 'Factures intraitables', icon: IconBarChart, link: '/intraitables'},
         ]
     },
     // {
-    //     Icon: IconLibraryBooks,
+    //     icon: IconLibraryBooks,
     //     name: 'Services en ligne',
     //     link: '/serviceEnLigne'
     // },
     // {
-    //     Icon: IconPeople,
+    //     icon: IconPeople,
     //     name: 'Factures',
     //     link: '/factures'
     // },
     // {
     //     name: 'Intraitables',
     //     link: '/intraitables',
-    //     Icon: IconBarChart,
+    //     icon: IconBarChart,
     // },
 
     // {
     //     name: 'Remote test App',
     //     link: '/test',
-    //     Icon: IconBarChart,
+    //     icon: IconBarChart,
     // },
     // {
     //     name: 'Hospi App',
     //     link: '/Hospi',
-    //     Icon: AccountBalance,
+    //     icon: AccountBalance,
     // },
 ]
 
 
 const RecursiveMenuItem = (props) => {
-    const { name, link, Icon, items = [] , popItems = [] } = props
+    const { name, link, icon, items = [] , popitems = [] } = props
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const ref = useRef();
@@ -121,9 +121,9 @@ const RecursiveMenuItem = (props) => {
                     />)}
                     to={link}
                     key={`listItem${link}`}>
-                        {!!Icon && (
+                        {!!icon && (
                             <ListItemIcon className={classes.menuItemIcon}>
-                                <Icon/>
+                                icon
                             </ListItemIcon>
                         )}
                         <ListItemText primary={name} />
@@ -132,16 +132,16 @@ const RecursiveMenuItem = (props) => {
                     button
                     to={link}
                     key={`listItem${link}`}>
-                        {!!Icon && (
+                        {!!icon && (
                             <ListItemIcon className={classes.menuItemIcon}>
-                                <Icon/>
+                                icon
                             </ListItemIcon>
                         )}
                         <ListItemText primary={name} />
                 </ListItem>}
 
 
-                {props?.popItems && <Popper
+                {props?.popitems && <Popper
                     anchorEl={ref.current}
                     open={open}
                     placement={props.placement ?? "right-start"}
@@ -154,7 +154,7 @@ const RecursiveMenuItem = (props) => {
                             boundariesElement: "viewport"
                         }
                     }} className={'poperStyle'}>
-                    {props?.popItems.map((item, index) => {
+                    {props?.popitems.map((item, index) => {
 
                         return <RecursiveMenuItem
                             autoFocus={false}

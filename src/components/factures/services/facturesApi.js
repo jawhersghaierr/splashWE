@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
+import { actesGridMapper } from '../../shared/grids/mapper'
 
 export const facturesApi = createApi({
     reducerPath: 'facturesApi',
@@ -115,6 +116,17 @@ export const facturesApi = createApi({
             },
             transformResponse: (response, meta) => {
                 if (meta.response.status == 204) return {meta: {status: meta.response.status}}
+
+                if (response.factLines && response.factLines.length > 0) {
+                    response.factLines = response.factLines.map(factLine => {
+                        factLine['taux'] = factLine['taux'] / 100;
+                        for (let key in actesGridMapper) {
+                            factLine[key] = factLine[actesGridMapper[key]['factures']];
+                        }
+                        return factLine
+                    })
+
+                }
                 return response
             }
         }),

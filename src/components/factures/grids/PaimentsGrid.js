@@ -6,7 +6,7 @@ import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiement
 import {ModalInfo} from "../../shared/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
-import './facturesGrid.scss';
+import '../../shared/styles/grid.scss';
 import {CircularProgress} from "@mui/material";
 import MoreThan200Results from "../../shared/MoreThan200Results";
 import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";

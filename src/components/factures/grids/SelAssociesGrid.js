@@ -6,7 +6,7 @@ import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 import {CircularProgress} from "@mui/material";
 import {ModalInfo} from "../../shared/ModalInfo";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
-import './facturesGrid.scss';
+import '../../shared/styles/grid.scss';
 import MoreThan200Results from "../../shared/MoreThan200Results";
 import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
