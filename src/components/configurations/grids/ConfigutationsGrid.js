@@ -1,26 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {CircularProgress, Typography} from "@mui/material";
 import Stack from '@mui/material/Stack'
-
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./configutationGridColumns";
-
 import {getConfigurations, setConfig} from "../configurationsSlice";
+import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
 import './configutationGrid.scss';
 
-import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
-
-
-
 export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {
+
     const dispatch = useDispatch();
     const configItem = (value) => {
         dispatch(setConfig(value));
     };
 
     const configurations = useSelector(getConfigurations);
-console.log(data)
+
+    console.log(data)
+
     if (!data || data?.result?.length == 0) return <NoSearchResultsAlert/>
 
     return <div className="gridContent">

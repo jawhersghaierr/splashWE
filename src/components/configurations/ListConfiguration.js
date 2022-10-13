@@ -74,25 +74,23 @@ export const ListConfiguration = (props) => {
                 })
             }
             fetch(url)
-                .then(res => {
-                    console.log('ar0rived res > ', res)
-                    if (res.ok && res.status == 204) return []
-                    return res.json()
-                })
-                .then((result) => {
-                        console.log('ar1rived result > ', result)
-                        setOpenMsg({success: false, open: true, error: result.error});
+                .then(res => res.json())
+                .then( (res) => {
                         setIsLoaded(true);
+                        console.log('ar0rived res > ', res)
+                        if (res.ok && res.status == 204) return []
+                        setItems(res);
+                        return res
+                    },
+                    (error) => {
+                        setIsLoaded(true);
+                        console.log('error > ', error)
+                        setOpenMsg({success: false, open: true, error: result.error});
                         setItems({
                             result: []
                         });
+                        setError(result.error);
                     }
-                    // },
-                    // (error, meta) => {
-                    //     console.log('ar2rived error > ', meta)
-                    //     setIsLoaded(true);
-                    //     setError(error);
-                    // }
                 )
         }
 

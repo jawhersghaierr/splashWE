@@ -9,6 +9,7 @@ import Tab from "@mui/material/Tab";
 import {RulesOfConfigGrid} from "../grids/RulesOfConfigGrid";
 import {RowInfo} from "../../beneficiaire/components/RowInfo";
 import {DetailsFactureMailConf} from "./DetailsFactureMailConf";
+import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
@@ -81,9 +82,8 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
                 {domainForPanel == 'delai' && <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} />}
 
                 {domainForPanel !== 'delai' && <div style={{display: 'flex', flexDirection: 'row'}}>
-                    <div style={{flex: 1, marginRight: '5%'}}>
-                        {data?.rules && nomRefs && <RulesOfConfigGrid data={data?.rules} nomRefs={nomRefs}/>}
-                    </div>
+                    {data?.rules && data?.rules.length > 0 && nomRefs && <div style={{minWidth: '100%'}}><RulesOfConfigGrid data={data?.rules} nomRefs={nomRefs}/></div>}
+                    {(!data?.rules || data?.rules?.length == 0) && nomRefs && <NoGridResultsAlert/>}
                 </div>}
 
             </Box>}
