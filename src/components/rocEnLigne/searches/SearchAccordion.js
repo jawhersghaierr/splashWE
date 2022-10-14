@@ -74,6 +74,7 @@ export default function SearchAccordion(props) {
     const [localStatus, setLocalStatus] = useState({});
     const [localMotif, setLocalMotif] = useState({});
     const [localSubMotif, setLocalSubMotif] = useState({});
+    const [amc, setAmc] = useState({});
     // const [availableDep, setAvailableDep] = useState({
     //     types: [],
     //     status: [],
@@ -87,6 +88,14 @@ export default function SearchAccordion(props) {
             setLocalStatus(nomRefs.ROC_STATUSES)
             setLocalMotif(nomRefs.ROC_MOTIFS)
             setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
+
+            let _tmpAmc = {}
+            Object.keys(nomRefs.CLIENT).forEach(cl=> {
+                if (nomRefs.ROC_AMCS.includes(cl)) {
+                    _tmpAmc[cl] = nomRefs.CLIENT[cl]
+                }
+            })
+            setAmc(_tmpAmc)
             // setAvailableDep({
             //     types: Object.keys( nomRefs.ROC_TYPES ),
             //     status: Object.keys( nomRefs.ROC_STATUSES ),
@@ -149,8 +158,8 @@ export default function SearchAccordion(props) {
 
                                     break
 
-                                    case 'amc': //Object.keys(nomRefs.CLIENT)
-                                        const amcObj = selectDeselectAllValues(value, nomRefs.CLIENT, field.active);
+                                    case 'amc': //Object.keys(nomRefs.CLIENT === amc)
+                                        const amcObj = selectDeselectAllValues(value, amc, field.active);
                                         _value.amc = amcObj ? amcObj[field.active] : value[field.active];
                                     break
 
@@ -660,18 +669,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} AMC sélectionnées`
-                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
+                                                                          return `(${selected[0]}) ${amc[selected[0]]}`;
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.amc?.length == Object.keys(nomRefs.CLIENT).length) ?
+                                                                              primary={(values?.amc?.length == Object.keys(amc).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(nomRefs.CLIENT).map(code => (
+                                                                      {Object.keys(amc).map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
+                                                                              {`(${code}) ${amc[code]}`}
                                                                           </MenuItem>
                                                                       ))}
 
