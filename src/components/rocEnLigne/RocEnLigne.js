@@ -5,7 +5,7 @@ import {RocEnLigneGrid} from "./grids/RocEnLigneGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
 
 import './rocEnLigne.scss'
-import MoreThan200Results from "../shared/MoreThan200Results";
+import MoreThan200Results from "../shared/modals/MoreThan200Results";
 
 export const RocEnLigne = () => {
 

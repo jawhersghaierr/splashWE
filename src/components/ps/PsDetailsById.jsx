@@ -6,10 +6,11 @@ import Chip from '@mui/material/Chip';
 import {useGetEtsByIdQuery} from "./services/psApi";
 import {statusRow} from "./utils/utils";
 import {useGetDisciplinesQuery} from "../../services/referentielApi";
-import {matchPath} from "react-router-dom";
-import {CircularProgress, Typography} from "@mui/material";
+import {matchPath, useHistory} from "react-router-dom";
+import {Button, CircularProgress, Typography} from "@mui/material";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
+import {useState} from "react";
 
 
 
@@ -44,16 +45,18 @@ function a11yProps(index) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
-export default function PsDetailsById(props) {
+export default function PsDetailsById({location, modalId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const match = matchPath(location?.pathname, {
         path: "/PS/:id",
         exact: true,
         strict: false
     });
+    const psID = (modalId)? modalId: match?.params?.id;
+    const history = useHistory();
 
-    const [value, setValue] = React.useState(0);
-    const {data = null, isFetching, isSuccess} = useGetEtsByIdQuery(match?.params?.id);
+    const [value, setValue] = useState(0);
+    const {data = null, isFetching, isSuccess} = useGetEtsByIdQuery(psID);
     const statRow = data?.statutRibs && statusRow(data?.statutRibs) || null
     const shown = data?.statutRibs && Object.keys(statRow).find(key => statRow[key].shown) || null;
     const {data: resultData, isFetching: DisciplineIsFetching, isSuccess: DisciplineIsSuccess} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })
@@ -65,9 +68,14 @@ export default function PsDetailsById(props) {
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-            <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>{data?.raisonSociale}</b>
-            </Typography>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
+                    <b>{data?.raisonSociale}</b>
+                </Typography>
+                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}} onClick={() => history.goBack()}>
+                    Revenir
+                </Button>}
+            </div>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 ROC
             </Typography>

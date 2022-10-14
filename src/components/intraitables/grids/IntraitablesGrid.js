@@ -15,8 +15,8 @@ import './intraitablesGrid.scss';
 import {usePrevious} from '../../../utils/status-utils';
 import mainPS from "../../../../assets/PS.png";
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/MoreThan200Results";
-import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
+import MoreThan200Results from "../../shared/modals/MoreThan200Results";
+import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
 
 export const IntraitablesGrid = () => {
 

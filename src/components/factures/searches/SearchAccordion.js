@@ -23,14 +23,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { MaskedInput } from "../../shared/TextMaskCustom";
 import {isValidDate} from '../../../utils/convertor-utils';
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {usePrevious} from '../../../utils/status-utils';
 import { checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-import { ConfirmNir } from "../../shared/ConfirmNir";
-import PanelNIR from '../../shared/PanelNIR';
+import { ConfirmNir, PanelNIR, MaskedInput } from "../../shared";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'

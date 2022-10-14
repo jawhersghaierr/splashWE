@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./configutationGridColumns";
 import {getConfigurations, setConfig} from "../configurationsSlice";
-import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
+import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
 import './configutationGrid.scss';
 
 export const ConfigutationsGrid = ({data, nomRefs, domain, code}) => {

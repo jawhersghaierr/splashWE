@@ -4,11 +4,11 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 import {CircularProgress} from "@mui/material";
-import {ModalInfo} from "../../shared/ModalInfo";
+import {ModalInfo} from "../../shared/modals/ModalInfo";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
 import '../../shared/styles/grid.scss';
-import MoreThan200Results from "../../shared/MoreThan200Results";
-import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import MoreThan200Results from "../../shared/modals/MoreThan200Results";
+import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
 
 export const SelAssociesGrid = ({numEng, noModal}) => {
 

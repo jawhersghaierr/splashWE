@@ -12,7 +12,7 @@ import {useGetVirementsQuery} from "../services/virementsApi";
 import './virementsGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
 import { allowSearch } from '../../../utils/validator-utils';
-import {NoSearchResultsAlert} from "../../shared/NoSearchResultsAlert";
+import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
 
 export const VirementsGrid = ({disciplines}) => {
 

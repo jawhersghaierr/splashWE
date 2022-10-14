@@ -1,10 +1,10 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {matchPath} from "react-router-dom";
-import {CircularProgress, Typography} from "@mui/material";
+import {matchPath, useHistory} from "react-router-dom";
+import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {HistoryGrid} from "./grids/HistoryGrid";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
@@ -12,12 +12,10 @@ import {AssociesGrid} from "./grids/AssociesGrid";
 import {paiementsStatus} from "../../utils/status-utils";
 import {convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import {Link} from "@material-ui/core";
-import {ModalInfo} from "../shared/ModalInfo";
-import VirementDetailsById from "../virement/VirementDetailsById";
-import {useState} from "react";
+import {ModalInfo} from "../shared/modals/ModalInfo";
 import FacturesDetailsById from "../factures/FacturesDetailsById";
+import {VirtLink} from "../shared";
 
 
 function TabPanel(props) {
@@ -83,6 +81,7 @@ export default function PaiementDetailsById({location, modalId = null}) {
         strict: false
     });
     const paiementID = (modalId)? modalId: match?.params?.id;
+    const history = useHistory();
 
     const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -92,13 +91,18 @@ export default function PaiementDetailsById({location, modalId = null}) {
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
     if (isFetching || nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
-    // debugger
+
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-            <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails du paiement</b>
-            </Typography>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
+                    <b>Détails du paiement</b>
+                </Typography>
+                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}} onClick={() => history.goBack()}>
+                    Revenir
+                </Button>}
+            </div>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {nomRefs && nomRefs.PAIEMENT_TYPE[data?.paiementType] || data?.paiementType}
             </Typography>
@@ -110,13 +114,7 @@ export default function PaiementDetailsById({location, modalId = null}) {
                     <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Facture'} value={
-                        <Link href={`#`} sx={{cursor: 'pointer'}}
-                            onClick={()=> {
-                                handleModalOpen({id: data?.idFacture})
-                            }}>
-                            {data?.numFacture || ' '}
-                    </Link>}/>
+                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.idFacture})} /> }/>
                 </div>
             </div>
 

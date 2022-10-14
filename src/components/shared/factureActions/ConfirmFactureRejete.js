@@ -14,10 +14,8 @@ import Select from "@mui/material/Select";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import {useEffect, useState} from "react";
-import {reshapeMotifVsStatus} from "../factures/utils/utils";
-import {env_IP, ports} from "../../../env-vars";
-
-
+import {reshapeMotifVsStatus} from "../../factures/utils/utils";
+import {env_IP, ports} from "../../../../env-vars";
 
 export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {
 

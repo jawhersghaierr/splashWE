@@ -24,7 +24,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { MaskedInput } from "../../shared/TextMaskCustom";
+import { MaskedInput } from "../../shared/customTextField/TextMaskCustom";
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {
     checkInsidePanels, getAvailableTypesFromStatuses,
@@ -32,8 +32,8 @@ import {
     getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromMotifs, getSubMotifsFromTypes,
 } from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice';
-import { ConfirmNir } from "../../shared/ConfirmNir";
-import PanelNIR from '../../shared/PanelNIR';
+import { ConfirmNir } from "../../shared/modals/ConfirmNir";
+import PanelNIR from '../../shared/modals/PanelNIR';
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'

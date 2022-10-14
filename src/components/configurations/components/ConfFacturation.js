@@ -9,7 +9,7 @@ import Tab from "@mui/material/Tab";
 import {RulesOfConfigGrid} from "../grids/RulesOfConfigGrid";
 import {RowInfo} from "../../beneficiaire/components/RowInfo";
 import {DetailsFactureMailConf} from "./DetailsFactureMailConf";
-import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;

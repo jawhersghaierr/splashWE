@@ -1,24 +1,20 @@
-import * as React from 'react';
-import {useState} from "react";
+import React, {useState} from 'react';
+import {useHistory, matchPath} from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {matchPath} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "../shared/grids/ActesGrid";
-import {SelAssociesGrid} from "./grids/SelAssociesGrid";
-import {PaimentsGrid} from "./grids/PaimentsGrid";
+import {ActesGrid} from "../shared/grids";
+import {ConfirmFactureRejete, ConfirmFactureAnule, ConfirmFactureRecyclage} from "../shared/factureActions";
 
+import {PaimentsGrid, SelAssociesGrid} from "./grids";
 import {FluxInfo} from "./components/FluxInfo";
 import {facturesStatus} from "../../utils/status-utils";
 import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {ConfirmFactureRejete} from "../shared/ConfirmFactureRejete";
-import {ConfirmFactureAnule} from "../shared/ConfirmFactureAnule";
-import {ConfirmFactureRecyclage} from "../shared/ConfirmFactureRecyclage";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle';
@@ -80,6 +76,8 @@ export default function FacturesDetailsById({location, modalId = null}) {
         data: null,
     })
 
+    const history = useHistory();
+
     const handleMsgClose = () => {
         if (!modalId) setOpenMsg({...openMsg, open: false})
     };
@@ -105,9 +103,15 @@ export default function FacturesDetailsById({location, modalId = null}) {
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-            <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <b>Détails de la facture</b>
-            </Typography>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
+                    <b>Détails de la facture</b>
+                </Typography>
+                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}
+                         onClick={() => history.goBack()}>
+                    Revenir
+                </Button>}
+            </div>
             {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.numFact}

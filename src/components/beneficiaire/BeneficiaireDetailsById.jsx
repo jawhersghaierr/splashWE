@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useHistory, Link, matchPath} from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetBenefByIdQuery} from "./services/beneficiaireApi";
-import {Link, matchPath} from "react-router-dom";
-import {CircularProgress, Typography} from "@mui/material";
+import {Button, CircularProgress, Typography} from "@mui/material";
 import {DoritInfoBox} from "./components/DroitInfoBox";
 import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
@@ -13,9 +13,7 @@ import {useGetRefsQuery} from "../../services/refsApi";
 import {RowInfo} from "./components/RowInfo";
 import {usePrevious, benefStatuses} from "../../utils/status-utils";
 import {dateConvertNaissanceRAW, convertDate} from "../../utils/convertor-utils";
-
-import {useEffect} from "react";
-import {NoGridResultsAlert} from "../shared/NoGridResultsAlert";
+import {NoGridResultsAlert} from "../shared";
 
 
 function TabPanel(props) {
@@ -54,26 +52,30 @@ function a11yProps(index) {
 
 
 
-export default function BeneficiaireDetailsById(props) {
+export default function BeneficiaireDetailsById({location, modalId = null}) {
 
-    const match = matchPath(props?.location?.pathname, {
+    const match = matchPath(location?.pathname, {
         path: "/beneficiaire/:id",
         exact: true,
         strict: false
     });
-    const [value, setValue] = React.useState(0);
+    const benefId = (modalId)? modalId: match?.params?.id;
+
+    const history = useHistory();
+
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => { setValue(newValue) };
 
-    const prevId = usePrevious(match?.params?.id)
+    const prevId = usePrevious(benefId)
     useEffect(() => {
 
-        if (prevId !== match?.params?.id ) {
+        if (prevId !== benefId ) {
             setValue(0)
         }
 
-    }, [prevId, match]);
-    const {data = null, isFetching, isSuccess} = useGetBenefByIdQuery(match?.params?.id);
+    }, [prevId, benefId]);
+    const {data = null, isFetching, isSuccess} = useGetBenefByIdQuery(benefId);
     const {data: nomEnviroments} = useGetEnvironmentsQuery();
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
     const {data: nomGaranties, isFetching: nomGarantiesIsFetching, isSuccess: nomGarantiesIsSuccess} = useGetGarantiesQuery();
@@ -122,8 +124,16 @@ export default function BeneficiaireDetailsById(props) {
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-            <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                <h3><b>{data?.nom}&nbsp;{data?.prenom}</b></h3>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
+                    <b>{data?.nom}&nbsp;{data?.prenom}</b>
+                </Typography>
+                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}
+                         onClick={() => history.goBack()}>
+                    Revenir
+                </Button>}
+            </div>
+            <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.lienFamillialLabel}
             </Typography>
 

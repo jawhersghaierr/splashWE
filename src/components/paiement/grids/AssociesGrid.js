@@ -2,11 +2,11 @@ import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
-import {ModalInfo} from "../../shared/ModalInfo";
+import {ModalInfo} from "../../shared/modals/ModalInfo";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
 import './paiementsGrid.scss';
-import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
 
 export const AssociesGrid = ({data, noModal}) => {
 

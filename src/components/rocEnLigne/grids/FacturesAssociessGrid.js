@@ -3,14 +3,14 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./facturesAssociessGridColumns";
 import '../../shared/styles/grid.scss';
-import {ModalInfo} from "../../shared/ModalInfo";
+import {ModalInfo} from "../../shared/modals/ModalInfo";
 import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import Pagination from "@mui/material/Pagination";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
 import {CircularProgress} from "@mui/material";
-import MoreThan200Results from "../../shared/MoreThan200Results";
-import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import MoreThan200Results from "../../shared/modals/MoreThan200Results";
+import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {

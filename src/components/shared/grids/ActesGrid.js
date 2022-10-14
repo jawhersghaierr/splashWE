@@ -3,7 +3,7 @@ import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "./actesGridColumns";
 import "../styles/grid.scss";
-import {NoGridResultsAlert} from "../NoGridResultsAlert";
+import {NoGridResultsAlert} from "../modals/NoGridResultsAlert";
 
 export const ActesGrid = ({ data, nomRefs }) => {
   let _data = {

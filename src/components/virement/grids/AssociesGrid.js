@@ -3,10 +3,10 @@ import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import './virementsGrid.scss';
-import {ModalInfo} from "../../shared/ModalInfo";
+import {ModalInfo} from "../../shared/modals/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../VirementDetailsById";
-import {NoGridResultsAlert} from "../../shared/NoGridResultsAlert";
+import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
 import {CircularProgress} from "@mui/material";
 
 export const AssociesGrid = ({data, nomRefs, noModal}) => {
