@@ -98,8 +98,6 @@ export default function FacturesDetailsById({location, modalId = null}) {
     let factLines = []
     if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
 
-
-
     return (
 
         <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
@@ -118,8 +116,10 @@ export default function FacturesDetailsById({location, modalId = null}) {
             </Typography>
 
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
-
+                {
+                    data?.status && <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
+                }
+            
                 {!modalId && <div>
                     {data?.status == 'A_RECYCLER' && <Button variant="contained"
                                                              size="medium"
@@ -173,7 +173,7 @@ export default function FacturesDetailsById({location, modalId = null}) {
                              value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
                              chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
                     />
-                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.totalRc)}/>
+                    <RowInfo label={'Montant RC'} value={data?.totalRc && currencyFormatter.format(data?.totalRc)}/>
                 </div>
             </div>
 
@@ -211,7 +211,7 @@ export default function FacturesDetailsById({location, modalId = null}) {
                         </div>
                         <div style={{flex: 1    }}>
                             <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={`${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
+                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.factData && `${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
                             <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
                             <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
                         </div>
