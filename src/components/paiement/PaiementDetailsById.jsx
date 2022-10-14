@@ -6,14 +6,12 @@ import Chip from '@mui/material/Chip';
 import {matchPath, useHistory} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
-import {HistoryGrid} from "./grids/HistoryGrid";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
-import {AssociesGrid} from "./grids/AssociesGrid";
+import { AssociesGrid, HistoryGrid } from "./grids";
 import {paiementsStatus} from "../../utils/status-utils";
 import {convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import {Link} from "@material-ui/core";
-import {ModalInfo} from "../shared/modals/ModalInfo";
+import { ModalInfo } from "../shared/modals";
 import FacturesDetailsById from "../factures/FacturesDetailsById";
 import {VirtLink} from "../shared";
 
@@ -73,7 +71,6 @@ export default function PaiementDetailsById({location, modalId = null}) {
     const handleModalClose = () => {
         setOpenModal({open: false, data: null});
     };
-
 
     const match = matchPath(location?.pathname, {
         path: "/paiement/:id",

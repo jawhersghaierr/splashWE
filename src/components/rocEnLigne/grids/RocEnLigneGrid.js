@@ -2,19 +2,18 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetRocEnLigneQuery} from "../services/rocEnLigneApi";
 import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
-import { selectCriterias } from '../rocEnLigneSlice'
 import {columns} from "./rocEnLigneGridColumns";
+import { selectCriterias } from '../rocEnLigneSlice'
+import {useGetRocEnLigneQuery} from "../services/rocEnLigneApi";
 import {usePrevious} from '../../../utils/status-utils'
 import {useGetRefsQuery} from "../../../services/refsApi";
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
+import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
 import mainPS from "../../../../assets/PS.png";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
 import '../../shared/styles/grid.scss';
 
-export const RocEnLigneGrid = ({disciplines}) => {
+export const RocEnLigneGrid = () => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)

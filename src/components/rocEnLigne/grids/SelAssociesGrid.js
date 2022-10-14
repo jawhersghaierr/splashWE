@@ -2,9 +2,9 @@ import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./selAssociesGridColumns";
-import {ModalInfo} from "../../shared/modals/ModalInfo";
+import {ModalInfo} from "../../shared/modals";
 import RocEnLigneDetailsById from "../RocEnLigneDetailsById";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
+import {NoGridResultsAlert} from "../../shared/modals";
 import '../../shared/styles/grid.scss';
 
 export const SelAssociesGrid = ({selAssosiete, nomRefs, noModal}) => {

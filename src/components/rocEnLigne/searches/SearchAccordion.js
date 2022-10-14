@@ -27,13 +27,11 @@ import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/customTextField/TextMaskCustom";
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
 import {
-    checkInsidePanels, getAvailableTypesFromStatuses,
-    reshapeMotifFromStatus, getMotifsFromTypes,
-    getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromMotifs, getSubMotifsFromTypes,
+    checkInsidePanels, getMotifsFromTypes,
+    getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromTypes,
 } from '../utils/utils';
-import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice';
-import { ConfirmNir } from "../../shared/modals/ConfirmNir";
-import PanelNIR from '../../shared/modals/PanelNIR';
+import { selectCriterias } from '../rocEnLigneSlice';
+import { ConfirmNir, PanelNIR } from "../../shared/modals";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'
@@ -75,13 +73,6 @@ export default function SearchAccordion(props) {
     const [localMotif, setLocalMotif] = useState({});
     const [localSubMotif, setLocalSubMotif] = useState({});
     const [amc, setAmc] = useState({});
-    // const [availableDep, setAvailableDep] = useState({
-    //     types: [],
-    //     status: [],
-    //     motif: [],
-    //     subMotif: [],
-    // });
-
 
     useEffect(() => {
         if (nomRefsIsSuccess) {
@@ -96,19 +87,9 @@ export default function SearchAccordion(props) {
                 }
             })
             setAmc(_tmpAmc)
-            // setAvailableDep({
-            //     types: Object.keys( nomRefs.ROC_TYPES ),
-            //     status: Object.keys( nomRefs.ROC_STATUSES ),
-            //     motif:  Object.keys( nomRefs.ROC_MOTIFS ),
-            //     subMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
-            // })
 
         }
     }, [nomRefsIsSuccess]);
-    //
-    // useEffect(() => {
-    //     console.log('availableDep > ', availableDep)
-    // }, [availableDep]);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 

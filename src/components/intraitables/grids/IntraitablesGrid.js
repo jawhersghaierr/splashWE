@@ -1,22 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-
+import React, {useEffect, useState} from 'react'
+import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {useGetIntraitablesQuery} from "../services/intraitablesApi";
-import {CircularProgress, Typography} from "@mui/material";
-import {DataGrid, gridClasses } from '@mui/x-data-grid';
+import { useGetIntraitablesQuery } from "../services/intraitablesApi";
+import { CircularProgress, Typography } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
 
 import { selectCriterias } from '../intraitablesSlice'
-
-import {columns} from "./columnsIntraitablesGrid";
-import './intraitablesGrid.scss';
-
-import {usePrevious} from '../../../utils/status-utils';
-import mainPS from "../../../../assets/PS.png";
+import { columns } from "./columnsIntraitablesGrid";
+import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
+import { MoreThan200Results, NoSearchResultsAlert } from "../../shared/modals";
+import './intraitablesGrid.scss';
+import mainPS from "../../../../assets/PS.png";
 
 export const IntraitablesGrid = () => {
 

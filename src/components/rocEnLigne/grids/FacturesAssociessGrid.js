@@ -2,15 +2,13 @@ import React, {useEffect, useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./facturesAssociessGridColumns";
-import '../../shared/styles/grid.scss';
-import {ModalInfo} from "../../shared/modals/ModalInfo";
-import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import Pagination from "@mui/material/Pagination";
+import {CircularProgress} from "@mui/material";
+import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
-import {CircularProgress} from "@mui/material";
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
+import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared/modals";
+import '../../shared/styles/grid.scss';
 
 
 export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {

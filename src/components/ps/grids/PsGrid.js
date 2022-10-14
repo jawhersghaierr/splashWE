@@ -1,18 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
+import { DataGrid } from '@mui/x-data-grid';
 import Stack from '@mui/material/Stack'
-import {useGetEtsQuery} from "../services/psApi";
-import {CircularProgress, Typography} from "@mui/material";
-import {DataGrid} from '@mui/x-data-grid';
+import { useGetEtsQuery } from "../services/psApi";
+import { CircularProgress, Typography } from "@mui/material";
 import { selectCriterias } from '../psSlice'
-import {columns} from "./psGridColumns";
-import {usePrevious} from '../../../utils/status-utils';
+import { columns } from "./psGridColumns";
+import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
+import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
 import './psGrid.scss';
 import mainPS from "../../../../assets/PS.png";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
 
 export const PsGrid = ({disciplines, disciplinesIsFetching}) => {
 

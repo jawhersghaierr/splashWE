@@ -1,16 +1,13 @@
 import React, {useState} from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./paimentsGridColumns";
+import {CircularProgress} from "@mui/material";
 import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiementsApi";
-import {ModalInfo} from "../../shared/modals/ModalInfo";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
+import {columns} from "./paimentsGridColumns";
+import { ModalInfo, NoGridResultsAlert, MoreThan200Results } from "../../shared/modals";
 import '../../shared/styles/grid.scss';
-import {CircularProgress} from "@mui/material";
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
-
 
 export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
 

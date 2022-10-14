@@ -2,19 +2,19 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
-import { selectCriterias } from '../virementsSlice'
+import {CircularProgress, Typography} from "@mui/material";
 import {columns} from "./virementGridColumns";
+import { selectCriterias } from '../virementsSlice'
+import {useGetVirementsQuery} from "../services/virementsApi";
+import { NoSearchResultsAlert } from "../../shared/modals";
 import {usePrevious} from '../../../utils/status-utils'
 import mainPS from "../../../../assets/PS.png";
-import {useGetVirementsQuery} from "../services/virementsApi";
-import './virementsGrid.scss';
 import {useGetRefsQuery} from "../../../services/refsApi";
 import { allowSearch } from '../../../utils/validator-utils';
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
+import './virementsGrid.scss';
 
-export const VirementsGrid = ({disciplines}) => {
+export const VirementsGrid = () => {
 
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
@@ -40,7 +40,6 @@ export const VirementsGrid = ({disciplines}) => {
     };
 
     useEffect(() => {
-
             if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
                 setCurrentPage(0)
             }

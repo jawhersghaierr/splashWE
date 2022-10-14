@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {CircularProgress, Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
 import {RocEnLigneGrid} from "./grids/RocEnLigneGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
-
+import {MoreThan200Results} from "../shared/modals";
 import './rocEnLigne.scss'
-import MoreThan200Results from "../shared/modals/MoreThan200Results";
 
 export const RocEnLigne = () => {
 

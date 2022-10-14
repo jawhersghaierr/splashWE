@@ -1,7 +1,7 @@
 import {FacturesGrid} from './FacturesGrid'
 import {PaimentsGrid} from './PaimentsGrid'
 import {SelAssociesGrid} from './SelAssociesGrid'
-import {ActesGrid} from '../../shared/grids/ActesGrid'
+import {ActesGrid} from '../../shared/grids/'
 
 
 export {

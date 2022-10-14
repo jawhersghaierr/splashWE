@@ -5,15 +5,13 @@ import Stack from '@mui/material/Stack'
 import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import { selectCriterias } from '../paiementSlice'
-import {columns} from "./paiementGridColumns";
-import {usePrevious} from '../../../utils/status-utils';
-import mainPS from "../../../../assets/PS.png";
-import {useGetPaiementsQuery} from "../services/paiementsApi";
-
-import './paiementsGrid.scss';
+import { columns } from "./paiementGridColumns";
+import { usePrevious } from '../../../utils/status-utils';
+import { useGetPaiementsQuery } from "../services/paiementsApi";
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
+import { MoreThan200Results, NoSearchResultsAlert } from "../../shared/modals";
+import './paiementsGrid.scss';
+import mainPS from "../../../../assets/PS.png";
 
 export const PaiementsGrid = () => {
 

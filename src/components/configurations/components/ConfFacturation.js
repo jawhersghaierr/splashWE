@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
 import Chip from '@mui/material/Chip';
-import {Typography} from "@mui/material";
 import Box from "@mui/material/Box";
-import {convertDate} from "../../../utils/convertor-utils";
-import {factureConfigurationStatus} from "../../../utils/status-utils";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import {RulesOfConfigGrid} from "../grids/RulesOfConfigGrid";
-import {RowInfo} from "../../beneficiaire/components/RowInfo";
-import {DetailsFactureMailConf} from "./DetailsFactureMailConf";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
+import { Typography } from "@mui/material";
+import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
+import { RowInfo } from "../../beneficiaire/components/RowInfo";
+import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
+import { NoGridResultsAlert } from "../../shared/modals";
+import { convertDate } from "../../../utils/convertor-utils";
+import { factureConfigurationStatus } from "../../../utils/status-utils";
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;

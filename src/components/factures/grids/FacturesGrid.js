@@ -7,13 +7,12 @@ import {useGetFacturesQuery} from "../services/facturesApi";
 import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
-import { selectCriterias } from '../facturesSlice'
 import {columns} from "./facturesGridColumns";
+import { selectCriterias } from '../facturesSlice'
 import {usePrevious} from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
 import mainPS from "../../../../assets/PS.png";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
+import {NoSearchResultsAlert, MoreThan200Results} from "../../shared/modals";
 import '../../shared/styles/grid.scss';
 
 

@@ -3,13 +3,12 @@ import { useSelector } from 'react-redux'
 import Stack from '@mui/material/Stack'
 import { DataGrid } from '@mui/x-data-grid';
 import { CircularProgress, Pagination, Typography } from "@mui/material";
-import { useGetBenefQuery } from "../services/beneficiaireApi";
-import { selectCriterias } from '../beneficiaireSlice'
 import { columns } from "./beneficiaireGridColumns";
+import { selectCriterias } from '../beneficiaireSlice'
+import { useGetBenefQuery } from "../services/beneficiaireApi";
 import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import MoreThan200Results from "../../shared/modals/MoreThan200Results";
-import {NoSearchResultsAlert} from "../../shared/modals/NoSearchResultsAlert";
+import { MoreThan200Results, NoSearchResultsAlert } from "../../shared/modals";
 import './beneficiaireGrid.scss';
 import mainPS from "../../../../assets/PS.png";
 

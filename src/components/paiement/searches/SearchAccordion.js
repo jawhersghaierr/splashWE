@@ -33,10 +33,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { isValidDate } from '../../../utils/convertor-utils';
 import { validators, calcCleFromNir, selectDeselectAllValues, allowSearch } from '../../../utils/validator-utils';
 import { checkInsidePanels } from '../utils/utils'
-import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
+import { selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { ConfirmNir } from "../../shared/modals/ConfirmNir";
-import PanelNIR from '../../shared/modals/PanelNIR';
+import { ConfirmNir, PanelNIR } from "../../shared/modals";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'

@@ -1,9 +1,8 @@
 import React from 'react'
 import Stack from '@mui/material/Stack'
-import {DataGrid, gridClasses } from '@mui/x-data-grid';
-import {simpleGarantieColumns, complexGarantieColumns} from "./gridGarantiesColumns";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
-
+import { DataGrid } from '@mui/x-data-grid';
+import { simpleGarantieColumns, complexGarantieColumns } from "./gridGarantiesColumns";
+import { NoGridResultsAlert } from "../../shared/modals";
 
 export const GarantiesGrid = ({garanties, nom, simple = true}) => {
 

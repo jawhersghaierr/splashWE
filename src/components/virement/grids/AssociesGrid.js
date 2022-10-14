@@ -1,13 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react'
 import Stack from '@mui/material/Stack'
-import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./associesGridColumns";
-import './virementsGrid.scss';
-import {ModalInfo} from "../../shared/modals/ModalInfo";
-import PaiementDetailsById from "../../paiement/PaiementDetailsById";
+import { DataGrid } from '@mui/x-data-grid';
+import { columns } from "./associesGridColumns";
 import VirementDetailsById from "../VirementDetailsById";
-import {NoGridResultsAlert} from "../../shared/modals/NoGridResultsAlert";
-import {CircularProgress} from "@mui/material";
+import PaiementDetailsById from "../../paiement/PaiementDetailsById";
+import { ModalInfo, NoGridResultsAlert } from "../../shared/modals";
+import './virementsGrid.scss';
 
 export const AssociesGrid = ({data, nomRefs, noModal}) => {
 

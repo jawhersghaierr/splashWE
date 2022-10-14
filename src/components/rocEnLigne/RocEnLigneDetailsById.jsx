@@ -7,7 +7,7 @@ import {useGetRocEnLigneByIdQuery} from "./services/rocEnLigneApi";
 import {matchPath, useHistory} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "../shared/grids/ActesGrid";
+import {ActesGrid} from "../shared/grids";
 import {SelAssociesGrid} from "./grids/SelAssociesGrid";
 import {FacturesAssociessGrid} from "./grids/FacturesAssociessGrid";
 import {FluxInfo} from "./components/FluxInfo";
