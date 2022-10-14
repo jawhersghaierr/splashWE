@@ -111,6 +111,17 @@ export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
     return tmpTypes
 }
 
+export const getSubMotifsFromTypes = ({type = [], nomRefs}) => {
+    let tmpMotifs = []
+    if (type.length > 0) {
+        type.forEach(_type => tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_SUB_MOTIFS[_type], ...tmpMotifs])
+        tmpMotifs = [...new Set(tmpMotifs)]
+
+    } else tmpMotifs = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+
+    return tmpMotifs
+}
+
 
 export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
     let tmpSubCode = []

@@ -29,7 +29,7 @@ import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '
 import {
     checkInsidePanels, getAvailableTypesFromStatuses,
     reshapeMotifFromStatus, getMotifsFromTypes,
-    getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromMotifs,
+    getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromMotifs, getSubMotifsFromTypes,
 } from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../rocEnLigneSlice';
 import { ConfirmNir } from "../../shared/ConfirmNir";
@@ -879,7 +879,8 @@ export default function SearchAccordion(props) {
                                           setLocalMotif(tmpMotif)
 
                                           let tmpSubMotif = {}
-                                          let tmpSubMotifsFromMotif =  getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                          // let tmpSubMotifsFromMotif =  getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                          let tmpSubMotifsFromMotif =  getSubMotifsFromTypes({type, nomRefs})
                                           tmpSubMotifsFromMotif.forEach(subCode => {
                                                   tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
                                               })
