@@ -10,7 +10,7 @@ export const NoSearchResultsAlert = () => {
 
 	return (
 		<Alert severity={'info'} sx={{bgcolor: '#a5ecf7', color: '#001c41', margin: '0 30px', boxShadow: 0}}>
-			<AlertTitle sx={{margin: 0}}>Aucun résiltat pour ces critères de recherche</AlertTitle>
+			<AlertTitle sx={{margin: 0}}>Aucun résultat pour ces critères de recherche</AlertTitle>
 		</Alert>
 	);
 }

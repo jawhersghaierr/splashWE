@@ -61,8 +61,8 @@ export const ListConfiguration = (props) => {
 
             let filters = {...criterias}
 
-            if (criterias?.referenceDate && criterias?.referenceDate != '' && criterias?.referenceDate != undefined) {
-                filters.referenceDate = new Date(criterias?.referenceDate).toLocaleDateString('sv');
+            if (criterias?.refDate && criterias?.refDate != '' && criterias?.refDate != undefined) {
+                filters.refDate = new Date(criterias?.refDate).toLocaleDateString('sv');
             }
 
             if (criterias?.status && criterias?.status !== '' && criterias?.status !== undefined) filters.status = 'A'

@@ -56,7 +56,7 @@ export const ConfirmFactureRecyclage = ({data, opened, setOpenMsg, close}) => {
 					<ErrorOutlineOutlinedIcon sx={{verticalAlign: 'top', width: 30, height: 30, margin: '0 5px'}}/>
 					<b>Attention</b>
 				</Typography>
-				<div style={{margin: '0 50px 15px'}}>{'Confirmez-vous le recylage?'}</div>
+				<div style={{margin: '0 50px 15px'}}>{'Confirmez-vous le recyclage?'}</div>
 			</DialogTitle>
 			{isFetching && <DialogContent>
 				<CircularProgress style={{margin: '50px auto'}}/>
