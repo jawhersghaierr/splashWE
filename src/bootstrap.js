@@ -149,7 +149,7 @@ const App = () => {
                   <Route path="/virements/:id?" component={VirementDetailsById}/>
                   <Route path="/intraitables" component={Intraitables}/>
                   <Route path="/intraitFactures" component={RemoteTest}/>
-                  <Route path="/test" component={RemoteTest}/>
+                  <Route path="/test" component={RemoteTest} />
                   <Route path="/PSremote" component={PSremote} />
                 </Switch>
 
