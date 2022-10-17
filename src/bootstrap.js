@@ -128,28 +128,28 @@ const App = () => {
                   <Route path="/Hospi" component={Hospi} />
                   <Route exact={true} path="/PS" component={Ps} />
                   <Route path="/PS/:id?" component={PsDetailsById}/>
-                  <Route exact={true} path="/beneficiaire" component={Beneficiaire}/> />
-                  <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/> />
-                  <Route path="/ligne" component={RemoteTest}/> />
-                  <Route exact={true} path="/factures" component={Factures}/> />
-                  <Route path="/factures/:id?" component={FacturesDetailsById}/> />
+                  <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
+                  <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>
+                  <Route path="/ligne" component={RemoteTest}/>
+                  <Route exact={true} path="/factures" component={Factures}/>
+                  <Route path="/factures/:id?" component={FacturesDetailsById}/>
 
                   <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
                   <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
                   <Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>
                   {/*<Route name={'configuration'} path="/configuration" component={Configurations}/> />*/}
 
-                  <Route exact={true} path="/paiement" component={Paiement}/> />
-                  <Route path="/paiement/:id?" component={PaiementDetailsById}/> />
+                  <Route exact={true} path="/paiement" component={Paiement}/>
+                  <Route path="/paiement/:id?" component={PaiementDetailsById}/>
 
-                  <Route exact={true} path="/serviceEnLigne" component={RocEnLigne}/> />
-                  <Route path="/serviceEnLigne/:id?" component={RocEnLigneDetailsById}/> />
+                  <Route exact={true} path="/serviceEnLigne" component={RocEnLigne}/>
+                  <Route path="/serviceEnLigne/:id?" component={RocEnLigneDetailsById}/>
 
-                  <Route exact={true} path="/virements" component={Virement}/> />
-                  <Route path="/virements/:id?" component={VirementDetailsById}/> />
-                  <Route path="/intraitables" component={Intraitables}/> />
-                  <Route path="/intraitFactures" component={RemoteTest}/> />
-                  <Route path="/test" component={RemoteTest}/> />
+                  <Route exact={true} path="/virements" component={Virement}/>
+                  <Route path="/virements/:id?" component={VirementDetailsById}/>
+                  <Route path="/intraitables" component={Intraitables}/>
+                  <Route path="/intraitFactures" component={RemoteTest}/>
+                  <Route path="/test" component={RemoteTest}/>
                   <Route path="/PSremote" component={PSremote} />
                 </Switch>
 
