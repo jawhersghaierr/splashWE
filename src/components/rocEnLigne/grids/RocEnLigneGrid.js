@@ -46,7 +46,6 @@ export const RocEnLigneGrid = () => {
 
     }, [criterias, currentPage]);
 
-    console.log('data > ', data)
     if (!isFetching && isSuccess  && (!data?.results || data?.results?.length == 0)) return <NoSearchResultsAlert/>
     if (isFetching || nomRefsIsFetching) return  <CircularProgress style={{margin: '100px 50%'}}/>
 

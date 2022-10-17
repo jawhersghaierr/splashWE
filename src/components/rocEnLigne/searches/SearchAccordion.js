@@ -30,7 +30,7 @@ import {
     checkInsidePanels, getMotifsFromTypes,
     getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromTypes,
 } from '../utils/utils';
-import { selectCriterias } from '../rocEnLigneSlice';
+import { selectCriterias, setCriterias } from '../rocEnLigneSlice';
 import { ConfirmNir, PanelNIR } from "../../shared/modals";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 

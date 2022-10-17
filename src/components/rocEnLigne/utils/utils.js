@@ -102,10 +102,8 @@ export const getSubMotifsFromMotifsFromTypes = ({type = [], nomRefs}) => {
 export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
     let tmpTypes = []
     statut.forEach( _statut => {
-        if (_statut !== 'all') {
-            tmpTypes = [...nomRefs.ROC_RLTN_STATUSES_TYPES[_statut], ...tmpTypes]
-        }
-    } )
+        if (_statut !== 'all') tmpTypes = [...nomRefs.ROC_RLTN_STATUSES_TYPES[_statut], ...tmpTypes]
+    })
     tmpTypes = [...new Set(tmpTypes)]
 
     return tmpTypes
@@ -113,8 +111,10 @@ export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
 
 export const getSubMotifsFromTypes = ({type = [], nomRefs}) => {
     let tmpMotifs = []
-    if (type.length > 0) {
-        type.forEach(_type => tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_SUB_MOTIFS[_type], ...tmpMotifs])
+    if (type.length > 0 && nomRefs) {
+        type.forEach(_type => {
+            if (_type !== 'all') tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_SUB_MOTIFS[_type], ...tmpMotifs]
+        })
         tmpMotifs = [...new Set(tmpMotifs)]
 
     } else tmpMotifs = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
@@ -127,9 +127,7 @@ export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
     let tmpSubCode = []
     if (motif && motif.length > 0) {
         motif.forEach(_motif => {
-            if (_motif !== 'all') {
-                tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
-            }
+            if (_motif !== 'all') tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
         })
         tmpSubCode = [...new Set(tmpSubCode)]
     } else return []
