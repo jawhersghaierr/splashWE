@@ -373,7 +373,6 @@ export default function SearchAccordion() {
                                                                       id="Statut"
                                                                       labelId="Statut-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -383,8 +382,7 @@ export default function SearchAccordion() {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
+                                                                          <ListItemText primary={(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 

@@ -39,3 +39,16 @@ export const columns = disciplines => [
     }},
 ];
 
+
+export const reverseMapPaiement = {
+    numAdhInd: 'N° adhérent Nom et prénom',
+    nomPrenom: 'N° adhérent Nom et prénom',
+    numIdPs: 'N° de facturation PS / TC',
+    provenance: 'Provenance',
+    creationDate: 'Date de paiement',
+    dateFacture: 'Date de facture',
+    numeroFacture: 'N° facture / titre',
+    factureStatus: 'Statut facture',
+    status: 'Statut paiement',
+    totalRc: 'RC paiement',
+}

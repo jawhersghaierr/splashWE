@@ -37,24 +37,49 @@ export const checkInsidePanels = (values) => {
 }
 
 
+export const reshapeCriterias = ({criterias}) => {
+
+    let {
+        dateDebutSoin, dateDebutSoinFin,
+        dateDebutHospitalisation, dateDebutHospitalisationFin,
+        dateFacture, dateFactureFin,
+        receivedDate, receivedDateFin,
+        creationDate, creationDateFin,
+        dateDeNaissance, birdDate,
+        nir, cle
+    } = criterias;
+
+    let filters = {...criterias}
+
+    if (dateDebutSoin && dateDebutSoin != '' && dateDebutSoin != undefined) filters.dateDebutSoin = new Date(dateDebutSoin).toLocaleDateString('sv');
+    if (dateDebutSoinFin && dateDebutSoinFin != '' && dateDebutSoinFin != undefined) filters.dateDebutSoinFin = new Date(dateDebutSoinFin).toLocaleDateString('sv');
+
+    if (dateDebutHospitalisation && dateDebutHospitalisation != '' && dateDebutHospitalisation != undefined) filters.dateDebutHospitalisation = new Date(dateDebutHospitalisation).toLocaleDateString('sv');
+    if (dateDebutHospitalisationFin && dateDebutHospitalisationFin != '' && dateDebutHospitalisationFin != undefined) filters.dateDebutHospitalisationFin = new Date(dateDebutHospitalisationFin).toLocaleDateString('sv');
+
+    if (dateFacture && dateFacture != '' && dateFacture != undefined) filters.dateFacture = new Date(dateFacture).toLocaleDateString('sv');
+    if (dateFactureFin && dateFactureFin != '' && dateFactureFin != undefined) filters.dateFactureFin = new Date(dateFactureFin).toLocaleDateString('sv');
+
+    if (receivedDate && receivedDate != '' && receivedDate != undefined) filters.receivedDate = new Date(receivedDate).toLocaleDateString('sv');
+    if (receivedDateFin && receivedDateFin != '' && receivedDateFin != undefined) filters.receivedDateFin = new Date(receivedDateFin).toLocaleDateString('sv');
+
+    if (creationDate && creationDate != '' && creationDate != undefined) filters.creationDate = new Date(creationDate).toLocaleDateString('sv');
+    if (creationDateFin && creationDateFin != '' && creationDateFin != undefined) filters.creationDateFin = new Date(creationDateFin).toLocaleDateString('sv');
+
+    if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
+        filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
+    }
+    if (birdDate && birdDate != '' && birdDate != undefined) {
+        if (birdDate instanceof Date && !isNaN(birdDate)){
+            filters.dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateDeNaissance = birdDate.split('/').reverse().join('');
+    }
 
 
-export const statusRow = (formattedValue) => {
+    if (nir && nir != undefined && cle && cle != undefined) {
+        filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+    }
 
-    let res = {}
-    formattedValue?.forEach((stat, i) => {
-        res[stat.statutRib] = {}
-        res[stat.statutRib] = {...stat, ...statusesRIB[stat.statutRib]};
-    })
-
-    if (res.ATT?.count > 0) return {...res, ATT: {...res.ATT, shown: true}};
-    if (res.REF?.count > 0) return {...res, REF: {...res.REF, shown: true}};
-    if (res.MIS?.count > 0) return {...res, MIS: {...res.MIS, shown: true}};
-    if (res.NA?.count > 0) return {...res, NA: {...res.NA, shown: true}};
-    if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
-
-    return res;
+    filters.cashe = null
+    return filters
 }
-
-
-

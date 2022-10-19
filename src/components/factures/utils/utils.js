@@ -74,3 +74,55 @@ export const reshapeMotifVsStatus = ({status, nomRefs}) => {
     }
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 }
+
+export const reshapeCriterias = ({criterias}) => {
+    let {
+        dateEntree, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
+        errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNai, birdDate, nir, cle
+    } = criterias;
+
+    let filters = {...criterias}
+
+    if (dateEntree && dateEntree != '' && dateEntree != undefined) {
+        filters.dateEntree = new Date(dateEntree).toLocaleDateString('sv');
+    }
+
+    if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
+        filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
+    }
+
+    if (dateReceivedEnd && dateReceivedEnd != '' && dateReceivedEnd != undefined) {
+        filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
+    }
+
+    if (dateFact && dateFact != '' && dateFact != undefined) {
+        filters.dateFact = new Date(dateFact).toLocaleDateString('sv');//.toISOString()
+    }
+
+    if (dateNai && dateNai != '' && dateNai != undefined) {
+        filters.dateNai = new Date(dateNai).toLocaleDateString('sv').replaceAll('-', '');
+    }
+
+    if (birdDate && birdDate != '' && birdDate != undefined) {
+        if (birdDate instanceof Date && !isNaN(birdDate)){
+            filters.dateNai = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateNai = birdDate.split('/').reverse().join('');
+    }
+
+    if (nir && nir != undefined && cle && cle != undefined) {
+        filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+    }
+
+    if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
+        if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
+
+        if (idPeriodeFact.length == 27) {
+            idPeriodeFact = idPeriodeFact.split(' / ')
+            filters.occId = idPeriodeFact[1]
+            filters.idPeriodeFact = idPeriodeFact[0]
+        }
+    }
+
+    filters.cashe = null
+    return filters
+}

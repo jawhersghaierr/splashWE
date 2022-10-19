@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack'
-import {CircularProgress, Typography} from "@mui/material";
+import {Button, CircularProgress, Link, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./rocEnLigneGridColumns";
 import { selectCriterias } from '../rocEnLigneSlice'
@@ -12,6 +12,12 @@ import {useGetRefsQuery} from "../../../services/refsApi";
 import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
 import mainPS from "../../../../assets/PS.png";
 import '../../shared/styles/grid.scss';
+import {env_IP, ports} from "../../../../env-vars";
+import {baseUrl} from "../services/rocEnLigneApi";
+import {addCriteriasForGetRequest} from "../../../utils/utils";
+import {reshapeCriterias} from "../../factures/utils/utils";
+import {reverseMapRocEnLigne} from "./rocEnLigneGridColumns";
+import download from "../../../../assets/download-blue.svg";
 
 export const RocEnLigneGrid = () => {
 
@@ -52,10 +58,20 @@ export const RocEnLigneGrid = () => {
     return <div className="gridContent">
 
         {(isSuccess && data?.results && nomRefs) && <div>
-            <div style={{margin: '25px'}}>
+            <div style={{margin: '25px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data.totalPages))? Number(data.totalElements) - currentPage * size : size)} sur {data.totalElements} résultats
                 </Typography>
+                <Button
+                    variant="contained"
+                    startIcon={<img src={download} width={22} style={{marginTop: '4px', color: 'white'}} />}
+                    component={Link}
+                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'sel/search/', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}`}
+                    className="RoundedEmptyButt"
+                    download="result.csv"
+                >
+                    Еxporter
+                </Button>
             </div>
             <DataGrid
                 rows={data?.results || []}

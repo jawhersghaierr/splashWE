@@ -1,4 +1,5 @@
 import {statusesRIB} from "../../../utils/status-utils";
+import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const checkInsidePanels = (values) => {
 
@@ -169,4 +170,64 @@ export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
         return _motif || null;
     }
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+}
+
+
+
+export const reshapeCriterias = ({criterias}) => {
+    let {
+        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
+        errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
+    } = criterias;
+
+    let filters = {...criterias}
+
+    if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
+        filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
+    }
+    if (dateAdmission && dateAdmission != '' && dateAdmission != undefined) {
+        filters.dateAdmission = new Date(dateAdmission).toLocaleDateString('sv');
+    }
+    if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
+        filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
+        // filters.receptionDateStart = new Date(receptionDateStart).toISOString()//.toLocaleDateString('sv');
+    }
+
+    if (receptionDateEnd && receptionDateEnd != '' && receptionDateEnd != undefined) {
+        filters.receptionDateEnd = IntlDateWithHHMM(receptionDateEnd)
+        // filters.receptionDateEnd = new Date(receptionDateEnd).toISOString()//.toLocaleDateString('sv');//
+    }
+
+    if (dateNaiss && dateNaiss != '' && dateNaiss != undefined) {
+        filters.dateNaiss = new Date(dateNaiss).toLocaleDateString('sv').replaceAll('-', '');
+    }
+
+    if (birdDate && birdDate != '' && birdDate != undefined) {
+        if (birdDate instanceof Date && !isNaN(birdDate)){
+            filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateNaiss = birdDate.split('/').reverse().join('');
+    }
+
+    if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
+        if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);
+
+        if (idPerFact.length == 27) {
+            idPerFact = idPerFact.split(' / ')
+            filters.occId = idPerFact[1]
+            filters.idPerFact = idPerFact[0]
+        }
+    }
+    /**
+     * just for Facturation
+     *
+                    if (nir && nir != undefined && cle && cle != undefined) {
+                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
+                }
+
+     */
+
+
+    filters.cashe = null
+    return filters
+
 }

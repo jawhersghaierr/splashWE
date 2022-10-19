@@ -7,6 +7,7 @@ module.exports = {
     //     url: 'http://localhost',
     //     port: 3001,
     // },
+    //download : http://10.241.25.10:8005/api/v1/factures?pageNumber=0&pageSize=20&status=BAP
     remotes: [
         {
             title: 'hospi_ui',
@@ -31,6 +32,7 @@ module.exports = {
         untreatable: 8031,
         beneficiaire: 8007,
         configurations: 8015,
+        download: 8015,
         factures: 8005,
         flux: 8014,
         paiements: 8003,

@@ -1,6 +1,5 @@
 import Chip from "@mui/material/Chip";
 import React from "react";
-
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
 import {rocStatus} from "../../../utils/status-utils";
@@ -35,3 +34,19 @@ export const columns = ({nomRefs}) => [
         return <Link to={`/serviceEnLigne/${params?.value}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];
+
+export const reverseMapRocEnLigne = {
+    dateReception: 'Reçu le',
+    numeroEngagement: 'N° engagement',
+    type: 'Type',
+    domaine: 'Domaine',
+    numeroPs: 'FINESS géographique',
+    dateEntree: 'Date d\'admission',
+    statut: 'Statut',
+    amc: 'AMC',
+    numeroAdherant: 'N° adhérent',
+    nom: 'Nom et date de naissance bénéficiaire',
+    prenom: 'Nom et date de naissance bénéficiaire',
+    dateNaiss: 'Nom et date de naissance bénéficiaire',
+    montantRc: 'Montant RC'
+}

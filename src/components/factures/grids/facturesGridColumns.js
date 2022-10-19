@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {facturesStatus} from "../../../utils/status-utils";
 import {dateConvertNaissance, convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 
-export const columns = disciplines => [
+export const columns = () => [
     { field: 'receivedDate', headerName: 'Reçu le', flex: 1, sortable: false, renderCell: (params) => {
         return (convertDate(params.value));
     }},
@@ -31,3 +31,18 @@ export const columns = disciplines => [
             return <Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
     }},
 ];
+
+export const reverseMapFacturation = {
+    receivedDate: 'Reçu le',
+    numFact: 'N° facture',
+    domaine: 'Domaine',
+    numId: 'FINESS géographique',
+    dateEntree: 'Date d\'admission',
+    status: 'Statut',
+    numClient: 'AMC',
+    numAdh: 'N° adhérent',
+    nom: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
+    prenom: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
+    dateNai: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
+    rc: 'Montant Rc',
+}

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP, ports} from '../../env-vars'
+import { env_IP, ports } from '../../env-vars'
 
 export const refsApi = createApi({
 
@@ -22,7 +22,7 @@ export const refsApi = createApi({
                 transform: (response, meta, arg) => {
                     return JSON.parse(response);
                 }}),
-            transform: (response, meta, arg) => {
+            transformResponse: (response, meta, arg) => {
                 return response
             }
         }),

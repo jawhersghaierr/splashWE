@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {env_IP, ports} from '../../../../env-vars'
+import {addCriteriasForGetRequest, pageSize} from "../../../utils/utils";
+import {reshapeCriterias} from "../utils/utils";
+
+export const baseUrl = `http://${env_IP}:${ports.ps}/api/v1`
 
 export const psApi = createApi({
     reducerPath: 'psApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:${ports.ps}/api/v1`,
+        baseUrl,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -54,31 +58,18 @@ export const psApi = createApi({
         }),
         getEts: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-                const {
-                    numPartenaire,
-                    raisonSociale,
-                    disciplines,
-                    codePostal,
-                    ville,
-                    statutRibs,
-                } = criterias;
+
+
+                let url = addCriteriasForGetRequest({url: 'ets', filters: reshapeCriterias({criterias})})
 
                 const {
                     sortDirection,
                     sortProperty,
                 } = sortProperties;
 
-                const size = 10;
-                let url = `ets?page=${currentPage}&size=${size}`;
-
+                url += `${(url.includes('?')? '&': '?')}page=${currentPage}&size=${pageSize}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
-                if (numPartenaire) url += `&numPartenaire=${numPartenaire}`;
-                if (raisonSociale) url += `&raisonSociale=${raisonSociale}`;
-                if (disciplines) url += `&disciplines=${disciplines}`;
-                if (codePostal) url += `&codePostal=${codePostal}`;
-                if (ville) url += `&ville=${ville}`;
-                if (statutRibs) url += `&statutRibs=${statutRibs}`;
 
                 console.log('params to be send > ', url);
 

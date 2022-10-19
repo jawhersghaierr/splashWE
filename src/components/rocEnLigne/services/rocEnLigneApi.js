@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP, ports} from '../../../../env-vars'
-import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
+import { env_IP, ports } from '../../../../env-vars'
+import { addCriteriasForGetRequest, pageSize } from "../../../utils/utils";
+import { reshapeCriterias } from "../utils/utils";
+
+export const baseUrl = `http://${env_IP}:${ports.selAndIdb}/api/v1`
 
 export const rocEnLigneApi = createApi({
     reducerPath: 'rocEnLigneApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:${ports.selAndIdb}/api/v1`,
+        baseUrl,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -22,78 +25,20 @@ export const rocEnLigneApi = createApi({
     endpoints: (builder) => ({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-                let {
-                    dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
-                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
-                } = criterias;
-
-                let filters = {...criterias}
-
-                if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
-                    filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
-                }
-                if (dateAdmission && dateAdmission != '' && dateAdmission != undefined) {
-                    filters.dateAdmission = new Date(dateAdmission).toLocaleDateString('sv');
-                }
-                if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
-                    filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
-                    // filters.receptionDateStart = new Date(receptionDateStart).toISOString()//.toLocaleDateString('sv');
-                }
-
-                if (receptionDateEnd && receptionDateEnd != '' && receptionDateEnd != undefined) {
-                    filters.receptionDateEnd = IntlDateWithHHMM(receptionDateEnd)
-                    // filters.receptionDateEnd = new Date(receptionDateEnd).toISOString()//.toLocaleDateString('sv');//
-                }
-
-                if (dateNaiss && dateNaiss != '' && dateNaiss != undefined) {
-                    filters.dateNaiss = new Date(dateNaiss).toLocaleDateString('sv').replaceAll('-', '');
-                }
-
-                if (birdDate && birdDate != '' && birdDate != undefined) {
-                    if (birdDate instanceof Date && !isNaN(birdDate)){
-                        filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else filters.dateNaiss = birdDate.split('/').reverse().join('');
-                }
-
-                if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
-                    if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);
-
-                    if (idPerFact.length == 27) {
-                        idPerFact = idPerFact.split(' / ')
-                        filters.occId = idPerFact[1]
-                        filters.idPerFact = idPerFact[0]
-                    }
-                }
-                /**
-                 * just for Facturation
-                 *
-                    if (nir && nir != undefined && cle && cle != undefined) {
-                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
-                }
-
-                 */
-
-                filters.cashe = null
 
                 const {
                     sortDirection,
                     sortProperty,
                 } = sortProperties;
 
-                const size = 20;
+                let url = addCriteriasForGetRequest({url: 'sel/search/', filters: reshapeCriterias({criterias})})
 
-                let url = `sel/search/?pageNumber=${currentPage}&pageSize=${size}`;
+                url += `${(url.includes('?')? '&': '?')}pageNumber=${currentPage}&pageSize=${pageSize}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
 
-                if(filters) {
-                    Object.keys(filters).forEach( key => {
-                        if (filters[key] && filters[key] !== 'null' && filters[key] !== undefined && filters[key] !== '') {
-                            url += `&${key}=${filters[key]}`;
-                        }
-                    })
-                }
                 console.log(url)
+
                 return ({
                     url,
                     transform: (response, meta, arg) => {

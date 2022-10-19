@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {benefStatuses} from '../../../utils/status-utils';
 import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 
-export const columns = enviroments => [
+export const columns = () => [
     { field: 'numeroAdherentFamilial', headerName: 'N° Adhérent Familial', flex: 2 },
     { field: 'numeroAdherentIndividuel', headerName: 'N° Adhérent Individuel', flex: 2 },
     { field: 'nom', headerName: 'Nom bénéficiaire et lien Famillial', flex: 4,
@@ -49,3 +49,18 @@ export const columns = enviroments => [
     }},
 ];
 
+
+export const reverseMapBenef = {
+    numeroAdherentFamilial: 'N° Adhérent Familial',
+    numeroAdherentIndividuel: 'N° Adhérent Individuel',
+    nom: 'Nom bénéficiaire et lien Famillial',
+    prenom: 'Nom bénéficiaire et lien Famillial',
+    lienFamillialLabel: 'Nom bénéficiaire et lien Famillial',
+    dateNaissance: 'Date de Naissance et Rang',
+    rangNaissance: 'Date de Naissance et Rang',
+    environmentCode: 'Environnement',
+    timestamp: 'Date de Mise à jour',
+    dateOuvertureDroits: 'Date de Validité',
+    dateFermetureDroits: 'Date de Validité',
+    status: 'Statut'
+}

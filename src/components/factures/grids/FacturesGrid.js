@@ -2,18 +2,23 @@ import React, {useEffect, useRef, useState, forwardRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Pagination from '@mui/material/Pagination';
+import {CircularProgress, Typography, Button, Link} from "@mui/material";
+// import {Link} from "@material-ui/core";
 import Stack from '@mui/material/Stack'
-import {useGetFacturesQuery} from "../services/facturesApi";
-import {CircularProgress, Typography} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 
-import {columns} from "./facturesGridColumns";
+import {columns, reverseMapFacturation} from "./facturesGridColumns";
+import {baseUrl, useGetFacturesQuery} from "../services/facturesApi";
 import { selectCriterias } from '../facturesSlice'
 import {usePrevious} from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
 import mainPS from "../../../../assets/PS.png";
 import {NoSearchResultsAlert, MoreThan200Results} from "../../shared/modals";
 import '../../shared/styles/grid.scss';
+import {env_IP, ports} from "../../../../env-vars";
+import download from "../../../../assets/download-blue.svg";
+import {addCriteriasForGetRequest} from "../../../utils/utils";
+import {reshapeCriterias} from "../utils/utils";
 
 
 export const FacturesGrid = ({disciplines}) => {
@@ -51,10 +56,24 @@ export const FacturesGrid = ({disciplines}) => {
 
     return <div className="gridContent">
         {(isSuccess && data?.results) && <div>
-            <div style={{margin: '25px'}}>
+            <div style={{margin: '25px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data?.totalPages))? Number(data?.totalElements) - currentPage * size : size)} sur {data?.totalElements} résultats
                 </Typography>
+                {/*<Link href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'factures', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`} download='result.csv1' >*/}
+                {/*    <img src={download} width={22} style={{marginTop: '4px'}} />*/}
+                {/*</Link>*/}
+
+                <Button
+                    variant="contained"
+                    startIcon={<img src={download} width={22} style={{marginTop: '4px', color: 'white'}} />}
+                    component={Link}
+                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'factures', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`}
+                    className="RoundedEmptyButt"
+                    download="result.csv"
+                >
+                    Еxporter
+                </Button>
             </div>
             <DataGrid
                 rows={data?.results || []}

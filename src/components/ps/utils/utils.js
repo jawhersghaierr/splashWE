@@ -35,3 +35,20 @@ export const checkInsidePanels = (values) => {
     console.log(result)
     return result
 }
+
+export const reshapeCriterias = ({criterias}) => {
+
+    const {
+        numPartenaire,
+        raisonSociale,
+        disciplines,
+        codePostal,
+        ville,
+        statutRibs,
+    } = criterias;
+
+    let filters = {...criterias}
+
+    filters.cashe = null
+    return filters
+}

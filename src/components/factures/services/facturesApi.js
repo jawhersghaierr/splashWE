@@ -1,11 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP, ports} from '../../../../env-vars'
+import { env_IP, ports } from '../../../../env-vars'
 import { actesGridMapper } from '../../../utils/reshaper-utils'
+import { reshapeCriterias } from "../utils/utils";
+import { addCriteriasForGetRequest, pageSize } from "../../../utils/utils";
+
+export const baseUrl = `http://${env_IP}:${ports.factures}/api/v1`
 
 export const facturesApi = createApi({
     reducerPath: 'facturesApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:${ports.factures}/api/v1`,
+        baseUrl,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -22,73 +26,18 @@ export const facturesApi = createApi({
     endpoints: (builder) => ({
         getFactures: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-                let {
-                    dateEntree, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
-                    errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNai, birdDate, nir, cle
-                } = criterias;
-
-                let filters = {...criterias}
-
-                if (dateEntree && dateEntree != '' && dateEntree != undefined) {
-                    filters.dateEntree = new Date(dateEntree).toLocaleDateString('sv');
-                }
-
-                if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
-                    filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
-                }
-
-                if (dateReceivedEnd && dateReceivedEnd != '' && dateReceivedEnd != undefined) {
-                    filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
-                }
-
-                if (dateFact && dateFact != '' && dateFact != undefined) {
-                    filters.dateFact = new Date(dateFact).toLocaleDateString('sv');//.toISOString()
-                }
-
-                if (dateNai && dateNai != '' && dateNai != undefined) {
-                    filters.dateNai = new Date(dateNai).toLocaleDateString('sv').replaceAll('-', '');
-                }
-
-                if (birdDate && birdDate != '' && birdDate != undefined) {
-                    if (birdDate instanceof Date && !isNaN(birdDate)){
-                        filters.dateNai = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-                    } else filters.dateNai = birdDate.split('/').reverse().join('');
-                }
-
-                if (nir && nir != undefined && cle && cle != undefined) {
-                    filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
-                }
-
-                if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
-                    if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
-
-                    if (idPeriodeFact.length == 27) {
-                        idPeriodeFact = idPeriodeFact.split(' / ')
-                        filters.occId = idPeriodeFact[1]
-                        filters.idPeriodeFact = idPeriodeFact[0]
-                    }
-                }
-
-                filters.cashe = null
 
                 const {
                     sortDirection,
                     sortProperty,
                 } = sortProperties;
 
-                const size = 20;
+                let url = addCriteriasForGetRequest({url: 'factures', filters: reshapeCriterias({criterias})})
 
-                let url = `factures?pageNumber=${currentPage}&pageSize=${size}`;
+                url += `${(url.includes('?')? '&': '?')}pageNumber=${currentPage}&pageSize=${pageSize}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
 
-                if(filters) {
-                    Object.keys(filters).forEach(key=>{
-                        if (filters[key] && filters[key] !== 'null' && filters[key] !== undefined && filters[key] !== '') {
-                            url += `&${key}=${filters[key]}`;
-                        }
-                    })
-                }
 
                 return ({
                     url,
