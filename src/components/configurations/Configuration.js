@@ -1,15 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
-import {useGetDisciplinesQuery} from "../../services/referentielApi"
-
-import './configuration.scss'
-import {matchPath} from "react-router-dom";
-import {useGetConfigsQuery} from "./services/configurationsApi";
 import ConfigurationDetailsById from "./ConfigurationDetailsById";
-
-
+import './configuration.scss'
 
 export const Configuration = ({config, nomRefs}) => {
     const [error, setError] = useState(null);

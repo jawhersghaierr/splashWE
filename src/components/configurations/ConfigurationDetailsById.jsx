@@ -24,6 +24,7 @@ export default function ConfigurationDetailsById(props) {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [data, setData] = useState([]);
+    const [currentConfigs, setCurrentConfigs] = useState({});
 
     let domainForPanel = null;
 
@@ -38,7 +39,9 @@ export default function ConfigurationDetailsById(props) {
     useEffect(() => {
 
         if (domain && code && id && LOCIsSuccess && LOC[domain]) {
-            url = LOC[domain]?.items?.find(e=>e.code==code)?.url?.split('?')[0] || null
+            const current = LOC[domain]?.items?.find(e=>e.code==code)
+            setCurrentConfigs(current)
+            url = current?.url?.split('?')[0] || null
         }
 
         if (url && id) {
@@ -61,8 +64,8 @@ export default function ConfigurationDetailsById(props) {
 
     if ((LOCIsFetching || nomRefsIsFetching) && !nomRefs && !domain) return <CircularProgress style={{margin: '100px 50%'}}/>
     switch (domain) {
-        case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
-        case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} error={error}/>
+        case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error}/>
+        case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error}/>
 
     }
 

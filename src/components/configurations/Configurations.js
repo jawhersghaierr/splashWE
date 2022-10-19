@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import './configuration.scss'
 import {initCriterias} from "./configurationsSlice";
 import {useDispatch} from "react-redux";
+import SettingsIcon from '@mui/icons-material/Settings';
 import background1 from '../../../assets/Config1.png'
 import background2 from '../../../assets/Config2.png'
 
@@ -36,9 +37,9 @@ export const Configurations = (props) => {
                     display: 'block',
                     minWidth: '500px'
                 }} key={data[tConf].code}>
-                    <h3 style={{marginBottom: '10px'}}>{data[tConf].label}</h3>
+                    <h3 style={{marginBottom: '10px', color: '#003154', display: 'flex'}}><SettingsIcon style={{marginRight: '5px'}}/>{data[tConf].label}</h3>
                     {data[tConf]?.items.map(e => <div key={e?.code}>
-                        <Link to={`configuration/${tConf}/${e?.code}`} style={{cursor: 'pointer'}}>{e.label}</Link>
+                        <Link to={`configuration/${tConf}/${e?.code}`} style={{cursor: 'pointer', color: '#00C9E9', paddingLeft: '5px'}}>{e.label}</Link>
                     </div>)}
                 </div>
             )}

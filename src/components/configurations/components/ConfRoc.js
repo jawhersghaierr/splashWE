@@ -11,6 +11,9 @@ import {DetailsRocConfAMC} from "./DetailsRocConfAMC";
 import {DetailsRocConfTypeConvention} from "./DetailsRocConfTypeConvention";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import {Link} from "react-router-dom";
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -50,7 +53,7 @@ function a11yProps(index) {
     };
 }
 
-export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}) => {
+export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, currentConfigs, error}) => {
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
@@ -88,13 +91,30 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, error}
         } else if(nomRefs?.RLTN_CLIENT_ENV[data?.content].length == 1) environnements = nomRefs?.RLTN_CLIENT_ENV[data?.content][0]
     }
 
+    const breadcrumbs = [
+        <Link key="1" color="inherit" to="/configuration" style={{textDecoration: 'none'}} >
+            <Typography variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
+                <b>Configuration</b>
+            </Typography>
+        </Link>,
+        <Link key="2" color="inherit" to={`/configuration/${domain}/${code}`} style={{textDecoration: 'none'}}>
+            <Typography variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
+                <b>{currentConfigs?.label}</b>
+            </Typography>
+        </Link>,
+        <Typography key="3" variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
+            {data?.label}
+        </Typography>,
+    ];
+
     return <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-        <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-            <b>Configuration&nbsp;</b> {data?.label}
-        </Typography>
-        <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-            {data?.type}
-        </Typography>
+        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
+            {breadcrumbs}
+        </Breadcrumbs>
+
+        {/*<Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>*/}
+        {/*    {data?.type}*/}
+        {/*</Typography>*/}
 
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
