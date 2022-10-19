@@ -1,11 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { env_IP, ports } from '../../../../env-vars'
+import {addCriteriasForGetRequest, pageSize} from "../../../utils/utils";
+import {reshapeCriterias} from "../utils/utils";
+
+export const baseUrl = `http://${env_IP}:${ports.paiements}/api/v1`
 
 export const virementsApi = createApi({
     reducerPath: 'virementsApi',
     baseQuery: fetchBaseQuery({
-
-        baseUrl: `http://${env_IP}:${ports.paiements}/api/v1`,
+        baseUrl,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -22,40 +25,20 @@ export const virementsApi = createApi({
     endpoints: (builder) => ({
         getVirements: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-                let {
-                    numVirement, numDecompte,
-                    numAdhInd, numPsAPayer,
-                    dateTraitement, dateTraitementFin,
-                    status, mntVirement
-                } = criterias;
-
-                let filters = {...criterias}
-
-                if (dateTraitement && dateTraitement != '' && dateTraitement != undefined) filters.dateTraitement = new Date(dateTraitement).toLocaleDateString('sv');
-                if (dateTraitementFin && dateTraitementFin != '' && dateTraitementFin != undefined) filters.dateTraitementFin = new Date(dateTraitementFin).toLocaleDateString('sv');
-
-                filters.cashe = null
 
                 const {
                     sortDirection,
                     sortProperty,
                 } = sortProperties;
 
-                const size = 20;
+                let url = addCriteriasForGetRequest({url: 'virements', filters: reshapeCriterias({criterias})})
 
-                let url = `virements?pageNumber=${currentPage}&pageSize=${size}`;
+                url += `${(url.includes('?')? '&': '?')}pageNumber=${currentPage}&pageSize=${pageSize}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
 
-                if(filters) {
-                    Object.keys(filters).forEach(key=>{
-                        if (filters[key] && filters[key] !== 'null' && filters[key] !== undefined && filters[key] !== '') {
-                            url += `&${key}=${filters[key]}`;
-                        }
-                    })
-                }
-
                 console.log(url)
+
                 return ({
                     url,
                     transform: (response, meta, arg) => {
