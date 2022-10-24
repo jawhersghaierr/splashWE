@@ -86,6 +86,7 @@ export default function SearchAccordion(props) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
                 }
             })
+
             setRln({
                 amc: Object.keys( _tmpAmc ),
                 localStatus: Object.keys( nomRefs.ROC_STATUSES ),
@@ -95,10 +96,6 @@ export default function SearchAccordion(props) {
 
         }
     }, [nomRefsIsSuccess]);
-
-    useEffect(() => {
-        console.log('rln ', rln)
-    }, [rln]);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -227,7 +224,7 @@ export default function SearchAccordion(props) {
                                             }
 
                                             setRln({
-                                                amc: [...Object.keys(rln.amc)],
+                                                amc: [...rln.amc],
                                                 localStatus: [...tmpStatut],
                                                 localMotif: [...tmpMotif],
                                                 localSubMotif: [...tmpSubMotif]
@@ -243,14 +240,15 @@ export default function SearchAccordion(props) {
                                         ) _value = {..._value, statut: undefined}
                                         if (_value?.statut?.includes('all')) _value = {..._value, statut: rln.localStatus}
 
-                                        // if ( _value?.statut?.length > 0 && !( _value?.statut?.includes('REJETEE') || _value?.statut?.includes('INVALIDE') )) {
-                                        //     if (_value.motif !== undefined) {
-                                        //         _value = {..._value, motif: undefined}
-                                        //     }
-                                        //     if (_value.sousMotif !== undefined) {
-                                        //         _value = {..._value, sousMotif: undefined}
-                                        //     }
-                                        // }
+                                        if ( !( _value?.statut?.length > 0 && ( _value?.statut?.includes('REJETEE') || _value?.statut?.includes('INVALIDE') )) ) {
+                                            if (_value.motif !== undefined) {
+                                                _value = {..._value, motif: undefined}
+                                            }
+                                            if (_value.sousMotif !== undefined) {
+                                                _value = {..._value, sousMotif: undefined}
+                                            }
+                                        }
+
                                     break
 
                                     case 'motif':
@@ -277,7 +275,7 @@ export default function SearchAccordion(props) {
                                             }
 
                                             setRln({
-                                                amc: Object.keys(rln.amc),
+                                                amc: [...rln.amc],
                                                 localStatus: [...rln.localStatus],
                                                 localMotif: [...rln.localMotif],
                                                 localSubMotif: [...tmpSubMotif]
@@ -351,61 +349,58 @@ export default function SearchAccordion(props) {
                                                   )}
                                               </Field>}
 
+                                              <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
+                                                {({ input, meta }) => (
+                                                    <div style={{flex: 2, marginRight: '20px'}}>
+                                                      <TextField
+                                                          id="NumEng"
+                                                          variant={'standard'}
+                                                          sx={{width: '100%'}}
+                                                          error={meta.invalid}
+                                                          {...input}
+                                                          placeholder={'Nº d\'engagement'}
+                                                          InputProps={{  disableUnderline: true }}
+                                                          className="RoundedEl"
+                                                      />
+                                                      {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
+                                                    </div>
+                                                )}
+                                              </Field>
 
+                                              <Field name="numAdh" validate={validators.composeValidators(validators.maxValue(16))}>
 
-
-                                                        <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
-                                                          {({ input, meta }) => (
-                                                              <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField
-                                                                      id="NumEng"
-                                                                      variant={'standard'}
-                                                                      sx={{width: '100%'}}
-                                                                      error={meta.invalid}
-                                                                      {...input}
-                                                                      placeholder={'Nº d\'engagement'}
-                                                                      InputProps={{  disableUnderline: true }}
-                                                                      className="RoundedEl"
-                                                                  />
-                                                                  {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                                              </div>
-                                                          )}
-                                                        </Field>
-
-                                                      <Field name="numAdh" validate={validators.composeValidators(validators.maxValue(16))}>
-
-                                                          {({ input, meta }) => (
-                                                              <div style={{flex: 2}}>
-                                                                  <TextField
-                                                                      id="NumAdh"
-                                                                      variant="standard"
-                                                                      error={meta.invalid}
-                                                                      {...input}
-                                                                      placeholder={'Nº adhérent'}
-                                                                      sx={{width: '100%'}}
-                                                                      className="RoundedEl"
-                                                                      InputProps={{  disableUnderline: true }}
-                                                                  />
-                                                                  {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
-                                                              </div>
-                                                          )}
-                                                      </Field>
-
-                                                      <div style={{width: 150, display: 'flex'}}>
-                                                          {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
-                                                              <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
-                                                          </IconButton>}
-                                                          {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
-                                                          <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
+                                                  {({ input, meta }) => (
+                                                      <div style={{flex: 2}}>
+                                                          <TextField
+                                                              id="NumAdh"
+                                                              variant="standard"
+                                                              error={meta.invalid}
+                                                              {...input}
+                                                              placeholder={'Nº adhérent'}
+                                                              sx={{width: '100%'}}
+                                                              className="RoundedEl"
+                                                              InputProps={{  disableUnderline: true }}
+                                                          />
+                                                          {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                       </div>
-                                                      <Button
-                                                          variant="contained"
-                                                          type="submit"
-                                                          // disabled={!allowSearch(values)}
-                                                          size="medium" className='RoundedEl' >
-                                                          <SearchIcon/>Rechercher
-                                                      </Button>
-                                                  </div>}
+                                                  )}
+                                              </Field>
+
+                                              <div style={{width: 150, display: 'flex'}}>
+                                                  {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
+                                                      <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
+                                                  </IconButton>}
+                                                  {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
+                                                  <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
+                                              </div>
+                                              <Button
+                                                  variant="contained"
+                                                  type="submit"
+                                                  // disabled={!allowSearch(values)}
+                                                  size="medium" className='RoundedEl' >
+                                                  <SearchIcon/>Rechercher
+                                              </Button>
+                                          </div>}
                                       />
 
                                       <CardContent sx={{ display: 'block', border: 0, padding: 0}}> </CardContent>
@@ -472,7 +467,6 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="receptionDateStart" >
                                                           {({ input, meta }) => (
-                                                              // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
@@ -491,7 +485,6 @@ export default function SearchAccordion(props) {
 
                                                       <Field name="receptionDateEnd" validate={ validators.composeValidators(validators.beforeThan(values, 'receptionDateStart')) }>
                                                           {({ input, meta }) => (
-                                                              // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
@@ -515,7 +508,6 @@ export default function SearchAccordion(props) {
                                                                       id="IdPerFact"
                                                                       autoFocus
                                                                       fullWidth
-                                                                      // mask={"0000000000000000000000 / 00"}
                                                                       mask={"********************** / 00"}
                                                                       placeholder={"********************** / 00"}
                                                                       color="primary"
