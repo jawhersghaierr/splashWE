@@ -125,10 +125,11 @@ export const getSubMotifsFromTypes = ({type = [], nomRefs}) => {
 
 
 export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
+    console.log('getSubMotifsFromMotif -> motif ', motif)
     let tmpSubCode = []
     if (motif && motif.length > 0) {
         motif.forEach(_motif => {
-            if (_motif !== 'all') tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
+            if (_motif !== 'all' && nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif]) tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
         })
         tmpSubCode = [...new Set(tmpSubCode)]
     } else return []

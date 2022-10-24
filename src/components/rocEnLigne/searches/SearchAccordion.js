@@ -1,28 +1,28 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
+import { styled } from '@mui/material/styles';
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
-import SearchIcon from '@mui/icons-material/Search';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import Collapse from '@mui/material/Collapse';
+import Badge from '@mui/material/Badge';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
 import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
 import { ListItemText } from "@material-ui/core";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { fr } from "date-fns/locale";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import InputAdornment from '@mui/material/InputAdornment';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { fr } from "date-fns/locale";
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/customTextField/TextMaskCustom";
 import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
@@ -69,16 +69,16 @@ export default function SearchAccordion(props) {
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
-    const [localStatus, setLocalStatus] = useState({});
-    const [localMotif, setLocalMotif] = useState({});
-    const [localSubMotif, setLocalSubMotif] = useState({});
-    const [amc, setAmc] = useState({});
+
+    const [rln, setRln] = useState({
+        amc: null,
+        localStatus: null,
+        localMotif: null,
+        localSubMotif: null
+    })
 
     useEffect(() => {
         if (nomRefsIsSuccess) {
-            setLocalStatus(nomRefs.ROC_STATUSES)
-            setLocalMotif(nomRefs.ROC_MOTIFS)
-            setLocalSubMotif(nomRefs.ROC_SOUS_MOTIFS)
 
             let _tmpAmc = {}
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
@@ -86,10 +86,19 @@ export default function SearchAccordion(props) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
                 }
             })
-            setAmc(_tmpAmc)
+            setRln({
+                amc: Object.keys( _tmpAmc ),
+                localStatus: Object.keys( nomRefs.ROC_STATUSES ),
+                localMotif: Object.keys( nomRefs.ROC_MOTIFS ),
+                localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+            })
 
         }
     }, [nomRefsIsSuccess]);
+
+    useEffect(() => {
+        console.log('rln ', rln)
+    }, [rln]);
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
@@ -140,30 +149,28 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'amc': //Object.keys(nomRefs.CLIENT === amc)
-                                        const amcObj = selectDeselectAllValues(value, amc, field.active);
-                                        _value.amc = amcObj ? amcObj[field.active] : value[field.active];
+                                        if (_value?.amc?.length === 0 ||
+                                            (_value?.amc?.includes('all') && _value?.amc?.length > rln.amc.length)
+                                        ) _value = {..._value, amc: undefined}
+                                        if (_value?.amc?.includes('all')) _value = {..._value, amc: rln.amc}
+
                                     break
 
                                     case 'domaine':
-                                        const domainObj = selectDeselectAllValues(value, nomRefs.ROC_DOMAINS, field.active);
-                                        _value.domaine = domainObj ? domainObj[field.active] : value[field.active];
+                                        if (_value?.domaine?.length === 0 ||
+                                            (_value?.domaine?.includes('all') && _value?.domaine?.length > Object.keys(nomRefs?.ROC_DOMAINS).length)
+                                        ) _value = {..._value, domaine: undefined}
+                                        if (_value?.domaine?.includes('all')) _value = {..._value, domaine: Object.keys(nomRefs?.ROC_DOMAINS)}
                                     break
 
-
-                                    // case 'type':
-                                    //     if (_value?.type?.length === 0 ||
-                                    //         (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
-                                    //     ) _value = {..._value, type: undefined}
-                                    //     if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
-                                    //     if (_value.errorCode !== undefined) {
-                                    //         _value = {..._value, errorCode: undefined}
-                                    //     }
-                                    //
-                                    //     break
-
                                     case 'type': //Object.keys(nomRefs.ROC_TYPES)
-                                        const typeObj = selectDeselectAllValues(value, nomRefs.ROC_TYPES, field.active);
-                                        _value.type = typeObj ? typeObj[field.active] : value[field.active];
+                                        if (_value?.type?.length === 0 ||
+                                            (_value?.type?.includes('all') && _value?.type?.length > Object.keys(nomRefs?.ROC_TYPES).length)
+                                        ) _value = {..._value, type: undefined}
+                                        if (_value?.type?.includes('all')) _value = {..._value, type: Object.keys(nomRefs?.ROC_TYPES)}
+                                        if (_value.errorCode !== undefined) {
+                                            _value = {..._value, errorCode: undefined}
+                                        }
 
                                         if (_value.statut !== undefined) {
                                             _value = {..._value, statut: undefined}
@@ -174,34 +181,119 @@ export default function SearchAccordion(props) {
                                         if (_value.sousMotif !== undefined) {
                                             _value = {..._value, sousMotif: undefined}
                                         }
-                                    break
 
-                                    case 'statut': //Object.keys(nomRefs.ROC_STATUSES)
-                                        const statutObj = selectDeselectAllValues(value, localStatus, field.active);
-                                        _value.statut = statutObj ? statutObj[field.active] : value[field.active];
+                                        /**
+                                         * TODO MUST BE FIXED
+                                         * ****************************************************************
+                                         */
+                                        if (_value.type){
 
-                                        if ( _value?.statut?.length > 0 && !( _value?.statut?.includes('REJETEE') || _value?.statut?.includes('INVALIDE') )) {
-                                            if (_value.motif !== undefined) {
-                                                _value = {..._value, motif: undefined}
+                                            let statusFromTypes = getStatusFromTypes({nomRefs, type: _value.type})
+                                            let tmpStatut = {}
+                                            Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
+                                                if (statusFromTypes.includes(stat)) {
+                                                    tmpStatut[stat] = nomRefs.ROC_STATUSES[stat]
+                                                }
+                                            })
+                                            if (Object.keys(tmpStatut).length == 0 ) {
+                                                tmpStatut = Object.keys( nomRefs.ROC_STATUSES )
+                                            } else {
+                                                tmpStatut = Object.keys( tmpStatut )
                                             }
-                                            if (_value.sousMotif !== undefined) {
-                                                _value = {..._value, sousMotif: undefined}
+
+                                            let motifsFromTypes = getMotifsFromTypes({type: _value.type, nomRefs})
+                                            let tmpMotif = {}
+                                            Object.keys(nomRefs.ROC_MOTIFS).forEach( stat => {
+                                                if (motifsFromTypes.includes(stat)) {
+                                                    tmpMotif[stat] = nomRefs.ROC_MOTIFS[stat]
+                                                }
+                                            })
+                                            if (Object.keys(tmpMotif).length == 0 ) {
+                                                tmpMotif = Object.keys( nomRefs.ROC_MOTIFS )
+                                            } else {
+                                                tmpMotif = Object.keys( tmpMotif )
                                             }
+
+                                            let tmpSubMotif = {}
+                                            // let tmpSubMotifsFromMotif =  getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
+                                            let tmpSubMotifsFromMotif =  getSubMotifsFromTypes({type: _value.type, nomRefs})
+                                            tmpSubMotifsFromMotif.forEach(subCode => {
+                                                tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
+                                            })
+                                            if (Object.keys(tmpMotif).length == 0 ) {
+                                                tmpSubMotif = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+                                            } else {
+                                                tmpSubMotif = Object.keys( tmpSubMotif )
+                                            }
+
+                                            setRln({
+                                                amc: [...Object.keys(rln.amc)],
+                                                localStatus: [...tmpStatut],
+                                                localMotif: [...tmpMotif],
+                                                localSubMotif: [...tmpSubMotif]
+                                            })
+
                                         }
                                     break
 
+                                    case 'statut': //Object.keys(nomRefs.ROC_STATUSES)
+
+                                        if (_value?.statut?.length === 0 ||
+                                            (_value?.statut?.includes('all') && _value?.statut?.length > rln.localStatus.length)
+                                        ) _value = {..._value, statut: undefined}
+                                        if (_value?.statut?.includes('all')) _value = {..._value, statut: rln.localStatus}
+
+                                        // if ( _value?.statut?.length > 0 && !( _value?.statut?.includes('REJETEE') || _value?.statut?.includes('INVALIDE') )) {
+                                        //     if (_value.motif !== undefined) {
+                                        //         _value = {..._value, motif: undefined}
+                                        //     }
+                                        //     if (_value.sousMotif !== undefined) {
+                                        //         _value = {..._value, sousMotif: undefined}
+                                        //     }
+                                        // }
+                                    break
+
                                     case 'motif':
-                                        const motifObj = selectDeselectAllValues(value, localMotif, field.active);
-                                        _value.motif = motifObj ? motifObj[field.active] : value[field.active];
+                                        if (_value?.motif?.length === 0 ||
+                                            (_value?.motif?.includes('all') && _value?.motif?.length > rln.localMotif.length)
+                                        ) _value = {..._value, motif: undefined}
+                                        if (_value?.motif?.includes('all')) _value = {..._value, motif: rln.localMotif}
 
                                         if (_value.sousMotif !== undefined) {
                                             _value = {..._value, sousMotif: undefined}
                                         }
-                                    break
+
+                                        //____________________________________________________________________________________________________
+                                        if (_value.motif) {
+                                            let tmpSubMotif = {}
+                                            getSubMotifsFromMotif({motif: _value.motif, nomRefs})
+                                                .forEach(subCode => {
+                                                    tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
+                                                })
+                                            if (Object.keys(tmpSubMotif).length == 0 ) {
+                                                tmpSubMotif = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+                                            } else {
+                                                tmpSubMotif = Object.keys( tmpSubMotif )
+                                            }
+
+                                            setRln({
+                                                amc: Object.keys(rln.amc),
+                                                localStatus: [...rln.localStatus],
+                                                localMotif: [...rln.localMotif],
+                                                localSubMotif: [...tmpSubMotif]
+
+                                            })
+
+
+                                        }
+                                        break
 
                                     case 'sousMotif':
-                                        const sousMotifObj = selectDeselectAllValues(value, localSubMotif, field.active);
-                                        _value.sousMotif = sousMotifObj ? sousMotifObj[field.active] : value[field.active];
+                                        if (_value?.sousMotif?.length === 0 ||
+                                            (_value?.sousMotif?.includes('all') && _value?.sousMotif?.length > rln.localSubMotif.length)
+                                        ) _value = {..._value, sousMotif: undefined}
+                                        if (_value?.sousMotif?.includes('all')) _value = {..._value, sousMotif: rln.localSubMotif}
+
                                     break
 
 
@@ -436,7 +528,7 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      {(nomRefs && localStatus) && <Field name="statut" format={value => value || []}>
+                                                      {(nomRefs && rln?.localStatus) && <Field name="statut" format={value => value || []}>
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '25%' }}>
@@ -450,18 +542,18 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return localStatus[selected[0]];
+                                                                          return nomRefs.ROC_STATUSES[selected[0]];
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.statut?.length == Object.keys(localStatus).length) ?
+                                                                              primary={(values?.statut?.length == Object.keys(rln.localStatus).length) ?
                                                                                   <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(localStatus).map(code => (
+                                                                      {rln.localStatus.map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {localStatus[code]}
+                                                                              {nomRefs.ROC_STATUSES[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -491,12 +583,12 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.motif?.length == Object.keys(nomRefs.ROC_MOTIFS).length) ?
+                                                                          <ListItemText primary={(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(localMotif).map(code => (<MenuItem key={code} value={code}>
-                                                                          {localMotif[code]}
+                                                                      {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code}>
+                                                                          {nomRefs.ROC_MOTIFS[code]}
                                                                       </MenuItem>))}
 
                                                                   </Select>
@@ -507,6 +599,8 @@ export default function SearchAccordion(props) {
                                                       {nomRefs && <Field name="sousMotif" format={value => value || []}>
 
                                                           {({input, meta}) => (
+                                                              console.log('values?.sousMotif ', values?.sousMotif),
+                                                              console.log('values?.motif ', values?.motif),
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
                                                                   <InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>
@@ -523,19 +617,19 @@ export default function SearchAccordion(props) {
                                                                       )}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} sous-motifs sélectionnés`
-                                                                          return localSubMotif[selected[0]];
+                                                                          return nomRefs.ROC_SOUS_MOTIFS[selected[0]];
                                                                       }}>
 
-                                                                      {localSubMotif && <MenuItem value="all" key='selectAll'>
+                                                                      {rln?.localSubMotif && <MenuItem value="all" key='selectAll'>
                                                                           <ListItemText
-                                                                              primary={(values?.sousMotif?.length == Object.keys(localSubMotif).length) ?
+                                                                              primary={(values?.sousMotif?.length == rln.localSubMotif.length) ?
                                                                                   <b>Désélectionner tout</b> :
                                                                                   <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>}
 
-                                                                      {localSubMotif && Object.keys(localSubMotif).map(code => (
+                                                                      {rln?.localSubMotif && rln.localSubMotif.map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {localSubMotif[code]}
+                                                                              {nomRefs.ROC_SOUS_MOTIFS[code]}
                                                                           </MenuItem>
                                                                       ))}
 
@@ -641,7 +735,7 @@ export default function SearchAccordion(props) {
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="NumClient-label">AMC</InputLabel>
-                                                                  <Select
+                                                                  {rln?.amc && <Select
                                                                       id="NumClient"
                                                                       labelId="NumClient-label"
                                                                       multiple
@@ -650,29 +744,25 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}
                                                                       renderValue={(selected) => {
                                                                           if (selected.length > 1) return `${selected.length} AMC sélectionnées`
-                                                                          return `(${selected[0]}) ${amc[selected[0]]}`;
+                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.amc?.length == Object.keys(amc).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          <ListItemText primary={(values?.amc?.length == rln.amc.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {Object.keys(amc).map(code => (
+                                                                      {rln.amc.map(code => (
                                                                           <MenuItem key={code} value={code}>
-                                                                              {`(${code}) ${amc[code]}`}
+                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
                                                                           </MenuItem>
                                                                       ))}
 
-                                                                  </Select>
+                                                                  </Select>}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
 
-                                                      <Field name="nom" validate={validators.composeValidators(
-                                                          validators.maxValue(51),
-                                                      )}>
+                                                      <Field name="nom" validate={validators.composeValidators( validators.maxValue(51) )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -687,10 +777,7 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="prenom" validate={validators.composeValidators(
-                                                          validators.maxValue(51),
-                                                          validators.associated(values, ['amc', 'nom', 'dateNaiss', 'numAdh'], 'Prénom')
-                                                      )}>
+                                                      <Field name="prenom" validate={validators.composeValidators( validators.maxValue(51), validators.associated(values, ['amc', 'nom', 'dateNaiss', 'numAdh'], 'Prénom') )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <TextField
@@ -831,56 +918,12 @@ export default function SearchAccordion(props) {
                                           nir, cle
                                       } = values?.values;
 
+                                      //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                                       form.mutators.setValue(values)
 
                                       /**
-                                       * TODO MUST BE FIXED
                                        * ****************************************************************
                                        */
-                                      if (type){
-
-                                          let statusFromTypes = getStatusFromTypes({nomRefs, type})
-                                          let tmpStatut = {}
-                                          Object.keys(nomRefs.ROC_STATUSES).forEach( stat => {
-                                              if (statusFromTypes.includes(stat)) {
-                                                  tmpStatut[stat] = nomRefs.ROC_STATUSES[stat]
-                                              }
-                                          })
-                                          if (Object.keys(tmpStatut).length == 0 ) tmpStatut = nomRefs.ROC_STATUSES
-                                          setLocalStatus(tmpStatut)
-
-                                          let motifsFromTypes = getMotifsFromTypes({type, nomRefs})
-                                          let tmpMotif = {}
-                                          Object.keys(nomRefs.ROC_MOTIFS).forEach( stat => {
-                                              if (motifsFromTypes.includes(stat)) {
-                                                  tmpMotif[stat] = nomRefs.ROC_MOTIFS[stat]
-                                              }
-                                          })
-                                          if (Object.keys(tmpMotif).length == 0 ) tmpMotif = nomRefs.ROC_MOTIFS
-                                          setLocalMotif(tmpMotif)
-
-                                          let tmpSubMotif = {}
-                                          // let tmpSubMotifsFromMotif =  getSubMotifsFromMotif({motif: motifsFromTypes, nomRefs})
-                                          let tmpSubMotifsFromMotif =  getSubMotifsFromTypes({type, nomRefs})
-                                          tmpSubMotifsFromMotif.forEach(subCode => {
-                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
-                                              })
-                                          if (Object.keys(tmpMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
-                                          setLocalSubMotif(tmpSubMotif)
-
-                                      }
-
-                                      if (motif) {
-                                          let tmpSubMotif = {}
-                                          getSubMotifsFromMotif({motif, nomRefs})
-                                              .forEach(subCode => {
-                                                  tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
-                                              })
-                                          if (Object.keys(tmpSubMotif).length == 0 ) tmpSubMotif = nomRefs.ROC_SOUS_MOTIFS
-                                          setLocalSubMotif(tmpSubMotif)
-                                      }
-
-                                      //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
                                       if(
                                           domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||

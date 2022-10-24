@@ -187,8 +187,8 @@ export default function SearchAccordion(props) {
                                               <Button
                                                   variant="contained"
                                                   type="submit"
-                                                  size="medium" className='RoundedEl'
-                                                  disabled={!allowSearch(values)} >
+                                                  // disabled={!allowSearch(values)}
+                                                  size="medium" className='RoundedEl' >
                                                   <SearchIcon/>Rechercher
                                               </Button>
                                           </div>}
@@ -383,7 +383,7 @@ export default function SearchAccordion(props) {
                                                   </Button>
                                                   <Button variant="contained"
                                                           type="submit" size="medium"
-                                                          disabled={!allowSearch(values)}
+                                                          // disabled={!allowSearch(values)}
                                                           className="RoundedEl">
                                                       <SearchIcon/>Rechercher
                                                   </Button>
