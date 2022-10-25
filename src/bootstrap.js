@@ -89,6 +89,7 @@ const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'))
 const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
 
 const PageDashboard = () => <Typography variant="h3" component="div">Dashboard Page</Typography>
+
 const Hospi = () => <Comp1/>
 const PSremote = () => <RemotePsApp  store={store} />
 const RemoteTest = () => <RemoteApp store={store} />

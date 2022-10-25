@@ -22,7 +22,7 @@ export const columns = ({nomRefs}) => [
         return (convertDate(params.value))
     }},
     { field: 'statut', headerName: 'Statut', flex: 1, sortable: false, renderCell: (params) => {
-        return ( <Chip label={`${rocStatus[params?.value?.code]?.label}`} sx={{color: 'black', bgcolor: rocStatus[params?.value?.code]?.color}}/> )
+        return ( <Chip label={`${rocStatus[params?.value]?.label}`} sx={{color: 'black', bgcolor: rocStatus[params?.value]?.color}}/> )
     }},
     { field: 'amc', headerName: 'AMC', flex: 1, sortable: false},
     { field: 'numeroAdherant', headerName: 'N° adhérent', flex: 1, sortable: false},
