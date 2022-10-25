@@ -68,7 +68,11 @@ export const FacturesGrid = ({disciplines}) => {
                     variant="contained"
                     startIcon={<img src={download} width={22} style={{marginTop: '4px', color: 'white'}} />}
                     component={Link}
-                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'factures', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`}
+                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({
+                        url: 'factures',
+                        filters: reshapeCriterias({criterias}),
+                        prepareForDownload: true
+                    })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`}
                     className="RoundedEmptyButt"
                     download="result.csv"
                 >

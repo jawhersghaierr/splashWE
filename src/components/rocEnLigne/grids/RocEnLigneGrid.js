@@ -66,7 +66,11 @@ export const RocEnLigneGrid = () => {
                     variant="contained"
                     startIcon={<img src={download} width={22} style={{marginTop: '4px', color: 'white'}} />}
                     component={Link}
-                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'sel/search/', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}`}
+                    href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({
+                        url: 'sel/search/',
+                        filters: reshapeCriterias({criterias}),
+                        prepareForDownload: true
+                    })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}`}
                     className="RoundedEmptyButt"
                     download="result.csv"
                 >
