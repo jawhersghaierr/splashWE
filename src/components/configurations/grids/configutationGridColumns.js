@@ -16,7 +16,7 @@ export const columns = ({nomRefs, configurations, domain, code}) => [
     { field: 'status', headerName: 'Statut', flex: 1, renderCell: (params) => { //FACTURE_CONFIGURATION_STATUS
             return (<Chip label={`${nomRefs.FACTURE_CONFIGURATION_STATUS[params.value] || params.value}`} sx={{color: 'black', bgcolor: factureConfigurationStatus[params.value]?.color}}/> )
         }},
-    { field: 'timestamp', headerName: 'Période de validaté', flex: 2, renderCell: (params) => {
+    { field: 'timestamp', headerName: 'Période de validité', flex: 2, renderCell: (params) => {
         return (`${convertDate(params.row?.startDate)}-${convertDate(params.row?.endDate)}`);
     }},
     { field: 'user', headerName: 'Utilisateur', flex: 1,renderCell: (params) => {

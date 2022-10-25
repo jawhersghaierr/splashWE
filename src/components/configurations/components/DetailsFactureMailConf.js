@@ -20,7 +20,7 @@ export const DetailsFactureMailConf = ({data}) => {
         margin: '5px',
         padding: '10px 25px 25px 25px'
     }}>
-        <h3><b>Détails du paramètres</b></h3>
+        <h3><b>Détail du paramètre</b></h3>
         <RowInfo label={'Objet du email'} value={data?.subject}/>
         <RowInfo label={'Corps du email'} value={data?.body} justify={true}/>
         <RowInfo label={'Expéditeur du email'} value={data?.from}/>

@@ -69,13 +69,13 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
         <div style={{display: 'flex', flexDirection: 'rows', margin: '25px 0 25px 0'}}>
-            <RowInfo label={'code'} value={data?.id} />
+            <RowInfo label={'Code'} value={data?.id} />
 
             <RowInfo label={'Période de validité'}
                 value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`} />
 
-                {domainForPanel !== 'delai' && domain !== 'roc' && <RowInfo label={'Détails du paramètre'}
-                     value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} />}
+                {/*{domainForPanel !== 'delai' && domain !== 'roc' && <RowInfo label={'Détails du paramètre'}*/}
+                {/*     value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} />}*/}
         </div>
 
         <Tabs
