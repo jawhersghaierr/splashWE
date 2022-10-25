@@ -13,7 +13,7 @@ import background2 from '../../../assets/Config2.png'
 export const Configurations = (props) => {
 
     const dispatch = useDispatch();
-    const {data} = useGetConfigsQuery();
+    const {data, isFetching, isSuccess} = useGetConfigsQuery();
 
     useEffect(() => {
         dispatch(initCriterias());

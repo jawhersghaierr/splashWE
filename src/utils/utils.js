@@ -9,7 +9,6 @@ export const addCriteriasForGetRequest = ({url, filters, prepareForDownload = fa
 		})
 	}
 
-	console.log('url > ', url)
 	return url
 }
 

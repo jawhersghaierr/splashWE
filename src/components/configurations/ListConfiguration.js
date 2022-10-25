@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Redirect } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
-import {Typography} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 import {matchPath} from "react-router-dom";
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {useGetRefsQuery} from "../../services/refsApi";
@@ -53,7 +53,7 @@ export const ListConfiguration = (props) => {
     };
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-    const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery(); // LOC === listOfConfigs
+    const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess, isError: LOCIsError, error: LOCError} = useGetConfigsQuery(); // LOC === listOfConfigs
 
     let moreCriterias = null
     if (code) moreCriterias = code?.includes('control') || null
@@ -86,22 +86,22 @@ export const ListConfiguration = (props) => {
                 })
             }
             fetch(url)
-                .then(res => res.json())
+                .then(res => {
+                    if (res.ok && res.status == 204) return {results:[]}
+                    return res.json()
+                })
                 .then( (res) => {
                         setIsLoaded(true);
-                        console.log('ar0rived res > ', res)
-                        if (res.ok && res.status == 204) return []
                         setItems(res);
                         return res
                     },
                     (error) => {
                         setIsLoaded(true);
-                        console.log('error > ', error)
-                        setOpenMsg({success: false, open: true, error: result.error});
+                        setOpenMsg({success: false, open: true, error});
                         setItems({
                             result: []
                         });
-                        setError(result.error);
+                        setError(error);
                     }
                 )
         }
@@ -129,7 +129,10 @@ export const ListConfiguration = (props) => {
         </Breadcrumbs>
         {code && <SearchAccordion code={code} nomRefs={nomRefs} moreCriterias={moreCriterias}/>}
 
-        {nomRefs && <ConfigutationsGrid data={items} nomRefs={nomRefs} domain={domain} code={code}/>}
+        {LOCIsFetching && nomRefsIsFetching && <CircularProgress style={{margin: '100px 50%'}}/>}
+
+        {!(LOCIsFetching || nomRefsIsFetching) && <ConfigutationsGrid data={items} nomRefs={nomRefs} domain={domain} code={code} error={LOCIsError}
+                             isSuccess={LOCIsSuccess} isError={LOCError}/>}
 
         <Snackbar open={openMsg.open}
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

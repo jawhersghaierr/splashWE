@@ -36,7 +36,7 @@ function a11yProps(index) {
     };
 }
 
-export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel, error, currentConfigs}) => {
+export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel, error, currentConfigs, isFetching}) => {
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 

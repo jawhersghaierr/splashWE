@@ -36,7 +36,7 @@ export const paiementsStatus = {
 
 export const factureConfigurationStatus = {
   A: { label: "Active", color: "#C7F99F" },
-  Active: { label: "Active", color: "#C7F99F" },
+  // Active: { label: "Active", color: "#C7F99F" }, //fixed from BE
   S: { label: "Suspendue", color: "#FFD4AD" },
   I: { label: "Inactive", color: "#FFA3A3" },
 };

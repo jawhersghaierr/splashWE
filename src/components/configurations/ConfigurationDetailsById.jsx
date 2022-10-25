@@ -23,6 +23,7 @@ export default function ConfigurationDetailsById(props) {
     const {domain, code, id} = match?.params
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
     const [data, setData] = useState([]);
     const [currentConfigs, setCurrentConfigs] = useState({});
 
@@ -45,8 +46,13 @@ export default function ConfigurationDetailsById(props) {
         }
 
         if (url && id) {
+            setIsFetching(true)
             fetch(`${url}/${id}`)
-                .then(res => res.json())
+                .then(res => {
+                    setIsFetching(false)
+                    if (res.ok && res.status == 204) return {results:[]}
+                    return res.json()
+                })
                 .then(
                     (result) => {
                         setIsLoaded(true);
@@ -54,6 +60,7 @@ export default function ConfigurationDetailsById(props) {
                         setData(result);
                     },
                     (error) => {
+                        setIsFetching(false)
                         setIsLoaded(true);
                         setError(error);
                     }
@@ -62,10 +69,11 @@ export default function ConfigurationDetailsById(props) {
 
     }, [domain, code, id, LOCIsSuccess])
 
-    if ((LOCIsFetching || nomRefsIsFetching) && !nomRefs && !domain) return <CircularProgress style={{margin: '100px 50%'}}/>
+    if ((LOCIsFetching || nomRefsIsFetching || isFetching) && !nomRefs && !domain) return <CircularProgress style={{margin: '100px 50%'}}/>
+
     switch (domain) {
-        case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error}/>
-        case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error}/>
+        case 'hft': return <ConfFacturation data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error} />
+        case 'roc': return <ConfRoc data={data} nomRefs={nomRefs} code={code} domain={domain} id={id} domainForPanel={domainForPanel} currentConfigs={currentConfigs} error={error} />
 
     }
 
