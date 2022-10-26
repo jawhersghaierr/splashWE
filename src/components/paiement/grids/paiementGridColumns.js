@@ -18,7 +18,7 @@ export const columns = disciplines => [
     { field: 'numeroFacture', headerName: 'N° facture / titre', flex: 2, renderCell },
     { field: 'factureStatus', headerName: 'Statut facture', flex: 1, renderCell, valueGetter: ({value}) => (<Chip label={facturesStatus[value]?.label} sx={{color: 'black', bgcolor: facturesStatus[value]?.color}}/>) },
     { field: 'status', headerName: 'Statut paiement', flex: 1, renderCell, valueGetter: ({value}) => ( <Chip label={paiementsStatus[value]?.label} sx={{color: 'black', bgcolor: paiementsStatus[value]?.color}}/>) },
-    { field: 'totalRc', headerName: 'RC paiement', type: 'number', flex: 1, renderCell, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'totalRc', headerName: 'RC paiement', type: 'number', flex: 1, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({row}) => (<Link to={`/paiement/${row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>) },
 ];
 

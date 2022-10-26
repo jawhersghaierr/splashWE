@@ -73,7 +73,7 @@ export const columns = (nomRefs) => [
     headerName: "PU",
     type: "number",
     flex: 1,
-    valueFormatter: ({ id, value }) => reformatCurrencyAtLastRow({ id, value }),
+    valueGetter: ({ id, value }) => reformatCurrencyAtLastRow({ id, value }),
     cellClassName: "boldValue",
   },
   {
@@ -81,7 +81,7 @@ export const columns = (nomRefs) => [
     headerName: "Base SS",
     type: "number",
     flex: 1,
-    valueFormatter: ({ id, value }) => reformatCurrencyAtLastRow({ id, value }),
+    valueGetter: ({ id, value }) => reformatCurrencyAtLastRow({ id, value }),
     cellClassName: "boldValue",
   },
   {
@@ -98,7 +98,7 @@ export const columns = (nomRefs) => [
     headerName: "MNT RO",
     type: "number",
     flex: 1,
-    valueFormatter: ({ value }) => currencyFormatter.format(value || 0),
+    valueGetter: ({ value }) => currencyFormatter.format(value || 0),
     cellClassName: "boldValue",
   },
   {
@@ -106,7 +106,7 @@ export const columns = (nomRefs) => [
     headerName: "DR",
     type: "number",
     flex: 1,
-    valueFormatter: ({ value }) => currencyFormatter.format(value || 0),
+    valueGetter: ({ value }) => currencyFormatter.format(value || 0),
     cellClassName: "boldValue",
   },
   {
@@ -114,7 +114,7 @@ export const columns = (nomRefs) => [
     headerName: "MNT RC",
     type: "number",
     flex: 1,
-    valueFormatter: ({ value }) => currencyFormatter.format(value || 0),
+    valueGetter: ({ value }) => currencyFormatter.format(value || 0),
     cellClassName: "boldValue",
   },
   {
@@ -122,7 +122,7 @@ export const columns = (nomRefs) => [
     headerName: "RAC",
     type: "number",
     flex: 1,
-    valueFormatter: ({ value }) => currencyFormatter.format(value || 0),
+    valueGetter: ({ value }) => currencyFormatter.format(value || 0),
     cellClassName: "boldValue",
   },
   {

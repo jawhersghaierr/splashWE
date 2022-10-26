@@ -13,8 +13,8 @@ export const columns = nomRefs => [
     { field: 'numDecompte', headerName: 'N° décompte', flex: 1, minWidth: '175px', type: "number", renderCell },
     { field: 'numPsAPayer', headerName: 'Nº PS à payer', flex: 2, minWidth: '175px', renderCell },
     { field: 'iban', headerName: 'IBAN\nBIC', flex: 3, sortable: false, renderCell, valueGetter: ({value, row}) => (<span>{value}<br/>{row?.bic}</span>) },
-    { field: 'mntVirement', headerName: 'Montant', type: 'number', flex: 1, renderCell, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'status', headerName: 'Statut', flex: 1, renderCell, valueFormatter: (params) => (<Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[params.value]} sx={{color: 'black', bgcolor: paiementsVirementStatus[params.value].color}}/>) },
+    { field: 'mntVirement', headerName: 'Montant', type: 'number', flex: 1, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'status', headerName: 'Statut', flex: 1, renderCell, valueGetter: (params) => (<Chip label={nomRefs?.PAIEMENT_VIREMENT_STATUS[params.value]} sx={{color: 'black', bgcolor: paiementsVirementStatus[params.value].color}}/>) },
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({row}) => (<Link to={`/virements/${row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>) },
 ];
 

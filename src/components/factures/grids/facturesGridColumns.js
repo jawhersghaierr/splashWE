@@ -17,7 +17,7 @@ export const columns = () => [
     { field: 'numClient', headerName: 'AMC', flex: 1, renderCell },
     { field: 'numAdh', headerName: 'N° adhérent', flex: 1, renderCell },
     { field: 'nom', headerName: 'Nom et date de naissance bénéficiaire', flex: 1, minWidth: '200px', renderCell, valueGetter: (params) => (<span><b>{params.row.nom}</b>&nbsp;{params.row.prenom}<br/>{dateConvertNaissance(params.row.dateNai)}</span>) },
-    { field: 'rc', headerName: 'Montant Rc', type: 'number', flex: 1, sortable: false, renderCell, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
+    { field: 'rc', headerName: 'Montant Rc', type: 'number', flex: 1, sortable: false, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue' },
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: (params) => (<Link to={`/factures/${params?.row?.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>) },
 ];
 

@@ -20,7 +20,7 @@ export const columns = ({nomRefs, handleModalOpen}) => [
             return result;
     }},
     { field: 'numero', headerName: 'Numéro', flex: 2, renderCell },
-    { field: 'montant', headerName: 'Montant', type: 'number', flex: 1, renderCell, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'montant', headerName: 'Montant', type: 'number', flex: 1, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell, valueGetter: ({value}) => (<Chip label={paiementsVirementStatus[value]?.label}  sx={{color: 'black', bgcolor: paiementsVirementStatus[value]?.color }}/>) },
     { field: 'details', headerName: 'Détails', flex: 3, renderCell },
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({row}) => (<VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(row)}/>) },

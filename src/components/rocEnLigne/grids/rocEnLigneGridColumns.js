@@ -17,7 +17,7 @@ export const columns = ({nomRefs}) => [
     { field: 'amc', headerName: 'AMC', flex: 1, sortable: false, renderCell },
     { field: 'numeroAdherant', headerName: 'N° adhérent', flex: 1, sortable: false},
     { field: 'nom', headerName: 'Nom et date de naissance bénéficiaire', flex: 1, minWidth: '200px', sortable: false, renderCell, valueGetter: ({row}) => (<span><b>{row?.nom}</b>&nbsp;{row?.prenom}<br/>{dateConvertNaissance(row?.dateNaiss)}</span>) },
-    { field: 'montantRc', headerName: 'Montant RC', type: 'number', flex: 1, sortable: false, renderCell, valueFormatter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue' },
+    { field: 'montantRc', headerName: 'Montant RC', type: 'number', flex: 1, sortable: false, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value || 0), cellClassName: 'boldValue' },
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({value}) => (<Link to={`/serviceEnLigne/${value}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>) },
 ];
 

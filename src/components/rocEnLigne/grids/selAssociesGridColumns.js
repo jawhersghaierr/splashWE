@@ -16,7 +16,7 @@ export const columns = ({handleModalOpen, nomRefs}) => [
             let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
             return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
         }},
-    { field: 'montantRC', headerName: 'Montant RC', flex: 1, renderCell, valueFormatter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'montantRC', headerName: 'Montant RC', flex: 1, renderCell, valueGetter: ({ value }) => value && currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({row}) => (<VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(row)}/>) },
 ];
 

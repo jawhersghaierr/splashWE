@@ -13,7 +13,7 @@ export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'dateEntree', headerName: 'Date d\'admission', minWidth: '150px', flex: 1, renderCell, valueGetter: ({value}) => { (convertDate(value)) } },
     { field: 'status', headerName: 'Statut', flex: 1, renderCell, valueGetter: ({value}) => ( <Chip label={`${facturesStatus[value]?.label}`} sx={{color: 'black', bgcolor: facturesStatus[value]?.color}}/> ) },
     { field: 'nom', headerName: 'Nom et date de naissance bénéficiaire', flex: 2, minWidth: '200px', renderCell, valueGetter: ({row}) => (<span><b>{row?.nom}</b>&nbsp;{row?.prenom}<br/>{dateConvertNaissance(row?.dateNai)}</span>) },
-    { field: 'rc', headerName: 'Montant RC', flex: 1, valueFormatter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
+    { field: 'rc', headerName: 'Montant RC', flex: 1, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
     { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({row}) => <VisibilityOutlinedIcon sx={{color: '#99ACBB', cursor: 'pointer'}} onClick={()=>handleModalOpen(row)}/> },
 
 ];
