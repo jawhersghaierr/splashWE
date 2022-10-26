@@ -19,7 +19,7 @@ export default function MoreThan200Results({ isSuccess, data, isError, error }) 
     };
 
     useEffect(() => {
-        if (isSuccess && data && data.moreExist) setOpenMsg({success: true, open: true, data: 'La recherche est limitee aux 200 premiers éléments, merci d\'affiner votre recherche.'});
+        if (isSuccess && data && data.moreExist) setOpenMsg({success: true, open: true, data: 'La recherche est limitée aux 200 premiers éléments, merci d\'affiner votre recherche.'});
         if (isError) setOpenMsg({success: false, open: true, error: error?.data?.error || 'Quelque chose s\'est mal passé!'});
     }, [data, isSuccess, isError, error]);
 

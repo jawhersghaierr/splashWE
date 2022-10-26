@@ -138,7 +138,7 @@ export default function SearchAccordion(props) {
                                                   )}
                                               </Field>
 
-                                              <Field name="refDate" >
+                                              <Field name="referenceDate" >
                                                   {({ input, meta }) => (
                                                       <FormControl className="RoundDate" style={{ flex: '1 0 21%', marginRight: '15px'}}>
                                                           <DatePicker
@@ -395,7 +395,7 @@ export default function SearchAccordion(props) {
                                   {<FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          label, refDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
+                                          label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
                                       } = values?.values;
 
                                       if( environment || provenance || discipline || factureContext || canalReception || dcs ) {

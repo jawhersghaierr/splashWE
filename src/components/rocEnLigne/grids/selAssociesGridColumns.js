@@ -12,7 +12,7 @@ export const columns = ({handleModalOpen, nomRefs}) => [
     { field: 'domaine', headerName: 'Domaine', flex: 2, renderCell, valueGetter: ({value}) => (nomRefs?.ROC_DOMAINS[value] || value)},
     { field: 'dateAdmission', headerName: 'Date d\'admission', flex: 1, renderCell, valueGetter: ({value}) => (convertDate(value)) },
     { field: 'statut', headerName: 'Statut', flex: 2, renderCell, valueGetter: ({value}) => ( <Chip label={`${value?.label}`} sx={{color: 'black', bgcolor: rocStatus[value?.code]?.color || 'rgba(0, 0, 0, 0.08)'}}/> ) },
-    { field: 'beneficiaryName', headerName: 'Nom et date de naissance beneficiaire', flex: 3, renderCell, valueGetter: (params) => {
+    { field: 'beneficiaryName', headerName: 'Nom et date de naissance bénéficiaire', flex: 3, renderCell, valueGetter: (params) => {
             let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
             return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
         }},

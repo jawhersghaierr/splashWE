@@ -11,7 +11,7 @@ const initialState = {
     },
     criterias: {
         label: undefined,
-        refDate: undefined,
+        referenceDate: undefined,
         status: true,
         environment: undefined,
         provenance: undefined,
@@ -66,7 +66,7 @@ export const configurationsSlice = createSlice({
         setCriterias: (state, action) => {
 
             let {
-                label, refDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
+                label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
             } = action?.payload
 
             let criterias = {...action?.payload, status: Boolean(!action?.payload?.status || action?.payload?.status == undefined)}
