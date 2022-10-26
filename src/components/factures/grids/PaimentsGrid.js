@@ -5,9 +5,10 @@ import {CircularProgress} from "@mui/material";
 import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiementsApi";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
-import {columns} from "./paimentsGridColumns";
+import { columns } from "./paimentsGridColumns";
 import { ModalInfo, NoGridResultsAlert, MoreThan200Results } from "../../shared/modals";
 import '../../shared/styles/grid.scss';
+
 
 export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
 
@@ -31,6 +32,7 @@ export const PaimentsGrid = ({factId, nomRefs, noModal}) => {
             columns={columns({nomRefs, handleModalOpen})}
             pageSize={20}
             autoHeight
+
             disableColumnMenu={true}
             disableColumnResize={false}
             components={{

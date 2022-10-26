@@ -2,6 +2,7 @@ import Chip from "@mui/material/Chip";
 import React from "react";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
+import {renderCell} from "../../../utils/utils";
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -38,38 +39,17 @@ const tip = (value, label) => {
 
 
 export const columns = nomRefs => [
-    { field: 'id', headerName: 'N°', flex: 1, width: 15, renderCell: (params) => {
-        return (params.value);
-    }},
-
-    { field: 'environmentSet', headerName: 'Environnement', flex: 1, renderCell: (params) => {
-        return tip(params.value, 'Environnement')
-    }},
-
-    { field: 'provenanceSet', headerName: 'Provenance', flex: 1,renderCell: (params) => {
-        return (params.value?.join(', '));
-    }},
-
-    { field: 'disciplineSet', headerName: 'Discipline', flex: 1, renderCell: (params) => {
-        return (params.value?.join(', '));
-    }},
-
-    { field: 'factureContexts', headerName: 'Contexte de la facture', flex: 1, renderCell: (params) => {
-        return (params.value?.join(', '));
-    }},
-
-    { field: 'canalReceptionSet', headerName: 'Canal de réception', flex: 1, renderCell: (params) => {
-            return (params.value?.join(', '));
-    }},
-
-    { field: 'dcsSet', headerName: 'Domaines d\'activités', flex: 1, renderCell: (params) => {
+    { field: 'id', headerName: 'N°', flex: 1, width: 15, renderCell },
+    { field: 'environmentSet', headerName: 'Environnement', flex: 1, renderCell, valueGetter: ({value}) => tip(value, 'Environnement') },
+    { field: 'provenanceSet', headerName: 'Provenance', flex: 1,renderCell, valueGetter: ({value}) => (value?.join(', ')) },
+    { field: 'disciplineSet', headerName: 'Discipline', flex: 1, renderCell, valueGetter: ({value}) => (value?.join(', ')) },
+    { field: 'factureContexts', headerName: 'Contexte de la facture', flex: 1, renderCell, valueGetter: ({value}) => (value?.join(', ')) },
+    { field: 'canalReceptionSet', headerName: 'Canal de réception', flex: 1, renderCell, valueGetter: ({value}) => (value?.join(', ')) },
+    { field: 'dcsSet', headerName: 'Domaines d\'activités', flex: 1, renderCell, valueGetter: ({value}) => {
         let dcs = []
-        params.value?.forEach((e)=>dcs.push(nomRefs.DCS[e] || e))
-        return (dcs?.join(', ') || params.value);
+        value?.forEach((e)=>dcs.push(nomRefs.DCS[e] || e))
+        return (dcs?.join(', ') || value);
     }},
-
-    { field: 'type', headerName: 'Type de règle', flex: 1, type: 'number', sortable: false, renderCell: (params) => {
-            return (params.value);
-    }},
+    { field: 'type', headerName: 'Type de règle', flex: 1, type: 'number', sortable: false, renderCell },
 ];
 

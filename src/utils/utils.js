@@ -1,3 +1,5 @@
+import React from "react";
+
 export const addCriteriasForGetRequest = ({url, filters, prepareForDownload = false}) => {
 	let concatSymbol = '&'
 	if (prepareForDownload) concatSymbol = '%26'
@@ -13,3 +15,5 @@ export const addCriteriasForGetRequest = ({url, filters, prepareForDownload = fa
 }
 
 export const pageSize = 20
+
+export const renderCell = ({row, value, field}) => <div id={`${field}_${row?.id}`}>{value}</div>

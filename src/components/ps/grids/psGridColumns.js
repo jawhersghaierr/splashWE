@@ -5,6 +5,7 @@ import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
+import {renderCell} from "../../../utils/utils";
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -36,17 +37,18 @@ const popOverRibs = (ribs) => {
 }
 
 const ribLabel = (discipl, disciplines) => {
-    if (discipl && discipl.length > 1) {
+    if (discipl) if (discipl.length > 1) {
         return 'Multi-disciplines'
     } else {
         return (<p style={{paddingLeft: '35px'}}>{disciplines.find(e => e.code == discipl[0])?.libelle}</p>)
     }
+    return ''
 }
 
 export const columns = disciplines => [
-    { field: 'numPartenaire', headerName: 'N° de partenaire', flex: 1 },
-    { field: 'statutRibs', headerName: 'Statut(s) RIB', flex: 1, sortable: false, renderCell: (params) => {
-            const statRow = statusRow(params.formattedValue)
+    { field: 'numPartenaire', headerName: 'N° de partenaire', flex: 1, renderCell },
+    { field: 'statutRibs', headerName: 'Statut(s) RIB', flex: 1, sortable: false, renderCell, valueGetter: ({value}) => {
+            const statRow = statusRow(value)
             const shown = Object.keys(statRow).find(key => statRow[key].shown);
             return (
                 <LightTooltip title={<div style={{ whiteSpace: 'pre-line' }}>{popOverRibs(statRow)}</div>} placement="top" arrow>
@@ -54,10 +56,11 @@ export const columns = disciplines => [
                 </LightTooltip>
             )
         }},
-    { field: 'raisonSociale', headerName: 'Raison Sociale', flex: 2 },
-    { field: 'disciplines', headerName: 'Discipline(s)', flex: 2, sortable: false, renderCell: (params) => {
-            const discipl = params.formattedValue || null;
+    { field: 'raisonSociale', headerName: 'Raison Sociale', flex: 2, renderCell },
+    { field: 'disciplines', headerName: 'Discipline(s)', flex: 2, sortable: false, renderCell, valueGetter: ({value}) => {
+            const discipl = value || null;
 
+            if (!!!discipl) return ''
             let _RibLabel = ribLabel(discipl, disciplines);
 
             let txt = discipl.map(s=>disciplines.find(e=>e.code==s)).map(e=>e?.libelle).join(' \n') || ''
@@ -79,10 +82,8 @@ export const columns = disciplines => [
                 </div>
             )
         }},
-    { field: 'ville', headerName: 'Ville', flex: 1, renderCell: (params) => ( params.formattedValue )},
-    { field: 'codePostal', headerName: 'Code postal', flex: 1 },
-    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell: (params) => {
-            return <Link to={`/PS/${params.formattedValue}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>
-    }},
+    { field: 'ville', headerName: 'Ville', flex: 1, renderCell },
+    { field: 'codePostal', headerName: 'Code postal', flex: 1, renderCell },
+    { field: 'id', headerName: '', width: 15, type: 'number', sortable: false, renderCell, valueGetter: ({value}) => (<Link to={`/PS/${value}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB'}}/></Link>) },
 ];
 
