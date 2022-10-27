@@ -94,6 +94,10 @@ export default function SearchAccordion(props) {
                                       _value.dcs = dcsObj ? dcsObj[field.active] : value[field.active];
                                   break
 
+                                  case 'status':
+                                      if (!!_value.status) _value.referenceDate = undefined
+                                  break
+
                               }
                               return _value
                           })

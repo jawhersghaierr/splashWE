@@ -11,8 +11,6 @@ export const ConfigutationsGrid = ({data, nomRefs, domain, code, error, isSucces
 
     const configurations = useSelector(getConfigurations);
 
-    console.log(data)
-
     return <div className="gridContent">
 
         {isSuccess && data?.results?.length > 0 && nomRefs && <DataGrid

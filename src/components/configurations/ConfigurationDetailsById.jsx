@@ -56,7 +56,7 @@ export default function ConfigurationDetailsById(props) {
                 .then(
                     (result) => {
                         setIsLoaded(true);
-                        if (result?.rules) result?.rules.map((e,id)=>e.id = id)
+                        if (result?.rules) result?.rules.map((e,id)=>e.id = id + 1)
                         setData(result);
                     },
                     (error) => {

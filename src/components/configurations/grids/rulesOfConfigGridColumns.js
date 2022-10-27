@@ -50,6 +50,12 @@ export const columns = nomRefs => [
         value?.forEach((e)=>dcs.push(nomRefs.DCS[e] || e))
         return (dcs?.join(', ') || value);
     }},
-    { field: 'type', headerName: 'Type de règle', flex: 1, type: 'number', sortable: false, renderCell },
+    { field: 'isExclusionRule', headerName: 'Type de règle', flex: 1, type: 'number', sortable: false, renderCell, valueGetter: ({value}) => {
+            if (value === true) {
+                return 'Exclusion'
+            } if (value === false) {
+                return 'Inclusion'
+            } else return ''
+        } },
 ];
 
