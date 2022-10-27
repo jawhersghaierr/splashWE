@@ -16,7 +16,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+import { FormSpy, Form, Field } from 'react-final-form';
 import { ListItemText } from "@material-ui/core";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -25,7 +25,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { fr } from "date-fns/locale";
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { MaskedInput } from "../../shared/customTextField/TextMaskCustom";
-import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
+import {validators, calcCleFromNir, allowSearch} from '../../../utils/validator-utils';
 import {
     checkInsidePanels, getMotifsFromTypes,
     getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromTypes,
@@ -470,13 +470,17 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
-                                                                      ampm={false}
-                                                                      inputFormat="dd/MM/yyyy hh:mm"
+                                                                      ampm ={true}
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                          <TextField style={{flex: 2}} type={'datetime-local'}
+                                                                            {...{...params,
+                                                                                inputProps: {
+                                                                                    ...params.inputProps,
+                                                                                    placeholder: "jj/mm/aaaa hh:mm am"
+                                                                                }
+                                                                            }} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -489,12 +493,15 @@ export default function SearchAccordion(props) {
                                                                   <DateTimePicker
                                                                       label={'au '}
                                                                       ampm={true}
-                                                                      inputFormat="dd/MM/yyyy hh:mm"
+                                                                      // inputFormat="dd/MM/yyyy hh:mm am"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"}}} />}
+                                                                          <TextField style={{flex: 2}} type={'datetime-local'}
+                                                                                     {...{...params, inputProps: {
+                                                                                         ...params.inputProps,
+                                                                                             placeholder : "jj/mm/aaaa hh:mm am"}
+                                                                                     }} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -591,8 +598,6 @@ export default function SearchAccordion(props) {
                                                       {nomRefs && <Field name="sousMotif" format={value => value || []}>
 
                                                           {({input, meta}) => (
-                                                              console.log('values?.sousMotif ', values?.sousMotif),
-                                                              console.log('values?.motif ', values?.motif),
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
                                                                   <InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>
