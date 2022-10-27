@@ -70,7 +70,7 @@ export const RocEnLigneGrid = () => {
                         url: 'sel/search/',
                         filters: reshapeCriterias({criterias}),
                         prepareForDownload: true
-                    })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}`}
+                    })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}&dateFormat=dateNaiss`}
                     className="RoundedEmptyButt"
                     download="result.csv"
                 >

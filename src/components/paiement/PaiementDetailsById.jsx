@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {matchPath, useHistory} from "react-router-dom";
+import {matchPath, Link} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {useGetPaiementByIdQuery} from "./services/paiementsApi";
@@ -78,7 +78,6 @@ export default function PaiementDetailsById({location, modalId = null}) {
         strict: false
     });
     const paiementID = (modalId)? modalId: match?.params?.id;
-    const history = useHistory();
 
     const [value, setValue] = React.useState(1);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -96,9 +95,13 @@ export default function PaiementDetailsById({location, modalId = null}) {
                 <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                     <b>Détails du paiement</b>
                 </Typography>
-                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}} onClick={() => history.goBack()}>
-                    Revenir
-                </Button>}
+
+                {!!!modalId && <Link to={`/paiement`} style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Revenir
+                    </Button>
+                </Link>}
+
             </div>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {nomRefs && nomRefs.PAIEMENT_TYPE[data?.paiementType] || data?.paiementType}

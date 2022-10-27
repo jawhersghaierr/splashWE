@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory, Link, matchPath} from 'react-router-dom';
+import {Link, matchPath} from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -60,9 +60,6 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
         strict: false
     });
     const benefId = (modalId)? modalId: match?.params?.id;
-
-    const history = useHistory();
-
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -128,10 +125,13 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                 <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                     <b>{data?.nom}&nbsp;{data?.prenom}</b>
                 </Typography>
-                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}
-                         onClick={() => history.goBack()}>
-                    Revenir
-                </Button>}
+
+                {!!!modalId && <Link to={`/beneficiaire`} style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Revenir
+                    </Button>
+                </Link>}
+
             </div>
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
                 {data?.lienFamillialLabel}

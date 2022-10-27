@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetRocEnLigneByIdQuery} from "./services/rocEnLigneApi";
-import {matchPath, useHistory} from "react-router-dom";
+import {matchPath, Link} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {ActesGrid} from "../shared/grids";
@@ -56,7 +56,6 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
     });
 
     const rocID = (modalId)? modalId: match?.params?.id;
-    const history = useHistory();
 
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
@@ -81,9 +80,11 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                 <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                     <b>Détail de la demande {data?.common && data?.common?.typeDemande}</b>
                 </Typography>
-                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}} onClick={() => history.goBack()}>
-                    Revenir
-                </Button>}
+                {!!!modalId && <Link to={`/serviceEnLigne`} style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Revenir
+                    </Button>
+                </Link>}
             </div>
             {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
             {isSuccess && <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>

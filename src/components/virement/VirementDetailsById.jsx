@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {matchPath, useHistory} from "react-router-dom";
+import {Link, matchPath} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import {RowInfo} from "./components/RowInfo";
 import {useGetVirementsByIdQuery} from "./services/virementsApi";
@@ -71,8 +71,6 @@ export default function VirementDetailsById({location, modalId = null}) {
     });
 
     const virementID = (modalId)? modalId: match?.params?.id;
-    const history = useHistory();
-
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => { setValue(newValue) };
 
@@ -86,9 +84,13 @@ export default function VirementDetailsById({location, modalId = null}) {
                 <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                     <b>Détails du virement</b>
                 </Typography>
-                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}} onClick={() => history.goBack()}>
-                    Revenir
-                </Button>}
+
+                {!!!modalId && <Link to={`/virements`} style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Revenir
+                    </Button>
+                </Link>}
+
             </div>
             {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>

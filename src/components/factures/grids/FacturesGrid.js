@@ -59,9 +59,6 @@ export const FacturesGrid = ({disciplines}) => {
                 <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
                     {currentPage * size + 1} - {currentPage * size + ((Number(currentPage + 1) == Number(data?.totalPages))? Number(data?.totalElements) - currentPage * size : size)} sur {data?.totalElements} résultats
                 </Typography>
-                {/*<Link href={`http://${env_IP}:${ports.download}/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({url: 'factures', filters: reshapeCriterias({criterias})})}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`} download='result.csv1' >*/}
-                {/*    <img src={download} width={22} style={{marginTop: '4px'}} />*/}
-                {/*</Link>*/}
 
                 <Button
                     variant="contained"
@@ -71,7 +68,7 @@ export const FacturesGrid = ({disciplines}) => {
                         url: 'factures',
                         filters: reshapeCriterias({criterias}),
                         prepareForDownload: true
-                    })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}`}
+                    })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}&dateFormat=dateNai`}
                     className="RoundedEmptyButt"
                     download="result.csv"
                 >

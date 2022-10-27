@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useHistory, matchPath} from 'react-router-dom';
+import { matchPath, Link } from 'react-router-dom';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -76,8 +76,6 @@ export default function FacturesDetailsById({location, modalId = null}) {
         data: null,
     })
 
-    const history = useHistory();
-
     const handleMsgClose = () => {
         if (!modalId) setOpenMsg({...openMsg, open: false})
     };
@@ -105,10 +103,13 @@ export default function FacturesDetailsById({location, modalId = null}) {
                 <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
                     <b>Détails de la facture</b>
                 </Typography>
-                {!!!modalId && <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}
-                         onClick={() => history.goBack()}>
-                    Revenir
-                </Button>}
+
+                {!!!modalId && <Link to={`/factures`} style={{textDecoration: 'none'}}>
+                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
+                        Revenir
+                    </Button>
+                </Link>}
+
             </div>
             {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
