@@ -470,7 +470,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'Réceptionné du'}
-                                                                      ampm ={true}
+                                                                      ampm ={false}
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       renderInput={(params) =>
@@ -478,7 +478,7 @@ export default function SearchAccordion(props) {
                                                                             {...{...params,
                                                                                 inputProps: {
                                                                                     ...params.inputProps,
-                                                                                    placeholder: "jj/mm/aaaa hh:mm am"
+                                                                                    placeholder: "jj/mm/aaaa hh:mm"
                                                                                 }
                                                                             }} />}
                                                                   />
@@ -492,7 +492,7 @@ export default function SearchAccordion(props) {
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
-                                                                      ampm={true}
+                                                                      ampm={false}
                                                                       // inputFormat="dd/MM/yyyy hh:mm am"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
@@ -500,7 +500,7 @@ export default function SearchAccordion(props) {
                                                                           <TextField style={{flex: 2}} type={'datetime-local'}
                                                                                      {...{...params, inputProps: {
                                                                                          ...params.inputProps,
-                                                                                             placeholder : "jj/mm/aaaa hh:mm am"}
+                                                                                             placeholder : "jj/mm/aaaa hh:mm"}
                                                                                      }} />}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
