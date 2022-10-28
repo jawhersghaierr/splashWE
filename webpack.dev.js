@@ -52,6 +52,33 @@ module.exports = {
             remotes: {
                 hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
                 ps_ui: `ps_ui@http://${env_IP}:8034/remotePsEntry.js`,
+                env: 'http://localhost:8080/api/vars',
+                // env: new Promise(resolve => {
+                //
+                //           const remoteUrlVars = 'http://localhost:8080/api/vars'
+                //           const script = document.createElement('script')
+                //           script.src = remoteUrlVars
+                //           script.onload = () => {
+                //             // the injected script has loaded and is available on window
+                //             // we can now resolve this Promise
+                //             console.log('#####################################################################')
+                //             console.log('script')
+                //             console.log('#####################################################################')
+                //             // const proxy = {
+                //             //   get: (request) => window.env.get(request),
+                //             //   init: (arg) => {
+                //             //     try {
+                //             //       return window.env
+                //             //     } catch(e) {
+                //             //       console.log('remote container already initialized')
+                //             //     }
+                //             //   }
+                //             // }
+                //             resolve(script)
+                //           }
+                //           // inject this script with the src set to the versioned remoteEntry.js
+                //           document.head.appendChild(script);
+                //         }),
                 // app1: `promise new Promise(resolve => {
                 //           const urlParams = new URLSearchParams(window.location.search)
                 //           const version = urlParams.get('app1VersionParam')

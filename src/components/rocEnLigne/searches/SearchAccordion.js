@@ -586,7 +586,7 @@ export default function SearchAccordion(props) {
                                                                               <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                                       </MenuItem>
 
-                                                                      {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code}>
+                                                                      {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>
                                                                           {nomRefs.ROC_MOTIFS[code]}
                                                                       </MenuItem>))}
 
@@ -625,7 +625,7 @@ export default function SearchAccordion(props) {
                                                                       </MenuItem>}
 
                                                                       {rln?.localSubMotif && rln.localSubMotif.map(code => (
-                                                                          <MenuItem key={code} value={code}>
+                                                                          <MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>
                                                                               {nomRefs.ROC_SOUS_MOTIFS[code]}
                                                                           </MenuItem>
                                                                       ))}
