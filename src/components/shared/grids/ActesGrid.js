@@ -40,9 +40,11 @@ export const ActesGrid = ({ data, nomRefs }) => {
           </Stack>
         ),
       }}
-      getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
-      }
+      getRowClassName={(params) => {
+          console.log(params)
+          if (params?.row?.statut && params?.row?.statut?.length > 0) return "Mui-status-red"
+          return params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+      }}
       onCellClick={(params, event) => {
         event.defaultMuiPrevented = true;
       }}
