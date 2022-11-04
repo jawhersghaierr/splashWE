@@ -180,6 +180,8 @@ export const reshapeCriterias = ({criterias}) => {
         dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
         errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
     } = criterias;
+    console.log(criterias)
+
 
     let filters = {...criterias}
 
@@ -208,6 +210,8 @@ export const reshapeCriterias = ({criterias}) => {
             filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
         } else filters.dateNaiss = birdDate.split('/').reverse().join('');
     }
+
+    delete filters.birdDate;
 
     if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
         if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);

@@ -294,7 +294,6 @@ export default function SearchAccordion(props) {
 
                                     break
 
-
                                 }
 
 
@@ -473,14 +472,17 @@ export default function SearchAccordion(props) {
                                                                       ampm ={false}
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} type={'datetime-local'}
-                                                                            {...{...params,
-                                                                                inputProps: {
-                                                                                    ...params.inputProps,
-                                                                                    placeholder: "jj/mm/aaaa hh:mm"
-                                                                                }
-                                                                            }} />}
+                                                                      renderInput={(params) => {
+                                                                          const {onChange} = params.inputProps
+                                                                          return <TextField style = {{ flex: 2 }} type = {'datetime-local'}
+                                                                            { ...{...params, inputProps: { ...params.inputProps, placeholder: "jj/mm/aaaa hh:mm" }} }
+                                                                            onBlur = {(e) => {
+                                                                              if (e.target.value.length < 16 && e.target.value.length >= 10) {
+                                                                                  form.getFieldState('receptionDateStart').change(new Date(e.target.value.substr(0,10) + ' 00:00'))
+                                                                                  onChange(e)
+                                                                              }
+                                                                            }}
+                                                                          />}}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -496,12 +498,17 @@ export default function SearchAccordion(props) {
                                                                       // inputFormat="dd/MM/yyyy hh:mm am"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}} type={'datetime-local'}
-                                                                                     {...{...params, inputProps: {
-                                                                                         ...params.inputProps,
-                                                                                             placeholder : "jj/mm/aaaa hh:mm"}
-                                                                                     }} />}
+                                                                      renderInput={(params) => {
+                                                                          const {onChange} = params.inputProps
+                                                                          return <TextField style={{flex: 2}} type={'datetime-local'}
+                                                                            {...{...params, inputProps: { ...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"} }}
+                                                                             onBlur = {(e) => {
+                                                                                 if (e.target.value.length < 16 && e.target.value.length >= 10) {
+                                                                                     form.getFieldState('receptionDateEnd').change(new Date(e.target.value.substr(0,10) + ' 00:00'))
+                                                                                     onChange(e)
+                                                                                 }
+                                                                             }}
+                                                                          />}}
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -790,38 +797,34 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
                                                       <Field name="dateNaiss" >
-                                                          {({ input: {onChange, value, ...rest}, meta }) => (
+                                                          {({ input, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
 
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
                                                                       onChange={(newDate) => {
+                                                                          console.log('DataPicker > ', newDate)
                                                                           if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
                                                                               form.getFieldState('birdDate').change(newDate)
-                                                                              onChange(newDate)
+                                                                              input.onChange(newDate)
                                                                           }
                                                                       }}
 
                                                                       inputFormat="dd/MM/yyyy"
 
-                                                                      value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
+                                                                      value={(input.value === '' || input.value == undefined || input.value == null  || input.value == 'null' )? null: input.value}
 
                                                                       renderInput={({ inputRef, inputProps, InputProps }) => {
 
-                                                                          const {
-                                                                              disabled,
-                                                                              onChange,
-                                                                              readOnly,
-                                                                              type,
-                                                                              value
-                                                                          } = inputProps
+                                                                          const { disabled, onChange, readOnly, type, value } = inputProps
 
                                                                           return <TextField
                                                                                   label="Date de naissance"
                                                                                   ref={inputRef}
                                                                                   disabled={disabled}
                                                                                   onChange={(event)=> {
+                                                                                      console.log('TextFiled > ', event.target.value)
                                                                                       form.getFieldState('birdDate').change(event.target.value)
                                                                                       onChange(event)
                                                                                   }}
@@ -835,7 +838,13 @@ export default function SearchAccordion(props) {
                                                                                           <InputAdornment position="end">
                                                                                               {InputProps?.endAdornment}
                                                                                           </InputAdornment>)
-                                                                                  }}/>
+                                                                                  }}
+                                                                                  onBlur={(e)=> {
+                                                                                      if (e.target.value.length !== 10) form.getFieldState('dateNaiss').change(undefined)
+                                                                                      return input.onBlur(e)
+                                                                                  }}
+
+                                                                          />
 
                                                                       }}
                                                                   />
