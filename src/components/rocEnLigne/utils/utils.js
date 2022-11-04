@@ -180,8 +180,6 @@ export const reshapeCriterias = ({criterias}) => {
         dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
         errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
     } = criterias;
-    console.log(criterias)
-
 
     let filters = {...criterias}
 

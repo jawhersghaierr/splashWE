@@ -126,7 +126,6 @@ export default function SearchAccordion(props) {
 
                           utils.changeValue(state, field, (value) => {
 
-                              // console.log('touched ', value)
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateNaiss = null}
 
@@ -138,11 +137,6 @@ export default function SearchAccordion(props) {
                                     break
 
                                     case 'cle':
-                                    break
-
-                                    case 'finessJur':
-                                        // if (value?.finessJur?.length < 8) console.log(value.finessJur, field)
-
                                     break
 
                                     case 'amc': //Object.keys(nomRefs.CLIENT === amc)
@@ -800,11 +794,9 @@ export default function SearchAccordion(props) {
                                                           {({ input, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
-
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
                                                                       onChange={(newDate) => {
-                                                                          console.log('DataPicker > ', newDate)
                                                                           if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
                                                                               form.getFieldState('birdDate').change(newDate)
                                                                               input.onChange(newDate)
@@ -824,7 +816,6 @@ export default function SearchAccordion(props) {
                                                                                   ref={inputRef}
                                                                                   disabled={disabled}
                                                                                   onChange={(event)=> {
-                                                                                      console.log('TextFiled > ', event.target.value)
                                                                                       form.getFieldState('birdDate').change(event.target.value)
                                                                                       onChange(event)
                                                                                   }}
