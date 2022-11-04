@@ -18,6 +18,7 @@ import {useGetRefsQuery} from "../../services/refsApi";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -234,6 +235,12 @@ export default function FacturesDetailsById({location, modalId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
+                { data?.factTransData?.factId && <><OpenInNewIcon
+                    sx={{color: '#99ACBB', cursor: 'pointer', float: 'right'}}
+                    onClick={()=>
+                    window.open(`FluxInfo/${data?.factTransData?.factId}`, 'FluxInfo', "height=735,width=1350,toolbar=no,menubar=no,scrollbars=no,location=no,status=no")
+                }/> </>}
+
                 { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
             </TabPanel>
 

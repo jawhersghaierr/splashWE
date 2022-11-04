@@ -140,8 +140,12 @@ const App = () => {
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
                   <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>
                   <Route path="/ligne" component={RemoteTest}/>
+
+                  <Route exact name={'FactureFluxInfo'} path="/factures/FluxInfo/:id?" render={(props) => (
+                      <FacturesFluxInfo factId={props.match.params.id} menu={setShown}/>
+                  )} />
+                  <Route path="/factures/:id" component={FacturesDetailsById}/>
                   <Route exact={true} path="/factures" component={Factures}/>
-                  <Route path="/factures/:id?" component={FacturesDetailsById}/>
 
                   <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
                   <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
@@ -151,7 +155,7 @@ const App = () => {
                   <Route path="/paiement/:id?" component={PaiementDetailsById}/>
 
                   {/*<Route exact name={'FluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" component={RocFluxInfo}/>*/}
-                  <Route exact name={'FluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" render={(props) => (
+                  <Route exact name={'RocFluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" render={(props) => (
                       <RocFluxInfo factId={props.match.params.id} menu={setShown}/>
                   )} />
                   <Route exact name={'RocEnLigneDetailsById'} path="/serviceEnLigne/:id" component={RocEnLigneDetailsById}/>

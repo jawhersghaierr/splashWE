@@ -2,7 +2,6 @@ import React from 'react'
 import {useGetFluxByIdQuery} from "../services/fluxApi";
 import XMLViewer from 'react-xml-viewer'
 import {CircularProgress, Typography} from "@mui/material";
-import {matchPath} from "react-router-dom";
 
 const customTheme = {
     overflowBreak: true,
