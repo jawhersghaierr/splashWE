@@ -1,10 +1,18 @@
 import React from 'react'
 import {useGetFluxByIdQuery} from "../services/fluxApi";
 import {CircularProgress} from "@mui/material";
+import {matchPath} from "react-router-dom";
 
 export const FluxInfo = ({factId}) => {
 
-    const {data, isFetching, isSuccess} = useGetFluxByIdQuery(factId, {forceRefetch: true} );
+    const match = matchPath(location?.pathname, {
+        path: "/factures/FluxInfo/:id",
+        exact: true,
+        strict: false
+    });
+    let fluxID = factId || match?.params?.id;
+
+    const {data, isFetching, isSuccess} = useGetFluxByIdQuery(fluxID, {forceRefetch: true} );
     let rows = []
 
     if (data) data.forEach(aEl => rows.push(aEl.map(e=>e.data).reduce((a,b)=>`${a}${b}`)))

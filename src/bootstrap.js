@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React, {Suspense, useState} from 'react';
 import ReactDOM from 'react-dom';
 
-import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import {Switch, Route, BrowserRouter, matchPath} from 'react-router-dom'
 
 import { Provider } from 'react-redux';
 
@@ -47,6 +47,8 @@ import {Virement} from "./components/virement/Virement";
 import VirementDetailsById from "./components/virement/VirementDetailsById";
 import {RocEnLigne} from "./components/rocEnLigne/RocEnLigne";
 import RocEnLigneDetailsById from "./components/rocEnLigne/RocEnLigneDetailsById";
+import {FluxInfo as FacturesFluxInfo} from "./components/factures/components/FluxInfo";
+import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxInfo";
 
 const defaultTheme = createTheme();
 const theme1 = createTheme({
@@ -90,7 +92,6 @@ const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp')
 const RemoteVars = React.lazy(() => dynamicFederation('env', './RemotePsApp'));
 
 const PageDashboard = () => {
-  debugger
   return <Typography variant="h3" component="div">Dashboard Page</Typography>
 }
 
@@ -102,7 +103,8 @@ const RemoteTest = () => <RemoteApp store={store} />
 const App = () => {
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+  const [shown, setShown] = useState(true);
 
   console.log(RemoteVars)
 
@@ -119,15 +121,15 @@ const App = () => {
             {/*<div className={clsx('Host', classes.root)}>*/}
             <Box sx={{ display: 'flex' }}>
               <CssBaseline />
-              <Drawer variant="permanent" open={open}>
+              {shown && <Drawer variant="permanent" open={open}>
                 <DrawerHeader>
                   <IconButton onClick={handleDrawer} style={{color: '#fff'}}>
-                    {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    {!open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                   </IconButton>
                 </DrawerHeader>
-                <Divider />
-                <HostMenu />
-              </Drawer>
+                <Divider/>
+                <HostMenu/>
+              </Drawer>}
 
               <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
@@ -144,13 +146,16 @@ const App = () => {
                   <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
                   <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
                   <Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>
-                  {/*<Route name={'configuration'} path="/configuration" component={Configurations}/> />*/}
 
                   <Route exact={true} path="/paiement" component={Paiement}/>
                   <Route path="/paiement/:id?" component={PaiementDetailsById}/>
 
-                  <Route exact={true} path="/serviceEnLigne" component={RocEnLigne}/>
-                  <Route path="/serviceEnLigne/:id?" component={RocEnLigneDetailsById}/>
+                  {/*<Route exact name={'FluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" component={RocFluxInfo}/>*/}
+                  <Route exact name={'FluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" render={(props) => (
+                      <RocFluxInfo factId={props.match.params.id} menu={setShown}/>
+                  )} />
+                  <Route exact name={'RocEnLigneDetailsById'} path="/serviceEnLigne/:id" component={RocEnLigneDetailsById}/>
+                  <Route exact index={true} name={'RocEnLigne'} path="/serviceEnLigne" component={RocEnLigne}/>
 
                   <Route exact={true} path="/virements" component={Virement}/>
                   <Route path="/virements/:id?" component={VirementDetailsById}/>

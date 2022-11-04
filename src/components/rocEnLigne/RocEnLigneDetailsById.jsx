@@ -15,7 +15,7 @@ import {FluxInfo} from "./components/FluxInfo";
 import {rocStatus} from "../../utils/status-utils";
 import {dateConvertNaissanceRAW, convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
@@ -223,6 +223,9 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
             </TabPanel>
 
             <TabPanel value={value} index={4} data={data}>
+                { rocID && <OpenInNewIcon sx={{color: '#99ACBB', cursor: 'pointer', float: 'right'}} onClick={()=>
+                    window.open(`FluxInfo/${rocID}`, 'FluxInfo', "height=735,width=1350,toolbar=no,menubar=no,scrollbars=no,location=no,status=no")
+                }/> }
                 { rocID && <FluxInfo factId={rocID}/> }
             </TabPanel>
 
