@@ -472,7 +472,7 @@ export default function SearchAccordion(props) {
                                                                             { ...{...params, inputProps: { ...params.inputProps, placeholder: "jj/mm/aaaa hh:mm" }} }
                                                                             onBlur = {(e) => {
                                                                               if (e.target.value.length < 16 && e.target.value.length >= 10) {
-                                                                                  form.getFieldState('receptionDateStart').change(new Date(e.target.value.substr(0,10) + ' 00:00'))
+                                                                                  form.getFieldState('receptionDateStart').change(new Date( e.target.value.substr(0,10).replace(/(\d+[/])(\d+[/])/, '$2$1') ))
                                                                                   onChange(e)
                                                                               }
                                                                             }}
@@ -498,7 +498,7 @@ export default function SearchAccordion(props) {
                                                                             {...{...params, inputProps: { ...params.inputProps, placeholder : "jj/mm/aaaa hh:mm"} }}
                                                                              onBlur = {(e) => {
                                                                                  if (e.target.value.length < 16 && e.target.value.length >= 10) {
-                                                                                     form.getFieldState('receptionDateEnd').change(new Date(e.target.value.substr(0,10) + ' 00:00'))
+                                                                                     form.getFieldState('receptionDateEnd').change(new Date(e.target.value.substr(0,10).replace(/(\d+[/])(\d+[/])/, '$2$1') ))
                                                                                      onChange(e)
                                                                                  }
                                                                              }}
