@@ -109,6 +109,8 @@ export const reshapeCriterias = ({criterias}) => {
         } else filters.dateNai = birdDate.split('/').reverse().join('');
     }
 
+    delete filters.birdDate;
+
     if (nir && nir != undefined && cle && cle != undefined) {
         filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
     }
@@ -122,7 +124,6 @@ export const reshapeCriterias = ({criterias}) => {
             filters.idPeriodeFact = idPeriodeFact[0]
         }
     }
-
     filters.cashe = null
     return filters
 }

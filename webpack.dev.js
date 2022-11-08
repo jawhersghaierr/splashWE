@@ -111,13 +111,27 @@ module.exports = {
                     { loader: "sass-loader", options: { sourceMap: true } },
                 ],
             },
-
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-                type: 'asset/inline',
-                // test: /\.svg/,
-                // type: 'asset/inline'
+                type: "asset/resource"
             },
+            // {
+            //     test: /\.svg/,
+            //     type: 'asset/resource'
+            // },
+            {
+                test: /\.json/,
+                type: 'asset/resource',
+                generator: {
+                    filename: './conf/[name][ext]',
+                },
+            },
+            // {
+            //     test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+            //     type: 'asset/inline',
+            //     // test: /\.svg/,
+            //     // type: 'asset/inline'
+            // },
 
             // Images: Copy image files to build folder
             // {

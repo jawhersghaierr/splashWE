@@ -89,7 +89,6 @@ const dynamicFederation = async (scope, module) => {
 
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
 const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
-const RemoteVars = React.lazy(() => dynamicFederation('env', './RemotePsApp'));
 
 const PageDashboard = () => {
   return <Typography variant="h3" component="div">Dashboard Page</Typography>
@@ -105,8 +104,6 @@ const App = () => {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [shown, setShown] = useState(true);
-
-  console.log(RemoteVars)
 
   const handleDrawer = () => {
     setOpen(!open);

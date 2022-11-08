@@ -25,7 +25,6 @@ export const rocEnLigneApi = createApi({
     endpoints: (builder) => ({
         getRocEnLigne: builder.query({
             query: ({currentPage, criterias, sortProperties}) => {
-
                 const {
                     sortDirection,
                     sortProperty,
