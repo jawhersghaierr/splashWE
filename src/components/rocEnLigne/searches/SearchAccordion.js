@@ -36,6 +36,8 @@ import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Acco
 
 import './searchAccordion.scss'
 import {isValidDate} from "../../../utils/convertor-utils";
+import Autocomplete from '@mui/material/Autocomplete';
+import {AutoCompleteCustom} from "../../shared/components/AutoCompleteCustom";
 
 const StyledCard = styled(Card)(({ theme }) => ({
     "&.MuiPaper-rounded": {
@@ -80,15 +82,19 @@ export default function SearchAccordion(props) {
     useEffect(() => {
         if (nomRefsIsSuccess) {
 
-            let _tmpAmc = {}
+            let _tmpAmc = {}, amc1 = []
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
                 if (nomRefs.ROC_AMCS.includes(cl)) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
+                    amc1.push({value:cl, title: nomRefs.CLIENT[cl]})
                 }
             })
 
+            console.log(amc1)
+
             setRln({
                 amc: Object.keys( _tmpAmc ),
+                amc1,
                 localStatus: Object.keys( nomRefs.ROC_STATUSES ),
                 localMotif: Object.keys( nomRefs.ROC_MOTIFS ),
                 localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS )
@@ -139,13 +145,13 @@ export default function SearchAccordion(props) {
                                     case 'cle':
                                     break
 
-                                    case 'amc': //Object.keys(nomRefs.CLIENT === amc)
-                                        if (_value?.amc?.length === 0 ||
-                                            (_value?.amc?.includes('all') && _value?.amc?.length > rln.amc.length)
-                                        ) _value = {..._value, amc: undefined}
-                                        if (_value?.amc?.includes('all')) _value = {..._value, amc: rln.amc}
-
-                                    break
+                                    // case 'amc': //Object.keys(nomRefs.CLIENT === amc)
+                                    //     if (_value?.amc?.length === 0 ||
+                                    //         (_value?.amc?.includes('all') && _value?.amc?.length > rln.amc.length)
+                                    //     ) _value = {..._value, amc: undefined}
+                                    //     if (_value?.amc?.includes('all')) _value = {..._value, amc: rln.amc}
+                                    //
+                                    // break
 
                                     case 'domaine':
                                         if (_value?.domaine?.length === 0 ||
@@ -301,7 +307,7 @@ export default function SearchAccordion(props) {
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775 }} id="RocEnLigneSearchForm" variant="outlined">
+                                  <StyledCard sx={{ display: 'block', minWidth: 775, overflow: 'visible' }} id="RocEnLigneSearchForm" variant="outlined">
                                       <CardHeader
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -732,30 +738,38 @@ export default function SearchAccordion(props) {
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="NumClient-label">AMC</InputLabel>
-                                                                  {rln?.amc && <Select
-                                                                      id="NumClient"
-                                                                      labelId="NumClient-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} AMC sélectionnées`
-                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
-                                                                      }}>
+                                                                  {/*<InputLabel id="NumClient-label">AMC</InputLabel>*/}
+                                                                  {/*{rln?.amc && <Select*/}
+                                                                  {/*    id="NumClient"*/}
+                                                                  {/*    labelId="NumClient-label"*/}
+                                                                  {/*    multiple*/}
+                                                                  {/*    {...input}*/}
+                                                                  {/*    input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}*/}
+                                                                  {/*    MenuProps={{autoFocus: false}}*/}
+                                                                  {/*    renderValue={(selected) => {*/}
+                                                                  {/*        if (selected.length > 1) return `${selected.length} AMC sélectionnées`*/}
+                                                                  {/*        return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;*/}
+                                                                  {/*    }}>*/}
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.amc?.length == rln.amc.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
+                                                                  {/*    <MenuItem value="all" key='selectAll'>*/}
+                                                                  {/*        <ListItemText primary={(values?.amc?.length == rln.amc.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>*/}
+                                                                  {/*    </MenuItem>*/}
 
-                                                                      {rln.amc.map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
-                                                                          </MenuItem>
-                                                                      ))}
+                                                                  {/*    {rln.amc.map(code => (*/}
+                                                                  {/*        <MenuItem key={code} value={code}>*/}
+                                                                  {/*            {`(${code}) ${nomRefs.CLIENT[code]}`}*/}
+                                                                  {/*        </MenuItem>*/}
+                                                                  {/*    ))}*/}
 
-                                                                  </Select>}
+                                                                  {/*</Select>}*/}
+                                                                  {rln.amc1 && rln.amc1.length > 0 &&
+                                                                    <AutoCompleteCustom id="NumClient" input={input}
+                                                                                        meta={meta}
+                                                                                        options={rln.amc1}
+                                                                                        selectMsg={'Sélectionner tout'}
+                                                                                        deSelectMsg={'Désélectionner tout'}
+                                                                                        selectedMsg={'AMC sélectionnées'}
+                                                                                        label={'AMC'}/>}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -796,12 +810,7 @@ export default function SearchAccordion(props) {
                                                                   <DatePicker
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
-                                                                      onChange={(newDate) => {
-                                                                          if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
-                                                                              form.getFieldState('birdDate').change(newDate)
-                                                                              input.onChange(newDate)
-                                                                          }
-                                                                      }}
+      c
 
                                                                       inputFormat="dd/MM/yyyy"
 

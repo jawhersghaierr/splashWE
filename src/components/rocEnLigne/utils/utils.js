@@ -177,7 +177,7 @@ export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
+        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission, amc,
         errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
     } = criterias;
 
@@ -228,6 +228,11 @@ export const reshapeCriterias = ({criterias}) => {
                 }
 
      */
+
+    if (amc && amc !== undefined) {
+        filters.amc = []
+        amc.forEach(el => filters.amc.push(el.value))
+    }
 
 
     filters.cashe = null
