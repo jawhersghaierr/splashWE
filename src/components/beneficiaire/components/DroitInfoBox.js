@@ -21,7 +21,7 @@ export const DoritInfoBox = ({droit}) => {
             <Link to={`/beneficiaire/${droit.id}`}><VisibilityOutlinedIcon sx={{color: '#99ACBB', float: 'right'}}/></Link>
         </h3>
 
-        ({droit?.id}) {droit.lienFamillialLabel} <br/>
+        {droit.lienFamillialLabel} <br/>
         <Chip label={benefStatuses[droit?.status]?.label} sx={{bgcolor: benefStatuses[droit?.status]?.color, margin: '5px'}}/>
 
         <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(droit?.dateNaissance)} chip={droit?.rangNaissance}/>
@@ -31,7 +31,7 @@ export const DoritInfoBox = ({droit}) => {
         <RowInfo label={'Date désactivation droits'} value={convertDate(droit?.dateDesactivationDroits)}/>
         <RowInfo label={'Grand régime'} value={droit?.grandRegime}/>
         <RowInfo label={'Caisse'} value={droit?.caisseAffiliation}/>
-        <RowInfo label={'Centre'} value={droit?.centreGestionAmo}/>
+        <RowInfo label={'Centre gestion AMO'} value={droit?.centreGestionAmo}/>
     </Box>
 }
 

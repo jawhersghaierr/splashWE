@@ -195,7 +195,7 @@ export default function SearchAccordion(props) {
                                             variant="standard"
                                             error={meta.invalid}
                                             {...input}
-                                            placeholder={'Nº Adhérent'}
+                                            placeholder={'Nº adhérent'}
                                             sx={{width: '100%'}}
                                             className="RoundedEl"
                                             InputProps={{  disableUnderline: true }}
@@ -235,7 +235,7 @@ export default function SearchAccordion(props) {
                                 <AccordionDetails>
 
                                     <Field name="dateNaissance">
-                                        {({ input: {onChange, value, ...rest}, meta }) => (
+                                        {({ input, meta }) => (
                                             <div className={"RoundDate"}>
                                                 <DatePicker
 
@@ -244,22 +244,16 @@ export default function SearchAccordion(props) {
                                                     onChange={(newDate) => {
                                                         if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
                                                             form.getFieldState('birdDate').change(newDate)
-                                                            onChange(newDate)
+                                                            input.onChange(newDate)
                                                         }
                                                     }}
                                                     inputFormat="dd/MM/yyyy"
                                                     placeholder={'jj/mm/aaaa'}
-                                                    value={(value === '' || value == undefined || value == null  || value == 'null' )? null: value}
+                                                    value={(input.value === '' || input.value == undefined || input.value == null  || input.value == 'null' )? null: input.value}
 
                                                     renderInput={({ inputRef, inputProps, InputProps }) => {
 
-                                                        const {
-                                                            disabled,
-                                                            onChange,
-                                                            readOnly,
-                                                            type,
-                                                            value
-                                                        } = inputProps
+                                                        const { disabled, onChange, readOnly, type, value } = inputProps
 
                                                         return <>
                                                             <TextField
@@ -280,7 +274,12 @@ export default function SearchAccordion(props) {
                                                                         <InputAdornment position="end">
                                                                             {InputProps?.endAdornment}
                                                                         </InputAdornment>)
-                                                                }}/>
+                                                                }}
+                                                                onBlur={(e)=> {
+                                                                    if (e.target.value.length !== 10) form.getFieldState('dateNaissance').change(undefined)
+                                                                    return input.onBlur(e)
+                                                                }}
+                                                            />
                                                         </>
                                                     }}
                                                 />
@@ -304,7 +303,7 @@ export default function SearchAccordion(props) {
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
-                                                <InputLabel id="Enviroment-label">Sélectionner</InputLabel>
+                                                <InputLabel id="Enviroment-label">Environnement</InputLabel>
                                                 <Select
                                                     id="Enviroment"
                                                     labelId="Enviroment-label"
@@ -315,7 +314,7 @@ export default function SearchAccordion(props) {
                                                     MenuProps={{autoFocus: false}}
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
-                                                            return `${selected.length} enviroments sélectionnéеs`
+                                                            return `${selected.length} environnements sélectionnés`
                                                         }
                                                         return enviroments.find(item => item.code.toString() === selected.toString())?.libelle || '';
                                                     }}>

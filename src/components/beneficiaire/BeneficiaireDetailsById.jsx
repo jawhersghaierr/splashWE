@@ -151,7 +151,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                 maxWidth: '870px'
             }}>
                 <span style={{margin: '5px'}}>Nº Adhérent individuel : <b>{data?.numeroAdherentIndividuel}</b></span>
-                <span style={{margin: '5px'}}>Nº Adhérent Familial : <b>{data?.numeroAdherentFamilial}</b></span>
+                <span style={{margin: '5px'}}>Nº Adhérent familial : <b>{data?.numeroAdherentFamilial}</b></span>
                 <span style={{margin: '5px'}}>
                     Droits ouverts : <b>{convertDate(data?.dateOuvertureDroits)} - {dateFin?.toLocaleDateString('en-GB')}</b>
                 </span>
@@ -168,7 +168,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                 <Tab label="Informations generales"  {...a11yProps(0)}/>
                 <Tab label={"Contrat"}  {...a11yProps(1)} />
                 <Tab label="Carte et couvertures"  {...a11yProps(2)}/>
-                <Tab label="Autres beneficiares"  {...a11yProps(3)}/>
+                <Tab label="AUTRES BENEFICIAIRES"  {...a11yProps(3)}/>
                 <Tab label="Historique" {...a11yProps(4)} disabled/>
             </Tabs>
 
@@ -215,7 +215,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
 
                         <RowInfo label={'Type de contrat'} value={data?.contratIndividuelCollectifLabel}/>
                         <RowInfo label={'N° de contrat'} value={data?.numeroContratClient}/>
-                        <RowInfo label={'Contrat résponsable'} value={(data?.contratResponsable)? 'OUI' : 'NON'}/>
+                        <RowInfo label={'Contrat responsable'} value={(data?.contratResponsable)? 'OUI' : 'NON'}/>
                         <RowInfo label={'Partenaire'} value={data?.nomPartenaire}/>
                         <RowInfo label={'Centre de gestion'} value={data?.nomCentre}/>
                     </Box>
