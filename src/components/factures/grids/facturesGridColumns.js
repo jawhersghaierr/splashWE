@@ -8,7 +8,7 @@ import {renderCell} from "../../../utils/utils";
 
 
 export const columns = () => [
-    { field: 'receivedDate', headerName: 'Reçu le', flex: 1, sortable: false, renderCell, valueGetter: (params) => (convertDate(params.value)) },
+    { field: 'receivedDateTime', headerName: 'Reçu le', flex: 1, sortable: false, renderCell, valueGetter: ({value}) => (convertDate(value, true)) },
     { field: 'numFact', headerName: 'N° facture', hideable: false, flex: 1, renderCell },
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell },
     { field: 'numId', headerName: 'FINESS géographique', flex: 1, renderCell },
@@ -22,7 +22,7 @@ export const columns = () => [
 ];
 
 export const reverseMapFacturation = {
-    receivedDate: 'Reçu le',
+    receivedDateTime: 'Reçu le',
     numFact: 'N° facture',
     domaine: 'Domaine',
     numId: 'FINESS géographique',

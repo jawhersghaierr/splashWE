@@ -161,7 +161,7 @@ export default function FacturesDetailsById({location, modalId = null}) {
                         <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
                         <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
                     <RowInfo label={'Environnement'} value={data?.numEnv}/>
-                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDate)}/>
+                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDateTime, true)}/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
                     <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
@@ -207,7 +207,7 @@ export default function FacturesDetailsById({location, modalId = null}) {
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
                             <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true}/>
-                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDate)} border={true} justify={true}/>
+                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDateTime, true)} border={true} justify={true}/>
                             <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
                             <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
                         </div>
