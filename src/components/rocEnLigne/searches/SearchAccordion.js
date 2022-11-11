@@ -306,9 +306,13 @@ export default function SearchAccordion(props) {
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775, overflow: 'visible' }} id="RocEnLigneSearchForm" variant="outlined">
+                                  <StyledCard id="RocEnLigneSearchForm"
+                                      sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                                          '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                                      }}
+                                      variant="outlined">
                                       <CardHeader
-                                          sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
+                                          sx={{ bgcolor: '#f1f1f1', display: "flex" }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
 
