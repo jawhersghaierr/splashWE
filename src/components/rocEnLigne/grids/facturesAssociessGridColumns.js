@@ -6,7 +6,7 @@ import {dateConvertNaissance, convertDate, currencyFormatter} from "../../../uti
 import {renderCell} from "../../../utils/utils";
 
 export const columns = ({nomRefs, handleModalOpen}) => [
-    { field: 'receivedDate', headerName: 'Reçu le', minWidth: '150px', flex: 2, renderCell, valueGetter: ({value, row}) => (convertDate(`${value} ${row?.receivedTime}`, true)) },
+    { field: 'receivedDateTime', headerName: 'Reçu le', minWidth: '150px', flex: 2, renderCell, valueGetter: ({value}) => convertDate(value, true) },
     { field: 'numFact', headerName: 'N° facture', flex: 2, renderCell},
     { field: 'type', headerName: 'Type', flex: 1, renderCell, valueGetter: () => 'Facture' },
     { field: 'domaine', headerName: 'Domaine', flex: 1, renderCell, valueGetter: ({value}) => (<b>{nomRefs?.ROC_DOMAINS[value] || value}</b>) },
