@@ -86,7 +86,7 @@ export default function SearchAccordion(props) {
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
                 if (nomRefs.ROC_AMCS.includes(cl)) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
-                    amc1.push({value:cl, title: nomRefs.CLIENT[cl]})
+                    amc1.push({value:cl, title: `(${cl})${nomRefs.CLIENT[cl]}`})
                 }
             })
 
