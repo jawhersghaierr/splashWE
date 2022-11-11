@@ -22,7 +22,7 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	                      multiple
 	                      disableClearable
 	                      disableCloseOnSelect
-	                      clearOnBlur={false}
+	                      clearOnBlur={true}
 	                      includeInputInList
 	                      value={input.value}
 	                      options={[checkAll, ...options]}
@@ -34,7 +34,7 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	                      renderTags={(selected) => {
 		                      if (focus) return ''
 		                      if (selected.length > 1) return `${selected.length} ${selectedMsg}`
-		                      return <span style={{whiteSpace: "nowrap", overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '93%' }}> {`(${selected[0].value}) ${selected[0].title}`} </span>;
+		                      return <span style={{whiteSpace: "nowrap", overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '93%' }}> {selected[0].title} </span>;
 	                      }}
 	                      renderInput={(params) => <TextField
 		                      label={label}
