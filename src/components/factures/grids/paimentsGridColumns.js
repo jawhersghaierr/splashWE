@@ -8,7 +8,7 @@ import {renderCell} from "../../../utils/utils";
 export const columns = ({nomRefs, handleModalOpen}) => [
     { field: 'dateCreation', headerName: 'Date et heure de réception', minWidth: '150px', flex: 2, renderCell, valueGetter: (params) => (convertDate(params.value, true)) },
     { field: 'type', headerName: 'Type', flex: 1, renderCell, valueGetter: (params) => {
-            let type = params.formattedValue
+            let type = params.value
             let result = params.value
 
             if ( nomRefs.PAIEMENT_TYPE[type] !== undefined && nomRefs.PAIEMENT_TYPE[type] ) {

@@ -119,7 +119,7 @@ export default function PsDetailsById({location, modalId = null}) {
                     minWidth: '300px',
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
-                    <h2><b>Coordonnes</b></h2>
+                    <h2><b>Coordonnées</b></h2>
                     {data?.adresse1 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse: <b>{data.adresse1}</b></Typography>}
                     {data?.adresse2 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse2: <b>{data.adresse2}</b></Typography>}
                     {data?.codePostal && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Code Postal: <b>{data.codePostal}</b></Typography>}

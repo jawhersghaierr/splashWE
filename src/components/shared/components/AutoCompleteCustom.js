@@ -18,16 +18,16 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	};
 
 	return (<Autocomplete className="RoundedEl"
-	                      disablePortal
-	                      multiple
-	                      disableClearable
-	                      disableCloseOnSelect
-	                      clearOnBlur={true}
-	                      includeInputInList
-	                      value={input.value}
-	                      options={[checkAll, ...options]}
-	                      getOptionLabel={(option) => option.title}
-	                      id={id}
+						  id={id}
+						  value={input.value}
+						  options={[checkAll, ...options]}
+						  disablePortal
+						  multiple
+						  disableClearable
+						  disableCloseOnSelect
+						  clearOnBlur={true}
+						  includeInputInList
+						  getOptionLabel={(option) => option.title}
 	                      sx={{
 							  '& .MuiAutocomplete-input': {minWidth: '0 !important', padding: '5px !important'},
 						  }}

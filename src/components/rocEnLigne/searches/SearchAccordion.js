@@ -36,7 +36,6 @@ import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Acco
 
 import './searchAccordion.scss'
 import {isValidDate} from "../../../utils/convertor-utils";
-import Autocomplete from '@mui/material/Autocomplete';
 import {AutoCompleteCustom} from "../../shared/components/AutoCompleteCustom";
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -86,7 +85,7 @@ export default function SearchAccordion(props) {
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
                 if (nomRefs.ROC_AMCS.includes(cl)) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
-                    amc1.push({value:cl, title: `(${cl})${nomRefs.CLIENT[cl]}`})
+                    amc1.push({value:cl, title: `(${cl}) ${nomRefs.CLIENT[cl]}`})
                 }
             })
 
@@ -654,8 +653,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="finessGeo" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="FINESSgeographique"
+                                                                  <TextField id="FINESSgeographique"
                                                                       label={'FINESS géographique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -674,8 +672,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="finessJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="FINESSJuridique"
+                                                                  <TextField id="FINESSJuridique"
                                                                       label={'FINESS juridique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -694,8 +691,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="raisonSociale" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="RaisonSociale"
+                                                                  <TextField id="RaisonSociale"
                                                                       label={'Raison sociale'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
@@ -710,8 +706,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="dеpartement" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Department"
+                                                                  <TextField id="Department"
                                                                       type={"number"}
                                                                       label={'Nº département'}
                                                                       variant="outlined"
@@ -777,8 +772,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="nom" validate={validators.composeValidators( validators.maxValue(51) )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Nom"
+                                                                  <TextField id="Nom"
                                                                       label={'Nom'}
                                                                       variant="outlined"
                                                                       {...input}
@@ -792,8 +786,7 @@ export default function SearchAccordion(props) {
                                                       <Field name="prenom" validate={validators.composeValidators( validators.maxValue(51), validators.associated(values, ['amc', 'nom', 'dateNaiss', 'numAdh'], 'Prénom') )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Prenom"
+                                                                  <TextField id="Prenom"
                                                                       label={'Prénom'}
                                                                       variant="outlined"
                                                                       {...input}
@@ -810,7 +803,6 @@ export default function SearchAccordion(props) {
                                                                   <DatePicker
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
-      c
 
                                                                       inputFormat="dd/MM/yyyy"
 
