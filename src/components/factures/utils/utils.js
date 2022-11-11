@@ -1,5 +1,6 @@
 import {useEffect, useRef} from "react";
 import {statusesRIB} from "../../../utils/status-utils";
+import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const checkInsidePanels = (values) => {
 
@@ -88,11 +89,13 @@ export const reshapeCriterias = ({criterias}) => {
     }
 
     if (dateReceivedStart && dateReceivedStart != '' && dateReceivedStart != undefined) {
-        filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
+        filters.dateReceivedStart = IntlDateWithHHMM(dateReceivedStart);
+        // filters.dateReceivedStart = new Date(dateReceivedStart).toLocaleDateString('sv');//.toISOString()
     }
 
     if (dateReceivedEnd && dateReceivedEnd != '' && dateReceivedEnd != undefined) {
-        filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
+        filters.dateReceivedEnd = IntlDateWithHHMM(dateReceivedEnd);
+        // filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
     }
 
     if (dateFact && dateFact != '' && dateFact != undefined) {
