@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Gotha";
+  font-weight: regular;
+  src: url('../assets/fonts/GothaProReg.otf');
+}
+@font-face {
+  font-family: "Gotha";
+  font-weight: bold;
+  src: url('../assets/fonts/GothaProBol.otf');
+}
 .MuiSlider-root {
   color: #20b2aa;
 }
@@ -10,9 +20,38 @@
   border-radius: 1px;
 }
 
-.MuiPaper-rounded {
-  //border: 0;
-  //border-radius: 26px;
+.MuiList-root, .popperStyle {
+  padding: 0 !important;
+  .MuiListItemButton-root {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .MuiMenuItem-root {
+    padding: 0;
+    .MuiButtonBase-root {
+      padding-left: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.MuiList-root.collapsed {
+  width: 100%;
+  text-align: center;
+  .menuItem {
+    margin: 0 auto;
+    
+    li {
+      padding: 0;
+      text-align: center;
+      svg {
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
 }
 
 .RoundedEl {
@@ -97,7 +136,8 @@ input:-webkit-autofill {
 .MuiBox-root {
   //padding: 0;
   background: #F6F8FC;
-  margin-bottom: 35px;
+  //margin-bottom: 35px;
+  height: 60px;
 }
 .MuiCardActions-root>:not(:first-of-type) {
   margin-left: 0;
@@ -107,4 +147,3 @@ input:-webkit-autofill {
   background: #1A4565;
   color: #fff;
 }
-

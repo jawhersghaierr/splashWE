@@ -15,7 +15,7 @@ import mainPS from "../../../../assets/PS.png";
 import {NoSearchResultsAlert, MoreThan200Results} from "../../shared/modals";
 import '../../shared/styles/grid.scss';
 import {env_IP, ports} from "../../../../env-vars";
-import download from "../../../../assets/download-blue.svg";
+import download from "../../../../assets/icons/download-blue.svg";
 import {addCriteriasForGetRequest} from "../../../utils/utils";
 import {reshapeCriterias} from "../utils/utils";
 
