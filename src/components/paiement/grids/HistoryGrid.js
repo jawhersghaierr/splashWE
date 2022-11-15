@@ -2,7 +2,7 @@ import React from 'react'
 import Stack from '@mui/material/Stack'
 import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./historyGridColumns";
-import { NoGridResultsAlert } from "../../shared/modals";
+import { NoGridResultsAlert } from "../../shared";
 import './paiementsGrid.scss';
 
 export const HistoryGrid = ({data, nomRefs}) => {

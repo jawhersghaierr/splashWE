@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
 import { RowInfo } from "../../beneficiaire/components/RowInfo";
 import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
-import { NoGridResultsAlert } from "../../shared/modals";
+import { NoGridResultsAlert } from "../../shared";
 import { convertDate } from "../../../utils/convertor-utils";
 import { factureConfigurationStatus } from "../../../utils/status-utils";
 import {Link} from "react-router-dom";

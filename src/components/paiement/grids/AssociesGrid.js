@@ -4,7 +4,7 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./associesGridColumns";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import {useGetRefsQuery} from "../../../services/refsApi";
-import { ModalInfo, NoGridResultsAlert } from "../../shared/modals";
+import { ModalInfo, NoGridResultsAlert } from "../../shared";
 import './paiementsGrid.scss';
 
 export const AssociesGrid = ({data, noModal}) => {

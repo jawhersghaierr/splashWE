@@ -5,8 +5,7 @@ import {CircularProgress} from "@mui/material";
 import {columns} from "./selAssociesGridColumns";
 import {useGetSelsAndIdbOfFactureEngNQuery} from "../services/selAndIdbApi";
 import RocEnLigneDetailsById from "../../rocEnLigne/RocEnLigneDetailsById";
-import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared/modals";
-import '../../shared/styles/grid.scss';
+import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared";
 
 export const SelAssociesGrid = ({numEng, noModal}) => {
 

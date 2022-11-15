@@ -8,7 +8,7 @@ import { selectCriterias } from '../beneficiaireSlice'
 import { useGetBenefQuery } from "../services/beneficiaireApi";
 import { usePrevious } from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
-import { MoreThan200Results, NoSearchResultsAlert } from "../../shared/modals";
+import { MoreThan200Results, NoSearchResultsAlert } from "../../shared";
 import './beneficiaireGrid.scss';
 import mainPS from "../../../../assets/PS.png";
 
