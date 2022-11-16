@@ -17,7 +17,7 @@ import {baseUrl} from "../services/rocEnLigneApi";
 import {addCriteriasForGetRequest} from "../../../utils/utils";
 import {reshapeCriterias} from "../../factures/utils/utils";
 import {reverseMapRocEnLigne} from "./rocEnLigneGridColumns";
-import download from "../../../../assets/download-blue.svg";
+import download from "../../../../assets/icons/download-blue.svg";
 
 export const RocEnLigneGrid = () => {
 

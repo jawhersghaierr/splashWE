@@ -3,7 +3,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {env_IP, ports} from '../../../../env-vars'
 import {Link} from "@material-ui/core";
 import {convertDate} from "../../../utils/convertor-utils";
-import download from '../../../../assets/download-blue.svg'
+import download from '../../../../assets/icons/download-blue.svg'
 
 export const columns = () => [
     { field: 'file_name', headerName: 'Nom du fichier', flex: 2 },
