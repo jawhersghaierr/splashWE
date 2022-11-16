@@ -35,7 +35,7 @@ import { validators, calcCleFromNir, selectDeselectAllValues, allowSearch } from
 import { checkInsidePanels } from '../utils/utils'
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { ConfirmNir, PanelNIR } from "../../shared/modals";
+import { ConfirmNir, PanelNIR } from "../../shared";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'

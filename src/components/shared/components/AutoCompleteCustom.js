@@ -13,7 +13,7 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 		setCheckAll({title: deSelectMsg, value: 'none'})
 	};
 	const deSelectAll = () => {
-		input?.onChange([])
+		input?.onChange(undefined)
 		setCheckAll({title: selectMsg, value: 'all'})
 	};
 
@@ -64,22 +64,18 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	                      }}
 
 	                      onChange={(event, newValue, reason) => {
-
 							  if (reason === "selectOption") {
 			                      if (newValue.find(el => el.value == 'all')) {
 				                      selectAll()
-			                      } else if (newValue.find(el => el.value == 'none')) {
+			                      } else if (newValue.length == 0 || newValue.find(el => el.value == 'none')) {
 				                      deSelectAll()
-			                      } else {
-				                      input?.onChange(newValue)
-			                      }
+			                      } else input?.onChange(newValue);
+
 		                      } else if (reason === "removeOption") {
-								  setCheckAll({title: selectMsg, value: 'all'})
-								  input?.onChange(newValue)
-		                      } else if (reason === "clear") {
-								  input?.onChange([])
-								  setCheckAll({title: deSelectMsg, value: 'none'})
-		                      }
+								  if(newValue.length == 0) {
+									  input?.onChange(undefined)
+								  } else input?.onChange(newValue)
+		                      } else if (reason === "clear") deSelectAll();
 	                      }}
 	                      onFocus={() => { setFocus(true) }}
 	                      onBlur={() => { setFocus(false) }}

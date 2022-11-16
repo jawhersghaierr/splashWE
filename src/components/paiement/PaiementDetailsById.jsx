@@ -11,9 +11,8 @@ import { AssociesGrid, HistoryGrid } from "./grids";
 import {paiementsStatus} from "../../utils/status-utils";
 import {convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import { ModalInfo } from "../shared/modals";
+import { ModalInfo, VirtLink } from "../shared";
 import FacturesDetailsById from "../factures/FacturesDetailsById";
-import {VirtLink} from "../shared";
 
 
 function TabPanel(props) {

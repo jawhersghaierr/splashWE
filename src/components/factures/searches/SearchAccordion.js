@@ -30,8 +30,7 @@ import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '
 import {usePrevious} from '../../../utils/status-utils';
 import { checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-import { ConfirmNir, PanelNIR, MaskedInput } from "../../shared";
-import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
+import { Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput } from "../../shared";
 
 import './searchAccordion.scss'
 
