@@ -49,14 +49,14 @@ function a11yProps(index) {
 }
 
 
-const oneRowHeader = ({ dateCreation, dateModification}) => {
+const oneRowHeader = ({ dateCreation, dateModification, id }) => {
 
     return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-            <RowInfo label={'Date de création'} value={convertDate(dateCreation)}/>
+            <RowInfo label={'Date de création'} value={convertDate(dateCreation)} id={id} field="dateCreation" />
         </div>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-            <RowInfo label={'Dernière modification'} value={convertDate(dateModification)}/>
+            <RowInfo label={'Dernière modification'} value={convertDate(dateModification)} id={id} field="dateModification" />
         </div>
     </div>
 }
@@ -110,10 +110,11 @@ export default function PaiementDetailsById({location, modalId = null}) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)}/>
+                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)} id={paiementID} field="rc" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.idFacture})} /> }/>
+                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.numFacture})}
+                    id={paiementID} field="dateModification" /> }/>
                 </div>
             </div>
 

@@ -156,26 +156,28 @@ export default function FacturesDetailsById({location, modalId = null}) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)}/>
+                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)} id={factureID} field="dateEntree" />
                     <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
                         <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
-                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>} />
-                    <RowInfo label={'Environnement'} value={data?.numEnv}/>
-                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDateTime)}/>
+                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>}
+                        id={factureID} field="nom_prenom" />
+                    <RowInfo label={'Environnement'} value={data?.numEnv} id={factureID} field="numEnv" />
+                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDateTime)} id={factureID} field="receivedDateTime"/>
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId}/>
-                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh}/>
-                    <RowInfo label={'AMC'} value={data?.numClient}/>
-                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)}/>
+                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId} id={factureID} field="numId" />
+                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh} id={factureID} field="numAdh" />
+                    <RowInfo label={'AMC'} value={data?.numClient} id={factureID} field="numClient" />
+                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)} id={factureID} field="timestamp" />
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur}/>
+                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur} id={factureID} field="numJur" />
                     <RowInfo label={'Date et rang de naissance'}
                              value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
                              chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
+                             id={factureID} field="dateNai"
                     />
-                    <RowInfo label={'Montant RC'} value={data?.totalRc && currencyFormatter.format(data?.totalRc)}/>
+                    <RowInfo label={'Montant RC'} value={data?.totalRc && currencyFormatter.format(data?.totalRc)} id={factureID} field="totalRc" />
                 </div>
             </div>
 
@@ -206,16 +208,16 @@ export default function FacturesDetailsById({location, modalId = null}) {
                     </Typography>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true}/>
-                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDateTime)} border={true} justify={true}/>
-                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true}/>
-                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true}/>
+                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true} id={factureID} field="numEng" />
+                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDateTime)} border={true} justify={true} id={factureID} field="receivedDateTime" />
+                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true} id={factureID} field="domaine" />
+                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true} id={factureID} field="errorLabel_errorCode" />
                         </div>
-                        <div style={{flex: 1    }}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true}/>
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.factData && `${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true}/>
-                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true}/>
-                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true}/>
+                        <div style={{flex: 1}}>
+                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true} id={factureID} field="dateFact" />
+                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.factData && `${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true} id={factureID} field="factData"/>
+                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true} id={factureID} field="numDateAccident" />
+                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true} id={factureID} field="comment" />
                         </div>
                     </div>
 

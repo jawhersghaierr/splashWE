@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import {useGetBenefByIdQuery} from "./services/beneficiaireApi";
 import {Button, CircularProgress, Typography} from "@mui/material";
-import {DoritInfoBox} from "./components/DroitInfoBox";
+import {DroitInfoBox} from "./components/DroitInfoBox";
 import {GarantiesGrid} from "./grids/GarantiesGrid";
 import {useGetDcsQuery, useGetGarantiesQuery, useGetReseauxQuery, useGetEnvironmentsQuery, useGetSousGarantiesQuery} from "../../services/referentielApi";
 import {useGetRefsQuery} from "../../services/refsApi";
@@ -150,10 +150,10 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                 justifyContent: 'space-between',
                 maxWidth: '870px'
             }}>
-                <span style={{margin: '5px'}}>Nº Adhérent individuel : <b>{data?.numeroAdherentIndividuel}</b></span>
-                <span style={{margin: '5px'}}>Nº Adhérent familial : <b>{data?.numeroAdherentFamilial}</b></span>
+                <span style={{margin: '5px'}}>Nº Adhérent individuel : <b id={"numeroAdherentIndividuel_" + benefId}>{data?.numeroAdherentIndividuel}</b></span>
+                <span style={{margin: '5px'}}>Nº Adhérent familial : <b id={"numeroAdherentFamilial_" + benefId}>{data?.numeroAdherentFamilial}</b></span>
                 <span style={{margin: '5px'}}>
-                    Droits ouverts : <b>{convertDate(data?.dateOuvertureDroits)} - {dateFin?.toLocaleDateString('en-GB')}</b>
+                    Droits ouverts : <b id={"dateOuvertureDroits_" + benefId}>{convertDate(data?.dateOuvertureDroits)} - {dateFin?.toLocaleDateString('en-GB')}</b>
                 </span>
             </div>}
 
@@ -177,27 +177,27 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                     <h3><b>Identité</b></h3>
                     {isFetching && <CircularProgress/>}
                     {data && <div>
-                        {(data?.prenom && data?.nom) && <RowInfo label={'Nom et prénom'} value={`${data.prenom} ${data.nom}`}/>}
+                        {(data?.prenom && data?.nom) && <RowInfo label={'Nom et prénom'} value={`${data.nom} ${data.prenom}`} id={benefId} field="nom_prenom" />}
                         {(data?.rangNaissance && data?.dateNaissance) &&
-                        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(data?.dateNaissance)} chip={data.rangNaissance}/>}
+                        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(data?.dateNaissance)} chip={data.rangNaissance} id={benefId} field="dateNaissance" />}
                     </div>}
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Coordonnées</b></h3>
                     {isFetching && <CircularProgress/>}
                     {data && <div>
-                            <RowInfo label={'Adresse'} value={adress}/>
-                            <RowInfo label={'Téléphone'} value={telephone}/>
-                            <RowInfo label={'E-mail'} value={<Link to={''} onClick={() => window.location =`mailTo:${email}`}>{email}</Link>}/>
+                            <RowInfo label={'Adresse'} value={adress} id={benefId} field="adress" />
+                            <RowInfo label={'Téléphone'} value={telephone} id={benefId} field="telephone" />
+                            <RowInfo label={'E-mail'} value={<Link to={''} onClick={() => window.location =`mailTo:${email}`}>{email}</Link>} id={benefId} field="email" />
                         </div>}
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
                     <h3><b>Régime</b></h3>
                     {isFetching && <CircularProgress/>}
                     {data && <div>
-                        <RowInfo label={'Grand Régime'} value={data?.grandRegime}/>
-                        <RowInfo label={'Caisse'} value={data?.caisseAffiliation}/>
-                        <RowInfo label={'Centre gestion AMO'} value={data?.centreGestionAmo}/>
+                        <RowInfo label={'Grand Régime'} value={data?.grandRegime} id={benefId} field="grandRegime" />
+                        <RowInfo label={'Caisse'} value={data?.caisseAffiliation} id={benefId} field="caisseAffiliation" />
+                        <RowInfo label={'Centre gestion AMO'} value={data?.centreGestionAmo} id={benefId} field="centreGestionAmo" />
                     </div>}
                 </Box>
             </TabPanel>
@@ -208,16 +208,16 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                         <h2>Information</h2>
                         {isFetching && <CircularProgress/>}
                         {nomEnviroments && <RowInfo label={'Environnement'}
-                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.libelle}/>}
+                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.libelle} id={benefId} field="libelle" />}
 
                         {nomEnviroments && <RowInfo label={'N° Client Viamedis'}
-                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.numero}/>}
+                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.numero} id={benefId} field="numero" />}
 
-                        <RowInfo label={'Type de contrat'} value={data?.contratIndividuelCollectifLabel}/>
-                        <RowInfo label={'N° de contrat'} value={data?.numeroContratClient}/>
-                        <RowInfo label={'Contrat responsable'} value={(data?.contratResponsable)? 'OUI' : 'NON'}/>
-                        <RowInfo label={'Partenaire'} value={data?.nomPartenaire}/>
-                        <RowInfo label={'Centre de gestion'} value={data?.nomCentre}/>
+                        <RowInfo label={'Type de contrat'} value={data?.contratIndividuelCollectifLabel} id={benefId} field="contratIndividuelCollectifLabel" />
+                        <RowInfo label={'N° de contrat'} value={data?.numeroContratClient} id={benefId} field="numeroContratClient" />
+                        <RowInfo label={'Contrat responsable'} value={(data?.contratResponsable)? 'OUI' : 'NON'} id={benefId} field="contratResponsable" />
+                        <RowInfo label={'Partenaire'} value={data?.nomPartenaire} id={benefId} field="nomPartenaire" />
+                        <RowInfo label={'Centre de gestion'} value={data?.nomCentre} id={benefId} field="nomCentre" />
                     </Box>
 
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
@@ -250,12 +250,13 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                         {isFetching && <CircularProgress/>}
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                             <div>
-                                <RowInfo label={'N° carte'} value={data?.numeroCarteClient}/>
-                                <RowInfo label={'Date début droits'} value={convertDate(data?.dateOuvertureDroits)}/>
+                                <RowInfo label={'N° carte'} value={data?.numeroCarteClient} id={benefId} field="numeroCarteClient" />
+                                <RowInfo label={'Date début droits'} value={convertDate(data?.dateOuvertureDroits)} id={benefId} field="dateOuvertureDroits" />
                             </div>
                             <div>
-                                <RowInfo label={'Date désactivation droit'} value={(data?.dateDesactivationDroits)? convertDate(data?.dateDesactivationDroits): ''}/>
-                                <RowInfo label={'Date fin droits'} value={convertDate(data?.dateFermetureDroits)}/>
+                                <RowInfo label={'Date désactivation droit'} value={(data?.dateDesactivationDroits)? convertDate(data?.dateDesactivationDroits): ''}
+                                    id={benefId} field="dateDesactivationDroits" />
+                                <RowInfo label={'Date fin droits'} value={convertDate(data?.dateFermetureDroits)} id={benefId} field="dateFermetureDroits" />
                             </div>
                         </div>
                     </div>
@@ -275,15 +276,15 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
 
             <TabPanel value={value} index={3} data={data} sx={{display: 'flex'}}>
                 {data?.ouvrantDroit && <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                        <DoritInfoBox droit={data?.ouvrantDroit} />
+                        <DroitInfoBox droit={data?.ouvrantDroit} />
                         {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => {
                             if (ouvrantDroit.id !== data.id) {
-                                return <DoritInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
+                                return <DroitInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
                             } else return ''
                         })}
                     </div>}
                 {(data?.ayantDroit && data?.ayantDroit?.length > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    {data?.ayantDroit.map(ayantDroit => <DoritInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
+                    {data?.ayantDroit.map(ayantDroit => <DroitInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
                 </div>}
 
                 {(!data?.ouvrantDroit || data?.ouvrantDroit?.length == 0)
