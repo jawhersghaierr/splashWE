@@ -6,7 +6,7 @@ import {convertDate} from "../../../utils/convertor-utils";
 import {factureConfigurationStatus} from "../../../utils/status-utils";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import {RowInfo} from "../../beneficiaire/components/RowInfo";
+import {RowInfo} from "./RowInfo";
 import {DetailsRocConfAMC} from "./DetailsRocConfAMC";
 import {DetailsRocConfTypeConvention} from "./DetailsRocConfTypeConvention";
 import {styled} from "@mui/material/styles";
@@ -119,30 +119,32 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
         <div style={{display: 'flex', flexDirection: 'row', margin: '25px 0', maxWidth: '1280px'}}>
-            <RowInfo label={'Code'} value={data?.id} border={false}/>
+            <RowInfo label={'Code'} value={data?.id} border={false} id={data?.id} field="id" />
             {(code == 'delai' || code == 'limit-sim') &&
             <RowInfo
                 label={'Période de validité'}
                 value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`}
-                styles={{flex: 2}} border={false}/>}
+                styles={{flex: 2}} border={false} id={data?.id} field="endDate" />}
 
             {code == 'limit-sim' &&
             <RowInfo
                 label={'AMC'}
                 value={environnements && <div style={{whiteSpace: 'pre-line'}}>{environnements.join('\n')}</div> || ''}
-                styles={{flex: 2}} border={false}/>}
+                styles={{flex: 2}} border={false} id={data?.id} field="environnements" />}
 
             {code == 'type-convention' &&
             <RowInfo label={'Période de validité'}
                       value={`${convertDate(data?.startDate)}${(data?.endDate) ? ' - ' : ''}${convertDate(data?.endDate)}`}
-                      border={false} styles={{flex: 2}}/>}
+                      border={false} styles={{flex: 2}} id={data?.id} field="endDate" />}
 
-            {nomRefs && code == 'amc' && <RowInfo label={'Groupement clients'} value={nomRefs.RLTN_CLIENT_GROUP[data?.content] || data?.content} border={false}/>}
+            {nomRefs && code == 'amc' && <RowInfo label={'Groupement clients'} value={nomRefs.RLTN_CLIENT_GROUP[data?.content] || data?.content} border={false}
+                id={data?.id} field="content" />}
 
-            {code == 'amc' && <RowInfo label={'Environnements'} value={environnements} justify={true} border={false}/>}
+            {code == 'amc' && <RowInfo label={'Environnements'} value={environnements} justify={true} border={false} id={data?.id} field="environnements" />}
 
             {domainForPanel !== 'delai' && domain !== 'roc' &&
-                <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} border={false}/>}
+                <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} border={false}
+                id={data?.id} field="content" />}
         </div>
 
         <Tabs
@@ -164,14 +166,15 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
                     backgroundColor: '#F6F8FC', flex: 1,
                     minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
                 }}>
-                    <RowInfo label={'Type de convention'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content}</div>}/>
+                    <RowInfo label={'Type de convention'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content}</div>} id={data?.id} field="content" />
                 </Box>}
             {code == 'delai' &&
                 <Box style={{
                     backgroundColor: '#F6F8FC', flex: 1,
                     minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
                 }}>
-                    <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} {data?.contentType} </div>} />
+                    <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} {data?.contentType} </div>}
+                        id={data?.id} field="content_contentType" />
                 </Box>}
             {/*{JSON.stringify(data)}*/}
         </TabPanel>

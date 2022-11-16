@@ -47,14 +47,14 @@ function a11yProps(index) {
 }
 
 
-const oneRowHeader = ({ creationDate, statusDate}) => {
+const oneRowHeader = ({ creationDate, statusDate, id}) => {
 
     return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-            <RowInfo label={'Date de création'} value={<b>{convertDate(creationDate)}</b>}/>
+            <RowInfo label={'Date de création'} value={convertDate(creationDate)} id={id} field="creationDate" />
         </div>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-            <RowInfo label={'Dernière modification'} value={<b>{convertDate(statusDate)}</b>}/>
+            <RowInfo label={'Dernière modification'} value={convertDate(statusDate)} id={id} field="statusDate" />
         </div>
     </div>
 }
@@ -102,13 +102,13 @@ export default function VirementDetailsById({location, modalId = null}) {
 
             {isSuccess && <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Nº virement'} value={data?.numVirement}/>
+                    <RowInfo label={'Nº virement'} value={data?.numVirement} id={virementID} field="numVirement" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Nº décompte'} value={data?.numDecompte}/>
+                    <RowInfo label={'Nº décompte'} value={data?.numDecompte} id={virementID} field="numDecompte" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Montant'} value={currencyFormatter.format(data?.mntVirement)}/>
+                    <RowInfo label={'Montant'} value={currencyFormatter.format(data?.mntVirement)} id={virementID} field="mntVirement" />
                 </div>
             </div>}
 
@@ -141,26 +141,26 @@ export default function VirementDetailsById({location, modalId = null}) {
                         <div style={{flex: 1, marginRight: '5%'}}>
                             <div style={{display: 'flex', flexDirection: 'row', maxHeight: '55px'}}>
                                 <RowInfo label={'IBAN'} value={data?.virementGeneralInfo?.iban} border={true}
-                                         justify={true}/>
+                                         justify={true} id={virementID} field="iban" />
                                 <div style={{margin: '0 0 0 35px', maxWidth: '300px'}}>
                                     <RowInfo label={'BIC'} value={data?.virementGeneralInfo?.bic} border={true}
-                                             justify={true}/>
+                                             justify={true} id={virementID} field="bic" />
                                 </div>
                             </div>
                             <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaire} border={true}
-                                     justify={true}/>
+                                     justify={true} id={virementID} field="titulaire" />
                             <RowInfo label={'Date d\'émission'}
                                      value={convertDate(data?.virementGeneralInfo?.dateTraitement) || ''} border={true}
-                                     justify={true}/>
+                                     justify={true} id={virementID} field="dateTraitement" />
                         </div>
                         <div style={{flex: 1}}>
                             <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true}
-                                     justify={true}/>
+                                     justify={true} id={virementID} field="emetteur" />
                             <RowInfo label={'Nº PS à payer'} value={data?.virementGeneralInfo?.numPsAPayer}
-                                     border={true} justify={true}/>
+                                     border={true} justify={true} id={virementID} field="numPsAPayer" />
                             <RowInfo label={'Date de rapprochement bancaire'}
                                      value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)}
-                                     border={true} justify={true}/>
+                                     border={true} justify={true} id={virementID} field="dateReconciliationBancaire" />
                         </div>
                     </div>}
 
