@@ -98,8 +98,6 @@ const afterThan = (values, thanField) => (value) => {
  */
 const associated = (values, associed, nameMsg) => (value) => {
   let isOk = true;
-  console.log('value > ', value)
-  console.log('values > ', values)
 
   if (associed && value && value !== undefined && value !== "") {
     isOk = false;
@@ -113,7 +111,7 @@ const associated = (values, associed, nameMsg) => (value) => {
       }
     });
   }
-console.log('isOk > ', isOk)
+
   return isOk
     ? undefined
     : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;

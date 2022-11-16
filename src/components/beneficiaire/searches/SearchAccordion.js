@@ -313,7 +313,6 @@ export default function SearchAccordion(props) {
                                                     id="Enviroment"
                                                     labelId="Enviroment-label"
                                                     multiple
-
                                                     {...input}
                                                     input={<OutlinedInput className="RoundedEl" label="Enviroment" sx={{minWidth: 200}}/>}
                                                     MenuProps={{autoFocus: false}}

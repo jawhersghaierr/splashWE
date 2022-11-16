@@ -114,7 +114,7 @@ const RecursiveMenuItem = (props) => {
 
   return (
     <List
-      {...props}
+      /*{...props}*/
       ref={ref}
       component="nav"
       className={openPopper ? classes.active : ""}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
@@ -70,6 +70,8 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion(props) {
 
+    const [firstRender, setFirstRender] = useState(true);
+
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
     const {disciplines, disciplinesIsFetching, disciplinesIsSuccess} = props;
@@ -101,12 +103,19 @@ export default function SearchAccordion(props) {
     };
 
 
-    // useEffect(() => {
-    //     console.log('Mount')
-    //     return () => {
-    //         console.log('UnMount')
-    //     }
-    // }, [])
+    useEffect(() => {
+        console.log('Mount')
+        return () => {
+            console.log('UnMount')
+        }
+    }, [])
+    useLayoutEffect(() => {
+        console.log('LayOut Mount')
+        setFirstRender(false)
+        return () => {
+            console.log('LayOut UnMount')
+        }
+    }, [])
 
     return (
         <div className={'formContent'}>
@@ -223,15 +232,13 @@ export default function SearchAccordion(props) {
                                                             return `${selected.length} disciplines sélectionnéеs`
                                                         }
                                                         return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
-                                                    }}
-                                                >
+                                                    }}>
 
-                                                    <MenuItem value="all" key='selectAll'>
-                                                        <ListItemText
-                                                            primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                    <MenuItem value="all" key='selectAll' sx={{margin: '5px 15px'}}>
+                                                        <ListItemText primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
                                                     {disciplines.map(({code, libelle}) => (
-                                                        <MenuItem key={code} value={code}>
+                                                        <MenuItem key={code} value={code} sx={{margin: '5px 15px'}}>
                                                             {libelle}
                                                         </MenuItem>
                                                     ))}
@@ -312,12 +319,12 @@ export default function SearchAccordion(props) {
                                                         return statusesRIB[selected[0]].label || '';
                                                     }}
                                                 >
-                                                    <MenuItem value="all" key='selectAll'>
+                                                    <MenuItem value="all" key='selectAll' sx={{margin: '5px 15px'}}>
                                                         <ListItemText sx={{fontWeight: 400}}
                                                                       primary={(values?.statutRibs?.length == Object.keys(statusesRIB).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                     </MenuItem>
                                                     {Object.keys(statusesRIB).map(code => (
-                                                        <MenuItem key={code} value={code} >
+                                                        <MenuItem key={code} value={code} sx={{margin: '5px 15px'}}>
                                                             {statusesRIB[code].label}
                                                         </MenuItem>
                                                     ))}
@@ -355,7 +362,7 @@ export default function SearchAccordion(props) {
                         </CardActions>
                     </Collapse>
                 </StyledCard>
-               {<FormSpy subscription={{values: true}} onChange={(values) => {
+               <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
                    form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;
                     if(disciplines || statutRibs || codePostal || ville) {
@@ -363,7 +370,7 @@ export default function SearchAccordion(props) {
                     } else {
                         setDotShow(false)
                     }
-               }}/>}
+               }}/>
             </form>)}/>
         </div>
     );
