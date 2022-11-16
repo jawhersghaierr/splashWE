@@ -16,7 +16,7 @@ import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "../../assets/icons/HomeIcon";
 import ROCIcon from "../../assets/icons/ROCIcon";
 import PaymentIcon from "../../assets/icons/PaymentIcon";
-import VirementsIcon from "../../assets/icons/VirementIcon";
+import VirementIcon from "../../assets/icons/VirementIcon";
 
 import PSIcon from "../../assets/icons/PSIcon";
 import BeneficiaireIcon from "../../assets/icons/BeneficiaireIcon";
@@ -56,7 +56,7 @@ const hostMenuItems = [
         name: 'Paiements', icon: PaymentIcon,
         popitems: [
             {name: 'Paiements',icon: PaymentIcon, link: '/paiement'},
-            {name: 'Virements',icon: VirementsIcon, link: '/virements'},
+            {name: 'Virements',icon: VirementIcon, link: '/virements'},
         ]
     },
     // {
