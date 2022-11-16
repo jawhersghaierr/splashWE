@@ -34,6 +34,7 @@ import { selectCriterias, setCriterias, initCriterias } from '../rocEnLigneSlice
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
 
 import './searchAccordion.scss'
+import {isValidDate} from "../../../utils/convertor-utils";
 
 //TODO this below should be separated in single file used by all modules
 
@@ -86,7 +87,7 @@ export default function SearchAccordion(props) {
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
                 if (nomRefs.ROC_AMCS.includes(cl)) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
-                    amc1.push({value:cl, title: nomRefs.CLIENT[cl]})
+                    amc1.push({value:cl, title: `(${cl}) ${nomRefs.CLIENT[cl]}`})
                 }
             })
 
@@ -313,7 +314,11 @@ export default function SearchAccordion(props) {
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775, overflow: 'visible' }} id="RocEnLigneSearchForm" variant="outlined">
+
+                                  <StyledCard id="RocEnLigneSearchForm" variant="outlined"
+                                              sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                                                  '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                                              }}>
                                       <CardHeader title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}>
 
@@ -783,6 +788,13 @@ export default function SearchAccordion(props) {
                                                                   <DatePicker
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
+                                                                      onChange={(newDate) => {
+                                                                          if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
+                                                                              form.getFieldState('birdDate').change(newDate)
+                                                                              input.onChange(newDate)
+                                                                          }
+                                                                      }}
+
                                                                       inputFormat="dd/MM/yyyy"
                                                                       value={(input.value === '' || input.value == undefined || input.value == null  || input.value == 'null' )? null: input.value}
 
