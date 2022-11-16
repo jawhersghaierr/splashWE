@@ -17,6 +17,7 @@ import HomeIcon from "../../assets/icons/HomeIcon";
 import ROCIcon from "../../assets/icons/ROCIcon";
 import PaymentIcon from "../../assets/icons/PaymentIcon";
 import VirementsIcon from "../../assets/icons/VirementIcon";
+
 import PSIcon from "../../assets/icons/PSIcon";
 import BeneficiaireIcon from "../../assets/icons/BeneficiaireIcon";
 import ConfigurationIcon from "../../assets/icons/ConfigurationIcon";

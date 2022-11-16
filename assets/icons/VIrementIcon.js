@@ -3,13 +3,8 @@ import { SvgIcon } from "@mui/material";
 
 export default function VirementIcon(props) {
   return (
-    <SvgIcon
-      {...props}
-    >
-      <svg
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+    <SvgIcon {...props} >
+      <svg fill="none" xmlns="http://www.w3.org/2000/svg" >
         <path
           d="M20 34H28C32.4183 34 36 30.4183 36 26C36 21.5817 32.4183 18 28 18C23.9204 18 20.554 21.0537 20.0619 25"
           stroke="white"
