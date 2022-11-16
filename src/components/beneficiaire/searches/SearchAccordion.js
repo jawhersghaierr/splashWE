@@ -127,14 +127,18 @@ export default function SearchAccordion(props) {
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
                         if(field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
+                        switch (field.active) {
+                            case 'envCodeList':
+                                let environment = {};
+                                for (let key in enviroments) {
+                                    environment[enviroments[key].code] = enviroments[key].libelle;
+                                }
 
-                        let environment = {};
-                        for (let key in enviroments) {
-                            environment[enviroments[key].code] = enviroments[key].libelle;  
+                                const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
+                                _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
+                            break
                         }
 
-                        const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
-                        _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
 
                         return _value
 
@@ -232,6 +236,7 @@ export default function SearchAccordion(props) {
                                 <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
                                     <Typography style={{paddingLeft: '5px'}}><b>Informations bénéficiaires</b></Typography>
                                 </AccordionSummary>
+
                                 <AccordionDetails>
 
                                     <Field name="dateNaissance">
@@ -335,33 +340,40 @@ export default function SearchAccordion(props) {
                                         )}
                                     </Field>}
 
-                                    <Field name="dateDebutSoins" >
+                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
                                         {({ input, meta }) => (
-                                            <FormControl className="RoundDate" sx={{ marginRight: '20px!important'}}>
+                                            <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
                                                     label="Date de référence du"
                                                     inputFormat="dd/MM/yyyy"
+                                                    maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
-                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                        <TextField style={{flex: 2}}
+                                                                   {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                        />}
                                                 />
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </FormControl>
                                         )}
                                     </Field>
 
-                                    <Field name="dateFinSoins">
+                                    <Field name="dateFinSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.beforeThan(values, 'dateDebutSoins'), validators.associated(values, ['dateDebutSoins'], 'Date de référence du') )}>
                                         {({ input, meta }) => (
-                                            <FormControl className="RoundDate">
+                                            <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0 15px'}}>
                                                 <DatePicker
                                                     label="au"
                                                     inputFormat="dd/MM/yyyy"
+                                                    maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
-                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
-
+                                                        <TextField style={{flex: 2}}
+                                                                   {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                        />}
                                                 />
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </FormControl>
                                         )}
                                     </Field>

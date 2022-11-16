@@ -98,31 +98,22 @@ const afterThan = (values, thanField) => (value) => {
  */
 const associated = (values, associed, nameMsg) => (value) => {
   let isOk = true;
+  console.log('value > ', value)
+  console.log('values > ', values)
 
   if (associed && value && value !== undefined && value !== "") {
     isOk = false;
     associed.forEach((el) => {
-      if (
-        el == "dateDeNaissance" &&
-        (!values[el] || values[el] == undefined || values[el] == "")
-      ) {
-        if (
-          !(
-            !values["birdDate"] ||
-            values["birdDate"] == undefined ||
-            values["birdDate"] == ""
-          )
-        ) {
+      if ( (el == "dateDeNaissance" || el == "dateNaissance" || el == "dateNaiss" || el == "dateNai") && (!values[el] || values[el] == undefined || values[el] == "") ) {
+        if ( !( !values["birdDate"] || values["birdDate"] == undefined || values["birdDate"] == "" ) ) {
           isOk = true;
         }
-      } else if (
-        !(!values[el] || values[el] == undefined || values[el] == "")
-      ) {
+      } else if ( !(!values[el] || values[el] == undefined || values[el] == "") ) {
         isOk = true;
       }
     });
   }
-
+console.log('isOk > ', isOk)
   return isOk
     ? undefined
     : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;
@@ -229,6 +220,9 @@ export const selectDeselectAllValues = (fieldObj, ref, field) => {
 };
 
 export const allowSearch = (values) => {
+  // console.log('error > ', error)
+  // console.log('pristine > ', pristine)
+
   for (let key in values) {
       if (values[key]) return true;
   }
