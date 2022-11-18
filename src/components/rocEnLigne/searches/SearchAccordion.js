@@ -83,19 +83,18 @@ export default function SearchAccordion(props) {
     useEffect(() => {
         if (nomRefsIsSuccess) {
 
-            let _tmpAmc = {}, amc1 = []
+            let _tmpAmc = {}, amc = []
             Object.keys(nomRefs.CLIENT).forEach(cl=> {
                 if (nomRefs.ROC_AMCS.includes(cl)) {
                     _tmpAmc[cl] = nomRefs.CLIENT[cl]
-                    amc1.push({value:cl, title: `(${cl}) ${nomRefs.CLIENT[cl]}`})
+                    amc.push({value:cl, title: `(${cl}) ${nomRefs.CLIENT[cl]}`})
                 }
             })
 
-            console.log(amc1)
+            console.log(amc)
 
             setRln({
-                amc: Object.keys( _tmpAmc ),
-                amc1,
+                amc,
                 localStatus: Object.keys( nomRefs.ROC_STATUSES ),
                 localMotif: Object.keys( nomRefs.ROC_MOTIFS ),
                 localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS )
@@ -319,8 +318,7 @@ export default function SearchAccordion(props) {
                                               sx={{ display: 'block', minWidth: 775, overflow: 'visible',
                                                   '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
                                               }}>
-                                      <CardHeader title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}
-                                          sx={{ bgcolor: '#f1f1f1', display: "flex",  }}>
+                                      <CardHeader title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }} sx={{ bgcolor: '#f1f1f1', display: "flex",  }}>
 
                                               {(nomRefs && nomRefs?.ROC_TYPES) && <Field name="type" format={value => value || []}>
 
@@ -340,8 +338,7 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.type?.length == Object.keys(nomRefs.ROC_TYPES).length) ?
+                                                                  <ListItemText primary={(values?.type?.length == Object.keys(nomRefs.ROC_TYPES).length) ?
                                                                           <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
                                                               </MenuItem>
 
@@ -350,7 +347,6 @@ export default function SearchAccordion(props) {
                                                                       {nomRefs.ROC_TYPES[code]}
                                                                   </MenuItem>
                                                               ))}
-
                                                           </Select>
                                                       </FormControl>
                                                   )}
@@ -742,11 +738,11 @@ export default function SearchAccordion(props) {
                                                                   {/*    ))}*/}
 
                                                                   {/*</Select>}*/}
-                                                                  {rln.amc1 && rln.amc1.length > 0 &&
+                                                                  {rln.amc && rln.amc.length > 0 &&
                                                                     <AutoCompleteCustom id="amc" label={'AMC'}
                                                                         meta={meta}
                                                                         input={input}
-                                                                        options={rln.amc1}
+                                                                        options={rln.amc}
                                                                         selectMsg={'Sélectionner tout'}
                                                                         deSelectMsg={'Désélectionner tout'}
                                                                         selectedMsg={'AMC sélectionnées'}

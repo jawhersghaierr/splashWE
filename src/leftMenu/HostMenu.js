@@ -48,7 +48,7 @@ const hostMenuItems = [
     //     icon: IconPeople,
     // },
     {
-        name: 'Beneficiaire',
+        name: 'Bénéficiaires',
         link: '/beneficiaire',
         icon: BeneficiaireIcon,
     },
