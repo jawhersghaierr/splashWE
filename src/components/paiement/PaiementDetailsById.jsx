@@ -141,7 +141,7 @@ export default function PaiementDetailsById({location, modalId = null}) {
                 {(data?.historyElements && data?.historyElements.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElements} nomRefs={nomRefs}/>}
             </TabPanel>
 
-            <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-facture-${openModal?.data?.id}`}>
+            <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-Payement-${openModal?.data?.id}`}>
                 {data && openModal?.data?.id  && <FacturesDetailsById modalId={openModal?.data?.id} />}
             </ModalInfo>
 
