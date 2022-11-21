@@ -8,8 +8,9 @@ import {
 } from './modals';
 
 import {
-    AutoCompleteCustom,
-    VirtLink
+    VirtLink,
+    StyledCard,
+    AutoCompleteCustom
 } from './components'
 
 import {TextMaskCustom, MaskedInput} from './customTextField/TextMaskCustom';
@@ -30,8 +31,9 @@ export {
 
     TextMaskCustom, MaskedInput,
 
-    AutoCompleteCustom,
     VirtLink,
+    StyledCard,
+    AutoCompleteCustom,
 
     ActesGrid, actesGridColumns,
     Accordion, AccordionSummary, AccordionDetails,
