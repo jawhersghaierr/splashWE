@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {
@@ -37,6 +37,7 @@ import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { ConfirmNir, PanelNIR } from "../../shared";
 import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
+import { AutoCompleteCustom } from "../../shared";
 
 import './searchAccordion.scss'
 
@@ -74,6 +75,22 @@ export default function SearchAccordion(props) {
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [panelExpanded, setPanelExpanded] = useState(false);
+    const [paiementStatuses, setPaiementStatuses] = useState([]);
+    const [environments, setEnvironments] = useState([]);
+    const [provenances, setProvenances] = useState([]);
+
+    useEffect(() => {
+        if (nomRefsIsSuccess) {
+            const paiementStatuses = Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]}));
+            setPaiementStatuses(paiementStatuses);
+
+            const environments = Object.keys(nomRefs.ENVIRONMENT).map(code => ({value: code, title: nomRefs.ENVIRONMENT[code]}));
+            setEnvironments(environments);
+
+            const provenances = Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`}));
+            setProvenances(provenances);
+        }
+    }, [nomRefs, nomRefsIsSuccess]);
 
     const handleChange = (panel) => (event, newExpanded) => {
         if (panel == 'panelNIR' && !expanded.panelNIR) {
@@ -122,25 +139,25 @@ export default function SearchAccordion(props) {
                                         _value.numEnv = numEnvObj ? numEnvObj[field.active] : value[field.active];
                                     break
 
-                                    case 'status': //Object.keys(nomRefs.PAIEMENT_STATUS)
-                                        const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_STATUS, field.active);
-                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
-                                    break
+                                    // case 'status': //Object.keys(nomRefs.PAIEMENT_STATUS)
+                                    //     const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_STATUS, field.active);
+                                    //     _value.status = statusObj ? statusObj[field.active] : value[field.active];
+                                    // break
 
                                     case 'groupDisciplines': // nomRefs?.DISCIPLINE_GROUP
                                         const groupDisciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE_GROUP, field.active);
                                         _value.groupDisciplines = groupDisciplinesObj ? groupDisciplinesObj[field.active] : value[field.active];
                                     break
 
-                                    case 'disciplines': // nomRefs?.DISCIPLINE
-                                        const disciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
-                                        _value.disciplines = disciplinesObj ? disciplinesObj[field.active] : value[field.active];
-                                    break
+                                    // case 'disciplines': // nomRefs?.DISCIPLINE
+                                    //     const disciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
+                                    //     _value.disciplines = disciplinesObj ? disciplinesObj[field.active] : value[field.active];
+                                    // break
 
-                                    case 'provenance': // nomRefs?.PROVENANCE
-                                        const provenanceObj = selectDeselectAllValues(value, nomRefs.PROVENANCE, field.active);
-                                        _value.provenance = provenanceObj ? provenanceObj[field.active] : value[field.active];
-                                    break
+                                    // case 'provenance': // nomRefs?.PROVENANCE
+                                    //     const provenanceObj = selectDeselectAllValues(value, nomRefs.PROVENANCE, field.active);
+                                    //     _value.provenance = provenanceObj ? provenanceObj[field.active] : value[field.active];
+                                    // break
 
                                 }
 
@@ -154,7 +171,9 @@ export default function SearchAccordion(props) {
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775 }} id="PaiementSearchForm" variant="outlined">
+                                  <StyledCard id="PaiementSearchForm" variant="outlined" sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                                    '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                                    }}>
                                       <CardHeader
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -458,7 +477,15 @@ export default function SearchAccordion(props) {
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                  <InputLabel id="Statut-label">Statut du paiement</InputLabel>
+                                                                <AutoCompleteCustom id="Statut" label={'Statut du paiement'}
+                                                                    meta={meta}
+                                                                    input={input}
+                                                                    options={paiementStatuses}
+                                                                    selectMsg={'Sélectionner tout'}
+                                                                    deSelectMsg={'Désélectionner tout'}
+                                                                    selectedMsg={'statuts sélectionnées'}
+                                                                />
+                                                                  {/* <InputLabel id="Statut-label">Statut du paiement</InputLabel>
                                                                   <Select
                                                                       id="Statut"
                                                                       labelId="Statut-label"
@@ -484,7 +511,7 @@ export default function SearchAccordion(props) {
                                                                           </MenuItem>
                                                                       ))}
 
-                                                                  </Select>
+                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -680,7 +707,15 @@ export default function SearchAccordion(props) {
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                  <InputLabel id="Enviroment-label">Environnement</InputLabel>
+                                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
+                                                                    meta={meta}
+                                                                    input={input}
+                                                                    options={environments}
+                                                                    selectMsg={'Sélectionner tout'}
+                                                                    deSelectMsg={'Désélectionner tout'}
+                                                                    selectedMsg={'environnements sélectionnées'}
+                                                                />
+                                                                  {/* <InputLabel id="Enviroment-label">Environnement</InputLabel>
                                                                   <Select
                                                                       id="NumEnv"
                                                                       labelId="Enviroment-label"
@@ -706,7 +741,7 @@ export default function SearchAccordion(props) {
                                                                           </MenuItem>
                                                                       ))}
 
-                                                                  </Select>
+                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -715,7 +750,15 @@ export default function SearchAccordion(props) {
 
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                  <InputLabel id="Provenance-label">Provenance</InputLabel>
+                                                                <AutoCompleteCustom id="Provenance" label={'Provenance'}
+                                                                    meta={meta}
+                                                                    input={input}
+                                                                    options={provenances}
+                                                                    selectMsg={'Sélectionner tout'}
+                                                                    deSelectMsg={'Désélectionner tout'}
+                                                                    selectedMsg={'provenances sélectionnées'}
+                                                                />
+                                                                  {/* <InputLabel id="Provenance-label">Provenance</InputLabel>
                                                                   <Select
                                                                       id="Provanance"
                                                                       labelId="Provanance-label"
@@ -741,7 +784,7 @@ export default function SearchAccordion(props) {
                                                                           </MenuItem>
                                                                       ))}
 
-                                                                  </Select>
+                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}

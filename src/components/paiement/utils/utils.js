@@ -46,7 +46,8 @@ export const reshapeCriterias = ({criterias}) => {
         receivedDate, receivedDateFin,
         creationDate, creationDateFin,
         dateDeNaissance, birdDate,
-        nir, cle
+        nir, cle, status, numEnv,
+        provenance
     } = criterias;
 
     let filters = {...criterias}
@@ -69,6 +70,7 @@ export const reshapeCriterias = ({criterias}) => {
     if (dateDeNaissance && dateDeNaissance != '' && dateDeNaissance != undefined) {
         filters.dateDeNaissance = new Date(dateDeNaissance).toLocaleDateString('sv').replaceAll('-', '');
     }
+
     if (birdDate && birdDate != '' && birdDate != undefined) {
         if (birdDate instanceof Date && !isNaN(birdDate)){
             filters.dateDeNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
@@ -80,6 +82,21 @@ export const reshapeCriterias = ({criterias}) => {
         filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
     }
 
-    filters.cashe = null
-    return filters
+    if (status && status !== undefined) {
+        filters.status = [];
+        status.forEach(el => filters.status.push(el.value));
+    }
+
+    if (numEnv && numEnv !== undefined) {
+        filters.numEnv = [];
+        numEnv.forEach(el => filters.numEnv.push(el.value));
+    }
+
+    if (provenance && provenance !== undefined) {
+        filters.provenance = [];
+        provenance.forEach(el => filters.provenance.push(el.value));
+    }
+
+    filters.cashe = null;
+    return filters;
 }

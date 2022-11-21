@@ -23,39 +23,41 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import {ListItemText} from "@material-ui/core";
 import {statusesRIB} from '../../../utils/status-utils';
 import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import {checkInsidePanels} from '../utils/utils'
-import { setCriterias, initCriterias, selectCriterias } from '../psSlice'
+import {checkInsidePanels} from '../utils/utils';
+import { setCriterias, initCriterias, selectCriterias } from '../psSlice';
+import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
+import { AutoCompleteCustom } from "../../shared";
 
 import './searchAccordion.scss'
 
-const Accordion = styled((props) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-    border: `none`,
-    '&:before': {
-        display: 'none',
-    },
-}));
+// const Accordion = styled((props) => (
+//     <MuiAccordion disableGutters elevation={0} square {...props} />
+// ))(({ theme }) => ({
+//     border: `none`,
+//     '&:before': {
+//         display: 'none',
+//     },
+// }));
 
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />
-))(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-}));
+// const AccordionSummary = styled((props) => (
+//     <MuiAccordionSummary
+//         expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+//         {...props}
+//     />
+// ))(({ theme }) => ({
+//     backgroundColor:
+//         theme.palette.mode === 'dark'
+//             ? 'rgba(255, 255, 255, .05)'
+//             : 'rgba(0, 0, 0, .03)',
+//     flexDirection: 'row-reverse',
+//     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+//         transform: 'rotate(90deg)',
+//     },
+// }));
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    border: 'none',
-}));
+// const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+//     border: 'none',
+// }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     "&.MuiPaper-rounded": {
@@ -91,6 +93,15 @@ export default function SearchAccordion(props) {
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
+    const [newDisciplines, setNewDisciplines] = useState([]);
+
+    useEffect(() => {
+        if (disciplinesIsSuccess) {
+            const newDisciplines = disciplines.map(({code, libelle}) => ({value: code, title: libelle}));
+            setNewDisciplines(newDisciplines);
+        }
+    }, [disciplines, disciplinesIsSuccess]);
+
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded({...expanded, [panel]: newExpanded});
     };
@@ -102,20 +113,20 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
-
     useEffect(() => {
         console.log('Mount')
         return () => {
             console.log('UnMount')
         }
-    }, [])
+    }, []);
+
     useLayoutEffect(() => {
         console.log('LayOut Mount')
-        setFirstRender(false)
+        setFirstRender(false);
         return () => {
             console.log('LayOut UnMount')
         }
-    }, [])
+    }, []);
 
     return (
         <div className={'formContent'}>
@@ -127,13 +138,13 @@ export default function SearchAccordion(props) {
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
 
-                        let discipline = {};
-                        for (let key in disciplines) {
-                            discipline[disciplines[key].code] = disciplines[key].libelle;  
-                        }
+                        // let discipline = {};
+                        // for (let key in disciplines) {
+                        //     discipline[disciplines[key].code] = disciplines[key].libelle;  
+                        // }
 
-                        const disciplinesObj = selectDeselectAllValues(value, discipline, 'disciplines');
-                        _value.disciplines = disciplinesObj ? disciplinesObj.disciplines : value.disciplines;
+                        // const disciplinesObj = selectDeselectAllValues(value, discipline, 'disciplines');
+                        // _value.disciplines = disciplinesObj ? disciplinesObj.disciplines : value.disciplines;
 
                         let statusRibs = {};
                         for (let key in statusesRIB) {
@@ -142,15 +153,19 @@ export default function SearchAccordion(props) {
                         const statutRibsObj = selectDeselectAllValues(value, statusRibs, 'statutRibs');
                         _value.statutRibs = statutRibsObj ? statutRibsObj.statutRibs : value.statutRibs;
 
-                        return _value
+                        return _value;
 
-                    })
+                    });
                 }
             }}
 
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
                 <form onSubmit={handleSubmit} >
-                <StyledCard sx={{ display: 'block', minWidth: 775 }} id="FinalForm" variant="outlined">
+                <StyledCard id="FinalForm" variant="outlined"
+                    sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                        '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                    }}
+                >
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -218,7 +233,15 @@ export default function SearchAccordion(props) {
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
-                                                <InputLabel id="Disciplines-label">Discipline</InputLabel>
+                                                <AutoCompleteCustom id="Disciplines" label={'Discipline'}
+                                                    meta={meta}
+                                                    input={input}
+                                                    options={newDisciplines}
+                                                    selectMsg={'Sélectionner tout'}
+                                                    deSelectMsg={'Désélectionner tout'}
+                                                    selectedMsg={'disciplines sélectionnées'}
+                                                />
+                                                {/* <InputLabel id="Disciplines-label">Discipline</InputLabel>
                                                 <Select
                                                     id="Disciplines"
                                                     labelId="Disciplines-label"
@@ -242,7 +265,8 @@ export default function SearchAccordion(props) {
                                                             {libelle}
                                                         </MenuItem>
                                                     ))}
-                                            </Select></FormControl>
+                                                </Select> */}
+                                            </FormControl>
                                         )}
                                     </Field>}
 
