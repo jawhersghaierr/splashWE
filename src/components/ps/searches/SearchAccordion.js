@@ -1,78 +1,39 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+
+import { InputLabel, Collapse, CardActions, TextField}  from "@mui/material";
+import { Button, Badge, CardContent, CardHeader, FormControl, MenuItem, OutlinedInput, Select, IconButton, Typography } from '@mui/material';
+
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import InputLabel from '@mui/material/InputLabel';
-import Collapse from '@mui/material/Collapse';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import {ListItemText} from "@material-ui/core";
-import {statusesRIB} from '../../../utils/status-utils';
+
+import { ListItemText } from "@material-ui/core";
+
+import { statusesRIB } from '../../../utils/status-utils';
 import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import {checkInsidePanels} from '../utils/utils';
+import { checkInsidePanels } from '../utils/utils';
+
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice';
-import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
+
 import { AutoCompleteCustom } from "../../shared";
+import { StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
 
 import './searchAccordion.scss'
-
-// const Accordion = styled((props) => (
-//     <MuiAccordion disableGutters elevation={0} square {...props} />
-// ))(({ theme }) => ({
-//     border: `none`,
-//     '&:before': {
-//         display: 'none',
-//     },
-// }));
-
-// const AccordionSummary = styled((props) => (
-//     <MuiAccordionSummary
-//         expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-//         {...props}
-//     />
-// ))(({ theme }) => ({
-//     backgroundColor:
-//         theme.palette.mode === 'dark'
-//             ? 'rgba(255, 255, 255, .05)'
-//             : 'rgba(0, 0, 0, .03)',
-//     flexDirection: 'row-reverse',
-//     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-//         transform: 'rotate(90deg)',
-//     },
-// }));
-
-// const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-//     border: 'none',
-// }));
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
 
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-
 export default function SearchAccordion(props) {
 
     const [firstRender, setFirstRender] = useState(true);
+    useLayoutEffect(() => {
+        setFirstRender(false);
+    }, []);
+
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
@@ -113,21 +74,6 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
-    useEffect(() => {
-        console.log('Mount')
-        return () => {
-            console.log('UnMount')
-        }
-    }, []);
-
-    useLayoutEffect(() => {
-        console.log('LayOut Mount')
-        setFirstRender(false);
-        return () => {
-            console.log('LayOut UnMount')
-        }
-    }, []);
-
     return (
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
@@ -164,10 +110,9 @@ export default function SearchAccordion(props) {
                 <StyledCard id="FinalForm" variant="outlined"
                     sx={{ display: 'block', minWidth: 775, overflow: 'visible',
                         '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
-                    }}
-                >
-                    <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
+                    }} >
 
+                    <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Field name="numPartenaire" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(10))}>
                                 {({ input, meta }) => (
@@ -198,7 +143,6 @@ export default function SearchAccordion(props) {
                                         error={meta.invalid}
                                         {...input}
                                         placeholder={'Raison sociale'}
-                                        // sx={{ borderRadius: '20px', background: '#fff', padding: '5px 15px', width: 1 }}
                                         sx={{width: '100%'}}
                                         className="RoundedEl"
                                         InputProps={{  disableUnderline: true }}
@@ -241,31 +185,6 @@ export default function SearchAccordion(props) {
                                                     deSelectMsg={'Désélectionner tout'}
                                                     selectedMsg={'disciplines sélectionnées'}
                                                 />
-                                                {/* <InputLabel id="Disciplines-label">Discipline</InputLabel>
-                                                <Select
-                                                    id="Disciplines"
-                                                    labelId="Disciplines-label"
-                                                    multiple
-                                                    sx={{width: 360}}
-                                                    {...input}
-                                                    input={<OutlinedInput className="RoundedEl" label="Disciplines"/>}
-                                                    MenuProps={{autoFocus: false}}
-                                                    renderValue={(selected) => {
-                                                        if (selected.length > 1) {
-                                                            return `${selected.length} disciplines sélectionnéеs`
-                                                        }
-                                                        return disciplines.find(item => item.code.toString() === selected.toString())?.libelle || '';
-                                                    }}>
-
-                                                    <MenuItem value="all" key='selectAll' sx={{margin: '5px 15px'}}>
-                                                        <ListItemText primary={(values?.disciplines?.length == disciplines.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                    </MenuItem>
-                                                    {disciplines.map(({code, libelle}) => (
-                                                        <MenuItem key={code} value={code} sx={{margin: '5px 15px'}}>
-                                                            {libelle}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select> */}
                                             </FormControl>
                                         )}
                                     </Field>}
@@ -283,15 +202,10 @@ export default function SearchAccordion(props) {
                                            validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
                                         {({ input, meta }) => (
                                             <div style={{marginRight: '15px'}}>
-                                                <TextField
-                                                    id="CodePostal"
-                                                    sx={{width: 360}}
-
+                                                <TextField id="CodePostal" label="Code Postal" className="RoundedEl" sx={{width: 360}}
                                                     error={meta.invalid}
-                                                    label="Code Postal"
                                                     variant="outlined"
                                                     {...input}
-                                                    className="RoundedEl"
                                                 />
                                                 {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </div>
@@ -300,15 +214,10 @@ export default function SearchAccordion(props) {
                                     <Field name="ville"  validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                         {({ input, meta }) => (
                                             <div>
-                                                <TextField
-                                                    id="Ville"
-                                                    sx={{width: 360}}
-
-                                                    label="Ville"
+                                                <TextField id="Ville" label="Ville" sx={{width: 360}} className="RoundedEl"
                                                     variant="outlined"
                                                     error={meta.invalid}
                                                     {...input}
-                                                    className="RoundedEl"
                                                 />
                                                 {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </div>
@@ -328,14 +237,11 @@ export default function SearchAccordion(props) {
                                         {({ input, meta }) => (
                                             <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
                                                 <InputLabel id="StatutRib-label">Statut RIB</InputLabel>
-                                                <Select
-                                                    id="StatutRibs"
-                                                    labelId="StatutRib-label"
+                                                <Select id="StatutRibs" labelId="StatutRib-label" className="RoundedEl"
                                                     multiple
                                                     MenuProps={{autoFocus: false}}
                                                     {...input}
                                                     input={<OutlinedInput className="RoundedEl" label="StatutRibs"/>}
-                                                    className="RoundedEl"
                                                     renderValue={(selected) => {
                                                         if (selected.length > 1) {
                                                             return `${selected.length} statuts sélectionnés`
@@ -362,30 +268,28 @@ export default function SearchAccordion(props) {
 
                             <div style={{ margin: '10px', textAlign: 'right'}}>
 
-                                <Button
-                                    variant="contained"
-                                    type="button"
-                                    onClick={()=> {
-                                        dispatch(initCriterias());
-                                        form.reset()
-                                    }}
-                                    className="RoundedEl"
-                                    disabled={!allowSearch(values)}
-                                    style={{marginRight: '15px'}}
-                                >
-                                    Effacer
+                                <Button type="button" variant="contained" className="RoundedEl" style={{marginRight: '15px'}}
+                                        onClick={()=> {
+                                            dispatch(initCriterias());
+                                            form.reset()
+                                        }}
+                                        disabled={!allowSearch(values)} >
+                                        Effacer
                                 </Button>
-                                <Button variant="contained"
-                                        type="submit" size="medium"
-                                        disabled={submitting || pristine}
-                                        className="RoundedEl">
+
+                                <Button variant="contained" type="submit" size="medium" className="RoundedEl"
+                                        disabled={submitting || pristine} >
                                     <SearchIcon/>Rechercher
                                 </Button>
 
                             </div>
+
                         </CardActions>
+
                     </Collapse>
+
                 </StyledCard>
+
                <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
                    form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;

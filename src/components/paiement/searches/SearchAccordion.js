@@ -1,52 +1,34 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
 import {
-    Badge,
-    Button,
-    Card,
-    CardHeader,
-    CardActions,
-    CardContent,
-    Collapse,
-    FormControl,
-    MenuItem,
-    OutlinedInput,
-    Select,
-    InputLabel,
-    InputAdornment,
-    IconButton,
-    Typography,
-    TextField, CircularProgress
+    CardActions, CircularProgress, Collapse, InputLabel, TextField,
+    Badge, Button, CardHeader, CardContent, FormControl, MenuItem, OutlinedInput, InputAdornment, IconButton, Select, Typography,
 } from "@mui/material";
+
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {ListItemText} from "@material-ui/core";
 
-import { fr } from "date-fns/locale";
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { fr } from "date-fns/locale";
+
+import { ListItemText } from "@material-ui/core";
+
+import { checkInsidePanels } from '../utils/utils'
 import { isValidDate } from '../../../utils/convertor-utils';
 import { validators, calcCleFromNir, selectDeselectAllValues, allowSearch } from '../../../utils/validator-utils';
-import { checkInsidePanels } from '../utils/utils'
+
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
-import { ConfirmNir, PanelNIR } from "../../shared";
-import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
-import { AutoCompleteCustom } from "../../shared";
+
+import { Accordion, AccordionSummary, AccordionDetails, AutoCompleteCustom, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
 
 import './searchAccordion.scss'
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -56,8 +38,9 @@ export default function SearchAccordion(props) {
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
-    const onSubmit = async (values) => {
 
+
+    const onSubmit = async (values) => {
         await sleep(300);
         dispatch(setCriterias({...values, cashe: Math.random()}));
         setPanelExpanded(false);
@@ -79,6 +62,8 @@ export default function SearchAccordion(props) {
     const [environments, setEnvironments] = useState([]);
     const [provenances, setProvenances] = useState([]);
 
+    const [firstRender, setFirstRender] = useState(true);
+
     useEffect(() => {
         if (nomRefsIsSuccess) {
             const paiementStatuses = Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]}));
@@ -89,6 +74,9 @@ export default function SearchAccordion(props) {
 
             const provenances = Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`}));
             setProvenances(provenances);
+
+            setFirstRender(false);
+
         }
     }, [nomRefs, nomRefsIsSuccess]);
 
@@ -107,7 +95,9 @@ export default function SearchAccordion(props) {
         }
         setPanelExpanded(!panelExpanded);
     };
+
     if (nomRefsIsFetching) return <div className={'formContent'} style={{height: '30%'}}><CircularProgress style={{margin: '100px 50%'}}/></div>
+
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
@@ -127,9 +117,6 @@ export default function SearchAccordion(props) {
                                         setDisableCle(cle ? false : true)
                                     break
 
-                                    case 'cle':
-                                    break
-
                                     case 'numJur':
                                         if (value?.numJur?.length < 8) console.log(value.numJur, field)
                                     break
@@ -139,25 +126,10 @@ export default function SearchAccordion(props) {
                                         _value.numEnv = numEnvObj ? numEnvObj[field.active] : value[field.active];
                                     break
 
-                                    // case 'status': //Object.keys(nomRefs.PAIEMENT_STATUS)
-                                    //     const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_STATUS, field.active);
-                                    //     _value.status = statusObj ? statusObj[field.active] : value[field.active];
-                                    // break
-
                                     case 'groupDisciplines': // nomRefs?.DISCIPLINE_GROUP
                                         const groupDisciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE_GROUP, field.active);
                                         _value.groupDisciplines = groupDisciplinesObj ? groupDisciplinesObj[field.active] : value[field.active];
                                     break
-
-                                    // case 'disciplines': // nomRefs?.DISCIPLINE
-                                    //     const disciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
-                                    //     _value.disciplines = disciplinesObj ? disciplinesObj[field.active] : value[field.active];
-                                    // break
-
-                                    // case 'provenance': // nomRefs?.PROVENANCE
-                                    //     const provenanceObj = selectDeselectAllValues(value, nomRefs.PROVENANCE, field.active);
-                                    //     _value.provenance = provenanceObj ? provenanceObj[field.active] : value[field.active];
-                                    // break
 
                                 }
 
@@ -485,33 +457,6 @@ export default function SearchAccordion(props) {
                                                                     deSelectMsg={'Désélectionner tout'}
                                                                     selectedMsg={'statuts sélectionnées'}
                                                                 />
-                                                                  {/* <InputLabel id="Statut-label">Statut du paiement</InputLabel>
-                                                                  <Select
-                                                                      id="Statut"
-                                                                      labelId="Statut-label"
-                                                                      multiple
-
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.PAIEMENT_STATUS[selected[0]];
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.PAIEMENT_STATUS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
-
-                                                                      {Object.keys(nomRefs.PAIEMENT_STATUS).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.PAIEMENT_STATUS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
-                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -715,33 +660,6 @@ export default function SearchAccordion(props) {
                                                                     deSelectMsg={'Désélectionner tout'}
                                                                     selectedMsg={'environnements sélectionnées'}
                                                                 />
-                                                                  {/* <InputLabel id="Enviroment-label">Environnement</InputLabel>
-                                                                  <Select
-                                                                      id="NumEnv"
-                                                                      labelId="Enviroment-label"
-                                                                      multiple
-
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Enviroment" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} environnements sélectionnés`
-                                                                          return nomRefs.ENVIRONMENT[selected[0]];
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.numEnv?.length == Object.keys(nomRefs.ENVIRONMENT).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
-
-                                                                      {Object.keys(nomRefs.ENVIRONMENT).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ENVIRONMENT[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
-                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -758,33 +676,6 @@ export default function SearchAccordion(props) {
                                                                     deSelectMsg={'Désélectionner tout'}
                                                                     selectedMsg={'provenances sélectionnées'}
                                                                 />
-                                                                  {/* <InputLabel id="Provenance-label">Provenance</InputLabel>
-                                                                  <Select
-                                                                      id="Provanance"
-                                                                      labelId="Provanance-label"
-                                                                      multiple
-
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Provenance" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} provenances sélectionnées`
-                                                                          return `(${selected[0]}) ${nomRefs.PROVENANCE[selected[0]]}`;
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.PROVENANCE).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                                      </MenuItem>
-
-                                                                      {Object.keys(nomRefs.PROVENANCE).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {`(${code}) ${nomRefs.PROVENANCE[code]}`}
-                                                                          </MenuItem>
-                                                                      ))}
-
-                                                                  </Select> */}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
@@ -948,37 +839,17 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  {<FormSpy onChange={(values) => {
+                                  <FormSpy onChange={firstRender? ()=>{}: (values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numeroFacture,
-                                          numIdPs,
-                                          numAdhInd,
-                                          dateDebutSoin,
-                                          dateDebutSoinFin,
-                                          grоupDisciplines,
-                                          disciplines,
-                                          numeroPsJuridique,
-                                          complNumTitre,
-                                          dateDebutHospitalisation,
-                                          dateDebutHospitalisationFin,
-                                          status,
-                                          totalRc,
-                                          dateFacture,
-                                          dateFactureFin,
-                                          receivedDate,
-                                          receivedDateFin,
-                                          creationDate,
-                                          creationDateFin,
-                                          factureRc,
-                                          numEnv,
-                                          provenance,
-                                          nom,
-                                          prenom,
-                                          dateDeNaissance,
-                                          birdDate,
-                                          nir,
-                                          cle
+                                          numeroFacture, numIdPs, numAdhInd,
+                                          dateDebutSoin, dateDebutSoinFin,
+                                          grоupDisciplines, disciplines, numeroPsJuridique, complNumTitre,
+                                          dateDebutHospitalisation, dateDebutHospitalisationFin,
+                                          status, totalRc,
+                                          dateFacture, dateFactureFin, receivedDate, receivedDateFin, creationDate, creationDateFin, factureRc,
+                                          numEnv, provenance, nom, prenom, dateDeNaissance,
+                                          birdDate, nir, cle
                                       } = values?.values;
 
                                       if(
@@ -990,7 +861,7 @@ export default function SearchAccordion(props) {
                                       } else {
                                           setDotShow(false)
                                       }
-                                  }}/>}
+                                  }}/>
 
                               </LocalizationProvider></form>)}/>
         </div>
