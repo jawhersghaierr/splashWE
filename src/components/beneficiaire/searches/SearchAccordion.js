@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from '@mui/material/styles';
 import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
@@ -29,6 +29,8 @@ import { isValidDate } from '../../../utils/convertor-utils';
 import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
 
 import { checkInsidePanels } from '../utils/utils';
+import { Accordion, AccordionSummary, AccordionDetails } from "../../shared/Accordion";
+import { AutoCompleteCustom } from "../../shared";
 
 import {
     setCriterias,
@@ -42,34 +44,34 @@ import InputAdornment from '@mui/material/InputAdornment';
 import {fr} from "date-fns/locale";
 
 
-const Accordion = styled((props) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-    border: `none`,
-    '&:before': {
-        display: 'none',
-    },
-}));
+// const Accordion = styled((props) => (
+//     <MuiAccordion disableGutters elevation={0} square {...props} />
+// ))(({ theme }) => ({
+//     border: `none`,
+//     '&:before': {
+//         display: 'none',
+//     },
+// }));
 
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />
-))(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-}));
+// const AccordionSummary = styled((props) => (
+//     <MuiAccordionSummary
+//         expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
+//         {...props}
+//     />
+// ))(({ theme }) => ({
+//     backgroundColor:
+//         theme.palette.mode === 'dark'
+//             ? 'rgba(255, 255, 255, .05)'
+//             : 'rgba(0, 0, 0, .03)',
+//     flexDirection: 'row-reverse',
+//     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+//         transform: 'rotate(90deg)',
+//     },
+// }));
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    border: 'none',
-}));
+// const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+//     border: 'none',
+// }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     "&.MuiPaper-rounded": {
@@ -102,6 +104,15 @@ export default function SearchAccordion(props) {
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
+    const [newEnviroments, setNewEnviroments] = useState([]);
+
+    useEffect(() => {
+        if (enviromentsIsSuccess) {
+            const newEnviroments = enviroments.map(({code, libelle}) => ({value: code, title: libelle}));
+            setNewEnviroments(newEnviroments);
+        }
+    }, [enviroments, enviromentsIsSuccess]);
+
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded({...expanded, [panel]: newExpanded});
     };
@@ -109,11 +120,11 @@ export default function SearchAccordion(props) {
     const handleAccordionPanel = () => (event) => {
         if (!panelExpanded) {
             let {values} = formRef.current?.getState()
-            console.log(values);
             setExpanded(checkInsidePanels(values))
         }
         setPanelExpanded(!panelExpanded);
     };
+
     if (enviromentsIsFetching) return <CircularProgress/>
 
     return (
@@ -126,23 +137,26 @@ export default function SearchAccordion(props) {
 
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-                        if(field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
-                        switch (field.active) {
-                            case 'envCodeList':
-                                let environment = {};
-                                for (let key in enviroments) {
-                                    environment[enviroments[key].code] = enviroments[key].libelle;
-                                }
 
-                                const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
-                                _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
-                            break
-                        }
+                        if (field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
+
+                        // switch (field.active) {
+                        //     case 'envCodeList':
+                        //         if (_value?.envCodeList?.length === 0) _value = {..._value, envCodeList: undefined}
+                        //         let environment = {};
+                        //         for (let key in enviroments) {
+                        //             environment[enviroments[key].code] = enviroments[key].libelle;
+                        //         }
+
+                        //         const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
+                        //         _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
+                        //     break
+                        // }
 
 
-                        return _value
+                        return _value;
 
-                    })
+                    });
                 }
             }}
 
@@ -150,7 +164,10 @@ export default function SearchAccordion(props) {
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                <StyledCard sx={{ display: 'block', minWidth: 775 }} id="BeneficiareSearchForm" variant="outlined">
+                <StyledCard id="BeneficiareSearchForm" variant="outlined"
+                    sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                    '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                    }}>
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -308,7 +325,15 @@ export default function SearchAccordion(props) {
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
-                                                <InputLabel id="Enviroment-label">Environnement</InputLabel>
+                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
+                                                    meta={meta}
+                                                    input={input}
+                                                    options={newEnviroments}
+                                                    selectMsg={'Sélectionner tout'}
+                                                    deSelectMsg={'Désélectionner tout'}
+                                                    selectedMsg={'AMC sélectionnées'}
+                                                />
+                                                {/* <InputLabel id="Enviroment-label">Environnement</InputLabel>
                                                 <Select
                                                     id="Enviroment"
                                                     labelId="Enviroment-label"
@@ -334,7 +359,7 @@ export default function SearchAccordion(props) {
                                                         </MenuItem>
                                                     ))}
 
-                                                </Select>
+                                                </Select> */}
                                             </FormControl>
                                         )}
                                     </Field>}

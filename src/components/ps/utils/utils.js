@@ -49,6 +49,11 @@ export const reshapeCriterias = ({criterias}) => {
 
     let filters = {...criterias}
 
-    filters.cashe = null
-    return filters
+    if (disciplines && disciplines !== undefined) {
+        filters.disciplines = [];
+        disciplines.forEach(el => filters.disciplines.push(el.value));
+    }
+
+    filters.cashe = null;
+    return filters;
 }
