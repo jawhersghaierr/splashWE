@@ -1,30 +1,27 @@
 import React, { forwardRef, useRef, useState } from "react";
-import makeStyles from "@mui/styles/makeStyles";
-import createStyles from "@mui/styles/createStyles";
-
-import List from "@mui/material/List";
-import { drawerWidth } from "../utils/consts";
-import HostMenuItem from "./HostMenuItem";
-import { MenuList, Popper } from "@material-ui/core";
-import MenuItem from "@mui/material/MenuItem";
-import "./menu.scss";
-import ListItem from "@mui/material/ListItem";
 import { NavLink } from "react-router-dom";
+import { makeStyles, createStyles } from "@mui/styles";
+
+import { Collapse, ListItemButton, List } from "@mui/material";
+
+import { drawerWidth } from "../utils/consts";
+
+import { MenuList, Popper } from "@material-ui/core";
+
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
 import HomeIcon from "../../assets/icons/HomeIcon";
 import ROCIcon from "../../assets/icons/ROCIcon";
 import PaymentIcon from "../../assets/icons/PaymentIcon";
 import VirementIcon from "../../assets/icons/VirementIcon";
-
 import PSIcon from "../../assets/icons/PSIcon";
 import BeneficiaireIcon from "../../assets/icons/BeneficiaireIcon";
 import ConfigurationIcon from "../../assets/icons/ConfigurationIcon";
 import IndusIcon from "../../assets/icons/IndusIcon";
 import DevisIcon from "../../assets/icons/DevisIcon";
+
 import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
-import { Collapse, ListItemButton } from "@mui/material";
+import "./menu.scss";
 
 const hostMenuItems = [
     {
@@ -123,106 +120,56 @@ const RecursiveMenuItem = (props) => {
       onClick={() => setOpenPopper(false)}
     >
       {link && (
-        <ListItemButton
-          component={forwardRef((props, ref) => (
-            <NavLink exact {...props} innerRef={ref} key={`navlink${link}`} />
-          ))}
-          to={link}
-          key={`listItem${link}`}
-        >
+        <ListItemButton id={name} component={forwardRef((props, ref) => ( <NavLink exact {...props} innerRef={ref} key={`navlink${link}`} /> ))} to={link} key={`listItem${link}`} >
           {!!Icon && (
             <ListItemIcon>
-              <Icon
-                viewBox="0 0 50 50"
-                sx={{ fontSize: "4em !important", height: "100% !important" }}
-              />
+              <Icon viewBox="0 0 50 50" sx={{ fontSize: "4em !important", height: "100% !important" }} />
             </ListItemIcon>
           )}
           <ListItemText primary={name} />
         </ListItemButton>
       )}
-      {!link && (
-        <ListItemButton
-          to={link}
-          key={`listItem${link}`}
-          onClick={() => setOpenSubMenu(!openSubMenu)}
-        >
-          <ListItemIcon className={classes.menuItemIcon}>
-            {!!Icon && (
-              <Icon
-                viewBox="0 0 50 50"
-                sx={{ fontSize: "4em !important", height: "100% !important" }}
-              />
-            )}
-          </ListItemIcon>
-          <ListItemText primary={name} />
-          {openSubMenu ? <ExpandLess /> : <ExpandMore />}
+      {!link && ( <ListItemButton id={name} to={link} key={`listItem${link}`} onClick={() => setOpenSubMenu(!openSubMenu)} >
+            <ListItemIcon className={classes.menuItemIcon}>
+                {!!Icon && (<Icon viewBox="0 0 50 50" sx={{ fontSize: "4em !important", height: "100% !important" }} /> )}
+            </ListItemIcon>
+            <ListItemText primary={name} />
+            {openSubMenu ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
       )}
 
       {props?.collapsed && props?.popitems && (
-        <Popper
-          anchorEl={ref.current}
-          open={openPopper}
-          placement={props.placement ?? "right-start"}
-          modifiers={{
-            flip: {
-              enabled: true,
-            },
-            preventOverflow: {
-              enabled: true,
-              boundariesElement: "viewport",
-            },
-          }}
-          className="popperStyle"
-        >
-          {props?.popitems.map((item, index) => {
-            return (
-              <RecursiveMenuItem
-                autoFocus={false}
-                key={`it_${index}`}
-                {...item}
-              />
-            );
-          })}
+        <Popper anchorEl={ref.current} className="popperStyle"
+                open={openPopper}
+                placement={props.placement ?? "right-start"}
+                modifiers={{
+                    flip: { enabled: true },
+                    preventOverflow: {
+                      enabled: true,
+                      boundariesElement: "viewport",
+                    },
+                }}>
+          {props?.popitems.map((item, index) => ( <RecursiveMenuItem autoFocus={false} key={`it_${index}`} {...item} /> ) )}
         </Popper>
       )}
 
-      {!props?.collapsed && props?.popitems && (
-        <Collapse in={openSubMenu} timeout="auto" unmountOnExit>
-          {props?.popitems.map((item, index) => {
-            return (
-              <RecursiveMenuItem
-                autoFocus={false}
-                key={`it_${index}`}
-                {...item}
-              />
-            );
-          })}
-        </Collapse>
-      )}
+      {!props?.collapsed && props?.popitems &&
+      (<Collapse in={openSubMenu} timeout="auto" unmountOnExit>
+          { props?.popitems.map( (item, index) => ( <RecursiveMenuItem autoFocus={false} key={`it_${index}`} {...item} /> ) ) }
+      </Collapse>)}
     </List>
   );
 };
 
 const HostMenu = (props) => {
+
   const classes = useStyles();
   const collapsedClass = props.collapsed ? "collapsed" : "";
 
   return (
-    <List
-      component="nav"
-      className={classes.hostMenu + " " + collapsedClass}
-    >
+    <List component="nav" className={classes.hostMenu + " " + collapsedClass} >
       <MenuList>
-        {hostMenuItems.map((item, index) => (
-          <RecursiveMenuItem
-            autoFocus={false}
-            collapsed={!!props.collapsed}
-            key={`it_${index}`}
-            {...item}
-          />
-        ))}
+        { hostMenuItems.map((item, index) => ( <RecursiveMenuItem autoFocus={false} collapsed={!!props.collapsed} key={`it_${index}`} {...item} /> ) ) }
       </MenuList>
     </List>
   );
