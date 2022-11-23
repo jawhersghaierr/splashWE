@@ -32,8 +32,10 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 							  '& .MuiAutocomplete-input': {minWidth: '0 !important', padding: '5px !important'},
 						  }}
 	                      renderTags={(selected) => {
-		                      if (focus) return ''
-		                      if (selected.length > 1) return `${selected.length} ${selectedMsg}`
+		                      if (focus) return '';
+		                      if (selected.length > 1) {
+								return <span style={{whiteSpace: "nowrap", overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '93%' }}> {selected.length} {selectedMsg} </span>;
+							  }
 		                      return <span style={{whiteSpace: "nowrap", overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '93%' }}> {selected[0].title} </span>;
 	                      }}
 	                      renderInput={(params) => <TextField
@@ -42,7 +44,9 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 		                      autoComplete="false"
 							  sx={{'& .MuiButtonBase-root, .MuiIconButton-root': {
 								  backgroundColor: 'transparent !important',
-								  color: 'rgba(0, 0, 0, 0.54) !important'
+								  color: 'rgba(0, 0, 0, 0.54) !important',
+								  textOverflow: 'ellipsis',
+								  whiteSpace: 'nowrap'
 							  }}}
 		                      {...{...params, inputProps: { ...params.inputProps } }}
 	                      />}

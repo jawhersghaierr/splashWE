@@ -258,7 +258,7 @@ export default function SearchAccordion(props) {
                                                     options={newEnviroments}
                                                     selectMsg={'Sélectionner tout'}
                                                     deSelectMsg={'Désélectionner tout'}
-                                                    selectedMsg={'AMC sélectionnées'}
+                                                    selectedMsg={'environnement sélectionnées'}
                                                 />
                                             </FormControl>
                                         )}
