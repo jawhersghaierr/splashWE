@@ -1,26 +1,27 @@
 import {calcCleFromNir} from "../../../utils/validator-utils";
 import {getMotifsFromTypes, getStatusFromTypes, getSubMotifsFromMotif, getSubMotifsFromTypes} from "../utils/utils";
 
-export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([field, value], state, utils) => {
+export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs, field, value, state, utils})  => {
+
 
 	//TODO Move mutators in separated file
 		utils.changeValue(state, field, (value) => {
 
-			let _value = value;
-			if(field?.modified?.birdDate && value == null) { _value.dateNaiss = null}
+			console.log('1. field > ', )
+			console.log('1. state ', state)
 
-			switch (field.active) {
+			let _value = value;
+
+			if ( field?.modified?.birdDate && _value?.dateNaiss != null && value == null ) { _value.dateNaiss = null}
+
+			switch (state.formState.active) {
 				case 'nir':
 					let cle = calcCleFromNir(value)
 					_value.cle = cle || undefined
 					setDisableCle(cle ? false : true)
 					break
 
-				case 'cle':
-					break
-
 				case 'amc':
-					console.log(_value?.amc)
 					if (_value?.amc?.length === 0) _value = {..._value, amc: undefined}
 					break
 
@@ -176,7 +177,6 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 					break
 
 			}
-
 
 			return _value
 

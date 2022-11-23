@@ -104,6 +104,10 @@ export default function SearchAccordion() {
                       setValue: ([field, value], state, utils) => {
 
                           utils.changeValue(state, field, (value) => {
+
+                              console.log('1. field?.modified > ', field?.modified)
+                              console.log('1. field.active > ', field.active)
+
                               let _value = value;
                               if(field?.modified?.birdDate && value == null) { _value.dateNai = null}
 
