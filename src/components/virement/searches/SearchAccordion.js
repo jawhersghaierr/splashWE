@@ -281,9 +281,8 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.status?.length == Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.status?.length == Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).map(code => (

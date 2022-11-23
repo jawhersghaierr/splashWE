@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Collapse, InputLabel, CardActions, TextField, CircularProgress } from "@mui/material";
@@ -36,6 +36,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion(props) {
 
+    const [firstRender, setFirstRender] = useState(true);
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);
@@ -82,6 +83,7 @@ export default function SearchAccordion(props) {
                 localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS )
             })
 
+            setFirstRender(false);
         }
     }, [nomRefsIsSuccess]);
 
@@ -139,8 +141,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText primary={(values?.type?.length == Object.keys(nomRefs.ROC_TYPES).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.type?.length == Object.keys(nomRefs.ROC_TYPES).length) ?
+                                                                      <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.ROC_TYPES).map(code => (
@@ -227,9 +229,8 @@ export default function SearchAccordion(props) {
                                                                       MenuProps={{autoFocus: false}}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.domaine?.length == Object.keys(nomRefs.ROC_DOMAINS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.domaine?.length == Object.keys(nomRefs.ROC_DOMAINS).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.ROC_DOMAINS).map(code => (
@@ -341,9 +342,8 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.statut?.length == Object.keys(rln.localStatus).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.statut?.length == Object.keys(rln.localStatus).length) ?
+                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {rln.localStatus.map(code => (
@@ -376,8 +376,8 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?
+                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>
@@ -410,10 +410,8 @@ export default function SearchAccordion(props) {
                                                                       }}>
 
                                                                       {rln?.localSubMotif && <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.sousMotif?.length == rln.localSubMotif.length) ?
-                                                                                  <b>Désélectionner tout</b> :
-                                                                                  <b>Sélectionner tout</b>}/>
+                                                                          {(values?.sousMotif?.length == rln.localSubMotif.length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>}
 
                                                                       {rln?.localSubMotif && rln.localSubMotif.map(code => (
@@ -659,7 +657,7 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  {<FormSpy onChange={(values) => {
+                                  <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
                                       const {
                                           type, numEng, numAdh,
                                           domaine,
@@ -691,7 +689,7 @@ export default function SearchAccordion(props) {
                                           setDotShow(false)
                                       }
 
-                                  }}/>}
+                                  }}/>
 
                               </LocalizationProvider></form>)}/>
         </div>

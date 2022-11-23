@@ -398,8 +398,8 @@ export default function SearchAccordion() {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.FACTURE_STATUS).map(code => (
@@ -433,8 +433,8 @@ export default function SearchAccordion() {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText primary={(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                     {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
@@ -557,9 +557,8 @@ export default function SearchAccordion() {
                                                                       }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
+                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
 
                                                                       {Object.keys(nomRefs.CLIENT).map(code => (

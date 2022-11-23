@@ -254,9 +254,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.discipline?.length == Object.keys(nomRefs.DISCIPLINE).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.discipline?.length == Object.keys(nomRefs.DISCIPLINE).length) ?
+                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.DISCIPLINE).map(code => (
@@ -288,9 +287,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.factureContext?.length == Object.keys(nomRefs.FACTURE_CONTEXT).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.factureContext?.length == Object.keys(nomRefs.FACTURE_CONTEXT).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.FACTURE_CONTEXT).map(code => (
@@ -321,9 +319,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.canalReception?.length == Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.canalReception?.length == Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).map(code => (
@@ -354,9 +351,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.dcs?.length == Object.keys(nomRefs.DCS).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.dcs?.length == Object.keys(nomRefs.DCS).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.DCS).map(code => (

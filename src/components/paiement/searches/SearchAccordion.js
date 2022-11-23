@@ -306,8 +306,8 @@ export default function SearchAccordion(props) {
                                                                   >
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.grоupDisciplines?.length == Object.keys(nomRefs?.DISCIPLINE_GROUP).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.grоupDisciplines?.length == Object.keys(nomRefs?.DISCIPLINE_GROUP).length) ?
+                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
                                                                       {Object.keys(nomRefs.DISCIPLINE_GROUP).map(key => (
                                                                           <MenuItem key={key} value={key}>
@@ -340,8 +340,8 @@ export default function SearchAccordion(props) {
                                                                   >
 
                                                                       <MenuItem value="all" key='selectAll'>
-                                                                          <ListItemText
-                                                                              primary={(values?.disciplines?.length == Object.keys(nomRefs?.DISCIPLINE).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                          {(values?.disciplines?.length == Object.keys(nomRefs?.DISCIPLINE).length) ?
+                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                                       </MenuItem>
                                                                       {Object.keys(nomRefs.DISCIPLINE).map(key => (
                                                                           <MenuItem key={key} value={key}>

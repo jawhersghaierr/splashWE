@@ -9,29 +9,22 @@ import {Typography, CssBaseline} from "@mui/material";
 import {
   StyledEngineProvider,
   ThemeProvider,
-  createTheme
+  createTheme,
+  responsiveFontSizes
 } from "@mui/material/styles";
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { store } from './store';
 
 import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
-import AppBar from "./components/shared/AppBar";
-import DrawerHeader from "./components/shared/DrawerHeader";
 import Drawer from "./components/shared/Drawer"
 import {Ps} from './components/ps/PS'
 import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 import {Test} from './components/beneficiaire/Test'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
-import { purple } from '@mui/material/colors';
 import './theme.scss'
 import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
@@ -52,9 +45,16 @@ import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxIn
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
-    fontFamily: 'Gotha'
+    allVariants: {
+      fontFamily: 'Gotha',
+      textTransform: 'none',
+      // fontSize: 16,
+    },
+  },
+  boldTypography: {
+    fontWeight: 'inherit',
   }
 });
 
@@ -107,6 +107,8 @@ const RemoteTest = () => <RemoteApp store={store} />
 
 
 const App = () => {
+
+  // theme = responsiveFontSizes(theme);
   const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(true);
 
@@ -183,7 +185,7 @@ const App = () => {
 
 ReactDOM.render(
     <StyledEngineProvider injectFirst>
-      <App />
+      <App />,
     </StyledEngineProvider>,
     document.getElementById('root')
 );

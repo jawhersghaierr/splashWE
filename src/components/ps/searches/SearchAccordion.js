@@ -250,8 +250,8 @@ export default function SearchAccordion(props) {
                                                     }}
                                                 >
                                                     <MenuItem value="all" key='selectAll' sx={{margin: '5px 15px'}}>
-                                                        <ListItemText sx={{fontWeight: 400}}
-                                                                      primary={(values?.statutRibs?.length == Object.keys(statusesRIB).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                        {(values?.statutRibs?.length == Object.keys(statusesRIB).length) ?
+                                                            <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                     </MenuItem>
                                                     {Object.keys(statusesRIB).map(code => (
                                                         <MenuItem key={code} value={code} sx={{margin: '5px 15px'}}>
