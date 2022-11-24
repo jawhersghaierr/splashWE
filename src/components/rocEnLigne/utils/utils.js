@@ -125,7 +125,7 @@ export const getSubMotifsFromTypes = ({type = [], nomRefs}) => {
 
 
 export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
-    console.log('getSubMotifsFromMotif -> motif ', motif)
+
     let tmpSubCode = []
     if (motif && motif.length > 0) {
         motif.forEach(_motif => {

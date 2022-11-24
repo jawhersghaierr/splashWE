@@ -1,27 +1,25 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
+import arrayMutators from 'final-form-arrays'
+import { FormSpy, Form, Field } from 'react-final-form';
+
 import { InputLabel, Collapse, CardActions, TextField}  from "@mui/material";
 import { Button, Badge, CardContent, CardHeader, FormControl, MenuItem, OutlinedInput, Select, IconButton, Typography } from '@mui/material';
-
-import { FormSpy, Form, Field } from 'react-final-form';
-import arrayMutators from 'final-form-arrays'
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { ListItemText } from "@material-ui/core";
-
+import { checkInsidePanels } from '../utils/utils';
 import { statusesRIB } from '../../../utils/status-utils';
 import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import { checkInsidePanels } from '../utils/utils';
 
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice';
 
-import { AutoCompleteCustom } from "../../shared";
-import { StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
+import { AutoCompleteCustom, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
 
+import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
 
 
@@ -78,33 +76,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
-            mutators={{
-                ...arrayMutators,
-                setValue: ([field, value], state, utils) => {
-                    utils.changeValue(state, field, (value) => {
-                        let _value = value;
-
-                        // let discipline = {};
-                        // for (let key in disciplines) {
-                        //     discipline[disciplines[key].code] = disciplines[key].libelle;  
-                        // }
-
-                        // const disciplinesObj = selectDeselectAllValues(value, discipline, 'disciplines');
-                        // _value.disciplines = disciplinesObj ? disciplinesObj.disciplines : value.disciplines;
-
-                        let statusRibs = {};
-                        for (let key in statusesRIB) {
-                            statusRibs[key] = statusesRIB[key].label;  
-                        }
-                        const statutRibsObj = selectDeselectAllValues(value, statusRibs, 'statutRibs');
-                        _value.statutRibs = statutRibsObj ? statutRibsObj.statutRibs : value.statutRibs;
-
-                        return _value;
-
-                    });
-                }
-            }}
-
+            mutators={{ ...arrayMutators, setValue: MutatorSetValue() }}
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
                 <form onSubmit={handleSubmit} >
                 <StyledCard id="FinalForm" variant="outlined"
@@ -247,14 +219,13 @@ export default function SearchAccordion(props) {
                                                             return `${selected.length} statuts sélectionnés`
                                                         }
                                                         return statusesRIB[selected[0]].label || '';
-                                                    }}
-                                                >
-                                                    <MenuItem value="all" key='selectAll' sx={{margin: '5px 15px'}}>
+                                                    }}>
+                                                    <MenuItem value="all" key='selectAll'>
                                                         {(values?.statutRibs?.length == Object.keys(statusesRIB).length) ?
                                                             <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                     </MenuItem>
                                                     {Object.keys(statusesRIB).map(code => (
-                                                        <MenuItem key={code} value={code} sx={{margin: '5px 15px'}}>
+                                                        <MenuItem key={code} value={code}>
                                                             {statusesRIB[code].label}
                                                         </MenuItem>
                                                     ))}

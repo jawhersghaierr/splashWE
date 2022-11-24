@@ -1,54 +1,31 @@
 import React, {useState, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField, InputAdornment} from "@mui/material";
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
+
+import {
+    CardActions, TextField, Collapse, InputLabel,
+    Button, Badge, CardContent, CardHeader, FormControl, Typography, InputAdornment, IconButton, MenuItem, Select, OutlinedInput
+} from "@mui/material";
+
+import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
-import SearchIcon from '@mui/icons-material/Search';
-import InputLabel from '@mui/material/InputLabel';
-import Collapse from '@mui/material/Collapse';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import {ListItemText} from "@material-ui/core";
 
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import { checkInsidePanels } from '../utils/utils'
+
+import {useGetRefsQuery} from "../../../services/refsApi";
 import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'
+import { Accordion, AccordionDetails, StyledCard } from "../../shared";
+
+import { checkInsidePanels } from '../utils/utils'
+import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
 
 import './searchAccordion.scss'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {useGetRefsQuery} from "../../../services/refsApi";
-
-const Accordion = styled( (props) => ( <MuiAccordion disableGutters elevation={0} square {...props} /> ) )
-(({ theme }) => ({
-    border: `none`,
-    '&:before': {
-        display: 'none',
-    },
-}));
-
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({ border: 'none' }));
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
-
+import {MutatorSetValue} from "./Mutators";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -56,7 +33,6 @@ export default function SearchAccordion(props) {
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
-
 
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
@@ -90,25 +66,27 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{
-                      ...arrayMutators,
-                      setValue: ([field, value], state, utils) => {
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({nomRefs}) }}
 
-                          utils.changeValue(state, field, (value) => {
-                              let _value = value;
-
-                                switch (field.active) {
-                                    case 'status'://Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)
-                                        const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_VIREMENT_STATUS, field.active);
-                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
-                                    break
-                                }
-
-                              return _value
-
-                          })
-                      }
-                  }}
+                  // mutators={{
+                  //     ...arrayMutators,
+                  //     setValue: MutatorSetValue([field, value], state, utils) => {
+                  //
+                  //         utils.changeValue(state, field, (value) => {
+                  //             let _value = value;
+                  //
+                  //               switch (field.active) {
+                  //                   case 'status'://Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)
+                  //                       const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_VIREMENT_STATUS, field.active);
+                  //                       _value.status = statusObj ? statusObj[field.active] : value[field.active];
+                  //                   break
+                  //               }
+                  //
+                  //             return _value
+                  //
+                  //         })
+                  //     }
+                  // }}
 
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
@@ -271,7 +249,6 @@ export default function SearchAccordion(props) {
                                                                       id="Statut"
                                                                       labelId="Statut-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -338,8 +315,7 @@ export default function SearchAccordion(props) {
                                                       }}
                                                       className="RoundedEl"
                                                       disabled={!allowSearch(values)}
-                                                      style={{marginRight: '15px'}}
-                                                  >
+                                                      style={{marginRight: '15px'}}>
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
@@ -353,17 +329,11 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  {<FormSpy onChange={(values) => {
+                                  <FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
-                                          numVirement,
-                                          numDecompte,
-                                          numAdhInd,
-                                          numPsAPayer,
-                                          dateTraitement,
-                                          dateTraitementFin,
-                                          status,
-                                          mntVirement
+                                          numVirement, numDecompte, numAdhInd, numPsAPayer, dateTraitement, dateTraitementFin,
+                                          status, mntVirement
                                       } = values?.values;
 
                                       if( status || mntVirement ) {
@@ -371,7 +341,7 @@ export default function SearchAccordion(props) {
                                       } else {
                                           setDotShow(false)
                                       }
-                                  }}/>}
+                                  }}/>
 
 
                               </LocalizationProvider></form>)}/>

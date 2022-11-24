@@ -80,9 +80,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
-            mutators={{
-                ...arrayMutators,
-                setValue: ([field, value], state, utils) => {
+            mutators={{ ...arrayMutators, setValue: ([field, value], state, utils) => {
 
                     utils.changeValue(state, field, (value) => {
                         let _value = value;

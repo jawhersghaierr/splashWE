@@ -17,17 +17,16 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 
-import { ListItemText } from "@material-ui/core";
-
 import { checkInsidePanels } from '../utils/utils'
 import { isValidDate } from '../../../utils/convertor-utils';
-import { validators, calcCleFromNir, selectDeselectAllValues, allowSearch } from '../../../utils/validator-utils';
+import { validators, allowSearch } from '../../../utils/validator-utils';
 
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 
 import { Accordion, AccordionSummary, AccordionDetails, AutoCompleteCustom, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
 
+import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -102,43 +101,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{
-                      ...arrayMutators,
-                      setValue: ([field, value], state, utils) => {
-
-                          utils.changeValue(state, field, (value) => {
-                              let _value = value;
-                              if(field?.modified?.birdDate && value == null) { _value.dateDeNaissance = null}
-
-                                switch (field.active) {
-                                    case 'nir':
-                                        let cle = calcCleFromNir(value)
-                                        _value.cle = cle || undefined
-                                        setDisableCle(cle ? false : true)
-                                    break
-
-                                    case 'numJur':
-                                        if (value?.numJur?.length < 8) console.log(value.numJur, field)
-                                    break
-
-                                    case 'numEnv': //Object.keys(nomRefs.ENVIRONMENT)
-                                        const numEnvObj = selectDeselectAllValues(value, nomRefs.ENVIRONMENT, field.active);
-                                        _value.numEnv = numEnvObj ? numEnvObj[field.active] : value[field.active];
-                                    break
-
-                                    case 'groupDisciplines': // nomRefs?.DISCIPLINE_GROUP
-                                        const groupDisciplinesObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE_GROUP, field.active);
-                                        _value.groupDisciplines = groupDisciplinesObj ? groupDisciplinesObj[field.active] : value[field.active];
-                                    break
-
-                                }
-
-                              return _value
-
-                          })
-                      }
-                  }}
-
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({setDisableCle, nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -293,7 +256,6 @@ export default function SearchAccordion(props) {
                                                                       id="GroupDisciplines"
                                                                       labelId="GroupDisciplines-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Group Disciplines" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -302,8 +264,7 @@ export default function SearchAccordion(props) {
                                                                               return `${selected.length} disciplines sélectionnéеs`
                                                                           }
                                                                           return nomRefs.DISCIPLINE_GROUP[selected.toString()] || '';
-                                                                      }}
-                                                                  >
+                                                                      }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           {(values?.grоupDisciplines?.length == Object.keys(nomRefs?.DISCIPLINE_GROUP).length) ?
@@ -327,7 +288,6 @@ export default function SearchAccordion(props) {
                                                                       id="Disciplines"
                                                                       labelId="Disciplines-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Disciplines" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -336,8 +296,7 @@ export default function SearchAccordion(props) {
                                                                               return `${selected.length} disciplines sélectionnéеs`
                                                                           }
                                                                           return nomRefs.DISCIPLINE[selected.toString()] || '';
-                                                                      }}
-                                                                  >
+                                                                      }}>
 
                                                                       <MenuItem value="all" key='selectAll'>
                                                                           {(values?.disciplines?.length == Object.keys(nomRefs?.DISCIPLINE).length) ?
@@ -365,8 +324,7 @@ export default function SearchAccordion(props) {
                                                                           if (e.target.value.length == 8) form.getFieldState('numeroPsJuridique').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -392,8 +350,7 @@ export default function SearchAccordion(props) {
                                                                               onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
                                                                           }
                                                                       }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl"/>
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -482,8 +439,7 @@ export default function SearchAccordion(props) {
                                                                           },
                                                                           InputProps: { ...input.InputProps, endAdornment: <InputAdornment position="end"><b>€</b></InputAdornment>}
                                                                       }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl"/>
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -795,13 +751,8 @@ export default function SearchAccordion(props) {
                                                 <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                     <Typography style={{ marginLeft: "5px" }}><b>Recherche par NIR</b></Typography>
                                                 </AccordionSummary>
-                                                <AccordionDetails
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexDirection: "row",
-                                                        justifyContent: "start",
-                                                    }}
-                                                >
+
+                                                <AccordionDetails sx={{ display: "flex", flexDirection: "row", justifyContent: "start", }} >
                                                     <PanelNIR validators={validators} disableCle={disableCle} />
                                                     <ConfirmNir 
                                                         agreed={()=> {
@@ -812,6 +763,7 @@ export default function SearchAccordion(props) {
                                                         opened={openNIRDialog}
                                                     />
                                                 </AccordionDetails>
+
                                               </Accordion>
 
                                               <div style={{ margin: '10px', textAlign: 'right'}}>

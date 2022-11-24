@@ -1,50 +1,40 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
+
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
+
+import {Badge, CardHeader, Select, CardContent, FormControl, Typography, MenuItem, Button, OutlinedInput, InputAdornment} from "@mui/material";
+import {CardActions, InputLabel, Collapse, TextField, CircularProgress} from "@mui/material";
+
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import Collapse from '@mui/material/Collapse';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
-import { ListItemText } from "@material-ui/core";
+
+import { FormSpy, Form, Field } from 'react-final-form';
+
+import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-import InputAdornment from '@mui/material/InputAdornment';
 import { useGetRefsQuery } from "../../../services/refsApi";
-import {isValidDate} from '../../../utils/convertor-utils';
-import {validators, calcCleFromNir, selectDeselectAllValues, allowSearch} from '../../../utils/validator-utils';
-import {usePrevious} from '../../../utils/status-utils';
-import { checkInsidePanels, reshapeMotifVsStatus} from '../utils/utils';
 import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-import { Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput } from "../../shared";
 
+import { checkInsidePanels } from '../utils/utils';
+import { isValidDate} from '../../../utils/convertor-utils';
+import { validators, allowSearch} from '../../../utils/validator-utils';
+
+import { Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput, StyledCard } from "../../shared";
+
+import { MutatorSetValue } from "./Mutators";
 import './searchAccordion.scss'
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion() {
 
+    const [firstRender, setFirstRender] = useState(true);
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);
@@ -60,15 +50,6 @@ export default function SearchAccordion() {
     const [disableCle, setDisableCle] = useState(true);
     const [motif, setMotif] = useState({});
     const [panelExpanded, setPanelExpanded] = useState(false);
-    const prevMotif = usePrevious(motif)
-
-
-    useEffect(() => {
-        console.log('Mount')
-        return () => {
-            console.log('UnMount')
-        }
-    }, [])
 
     const handleChange = (panel) => (event, newExpanded) => {
         if (panel == 'panelNIR' && !expanded.panelNIR) {
@@ -93,67 +74,17 @@ export default function SearchAccordion() {
         setPanelExpanded(!panelExpanded);
     };
 
+    useEffect(() => {
+        if (nomRefsIsSuccess) setFirstRender(false);
+    }, [nomRefsIsSuccess]);
+
     if (nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{
-                      ...arrayMutators,
-                      setValue: ([field, value], state, utils) => {
-
-                          utils.changeValue(state, field, (value) => {
-
-                              console.log('1. field?.modified > ', field?.modified)
-                              console.log('1. field.active > ', field.active)
-
-                              let _value = value;
-                              if(field?.modified?.birdDate && value == null) { _value.dateNai = null}
-
-                                switch (field.active) {
-                                    case 'nir':
-                                        let cle = calcCleFromNir(value)
-                                        _value.cle = cle || undefined
-                                            setDisableCle(cle ? false : true)
-                                    break
-
-                                    case 'cle':
-                                    break
-
-                                    case 'numJur':
-                                        // if (value?.numJur?.length < 8) console.log(value.numJur, field)
-
-                                    break
-
-                                    case 'numClient': //Object.keys(nomRefs.CLIENT)
-                                        const numClientObj = selectDeselectAllValues(value, nomRefs.CLIENT, field.active);
-                                        _value.numClient = numClientObj ? numClientObj[field.active] : value[field.active];
-                                    break
-
-                                    case 'errorCode': //Object.keys(nomRefs.FACTURE_ERROR) actually from state -> motif
-                                        const errorCodeObj = selectDeselectAllValues(value, motif, field.active);
-                                        _value.errorCode = errorCodeObj ? errorCodeObj[field.active] : value[field.active];
-                                    break
-
-                                    case 'status': //Object.keys(nomRefs.FACTURE_STATUS)
-                                        const statusObj = selectDeselectAllValues(value, nomRefs.FACTURE_STATUS, field.active);
-                                        _value.status = statusObj ? statusObj[field.active] : value[field.active];
-                                        if (_value.errorCode !== undefined) {
-                                            _value = {..._value, errorCode: undefined}
-                                        }
-
-                                        break
-
-                                }
-
-
-                              return _value
-
-                          })
-                      }
-                  }}
-
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({motif, setMotif, setDisableCle, nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -166,22 +97,13 @@ export default function SearchAccordion() {
                                                       <Field name="numFact" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField
-                                                                      id="NumFact"
-                                                                      type={'number'}
-                                                                      variant="standard"
+                                                                  <TextField id="NumFact" type={'number'} variant="standard"
                                                                       error={meta.invalid}
                                                                       placeholder={'Nº facture'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
-                                                                      {...{...input,
-                                                                          inputProps: {
-                                                                              ...input.inputProps,
-                                                                              step: 1,
-                                                                              lang: 'fr',
-                                                                              inputMode: 'numeric',
-                                                                              pattern: '[0-9]*',
+                                                                      {...{...input, inputProps: { ...input.inputProps, step: 1, lang: 'fr', inputMode: 'numeric', pattern: '[0-9]*',
                                                                               onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
                                                                           }
                                                                       }}
@@ -194,16 +116,13 @@ export default function SearchAccordion() {
                                                       <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField
-                                                                      id="NumEng"
-                                                                      variant={'standard'}
-                                                                      sx={{width: '100%'}}
+                                                                  <TextField id="NumEng" variant={'standard'}
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       placeholder={'Nº d\'engagement'}
                                                                       InputProps={{  disableUnderline: true }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      sx={{width: '100%'}}
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </div>
                                                           )}
@@ -213,16 +132,13 @@ export default function SearchAccordion() {
 
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2}}>
-                                                                  <TextField
-                                                                      id="NumAdh"
-                                                                      variant="standard"
-                                                                      error={meta.invalid}
-                                                                      {...input}
-                                                                      placeholder={'Nº adhérent'}
-                                                                      sx={{width: '100%'}}
-                                                                      className="RoundedEl"
-                                                                      InputProps={{  disableUnderline: true }}
-                                                                  />
+                                                                  <TextField id="NumAdh" variant="standard"
+                                                                     error={meta.invalid}
+                                                                     {...input}
+                                                                     placeholder={'Nº adhérent'}
+                                                                     InputProps={{  disableUnderline: true }}
+                                                                     sx={{width: '100%'}}
+                                                                     className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </div>
                                                           )}
@@ -262,19 +178,11 @@ export default function SearchAccordion() {
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Domaine-label">Domaine</InputLabel>
-                                                                  <Select
-                                                                      id="Domaine"
-                                                                      labelId="Domaine-label"
+                                                                  <Select id="Domaine" labelId="Domaine-label"
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}>
-
-                                                                      {Object.keys(nomRefs.FACTURE_DOMAINE).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_DOMAINE[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
+                                                                      {Object.keys(nomRefs.FACTURE_DOMAINE).map(code => ( <MenuItem key={code} value={code}> {nomRefs.FACTURE_DOMAINE[code]} </MenuItem> ))}
                                                                   </Select>
                                                               </FormControl>
                                                           )}
@@ -288,9 +196,7 @@ export default function SearchAccordion() {
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       inputFormat="dd/MM/yyyy"
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}/>}
+                                                                      renderInput={(params) => <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}/>}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -323,7 +229,6 @@ export default function SearchAccordion() {
 
                                                       <Field name="dateReceivedEnd" validate={ validators.composeValidators(validators.beforeThan(values, 'dateReceivedStart')) }>
                                                           {({ input, meta }) => (
-                                                              // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DateTimePicker
                                                                       label={'au '}
@@ -350,16 +255,12 @@ export default function SearchAccordion() {
                                                       <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
-                                                                  <MaskedInput
-                                                                      id="IdPeriodeFact"
-                                                                      autoFocus
-                                                                      fullWidth
+                                                                  <MaskedInput id="IdPeriodeFact" autoFocus fullWidth
                                                                       mask={"********************** / 00"}
                                                                       placeholder={"********************** / 00"}
                                                                       color="primary"
                                                                       label={'ID période de facturation / Nº d\'occurrence'}
-                                                                      {...input}
-                                                                  />
+                                                                      {...input} />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -375,10 +276,7 @@ export default function SearchAccordion() {
                                                                       inputFormat="dd/MM/yyyy"
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
-                                                                          />}
+                                                                      renderInput={(params) => <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -389,9 +287,7 @@ export default function SearchAccordion() {
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Statut-label">Statut</InputLabel>
-                                                                  <Select
-                                                                      id="Statut"
-                                                                      labelId="Statut-label"
+                                                                  <Select id="Statut" labelId="Statut-label"
                                                                       multiple
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
@@ -401,16 +297,9 @@ export default function SearchAccordion() {
                                                                           return nomRefs.FACTURE_STATUS[selected[0]];ю
                                                                       }}>
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
+                                                                      <MenuItem value="all" key='selectAll'> {(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
 
-                                                                      {Object.keys(nomRefs.FACTURE_STATUS).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.FACTURE_STATUS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
+                                                                      {Object.keys(nomRefs.FACTURE_STATUS).map(code => ( <MenuItem key={code} value={code}> {nomRefs.FACTURE_STATUS[code]} </MenuItem> ))}
 
                                                                   </Select>
                                                               </FormControl>
@@ -423,9 +312,7 @@ export default function SearchAccordion() {
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="Motif-label">Motif</InputLabel>
-                                                                  <Select
-                                                                      id="Motif"
-                                                                      labelId="Motif-label"
+                                                                  <Select id="Motif" labelId="Motif-label"
                                                                       multiple
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
@@ -436,10 +323,7 @@ export default function SearchAccordion() {
                                                                           return nomRefs.FACTURE_ERROR[selected[0]];
                                                                       }}>
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
+                                                                      <MenuItem value="all" key='selectAll'> {(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
 
                                                                     {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
                                                                             {motif[code]}
@@ -462,9 +346,7 @@ export default function SearchAccordion() {
                                                       <Field name="numId" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="FINESSgeographique"
-                                                                      label={'FINESS géographique'}
+                                                                  <TextField id="FINESSgeographique" label={'FINESS géographique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -472,8 +354,7 @@ export default function SearchAccordion() {
                                                                           if (e.target.value.length == 8) form.getFieldState('numId').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -482,18 +363,14 @@ export default function SearchAccordion() {
                                                       <Field name="numJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="FINESSJuridique"
-                                                                      label={'FINESS juridique'}
-                                                                      variant="outlined"
+                                                                  <TextField id="FINESSJuridique" label={'FINESS juridique'} variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
                                                                           if (e.target.value.length == 8) form.getFieldState('numJur').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -502,14 +379,11 @@ export default function SearchAccordion() {
                                                       <Field name="raisonSociale" validate={validators.composeValidators(validators.minValue(3), validators.maxValue(51))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="RaisonSociale"
-                                                                      label={'Raison sociale'}
+                                                                  <TextField id="RaisonSociale" label={'Raison sociale'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -518,15 +392,10 @@ export default function SearchAccordion() {
                                                       <Field name="department" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Department"
-                                                                      type={"number"}
-                                                                      label={'Nº département'}
-                                                                      variant="outlined"
+                                                                  <TextField id="Department" type={"number"} label={'Nº département'} variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -547,11 +416,8 @@ export default function SearchAccordion() {
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <InputLabel id="NumClient-label">AMC</InputLabel>
-                                                                  <Select
-                                                                      id="NumClient"
-                                                                      labelId="NumClient-label"
+                                                                  <Select id="NumClient" labelId="NumClient-label"
                                                                       multiple
-
                                                                       {...input}
                                                                       input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
                                                                       MenuProps={{autoFocus: false}}
@@ -560,16 +426,9 @@ export default function SearchAccordion() {
                                                                           return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
                                                                       }}>
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
+                                                                      <MenuItem value="all" key='selectAll'> {(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
 
-                                                                      {Object.keys(nomRefs.CLIENT).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {`(${code}) ${nomRefs.CLIENT[code]}`}
-                                                                          </MenuItem>
-                                                                      ))}
+                                                                      {Object.keys(nomRefs.CLIENT).map(code => ( <MenuItem key={code} value={code}> {`(${code}) ${nomRefs.CLIENT[code]}`} </MenuItem> ))}
 
                                                                   </Select>
                                                               </FormControl>
@@ -582,13 +441,9 @@ export default function SearchAccordion() {
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Nom"
-                                                                      label={'Nom'}
-                                                                      variant="outlined"
+                                                                  <TextField id="Nom" label={'Nom'} variant="outlined"
                                                                       {...input}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -600,13 +455,9 @@ export default function SearchAccordion() {
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField
-                                                                      id="Prenom"
-                                                                      label={'Prénom'}
-                                                                      variant="outlined"
+                                                                  <TextField id="Prenom" label={'Prénom'} variant="outlined"
                                                                       {...input}
-                                                                      className="RoundedEl"
-                                                                  />
+                                                                      className="RoundedEl" />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
                                                           )}
@@ -647,12 +498,7 @@ export default function SearchAccordion() {
                                                                                   type={type}
                                                                                   value={value}
                                                                                   style={{width: '100%'}}
-                                                                                  InputProps={{
-                                                                                      endAdornment: (
-                                                                                          <InputAdornment position="end">
-                                                                                              {InputProps?.endAdornment}
-                                                                                          </InputAdornment>)
-                                                                                  }}
+                                                                                  InputProps={{ endAdornment: ( <InputAdornment position="end"> {InputProps?.endAdornment} </InputAdornment>) }}
                                                                                   onBlur={(e)=> {
                                                                                       if (e.target.value.length !== 10) form.getFieldState('dateNai').change(undefined)
                                                                                       return input.onBlur(e)
@@ -706,8 +552,7 @@ export default function SearchAccordion() {
                                                       }}
                                                       className="RoundedEl"
                                                       disabled={!allowSearch(values)}
-                                                      style={{marginRight: '15px'}}
-                                                  >
+                                                      style={{marginRight: '15px'}} >
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
@@ -721,26 +566,18 @@ export default function SearchAccordion() {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  {<FormSpy onChange={(values) => {
+                                  <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
+
                                       form.mutators.setValue(values)
+
                                       const {
                                           numFact, numEng, numAdh,
-                                          domaine,
-                                          dateEntree,
-                                          dateReceivedStart, dateReceivedEnd,
-                                          idPeriodeFact, dateFact,
-                                          status, errorCode,
-                                          numId, numJur,
-                                          raisonSociale,
+                                          domaine, dateEntree, dateReceivedStart, dateReceivedEnd,
+                                          idPeriodeFact, dateFact, status, errorCode,
+                                          numId, numJur, raisonSociale,
                                           department, numClient,
-                                          nom, prenom,
-                                          dateNai, birdDate,
-                                          nir, cle
+                                          nom, prenom, dateNai, birdDate, nir, cle
                                       } = values?.values;
-
-
-                                      let _motif = reshapeMotifVsStatus({status, nomRefs})
-                                      if (_motif) setMotif(_motif)
 
                                       if(
                                           domaine || dateEntree || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
@@ -751,7 +588,7 @@ export default function SearchAccordion() {
                                       } else {
                                           setDotShow(false)
                                       }
-                                  }}/>}
+                                  }}/>
 
                               </LocalizationProvider></form>)}/>
         </div>

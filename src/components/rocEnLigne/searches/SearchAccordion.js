@@ -21,9 +21,9 @@ import { AutoCompleteCustom, ConfirmNir, PanelNIR, MaskedInput, StyledCard, Acco
 import { selectCriterias, setCriterias, initCriterias } from '../rocEnLigneSlice';
 import { useGetRefsQuery } from "../../../services/refsApi";
 
+import { checkInsidePanels } from '../utils/utils';
 import { isValidDate } from "../../../utils/convertor-utils";
 import { validators, allowSearch } from '../../../utils/validator-utils';
-import { checkInsidePanels } from '../utils/utils';
 
 import { MutatorSetValue } from "./Mutators";
 
@@ -110,11 +110,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias, cashe: undefined }}
-                  // mutators={{ ...arrayMutators, setValue: MutatorSetValue({rln, setRln, setDisableCle, nomRefs}) }}
-                  mutators={{
-                      ...arrayMutators,
-                      setValue: ([field, value], state, utils) => MutatorSetValue({rln, setRln, setDisableCle, nomRefs, field, value, state, utils})
-                  }}
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({rln, setRln, setDisableCle, nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >

@@ -1,31 +1,23 @@
-import React, {useState, useRef} from 'react'
+import React, {useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, Typography, Button, TextField}  from "@mui/material";
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field } from 'react-final-form';
-import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
+import { Form, Field } from 'react-final-form';
+import {
+    Button, CardHeader, FormControl,
+    TextField
+}  from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
+
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {fr} from "date-fns/locale";
+import { fr } from "date-fns/locale";
+
 import { setCriterias, initCriterias, selectCriterias } from '../intraitablesSlice'
-import {allowSearch, validators} from '../../../utils/validator-utils';
+import { allowSearch, validators } from '../../../utils/validator-utils';
+import { StyledCard } from "../../shared";
 
 import './searchAccordion.scss'
 
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
-
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion(props) {
 
@@ -33,28 +25,12 @@ export default function SearchAccordion(props) {
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);
 
-    const onSubmit = async (values) => {
-
-        await sleep(300);
-        dispatch(setCriterias(values));
-    };
-
+    const onSubmit = (values) => dispatch(setCriterias(values));
 
     return (
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
-            mutators={{
-                ...arrayMutators,
-                setValue: ([field, value], state, utils) => {
-
-                    utils.changeValue(state, field, (value) => {
-                        let _value = value;
-                        return _value
-                    })
-                }
-            }}
-
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
@@ -109,15 +85,12 @@ export default function SearchAccordion(props) {
                                             renderInput={(params) =>
                                                 <div style={{flex: 2, marginRight: '20px', outline: 'none',}}>
                                                     <TextField
-                                                        // variant={'standard'}
                                                         className="RoundedEl"
                                                         sx={{width: '100%', flex: 2 }}
                                                         error={meta.invalid}
                                                         {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
                                                     />
-                                                </div>
-
-                                            }
+                                                </div>}
                                         />
                                         {meta.error && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                     </FormControl>
@@ -133,8 +106,7 @@ export default function SearchAccordion(props) {
                                 }}
                                 className="RoundedEl"
                                 disabled={!allowSearch(values)}
-                                style={{marginRight: '15px'}}
-                            >
+                                style={{marginRight: '15px'}} >
                                 Effacer
                             </Button>
 
@@ -149,14 +121,7 @@ export default function SearchAccordion(props) {
                     />
 
                 </StyledCard>
-               {<FormSpy onChange={(values) => {
-                   form.mutators.setValue(values)
-                   const {
-                       periodFrom,
-                       periodTo,
-                   } = values?.values;
 
-               }}/>}
                 </LocalizationProvider></form>)}/>
         </div>
     );
