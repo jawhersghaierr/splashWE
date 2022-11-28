@@ -6,9 +6,9 @@ import Stack from "@mui/material/Stack";
 import {
   NoSearchResultsAlert,
   MoreThan200Results,
-} from "../components/shared/modals";
-import mainPS from "../../assets/PS.png";
-import download from "../../assets/download-blue.svg";
+} from "../modals";
+import mainPS from "../../../../assets/PS.png";
+import download from "../../../../assets/icons/download-blue.svg";
 
 export const MainGrid = (props) => {
   const { showNoSearchResultsAlert, showCircularProgress } = props;
