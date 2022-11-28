@@ -1,87 +1,39 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField, CircularProgress} from "@mui/material";
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+import { Collapse, CardActions, TextField, CircularProgress } from "@mui/material";
+import { Badge, Button, CardHeader, CardContent, FormControl, InputAdornment, Typography } from "@mui/material";
+
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
+
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
-import InputLabel from '@mui/material/InputLabel';
-import Collapse from '@mui/material/Collapse';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import {ListItemText} from "@material-ui/core";
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { fr } from "date-fns/locale";
 
 import { isValidDate } from '../../../utils/convertor-utils';
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-
+import { allowSearch, validators } from '../../../utils/validator-utils';
 import { checkInsidePanels } from '../utils/utils';
+import { AutoCompleteCustom, Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
 
-import {
-    setCriterias,
-    initCriterias,
-    selectCriterias,
-} from '../beneficiaireSlice'
+import { initCriterias, setCriterias, selectCriterias } from '../beneficiaireSlice'
 
 import './searchAccordion.scss'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import InputAdornment from '@mui/material/InputAdornment';
-import {fr} from "date-fns/locale";
-
-
-const Accordion = styled((props) => (
-    <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-    border: `none`,
-    '&:before': {
-        display: 'none',
-    },
-}));
-
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />
-))(({ theme }) => ({
-    backgroundColor:
-        theme.palette.mode === 'dark'
-            ? 'rgba(255, 255, 255, .05)'
-            : 'rgba(0, 0, 0, .03)',
-    flexDirection: 'row-reverse',
-    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-        transform: 'rotate(90deg)',
-    },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-    border: 'none',
-}));
-
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
 
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion(props) {
+
+    const [firstRender, setFirstRender] = useState(true);
+    useLayoutEffect(() => {
+        setFirstRender(false);
+    }, []);
 
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
@@ -89,7 +41,6 @@ export default function SearchAccordion(props) {
     const formRef= useRef(null);
 
     const onSubmit = async (values) => {
-
         await sleep(300);
         dispatch(setCriterias({...values, cashe: Math.random()}));
     };
@@ -102,6 +53,15 @@ export default function SearchAccordion(props) {
 
     const [panelExpanded, setPanelExpanded] = useState(false);
 
+    const [newEnviroments, setNewEnviroments] = useState([]);
+
+    useEffect(() => {
+        if (enviromentsIsSuccess) {
+            const newEnviroments = enviroments.map(({code, libelle}) => ({value: code, title: libelle}));
+            setNewEnviroments(newEnviroments);
+        }
+    }, [enviroments, enviromentsIsSuccess]);
+
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded({...expanded, [panel]: newExpanded});
     };
@@ -109,36 +69,27 @@ export default function SearchAccordion(props) {
     const handleAccordionPanel = () => (event) => {
         if (!panelExpanded) {
             let {values} = formRef.current?.getState()
-            console.log(values);
             setExpanded(checkInsidePanels(values))
         }
         setPanelExpanded(!panelExpanded);
     };
+
     if (enviromentsIsFetching) return <CircularProgress/>
 
     return (
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
-            mutators={{
-                ...arrayMutators,
-                setValue: ([field, value], state, utils) => {
+            mutators={{ ...arrayMutators, setValue: ([field, value], state, utils) => {
 
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-                        if(field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
 
-                        let environment = {};
-                        for (let key in enviroments) {
-                            environment[enviroments[key].code] = enviroments[key].libelle;  
-                        }
+                        if (field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
 
-                        const environmentObj = selectDeselectAllValues(value, environment, 'envCodeList');
-                        _value.envCodeList = environmentObj ? environmentObj.envCodeList : value.envCodeList;
+                        return _value;
 
-                        return _value
-
-                    })
+                    });
                 }
             }}
 
@@ -146,7 +97,10 @@ export default function SearchAccordion(props) {
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                <StyledCard sx={{ display: 'block', minWidth: 775 }} id="BeneficiareSearchForm" variant="outlined">
+                <StyledCard id="BeneficiareSearchForm" variant="outlined"
+                    sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                    '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                    }}>
                     <CardHeader sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
 
                         title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -172,15 +126,12 @@ export default function SearchAccordion(props) {
                             <Field name="prenom" validate={validators.composeValidators(validators.maxValue(51))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2, marginRight: '20px'}}>
-                                        <TextField
-                                            id="Prenom"
-                                            variant={'standard'}
-                                            sx={{width: '100%'}}
+                                        <TextField id="Prenom" variant={'standard'}
                                             error={meta.invalid}
                                             {...input}
                                             placeholder={'Prénom'}
+                                            sx={{width: '100%'}} className="RoundedEl"
                                             InputProps={{  disableUnderline: true }}
-                                            className="RoundedEl"
                                         />
                                         {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                     </div>
@@ -190,14 +141,11 @@ export default function SearchAccordion(props) {
                             <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(16))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2}}>
-                                        <TextField
-                                            id="AdherentIndividuel"
-                                            variant="standard"
+                                        <TextField id="AdherentIndividuel" variant="standard"
                                             error={meta.invalid}
                                             {...input}
                                             placeholder={'Nº adhérent'}
-                                            sx={{width: '100%'}}
-                                            className="RoundedEl"
+                                            sx={{width: '100%'}} className="RoundedEl"
                                             InputProps={{  disableUnderline: true }}
                                         />
                                         {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
@@ -212,9 +160,7 @@ export default function SearchAccordion(props) {
                                 {panelExpanded && <IconButton onClick={handleAccordionPanel()}><DoDisturbOnIcon/></IconButton>}
                                 <Typography component="div" className='verticalTxt'><b>Critères</b></Typography>
                             </div>
-                            <Button
-                                variant="contained"
-                                type="submit"
+                            <Button type="submit" variant="contained"
                                 size="medium" className='RoundedEl'
                                 disabled={!allowSearch(values)} >
                                 <SearchIcon/>Rechercher
@@ -232,6 +178,7 @@ export default function SearchAccordion(props) {
                                 <AccordionSummary aria-controls="panelDisciplines-content" id="panelDisciplines-header">
                                     <Typography style={{paddingLeft: '5px'}}><b>Informations bénéficiaires</b></Typography>
                                 </AccordionSummary>
+
                                 <AccordionDetails>
 
                                     <Field name="dateNaissance">
@@ -303,65 +250,52 @@ export default function SearchAccordion(props) {
 
                                         {({input, meta}) => (
                                             <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
-                                                <InputLabel id="Enviroment-label">Environnement</InputLabel>
-                                                <Select
-                                                    id="Enviroment"
-                                                    labelId="Enviroment-label"
-                                                    multiple
-
-                                                    {...input}
-                                                    input={<OutlinedInput className="RoundedEl" label="Enviroment" sx={{minWidth: 200}}/>}
-                                                    MenuProps={{autoFocus: false}}
-                                                    renderValue={(selected) => {
-                                                        if (selected.length > 1) {
-                                                            return `${selected.length} environnements sélectionnés`
-                                                        }
-                                                        return enviroments.find(item => item.code.toString() === selected.toString())?.libelle || '';
-                                                    }}>
-
-                                                    <MenuItem value="all" key='selectAll'>
-                                                        <ListItemText
-                                                            primary={(values?.envCodeList?.length == enviroments.length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
-                                                    </MenuItem>
-
-                                                    {enviroments.map(({code, libelle}) => (
-                                                        <MenuItem key={code} value={code}>
-                                                            {libelle}
-                                                        </MenuItem>
-                                                    ))}
-
-                                                </Select>
+                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
+                                                    meta={meta}
+                                                    input={input}
+                                                    options={newEnviroments}
+                                                    selectMsg={'Sélectionner tout'}
+                                                    deSelectMsg={'Désélectionner tout'}
+                                                    selectedMsg={'environnement sélectionnées'}
+                                                />
                                             </FormControl>
                                         )}
                                     </Field>}
 
-                                    <Field name="dateDebutSoins" >
+                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
                                         {({ input, meta }) => (
-                                            <FormControl className="RoundDate" sx={{ marginRight: '20px!important'}}>
+                                            <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
                                                     label="Date de référence du"
                                                     inputFormat="dd/MM/yyyy"
+                                                    maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
-                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
+                                                        <TextField style={{flex: 2}}
+                                                                   {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                        />}
                                                 />
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </FormControl>
                                         )}
                                     </Field>
 
-                                    <Field name="dateFinSoins">
+                                    <Field name="dateFinSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.beforeThan(values, 'dateDebutSoins'), validators.associated(values, ['dateDebutSoins'], 'Date de référence du') )}>
                                         {({ input, meta }) => (
-                                            <FormControl className="RoundDate">
+                                            <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0 15px'}}>
                                                 <DatePicker
                                                     label="au"
                                                     inputFormat="dd/MM/yyyy"
+                                                    maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
-                                                        <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}} />}
-
+                                                        <TextField style={{flex: 2}}
+                                                                   {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}
+                                                        />}
                                                 />
+                                                {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                             </FormControl>
                                         )}
                                     </Field>
@@ -372,23 +306,15 @@ export default function SearchAccordion(props) {
 
                             <div style={{ margin: '10px', textAlign: 'right'}}>
 
-                                <Button
-                                    variant="contained"
-                                    type="button"
-                                    onClick={()=> {
-                                        dispatch(initCriterias());
-                                        form.reset()
-                                    }}
-                                    className="RoundedEl"
-                                    disabled={!allowSearch(values)}
-                                    style={{marginRight: '15px'}}
-                                >
+                                <Button type="button" variant="contained" disabled={!allowSearch(values)}
+                                        onClick={()=> {
+                                            dispatch(initCriterias());
+                                            form.reset()
+                                        }}
+                                        className="RoundedEl" style={{marginRight: '15px'}} >
                                     Effacer
                                 </Button>
-                                <Button variant="contained"
-                                        type="submit" size="medium"
-                                        disabled={!allowSearch(values) || error || pristine}
-                                        className="RoundedEl">
+                                <Button variant="contained" type="submit" size="medium" disabled={!allowSearch(values) || error || pristine} className="RoundedEl">
                                     <SearchIcon/>Rechercher
                                 </Button>
 
@@ -396,7 +322,7 @@ export default function SearchAccordion(props) {
                         </CardActions>
                     </Collapse>
                 </StyledCard>
-               {<FormSpy onChange={(values) => {
+               <FormSpy onChange={firstRender? ()=>{}: (values) => {
                    form.mutators.setValue(values)
                    const {
                        prenom, nom, numeroAdherent,
@@ -411,7 +337,7 @@ export default function SearchAccordion(props) {
                     } else {
                         setDotShow(false)
                     }
-               }}/>}
+               }}/>
                 </LocalizationProvider></form>)}/>
         </div>
     );

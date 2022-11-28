@@ -1,6 +1,5 @@
 variables:
   PROJECT_NAME: host-ui
-  PROJECT_LABEL: Host UI
   PROGECT_GROUP: COMMON
   COMPOSE_NAME: HOST-UI
   DOCKER_IMAGE_NAME_FE: common/host-ui
@@ -10,6 +9,8 @@ variables:
   VERSION_SNAPSHOT: 0.1.0-SNAPSHOT
 
 include:
-  - project: 'devops/infrastructure/ci-library'
-    ref: 'feature/by-project-type'
-    file: 'frontend/.gitlab-ci-latest.yml'
+  - project: devops/infrastructure/ci-library
+    ref: '2.0'
+    file:
+      - pipelines/frontend.yml
+      - components/env-definitions-azure-docker.yml

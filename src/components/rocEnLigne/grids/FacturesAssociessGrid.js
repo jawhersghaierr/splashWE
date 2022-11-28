@@ -7,7 +7,7 @@ import {CircularProgress} from "@mui/material";
 import {useGetFacturesQuery} from "../../factures/services/facturesApi";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
 import { allowSearch } from '../../../utils/validator-utils';
-import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared/modals";
+import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared";
 import '../../shared/styles/grid.scss';
 
 

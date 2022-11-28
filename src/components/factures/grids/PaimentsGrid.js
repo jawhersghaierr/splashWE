@@ -6,8 +6,7 @@ import {useGetPaiementsFacturesByIdQuery} from "../../paiement/services/paiement
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
 import VirementDetailsById from "../../virement/VirementDetailsById";
 import { columns } from "./paimentsGridColumns";
-import { ModalInfo, NoGridResultsAlert, MoreThan200Results } from "../../shared/modals";
-import '../../shared/styles/grid.scss';
+import { ModalInfo, NoGridResultsAlert, MoreThan200Results } from "../../shared";
 
 
 export const PaimentsGrid = ({factId, nomRefs, noModal}) => {

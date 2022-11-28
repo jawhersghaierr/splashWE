@@ -7,31 +7,24 @@ import { Provider } from 'react-redux';
 
 import {Typography, CssBaseline} from "@mui/material";
 import {
-  useTheme,
   StyledEngineProvider,
   ThemeProvider,
-  createTheme
+  createTheme,
+  responsiveFontSizes
 } from "@mui/material/styles";
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { store } from './store';
 
 import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
-import AppBar from "./components/shared/AppBar";
-import DrawerHeader from "./components/shared/DrawerHeader";
 import Drawer from "./components/shared/Drawer"
 import {Ps} from './components/ps/PS'
 import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
+import {Test} from './components/beneficiaire/Test'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
-import { purple } from '@mui/material/colors';
 import './theme.scss'
 import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
@@ -49,8 +42,22 @@ import {RocEnLigne} from "./components/rocEnLigne/RocEnLigne";
 import RocEnLigneDetailsById from "./components/rocEnLigne/RocEnLigneDetailsById";
 import {FluxInfo as FacturesFluxInfo} from "./components/factures/components/FluxInfo";
 import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxInfo";
+import LogoIcon from '../assets/icons/LogoIcon';
+import LogoTextIcon from '../assets/icons/LogoTextIcon';
 
-const defaultTheme = createTheme();
+let theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: 'Gotha',
+      textTransform: 'none',
+      // fontSize: 16,
+    },
+  },
+  boldTypography: {
+    fontWeight: 'inherit',
+  }
+});
+
 const theme1 = createTheme({
   palette: {
     // augmentColor is a step that Material-UI automatically does for the standard palette colors.
@@ -90,9 +97,9 @@ const dynamicFederation = async (scope, module) => {
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
 const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
 
-const PageDashboard = () => {
-  return <Typography variant="h3" component="div">Dashboard Page</Typography>
-}
+const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
+  <b>Dashboard Page</b>
+</Typography>
 
 const Hospi = () => <Comp1/>
 const PSremote = () => <RemotePsApp  store={store} />
@@ -101,8 +108,8 @@ const RemoteTest = () => <RemoteApp store={store} />
 
 const App = () => {
 
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
+  // theme = responsiveFontSizes(theme);
+  const [open, setOpen] = useState(false);
   const [shown, setShown] = useState(true);
 
   const handleDrawer = () => {
@@ -112,22 +119,21 @@ const App = () => {
   return (
     <Provider store={store}>
       {/*<StyledEngineProvider injectFirst>*/}
-      {/*<ThemeProvider theme={theme1}>*/}
+      <ThemeProvider theme={theme}>
         <Suspense fallback="Loading...">
           <BrowserRouter>
             {/*<div className={clsx('Host', classes.root)}>*/}
             <Box sx={{ display: 'flex' }}>
               <CssBaseline />
               {shown && <Drawer variant="permanent" open={open}>
-                <DrawerHeader>
-                  <IconButton onClick={handleDrawer} style={{color: '#fff'}}>
-                    {!open ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
-                  </IconButton>
-                </DrawerHeader>
-                <Divider/>
-                <HostMenu/>
-              </Drawer>}
-
+                <Box sx={{ display: 'flex', justifyContent: 'center', backgroundColor: "#1A4565 !important" }}>
+                  <LogoIcon onClick={handleDrawer} viewBox="0 0 200 200" sx={{ flex: "1 0 auto", margin: "0.6em auto !important", fontSize: "2em !important"}}/>
+                  {open && <LogoTextIcon viewBox="0 0 294.2 56.3" sx={{ flex: "1 0 auto", width: "5em !important", margin: "1em 1em 1em 0 !important"}}/>}
+                </Box>
+                <Divider />
+                <HostMenu collapsed={!open} />
+              </Drawer>
+              }
               <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
                   <Route exact path="/" component={PageDashboard} />
@@ -161,8 +167,8 @@ const App = () => {
                   <Route exact={true} path="/virements" component={Virement}/>
                   <Route path="/virements/:id?" component={VirementDetailsById}/>
                   <Route path="/intraitables" component={Intraitables}/>
-                  <Route path="/intraitFactures" component={RemoteTest} />
-                  <Route path="/test" component={RemoteTest} />
+                  <Route path="/intraitFactures" component={RemoteTest}/>
+                  <Route path="/test" component={Test}/>
                   <Route path="/PSremote" component={PSremote} />
                 </Switch>
 
@@ -171,7 +177,7 @@ const App = () => {
 
           </BrowserRouter>
         </Suspense>
-      {/*</ThemeProvider>*/}
+      </ThemeProvider>
       {/*</StyledEngineProvider>*/}
     </Provider>
   );
@@ -179,7 +185,7 @@ const App = () => {
 
 ReactDOM.render(
     <StyledEngineProvider injectFirst>
-      <App />
+      <App />,
     </StyledEngineProvider>,
     document.getElementById('root')
 );

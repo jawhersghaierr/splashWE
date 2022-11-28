@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
 import { RowInfo } from "../../beneficiaire/components/RowInfo";
 import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
-import { NoGridResultsAlert } from "../../shared/modals";
+import { NoGridResultsAlert } from "../../shared";
 import { convertDate } from "../../../utils/convertor-utils";
 import { factureConfigurationStatus } from "../../../utils/status-utils";
 import {Link} from "react-router-dom";
@@ -69,10 +69,10 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
         <div style={{display: 'flex', flexDirection: 'rows', margin: '25px 0 25px 0'}}>
-            <RowInfo label={'Code'} value={data?.id} />
+            <RowInfo label={'Code'} value={data?.id} id={data?.id} field="id" />
 
             <RowInfo label={'Période de validité'}
-                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`} />
+                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`} id={data?.id} field="startDate_endDate" />
 
                 {/*{domainForPanel !== 'delai' && domain !== 'roc' && <RowInfo label={'Détails du paramètre'}*/}
                 {/*     value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} />}*/}
@@ -99,8 +99,8 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
                 padding: '10px 25px 25px 25px'
             }}>
 
-                {domainForPanel !== 'delai' && <RowInfo label={'Nombre de règles'} value={data?.rules?.length}/>}
-                {domainForPanel == 'delai' && <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} />}
+                {domainForPanel !== 'delai' && <RowInfo label={'Nombre de règles'} value={data?.rules?.length} id={data?.id} field="rules" />}
+                {domainForPanel == 'delai' && <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} mois </div>} id={data?.id} field="content" />}
 
                 {domainForPanel !== 'delai' && <div style={{display: 'flex', flexDirection: 'row'}}>
                     {data?.rules && data?.rules.length > 0 && nomRefs && <div style={{minWidth: '100%'}}><RulesOfConfigGrid data={data?.rules} nomRefs={nomRefs}/></div>}

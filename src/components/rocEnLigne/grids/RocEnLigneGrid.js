@@ -10,15 +10,14 @@ import { useGetRocEnLigneQuery } from "../services/rocEnLigneApi";
 import { usePrevious } from "../../../utils/status-utils";
 import { useGetRefsQuery } from "../../../services/refsApi";
 import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
-// import mainPS from "../../../../assets/PS.png";
-import "../../shared/styles/grid.scss";
-import { env_IP, ports } from "../../../../env-vars";
-import { baseUrl } from "../services/rocEnLigneApi";
-import { addCriteriasForGetRequest } from "../../../utils/utils";
-import { reshapeCriterias } from "../../factures/utils/utils";
-import { reverseMapRocEnLigne } from "./rocEnLigneGridColumns";
-// import download from "../../../../assets/download-blue.svg";
-import { MainGrid } from "../../../utils/MainGrid";
+import mainPS from "../../../../assets/PS.png";
+import '../../shared/styles/grid.scss';
+import {env_IP, ports} from "../../../../env-vars";
+import {baseUrl} from "../services/rocEnLigneApi";
+import {addCriteriasForGetRequest} from "../../../utils/utils";
+import {reshapeCriterias} from "../../factures/utils/utils";
+import {reverseMapRocEnLigne} from "./rocEnLigneGridColumns";
+import download from "../../../../assets/icons/download-blue.svg";
 
 export const RocEnLigneGrid = () => {
   const criterias = useSelector(selectCriterias);

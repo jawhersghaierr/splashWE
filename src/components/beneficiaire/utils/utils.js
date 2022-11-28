@@ -28,6 +28,7 @@ export const reshapeCriterias = ({criterias}) => {
     if (dateDebutSoins && dateDebutSoins != '' && dateDebutSoins != undefined) {
         filters.dateDebutSoins = new Date(dateDebutSoins).toLocaleDateString('sv');
     }
+    
     if (dateFinSoins && dateFinSoins != '' && dateFinSoins != undefined) {
         filters.dateFinSoins = new Date(dateFinSoins).toLocaleDateString('sv');
     }
@@ -42,7 +43,11 @@ export const reshapeCriterias = ({criterias}) => {
         } else filters.dateNaissance = birdDate.split('/').reverse().join('');
     }
 
+    if (envCodeList && envCodeList !== undefined) {
+        filters.envCodeList = [];
+        envCodeList.forEach(el => filters.envCodeList.push(el.value));
+    }
 
-    filters.cashe = null
-    return filters
+    filters.cashe = null;
+    return filters;
 }

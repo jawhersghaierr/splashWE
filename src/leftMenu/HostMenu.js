@@ -1,37 +1,43 @@
-import React, {forwardRef, useRef, useState} from 'react'
-import makeStyles from '@mui/styles/makeStyles';
-import createStyles from '@mui/styles/createStyles';
+import React, { forwardRef, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { makeStyles, createStyles } from "@mui/styles";
 
-import List from '@mui/material/List'
-import IconDashboard from '@mui/icons-material/Dashboard'
-import IconPeople from '@mui/icons-material/People'
-import IconBarChart from '@mui/icons-material/BarChart'
-import IconLibraryBooks from '@mui/icons-material/LibraryBooks'
-import {drawerWidth} from '../utils/consts'
-import HostMenuItem from './HostMenuItem'
-import {MenuList, Popper} from "@material-ui/core";
-import MenuItem from "@mui/material/MenuItem";
-import './menu.scss'
-import ListItem from "@mui/material/ListItem";
-import {NavLink} from "react-router-dom";
+import { Collapse, ListItemButton, List } from "@mui/material";
+
+import { drawerWidth } from "../utils/consts";
+
+import { MenuList, Popper } from "@material-ui/core";
+
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import HomeIcon from "../../assets/icons/HomeIcon";
+import ROCIcon from "../../assets/icons/ROCIcon";
+import PaymentIcon from "../../assets/icons/PaymentIcon";
+import VirementIcon from "../../assets/icons/VirementIcon";
+import PSIcon from "../../assets/icons/PSIcon";
+import BeneficiaireIcon from "../../assets/icons/BeneficiaireIcon";
+import ConfigurationIcon from "../../assets/icons/ConfigurationIcon";
+import IndusIcon from "../../assets/icons/IndusIcon";
+import DevisIcon from "../../assets/icons/DevisIcon";
+
+import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+import "./menu.scss";
 
 const hostMenuItems = [
     {
         name: 'Dashboard',
         link: '/',
-        icon: IconDashboard,
+        icon: HomeIcon,
     },
     {
-        icon: IconBarChart,
+        icon: ConfigurationIcon,
         name: 'Configuration',
         link: '/configuration'
     },
     {
         name: 'PS',
         link: '/PS',
-        icon: IconPeople,
+        icon: PSIcon,
     },
     // {
     //     name: 'PS Remote',
@@ -41,13 +47,13 @@ const hostMenuItems = [
     {
         name: 'Bénéficiaires',
         link: '/beneficiaire',
-        icon: IconPeople,
+        icon: BeneficiaireIcon,
     },
     {
-        name: 'Paiements', icon: IconBarChart,
+        name: 'Paiements', icon: PaymentIcon,
         popitems: [
-            {name: 'Paiements',icon: IconBarChart, link: '/paiement'},
-            {name: 'Virements',icon: IconBarChart, link: '/virements'},
+            {name: 'Paiements',icon: PaymentIcon, link: '/paiement'},
+            {name: 'Virements',icon: VirementIcon, link: '/virements'},
         ]
     },
     // {
@@ -61,11 +67,11 @@ const hostMenuItems = [
     //     link: '/virements'
     // },
     {
-        name: 'ROC', icon: IconBarChart,
+        name: 'ROC', icon: ROCIcon,
         popitems: [
-            {name: 'Services en ligne',icon: IconLibraryBooks, link: '/serviceEnLigne'},
-            {name: 'Factures',icon: IconPeople, link: '/factures'},
-            {name: 'Factures intraitables',icon: IconBarChart, link: '/intraitables'},
+            {name: 'Services en ligne',icon: DevisIcon, link: '/serviceEnLigne'},
+            {name: 'Factures',icon: PaymentIcon, link: '/factures'},
+            {name: 'Factures intraitables',icon: IndusIcon, link: '/intraitables'},
         ]
     },
     // {
@@ -84,127 +90,107 @@ const hostMenuItems = [
     //     icon: IconBarChart,
     // },
 
-    // {
-    //     name: 'Remote test App',
-    //     link: '/test',
-    //     icon: IconBarChart,
-    // },
-    // {
-    //     name: 'Hospi App',
-    //     link: '/Hospi',
-    //     icon: AccountBalance,
-    // },
+  // {
+  //     name: 'Remote test App',
+  //     link: '/test',
+  //     icon: IconBarChart,
+  // },
+  // {
+  //     name: 'Hospi App',
+  //     link: '/Hospi',
+  //     icon: AccountBalance,
+  // },
 ];
 
 const RecursiveMenuItem = (props) => {
-    const { name, link, icon: Icon } = props
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
-    const ref = useRef();
+  const { name, link, icon: Icon } = props;
+  const classes = useStyles();
+  const [openPopper, setOpenPopper] = useState(false);
+  const [openSubMenu, setOpenSubMenu] = useState(false);
+  const ref = useRef();
 
-    return (
-        <div className={'menuItem'}>
-            <MenuItem {...props}
-                ref={ref}
-                className={open ? classes.active : ""}
-                onMouseEnter={() => setOpen(true)}
-                onMouseLeave={() => setOpen(false)}
-                onClick={() => setOpen(false)}>
+  return (
+    <List
+      /*{...props}*/
+      ref={ref}
+      component="nav"
+      className={openPopper ? classes.active : ""}
+      onMouseEnter={() => setOpenPopper(true)}
+      onMouseLeave={() => setOpenPopper(false)}
+      onClick={() => setOpenPopper(false)}
+    >
+      {link && (
+        <ListItemButton id={name} component={forwardRef((props, ref) => ( <NavLink exact {...props} innerRef={ref} key={`navlink${link}`} /> ))} to={link} key={`listItem${link}`} >
+          {!!Icon && (
+            <ListItemIcon>
+              <Icon viewBox="0 0 50 50" sx={{ fontSize: "4em !important", height: "100% !important" }} />
+            </ListItemIcon>
+          )}
+          <ListItemText primary={name} />
+        </ListItemButton>
+      )}
+      {!link && ( <ListItemButton id={name} to={link} key={`listItem${link}`} onClick={() => setOpenSubMenu(!openSubMenu)} >
+            <ListItemIcon className={classes.menuItemIcon}>
+                {!!Icon && (<Icon viewBox="0 0 50 50" sx={{ fontSize: "4em !important", height: "100% !important" }} /> )}
+            </ListItemIcon>
+            <ListItemText primary={name} />
+            {openSubMenu ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+      )}
 
-                {link && <ListItem
-                    button
-                    component={forwardRef((props, ref) => <NavLink
-                        exact {...props}
-                        innerRef={ref}
-                        key={`navlink${link}`}
-                    />)}
-                    to={link}
-                    key={`listItem${link}`}>
-                        {!!Icon && (
-                            <ListItemIcon className={classes.menuItemIcon}>
-                                <Icon/>
-                            </ListItemIcon>
-                        )}
-                        <ListItemText primary={name} />
-                </ListItem>}
-                {!link && <ListItem
-                    button
-                    to={link}
-                    key={`listItem${link}`}>
-                        {!!Icon && (
-                            <ListItemIcon className={classes.menuItemIcon}>
-                                <Icon/>
-                            </ListItemIcon>
-                        )}
-                        <ListItemText primary={name} />
-                </ListItem>}
+      {props?.collapsed && props?.popitems && (
+        <Popper anchorEl={ref.current} className="popperStyle"
+                open={openPopper}
+                placement={props.placement ?? "right-start"}
+                modifiers={{
+                    flip: { enabled: true },
+                    preventOverflow: {
+                      enabled: true,
+                      boundariesElement: "viewport",
+                    },
+                }}>
+          {props?.popitems.map((item, index) => ( <RecursiveMenuItem autoFocus={false} key={`it_${index}`} {...item} /> ) )}
+        </Popper>
+      )}
 
-
-                {props?.popitems && <Popper
-                    anchorEl={ref.current}
-                    open={open}
-                    placement={props.placement ?? "right-start"}
-                    modifiers={{
-                        flip: {
-                            enabled: true
-                        },
-                        preventOverflow: {
-                            enabled: true,
-                            boundariesElement: "viewport"
-                        }
-                    }} className={'poperStyle'}>
-                    {props?.popitems.map((item, index) => {
-
-                        return <RecursiveMenuItem
-                            autoFocus={false}
-                            key={`it_${index}`}
-                            {...item}/>
-                    })}
-
-                </Popper>}
-            </MenuItem>
-        </div>
-    );
+      {!props?.collapsed && props?.popitems &&
+      (<Collapse in={openSubMenu} timeout="auto" unmountOnExit>
+          { props?.popitems.map( (item, index) => ( <RecursiveMenuItem autoFocus={false} key={`it_${index}`} {...item} /> ) ) }
+      </Collapse>)}
+    </List>
+  );
 };
 
-const HostMenu = () => {
-    const classes = useStyles()
-    return (
-        <List component="nav" className={classes.hostMenu} disablePadding>
+const HostMenu = (props) => {
 
-            {/*{hostMenuItems.map((item, index) => (*/}
-            {/*    <HostMenuItem {...item} key={index} />*/}
-            {/*))}*/}
+  const classes = useStyles();
+  const collapsedClass = props.collapsed ? "collapsed" : "";
 
-            <MenuList>
-                {hostMenuItems.map((item, index) =>
-                    <RecursiveMenuItem
-                        autoFocus={false}
-                        key={`it_${index}`}
-                        {...item}/>
-                )}
-            </MenuList>
-        </List>
-    )
-}
+  return (
+    <List component="nav" className={classes.hostMenu + " " + collapsedClass} >
+      <MenuList>
+        { hostMenuItems.map((item, index) => ( <RecursiveMenuItem autoFocus={false} collapsed={!!props.collapsed} key={`it_${index}`} {...item} /> ) ) }
+      </MenuList>
+    </List>
+  );
+};
 
-const useStyles = makeStyles(theme =>
-    createStyles({
-        hostMenu: {
-            width: '100%',
-        },
-        navList: {
-            width: drawerWidth,
-        },
-        menuItem: {
-            width: drawerWidth,
-            // '&:hover': { backgroundColor: theme.palette.primary.main },
-        },
-        menuItemIcon: {
-            color: '#1976d2',
-        },
-    }),
-)
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    hostMenu: {
+      width: "100%",
+    },
+    navList: {
+      width: drawerWidth,
+    },
+    menuItem: {
+      width: drawerWidth,
+      // '&:hover': { backgroundColor: theme.palette.primary.main },
+    },
+    menuItemIcon: {
+      color: "#1976d2",
+    },
+  })
+);
 
-
-export default HostMenu
+export default HostMenu;

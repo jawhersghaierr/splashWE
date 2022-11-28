@@ -2,7 +2,7 @@ import React from 'react'
 import Chip from '@mui/material/Chip';
 import {Typography} from "@mui/material";
 
-export const RowInfo = ({value, label, chip = null, border = true, justify = false, styles = {}}) => {
+export const RowInfo = ({value, label, id, field, chip = null, border = true, justify = false, styles = {}}) => {
 
     return <div style={{
         flex: 1,
@@ -20,7 +20,7 @@ export const RowInfo = ({value, label, chip = null, border = true, justify = fal
             justifyContent: (justify)? 'space-between': 'space-start'}}>
 
             {label && <span>{label}&nbsp;:&nbsp;</span>}
-            <b>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
+            <b id={field + "_" + id}>{value}&nbsp;{chip && <Chip label={chip} sx={{margin: '0 5px 0 0'}}/>}</b>
         </Typography>
     </div>
 }

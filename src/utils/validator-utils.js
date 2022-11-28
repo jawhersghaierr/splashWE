@@ -102,22 +102,11 @@ const associated = (values, associed, nameMsg) => (value) => {
   if (associed && value && value !== undefined && value !== "") {
     isOk = false;
     associed.forEach((el) => {
-      if (
-        el == "dateDeNaissance" &&
-        (!values[el] || values[el] == undefined || values[el] == "")
-      ) {
-        if (
-          !(
-            !values["birdDate"] ||
-            values["birdDate"] == undefined ||
-            values["birdDate"] == ""
-          )
-        ) {
+      if ( (el == "dateDeNaissance" || el == "dateNaissance" || el == "dateNaiss" || el == "dateNai") && (!values[el] || values[el] == undefined || values[el] == "") ) {
+        if ( !( !values["birdDate"] || values["birdDate"] == undefined || values["birdDate"] == "" ) ) {
           isOk = true;
         }
-      } else if (
-        !(!values[el] || values[el] == undefined || values[el] == "")
-      ) {
+      } else if ( !(!values[el] || values[el] == undefined || values[el] == "") ) {
         isOk = true;
       }
     });
@@ -229,6 +218,9 @@ export const selectDeselectAllValues = (fieldObj, ref, field) => {
 };
 
 export const allowSearch = (values) => {
+  // console.log('error > ', error)
+  // console.log('pristine > ', pristine)
+
   for (let key in values) {
       if (values[key]) return true;
   }

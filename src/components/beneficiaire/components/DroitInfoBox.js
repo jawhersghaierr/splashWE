@@ -7,9 +7,7 @@ import {RowInfo} from "./RowInfo";
 import {benefStatuses } from "../../../utils/status-utils";
 import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 
-export const DoritInfoBox = ({droit}) => {
-
-
+export const DroitInfoBox = ({droit}) => {
     return <Box style={{
         backgroundColor: (droit.lienFamillialLabel == 'Ayant droit') ?'#F6F8FC': '#EDF2FA',
         flex: 1,
@@ -24,14 +22,15 @@ export const DoritInfoBox = ({droit}) => {
         {droit.lienFamillialLabel} <br/>
         <Chip label={benefStatuses[droit?.status]?.label} sx={{bgcolor: benefStatuses[droit?.status]?.color, margin: '5px'}}/>
 
-        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(droit?.dateNaissance)} chip={droit?.rangNaissance}/>
-        <RowInfo label={'N° adhérent individuel'} value={droit?.numeroAdherentIndividuel}/>
-        <RowInfo label={'Date début droits'} value={convertDate(droit?.dateOuvertureDroits)}/>
-        <RowInfo label={'Date fin droits'} value={convertDate(droit?.dateFermetureDroits)}/>
-        <RowInfo label={'Date désactivation droits'} value={convertDate(droit?.dateDesactivationDroits)}/>
-        <RowInfo label={'Grand régime'} value={droit?.grandRegime}/>
-        <RowInfo label={'Caisse'} value={droit?.caisseAffiliation}/>
-        <RowInfo label={'Centre gestion AMO'} value={droit?.centreGestionAmo}/>
+        <RowInfo label={'Date et rang de naissance'} value={dateConvertNaissanceRAW(droit?.dateNaissance)} chip={droit?.rangNaissance} 
+            id={droit.id} field="dateNaissance_rangNaissance" />
+        <RowInfo label={'N° adhérent individuel'} value={droit?.numeroAdherentIndividuel} id={droit.id} field="numeroAdherentIndividuel" />
+        <RowInfo label={'Date début droits'} value={convertDate(droit?.dateOuvertureDroits)} id={droit.id} field="dateOuvertureDroits" />
+        <RowInfo label={'Date fin droits'} value={convertDate(droit?.dateFermetureDroits)} id={droit.id} field="dateFermetureDroits" />
+        <RowInfo label={'Date désactivation droits'} value={convertDate(droit?.dateDesactivationDroits)} id={droit.id} field="dateDesactivationDroits" />
+        <RowInfo label={'Grand régime'} value={droit?.grandRegime} id={droit.id} field="grandRegime" />
+        <RowInfo label={'Caisse'} value={droit?.caisseAffiliation} id={droit.id} field="caisseAffiliation" />
+        <RowInfo label={'Centre gestion AMO'} value={droit?.centreGestionAmo} id={droit.id} field="centreGestionAmo" />
     </Box>
 }
 

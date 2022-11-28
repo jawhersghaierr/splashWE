@@ -11,9 +11,8 @@ import { AssociesGrid, HistoryGrid } from "./grids";
 import {paiementsStatus} from "../../utils/status-utils";
 import {convertDate, currencyFormatter} from "../../utils/convertor-utils";
 import {useGetRefsQuery} from "../../services/refsApi";
-import { ModalInfo } from "../shared/modals";
+import { ModalInfo, VirtLink } from "../shared";
 import FacturesDetailsById from "../factures/FacturesDetailsById";
-import {VirtLink} from "../shared";
 
 
 function TabPanel(props) {
@@ -50,14 +49,14 @@ function a11yProps(index) {
 }
 
 
-const oneRowHeader = ({ dateCreation, dateModification}) => {
+const oneRowHeader = ({ dateCreation, dateModification, id }) => {
 
     return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-            <RowInfo label={'Date de création'} value={convertDate(dateCreation)}/>
+            <RowInfo label={'Date de création'} value={convertDate(dateCreation)} id={id} field="dateCreation" />
         </div>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-            <RowInfo label={'Dernière modification'} value={convertDate(dateModification)}/>
+            <RowInfo label={'Dernière modification'} value={convertDate(dateModification)} id={id} field="dateModification" />
         </div>
     </div>
 }
@@ -111,10 +110,11 @@ export default function PaiementDetailsById({location, modalId = null}) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)}/>
+                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)} id={paiementID} field="rc" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.idFacture})} /> }/>
+                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.numFacture})}
+                    id={paiementID} field="dateModification" /> }/>
                 </div>
             </div>
 
@@ -141,7 +141,7 @@ export default function PaiementDetailsById({location, modalId = null}) {
                 {(data?.historyElements && data?.historyElements.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElements} nomRefs={nomRefs}/>}
             </TabPanel>
 
-            <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-facture-${openModal?.data?.id}`}>
+            <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-Payement-${openModal?.data?.id}`}>
                 {data && openModal?.data?.id  && <FacturesDetailsById modalId={openModal?.data?.id} />}
             </ModalInfo>
 

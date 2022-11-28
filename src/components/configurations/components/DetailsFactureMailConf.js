@@ -21,10 +21,10 @@ export const DetailsFactureMailConf = ({data}) => {
         padding: '10px 25px 25px 25px'
     }}>
         <h3><b>Détail du paramètre</b></h3>
-        <RowInfo label={'Objet du email'} value={data?.subject}/>
-        <RowInfo label={'Corps du email'} value={data?.body} justify={true}/>
-        <RowInfo label={'Expéditeur du email'} value={data?.from}/>
-        <RowInfo label={'Destinataire du email'} value={separetedMails(data?.to)}/>
+        <RowInfo label={'Objet du email'} value={data?.subject} id={data?.id} field="subject" />
+        <RowInfo label={'Corps du email'} value={data?.body} justify={true} id={data?.id} field="body" />
+        <RowInfo label={'Expéditeur du email'} value={data?.from} id={data?.id} field="from" />
+        <RowInfo label={'Destinataire du email'} value={separetedMails(data?.to)} id={data?.id} field="to" />
 
     </Box>
 }

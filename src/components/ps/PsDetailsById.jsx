@@ -82,16 +82,16 @@ export default function PsDetailsById({location, modalId = null}) {
                 ROC
             </Typography>
             <div>
-                {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{color: 'black'}} sx={{margin: '10px 10px 10px 0'}} key={`chip_${i}`}/>)}
+                {(data?.disciplines && resultData) && data?.disciplines.map((e, i)=><Chip label={reShapeDiscipline(e)} sx={{margin: '10px 10px 10px 0', color: 'black'}} key={`chip_${i}`}/>)}
                 {data &&
                     <div style={{display: 'flex', alignItems: 'center', padding: '15px 0', margin: '15px 0', height: '50px'}}>
-                        Nº de partenaire&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.numPartenaire}</b> &nbsp;
+                        Nº de partenaire&nbsp;:&nbsp;<b style={{color: '#00C9E9'}} id={"numPartenaire_" + psID}>{data.numPartenaire}</b> &nbsp;
                         <Tooltip
-                            title={'Finess Géographique'}
+                          title={'Finess Géographique'}  
                             placement="top" arrow>
                             <InfoOutlinedIcon/>
                         </Tooltip>
-                        <span style={{marginLeft: '50px'}}>Finess Juridique&nbsp;:&nbsp;<b style={{color: '#00C9E9'}}>{data.finessJuridique}</b></span>
+                        <span style={{marginLeft: '50px'}}>Finess Juridique&nbsp;:&nbsp;<b style={{color: '#00C9E9'}} id={"finessJuridique_" + psID}>{data.finessJuridique}</b></span>
                     </div>}
             </div>
             <Tabs
@@ -120,10 +120,10 @@ export default function PsDetailsById({location, modalId = null}) {
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
                     <h2><b>Coordonnées</b></h2>
-                    {data?.adresse1 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse: <b>{data.adresse1}</b></Typography>}
-                    {data?.adresse2 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse2: <b>{data.adresse2}</b></Typography>}
-                    {data?.codePostal && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Code Postal: <b>{data.codePostal}</b></Typography>}
-                    {data?.ville && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Ville: <b>{data.ville}</b></Typography>}
+                    {data?.adresse1 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse: <b id={"adresse1_" + psID}>{data.adresse1}</b></Typography>}
+                    {data?.adresse2 && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>adresse2: <b id={"adresse2_" + psID}>{data.adresse2}</b></Typography>}
+                    {data?.codePostal && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Code Postal: <b id={"codePostal_" + psID}>{data.codePostal}</b></Typography>}
+                    {data?.ville && <Typography variant="subtitle1" noWrap component="div" sx={{ color: '#003154', padding: '5px 0' }}>Ville: <b id={"ville_" + psID}>{data.ville}</b></Typography>}
                 </Box>}
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>

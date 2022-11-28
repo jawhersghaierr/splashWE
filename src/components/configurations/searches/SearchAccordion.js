@@ -1,47 +1,35 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from '@mui/material/styles';
-import {Card, CardActions, CardContent, Typography, Button, TextField}  from "@mui/material";
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import { FormSpy, Form, Field, FieldProps, FieldRenderProps } from 'react-final-form';
+
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
-import CardHeader from '@mui/material/CardHeader';
-import IconButton from '@mui/material/IconButton';
+
+import {
+    CardActions, Checkbox, InputLabel, TextField,
+    CardHeader, CardContent, Collapse, Badge, Button, FormControl, MenuItem, OutlinedInput, Select, Typography,
+}  from "@mui/material";
+
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
+import IconButton from '@mui/material/IconButton';
+
 import SearchIcon from '@mui/icons-material/Search';
-import Badge from '@mui/material/Badge';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Collapse from '@mui/material/Collapse';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { fr } from "date-fns/locale";
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import {useGetRefsQuery} from "../../../services/refsApi";
 
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
-import { checkInsidePanels } from '../utils/utils';
+import { StyledCard } from "../../shared";
+import { useGetRefsQuery } from "../../../services/refsApi";
 
 import { setCriterias, initCriterias, selectCriterias } from '../configurationsSlice'
 
+import { allowSearch, validators } from '../../../utils/validator-utils';
+import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import MenuItem from "@mui/material/MenuItem";
-import {ListItemText} from "@material-ui/core";
 
 
-const StyledCard = styled(Card)(({ theme }) => ({
-    "&.MuiPaper-rounded": {
-        border: 0,
-        borderRadius: '30px',
-    },
-}));
-
-
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 export default function SearchAccordion(props) {
 
@@ -66,44 +54,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{
-                      ...arrayMutators,
-                      setValue: ([field, value], state, utils) => {
-
-                          utils.changeValue(state, field, (value) => {
-                              let _value = value;
-
-                              switch (field.active) {
-                                  case 'discipline':
-                                      const disciplineObj = selectDeselectAllValues(value, nomRefs.DISCIPLINE, field.active);
-                                      _value.discipline = disciplineObj ? disciplineObj[field.active] : value[field.active];
-                                  break
-
-                                  case 'factureContext':
-                                      const factureContextObj = selectDeselectAllValues(value, nomRefs.FACTURE_CONTEXT, field.active);
-                                      _value.factureContext = factureContextObj ? factureContextObj[field.active] : value[field.active];
-                                  break
-
-                                  case 'canalReception':
-                                      const canalReceptiontObj = selectDeselectAllValues(value, nomRefs.FACTURE_CANAL_INTEGRATION, field.active);
-                                      _value.canalReception = canalReceptiontObj ? canalReceptiontObj[field.active] : value[field.active];
-                                  break
-
-                                  case 'dcs':
-                                      const dcsObj = selectDeselectAllValues(value, nomRefs.DCS, field.active);
-                                      _value.dcs = dcsObj ? dcsObj[field.active] : value[field.active];
-                                  break
-
-                                  case 'status':
-                                      if (!!_value.status) _value.referenceDate = undefined
-                                  break
-
-                              }
-                              return _value
-                          })
-                      }
-                  }}
-
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -191,7 +142,6 @@ export default function SearchAccordion(props) {
                                               <Button
                                                   variant="contained"
                                                   type="submit"
-                                                  // disabled={!allowSearch(values)}
                                                   size="medium" className='RoundedEl' >
                                                   <SearchIcon/>Rechercher
                                               </Button>
@@ -254,9 +204,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.discipline?.length == Object.keys(nomRefs.DISCIPLINE).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.discipline?.length == Object.keys(nomRefs.DISCIPLINE).length) ?
+                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.DISCIPLINE).map(code => (
@@ -288,9 +237,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.factureContext?.length == Object.keys(nomRefs.FACTURE_CONTEXT).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.factureContext?.length == Object.keys(nomRefs.FACTURE_CONTEXT).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.FACTURE_CONTEXT).map(code => (
@@ -321,9 +269,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.canalReception?.length == Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.canalReception?.length == Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.FACTURE_CANAL_INTEGRATION).map(code => (
@@ -354,9 +301,8 @@ export default function SearchAccordion(props) {
                                                               }}>
 
                                                               <MenuItem value="all" key='selectAll'>
-                                                                  <ListItemText
-                                                                      primary={(values?.dcs?.length == Object.keys(nomRefs.DCS).length) ?
-                                                                          <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}/>
+                                                                  {(values?.dcs?.length == Object.keys(nomRefs.DCS).length) ?
+                                                                    <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
                                                               </MenuItem>
 
                                                               {Object.keys(nomRefs.DCS).map(code => (
@@ -381,8 +327,7 @@ export default function SearchAccordion(props) {
                                                       }}
                                                       className="RoundedEl"
                                                       disabled={!allowSearch(values)}
-                                                      style={{marginRight: '15px'}}
-                                                  >
+                                                      style={{marginRight: '15px'}}>
                                                       Effacer
                                                   </Button>
                                                   <Button variant="contained"
@@ -396,7 +341,8 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  {<FormSpy onChange={(values) => {
+
+                                  <FormSpy onChange={(values) => {
                                       form.mutators.setValue(values)
                                       const {
                                           label, referenceDate, status, environment, provenance, discipline, factureContext, canalReception, dcs
@@ -407,12 +353,10 @@ export default function SearchAccordion(props) {
                                       } else {
                                           setDotShow(false)
                                       }
-                                  }}/>}
+                                  }}/>
+
                               </LocalizationProvider></form>)}/>
         </div>
     );
 }
-
-
-
 

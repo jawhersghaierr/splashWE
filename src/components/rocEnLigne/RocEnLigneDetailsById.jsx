@@ -96,25 +96,30 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
 
             {isSuccess &&<div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '455px'}}>
-                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)}/>
+                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)} id={rocID} field="dateAdmission" />
                     <RowInfo label={'Bénéficiaire'} value={
-                        <span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>}/>
-                    <RowInfo label={'Environnement'} value={data?.common?.environment}/>
-                    <RowInfo label={'N° facturation'} value={data?.common?.numFacturation}/>
+                        <span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>} id={rocID} field="beneficiaryNom_beneficiaryPrenom" />
+                    <RowInfo label={'Environnement'} value={data?.common?.environment} id={rocID} field="environment" />
+                    <RowInfo label={'N° facturation'} value={data?.common?.numFacturation} id={rocID} field="numFacturation" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '425px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo}/>
-                    <RowInfo label={'Nº adhérent'} value={data?.common?.numAdherent}/>
-                    <RowInfo label={'AMC'} value={data?.common?.amc}/>
+                    <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo} id={rocID} field="finessGeo" />
+                    <RowInfo label={'Nº adhérent'} value={data?.common?.numAdherent} id={rocID} field="numAdherent" />
+                    <RowInfo label={'AMC'} value={data?.common?.amc} id={rocID} field="amc" />
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.common?.finessJur}/>
+                    <RowInfo label={'FINESS juridique'} value={data?.common?.finessJur} id={rocID} field="finessJur" />
                     <RowInfo label={'Date et rang de naissance'}
                              value={data?.common?.dateNaiss && dateConvertNaissanceRAW(data?.common?.dateNaiss)}
                              chip={data?.common?.rang && data?.common?.rang || null}
+                             id={rocID}
+                             field="dateNaiss"
                     />
                     <RowInfo label={'Montant RC'}
-                             value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}/>
+                             value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}
+                             id={rocID}
+                             field="montantRc"
+                    />
                 </div>
             </div>}
 
@@ -153,37 +158,39 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                             <div style={{flex: 1, marginRight: '5%'}}>
                                 <RowInfo label={'Date de réception'}
                                          value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true}
+                                         id={rocID} field="dateReception" />
                                 <RowInfo label={'ID période de facturation / Nº d\'occurrence'}
                                          value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true}
-                                         justify={true}/>
+                                         justify={true} id={rocID} field="idPeriodeFacturationNumOccurence" />
                                 <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="natureAssurance" />
                                 <RowInfo label={'Nature interruption séjour'}
                                          value={data?.info?.demande?.natureInterruptionSejour} border={true}
-                                         justify={true}/>
+                                         justify={true} id={rocID} field="natureInterruptionSejour" />
                                 <RowInfo label={'Indicateur parcours de soins'}
-                                         value={data?.info?.demande?.indicateurParcours} border={true} justify={true}/>
+                                         value={data?.info?.demande?.indicateurParcours} border={true} justify={true}
+                                         id={rocID} field="indicateurParcours" />
                                 <RowInfo label={'Motif de rejet'}
                                          value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true}
-                                         justify={true}/>
+                                         justify={true} id={rocID} field="motifRejets" />
                             </div>
                             <div style={{flex: 1}}>
                                 <RowInfo label={'Domaine'}
                                          value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="domaine" />
                                 <RowInfo label={'Période des prestations'}
                                          value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="periodePrestationStart_periodePrestationEnd" />
                                 <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="contexteEchange" />
                                 <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="numDossier" />
                                 <RowInfo label={'Date accident de travail'}
                                          value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="dateAccidentTravail" />
                                 <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets}
-                                         border={true} justify={true}/>
+                                         border={true} justify={true} id={rocID} field="messageRejets" />
                             </div>
                         </div>}
                     </div>
@@ -194,13 +201,13 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                         </Typography>
                         <div style={{margin: 0}}>
                             <RowInfo label={'Raison sociale'} value={data?.info?.ets?.raisonSociale} border={true}
-                                     justify={true}/>
+                                     justify={true} id={rocID} field="raisonSociale" />
                             <RowInfo label={'Nom contact ETS '} value={data?.info?.ets?.nomContact} border={true}
-                                     justify={true}/>
+                                     justify={true} id={rocID} field="nomContact" />
                             <RowInfo label={'Nº téléphone contact ETS'} value={data?.info?.ets?.telephone} border={true}
-                                     justify={true}/>
+                                     justify={true} id={rocID} field="telephone" />
                             <RowInfo label={'Mail contact ETS'} value={data?.info?.ets?.email} border={true}
-                                     justify={true}/>
+                                     justify={true} id={rocID} field="email" />
                         </div>
                     </div>}
 
