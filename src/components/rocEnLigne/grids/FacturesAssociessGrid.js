@@ -1,100 +1,146 @@
-import React, {useEffect, useState} from 'react'
-import Stack from '@mui/material/Stack'
-import {DataGrid} from '@mui/x-data-grid';
-import {columns} from "./facturesAssociessGridColumns";
-import Pagination from "@mui/material/Pagination";
-import {CircularProgress} from "@mui/material";
-import {useGetFacturesQuery} from "../../factures/services/facturesApi";
+import React, { useEffect, useState } from "react";
+import Stack from "@mui/material/Stack";
+// import { DataGrid } from "@mui/x-data-grid";
+import { columns } from "./facturesAssociessGridColumns";
+// import Pagination from "@mui/material/Pagination";
+// import { CircularProgress } from "@mui/material";
+import { useGetFacturesQuery } from "../../factures/services/facturesApi";
 import FacturesDetailsById from "../../factures/FacturesDetailsById";
-import { allowSearch } from '../../../utils/validator-utils';
-import { ModalInfo, MoreThan200Results, NoGridResultsAlert } from "../../shared";
-import '../../shared/styles/grid.scss';
+import { allowSearch } from "../../../utils/validator-utils";
+// import {
+//   ModalInfo,
+//   MoreThan200Results,
+//   NoGridResultsAlert,
+// } from "../../shared";
+import "../../shared/styles/grid.scss";
+import { SubGrid } from "../../shared/grids";
 
+export const FacturesAssociessGrid = ({ engagements, nomRefs, noModal }) => {
+  const criterias = { numEng: engagements.join() };
+  const [currentPage, setCurrentPage] = useState(0);
+  const [sortProperties, setSortProperties] = useState({
+    sortDirection: null,
+    sortProperty: null,
+  });
 
-export const FacturesAssociessGrid = ({engagements, nomRefs, noModal}) => {
+  const { data, isFetching, isSuccess, isError, error } = useGetFacturesQuery(
+    { currentPage, criterias, sortProperties },
+    { skip: !allowSearch(criterias) }
+  );
 
-    const criterias = {numEng: engagements.join()}
-    const [currentPage, setCurrentPage] = useState( 0);
-    const [sortProperties, setSortProperties] = useState({
-        sortDirection: null,
-        sortProperty: null
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value - 1);
+  };
+  const handleOrdering = (value) => {
+    setSortProperties({
+      sortProperty: value[0]?.field || null,
+      sortDirection: value[0]?.sort?.toUpperCase() || null,
     });
+  };
 
+  const [openModal, setOpenModal] = useState({ open: false, data: null });
+  const handleModalOpen = (data = null) => {
+    if (data && noModal) setOpenModal({ open: true, data });
+  };
+  const handleModalClose = () => {
+    setOpenModal({ open: false, data: null });
+  };
+  console.log("engagements > ", engagements);
+  console.log("data > ", data);
 
-    const {data, isFetching, isSuccess, isError, error} = useGetFacturesQuery({currentPage, criterias, sortProperties}, {skip: !allowSearch(criterias)});
+  return (
+    <SubGrid
+      showNoGridResultsAlert={(isSuccess && data?.meta?.status == 204) || !engagements || engagements?.length == 0}
+      showCircularProgress={isFetching}
+      showGrid={isSuccess}
+      showPagination={data}
+      rows={data?.results}
+      columns={columns({nomRefs, handleModalOpen})}
+      pageSize={20}
+      currentPage={currentPage}
+      totalPages={data?.totalPages}
+      totalElements={data?.totalElements}
+      disableColumnMenu={true}
+      disableColumnResize={false}
+      components={{
+        NoRowsOverlay: () => (
+          <Stack height="75px" alignItems="center" justifyContent="center">
+            <b>Aucun résultat pour ces critères de recherche</b>
+          </Stack>
+        ),
+      }}
+      getRowClassName={(params) =>
+        params.indexRelativeToCurrentPage % 2 === 0 ? "Mui-even" : "Mui-odd"
+      }
+      onCellClick={(params, event) => {
+        event.defaultMuiPrevented = true;
+      }}
+      sortingMode="server"
+      onSortModelChange={handleOrdering}
+      showModalInfo={true}
+      openModal={openModal}
+      handleModalClose={handleModalClose}
+      showModalComponent={openModal?.data}
+      modalComponent={<FacturesDetailsById modalId={openModal?.data?.id} />}
+      showMoreThan200Results={true}
+      data={data}
+      error={error}
+      isSuccess={isSuccess}
+      isError={isError}
+    />
+  );
 
-    const handlePageChange = (event, value) => {
-        setCurrentPage(value-1)
-    };
-    const handleOrdering = ( value) => {
-        setSortProperties({
-            sortProperty: value[0]?.field || null,
-            sortDirection: value[0]?.sort?.toUpperCase() || null
-        })
-    };
+  // if ((isSuccess && data?.meta?.status == 204) || !engagements || engagements?.length == 0) return <NoGridResultsAlert/>
+  // if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
-    const [openModal, setOpenModal] = useState({open: false, data: null});
-    const handleModalOpen = (data = null) => {
-        if (data && noModal) setOpenModal({open: true, data});
-    };
-    const handleModalClose = () => {
-        setOpenModal({open: false, data: null});
-    };
-    console.log('engagements > ', engagements)
-    console.log('data > ', data)
+  // return <div style={{margin: 0}}>
+  //     {isSuccess && <DataGrid
+  //         rows={data?.results || []}
+  //         columns={columns({nomRefs, handleModalOpen})}
+  //         pageSize={20}
+  //         autoHeight
+  //         disableColumnMenu={true}
+  //         disableColumnResize={false}
+  //         components={{
+  //             NoRowsOverlay: () => (
+  //                 <Stack height="75px" alignItems="center" justifyContent="center">
+  //                     <b>Aucun résultat pour ces critères de recherche</b>
+  //                 </Stack>
+  //             )
+  //         }}
+  //         getRowClassName={(params) =>
+  //             params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
+  //         }
+  //         onCellClick={(params, event) => {
+  //             event.defaultMuiPrevented = true;
+  //         }}
 
-    if ((isSuccess && data?.meta?.status == 204) || !engagements || engagements?.length == 0) return <NoGridResultsAlert/>
-    if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
+  //         sortingMode="server"
+  //         onSortModelChange={handleOrdering}
 
-    return <div style={{margin: 0}}>
-        {isSuccess && <DataGrid
-            rows={data?.results || []}
-            columns={columns({nomRefs, handleModalOpen})}
-            pageSize={20}
-            autoHeight
-            disableColumnMenu={true}
-            disableColumnResize={false}
-            components={{
-                NoRowsOverlay: () => (
-                    <Stack height="75px" alignItems="center" justifyContent="center">
-                        <b>Aucun résultat pour ces critères de recherche</b>
-                    </Stack>
-                )
-            }}
-            getRowClassName={(params) =>
-                params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
-            }
-            onCellClick={(params, event) => {
-                event.defaultMuiPrevented = true;
-            }}
+  //         sx={{
+  //             '& .boldValue': {fontWeight: 'bold',},
+  //             '& .MuiDataGrid-columnHeaderTitle': {
+  //                 textOverflow: "clip",
+  //                 whiteSpace: "break-spaces",
+  //                 lineHeight: 1
+  //             },
+  //         }}
+  //     />}
 
-            sortingMode="server"
-            onSortModelChange={handleOrdering}
+  //     {data && <Stack spacing={2} sx={{margin: '25px'}}>
+  //         <Pagination
+  //             count={data.totalPages}
+  //             page={currentPage+1}
+  //             onChange={handlePageChange}
+  //         />
+  //     </Stack>}
 
-            sx={{
-                '& .boldValue': {fontWeight: 'bold',},
-                '& .MuiDataGrid-columnHeaderTitle': {
-                    textOverflow: "clip",
-                    whiteSpace: "break-spaces",
-                    lineHeight: 1
-                },
-            }}
-        />}
+  //     <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
+  //         {(openModal?.data) && <FacturesDetailsById modalId={openModal?.data?.id} />}
+  //     </ModalInfo>
 
-        {data && <Stack spacing={2} sx={{margin: '25px'}}>
-            <Pagination
-                count={data.totalPages}
-                page={currentPage+1}
-                onChange={handlePageChange}
-            />
-        </Stack>}
+  //     <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
 
-        <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-title-${openModal?.data?.type}`}>
-            {(openModal?.data) && <FacturesDetailsById modalId={openModal?.data?.id} />}
-        </ModalInfo>
-
-        <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
-
-    </div>
-}
-
+  // </div>
+};

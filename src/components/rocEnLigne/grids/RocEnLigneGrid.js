@@ -11,13 +11,14 @@ import { usePrevious } from "../../../utils/status-utils";
 import { useGetRefsQuery } from "../../../services/refsApi";
 // import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
 // import mainPS from "../../../../assets/PS.png";
-import '../../shared/styles/grid.scss';
-import {env_IP, ports} from "../../../../env-vars";
-import {baseUrl} from "../services/rocEnLigneApi";
-import {addCriteriasForGetRequest} from "../../../utils/utils";
-import {reshapeCriterias} from "../../factures/utils/utils";
-import {reverseMapRocEnLigne} from "./rocEnLigneGridColumns";
+import "../../shared/styles/grid.scss";
+import { env_IP, ports } from "../../../../env-vars";
+import { baseUrl } from "../services/rocEnLigneApi";
+import { addCriteriasForGetRequest } from "../../../utils/utils";
+import { reshapeCriterias } from "../../factures/utils/utils";
+import { reverseMapRocEnLigne } from "./rocEnLigneGridColumns";
 // import download from "../../../../assets/icons/download-blue.svg";
+import { MainGrid } from "../../shared/grids";
 
 export const RocEnLigneGrid = () => {
   const criterias = useSelector(selectCriterias);
@@ -76,8 +77,11 @@ export const RocEnLigneGrid = () => {
         (!data?.results || data?.results?.length == 0)
       }
       showCircularProgress={isFetching || nomRefsIsFetching}
+      showGridHeader={true}
       showGrid={isSuccess && data?.results && nomRefs}
+      showPagination={isSuccess && data?.results && nomRefs}
       showNoData={!data}
+      showNoDataAdition={true}
       showDownload={true}
       downloadHref={downloadHref}
       gridHeaderStyle={{
@@ -90,6 +94,8 @@ export const RocEnLigneGrid = () => {
       columns={columns({ nomRefs })}
       pageSize={size}
       currentPage={currentPage}
+      totalPages={data?.totalPages}
+      totalElements={data?.totalElements}
       hideFooter={true}
       disableColumnMenu={true}
       disableColumnResize={false}
@@ -109,6 +115,7 @@ export const RocEnLigneGrid = () => {
       sortingMode="server"
       onSortModelChange={handleOrdering}
       handlePageChange={handlePageChange}
+      showMoreThan200Results={true}
       data={data}
       error={error}
       isSuccess={isSuccess}
