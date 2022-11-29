@@ -6,6 +6,7 @@ import { CardContent, Typography, Button, Badge, Select, MenuItem, CardHeader, I
 
 import arrayMutators from 'final-form-arrays'
 import { FormSpy, Form, Field } from 'react-final-form';
+import { OnChange } from 'react-final-form-listeners'
 
 import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -25,7 +26,7 @@ import { checkInsidePanels } from '../utils/utils';
 import { isValidDate } from "../../../utils/convertor-utils";
 import { validators, allowSearch } from '../../../utils/validator-utils';
 
-import { MutatorSetValue } from "./Mutators";
+import { MutatorSetValue, setSubMotifs } from "./Mutators";
 
 import './searchAccordion.scss'
 
@@ -63,7 +64,9 @@ export default function SearchAccordion(props) {
         amc: null,
         localStatus: null,
         localMotif: null,
-        localSubMotif: null
+        localMotif1: null,
+        localSubMotif: null,
+        localSubMotif1: null
     })
 
     useEffect(() => {
@@ -80,7 +83,9 @@ export default function SearchAccordion(props) {
                 amc,
                 localStatus: Object.keys( nomRefs.ROC_STATUSES ),
                 localMotif: Object.keys( nomRefs.ROC_MOTIFS ),
-                localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+                localMotif1: Object.keys(nomRefs.ROC_MOTIFS).map(code => ({value: code, title: nomRefs.ROC_MOTIFS[code]})),
+                localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
+                localSubMotif1: Object.keys(nomRefs.ROC_SOUS_MOTIFS).map(code => ({value: code, title: nomRefs.ROC_SOUS_MOTIFS[code]})),
             })
 
             setFirstRender(false);
@@ -110,7 +115,7 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias, cashe: undefined }}
-                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({rln, setRln, setDisableCle, nomRefs}) }}
+                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({rln, setRln, setDisableCle, nomRefs}), setSubMotifs }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -356,74 +361,98 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>}
 
-                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="motif" format={value => value || []}>
+                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="motif" multiple={true} format={value => value || []}>
                                                           {({input, meta}) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  <InputLabel id="Motif-label">Motif de rejet</InputLabel>
-                                                                  <Select id="Motif" labelId="Motif-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      disabled={!Boolean(
-                                                                    ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))
-                                                                          || (values?.statut == undefined || values?.statut?.length == 0)
-                                                                      )}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} motifs sélectionnés`
-                                                                          return nomRefs.ROC_MOTIFS[selected[0]];
-                                                                      }}>
+                                                                  {/*<InputLabel id="Motif-label">Motif de rejet</InputLabel>*/}
+                                                                  {/*<Select id="Motif" labelId="Motif-label"*/}
+                                                                  {/*    multiple*/}
+                                                                  {/*    {...input}*/}
+                                                                  {/*    input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}*/}
+                                                                  {/*    MenuProps={{autoFocus: false}}*/}
+                                                                  {/*    disabled={!Boolean(*/}
+                                                                  {/*  ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))*/}
+                                                                  {/*        || (values?.statut == undefined || values?.statut?.length == 0)*/}
+                                                                  {/*    )}*/}
+                                                                  {/*    renderValue={(selected) => {*/}
+                                                                  {/*        if (selected.length > 1) return `${selected.length} motifs sélectionnés`*/}
+                                                                  {/*        return nomRefs.ROC_MOTIFS[selected[0]];*/}
+                                                                  {/*    }}>*/}
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
+                                                                  {/*    <MenuItem value="all" key='selectAll'>*/}
+                                                                  {/*        {(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?*/}
+                                                                  {/*            <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}*/}
+                                                                  {/*    </MenuItem>*/}
 
-                                                                      {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>
-                                                                          {nomRefs.ROC_MOTIFS[code]}
-                                                                      </MenuItem>))}
+                                                                  {/*    {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>*/}
+                                                                  {/*        {nomRefs.ROC_MOTIFS[code]}*/}
+                                                                  {/*    </MenuItem>))}*/}
 
-                                                                  </Select>
+                                                                  {/*</Select>*/}
+                                                                  {rln?.localMotif1 && <AutoCompleteCustom id="Motif"
+                                                                                                      label={'Motif de rejet'}
+                                                                                                      meta={meta}
+                                                                                                      input={input}
+                                                                                                      options={rln.localMotif1}
+                                                                                                      selectMsg={'Sélectionner tout'}
+                                                                                                      deSelectMsg={'Désélectionner tout'}
+                                                                                                      selectedMsg={'motifs sélectionnés'}
+                                                                  />}
+                                                                  <OnChange name="motif">
+                                                                      {(value, previous) => {
+                                                                          console.log('OnChange motif > ',value, previous)
+                                                                          form.mutators.setSubMotifs(value)
+                                                                      }}
+                                                                  </OnChange>
+
                                                               </FormControl>
                                                           )}
                                                       </Field>}
 
-                                                      {nomRefs && <Field name="sousMotif" format={value => value || []}>
+                                                      {nomRefs && <Field name="sousMotif" multiple={true} format={value => value || []}>
 
                                                           {({input, meta}) => (
 
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  <InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>
-                                                                  <Select id="SubMotif" labelId="SubMotif-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      disabled={!Boolean(
-                                                                          ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))
-                                                                          || (values?.statut == undefined || values?.statut?.length == 0)
-                                                                      )}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} sous-motifs sélectionnés`
-                                                                          return nomRefs.ROC_SOUS_MOTIFS[selected[0]];
-                                                                      }}>
+                                                                  {/*<InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>*/}
+                                                                  {/*<Select id="SubMotif" labelId="SubMotif-label"*/}
+                                                                  {/*    multiple*/}
+                                                                  {/*    {...input}*/}
+                                                                  {/*    input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}*/}
+                                                                  {/*    MenuProps={{autoFocus: false}}*/}
+                                                                  {/*    disabled={!Boolean(*/}
+                                                                  {/*        ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))*/}
+                                                                  {/*        || (values?.statut == undefined || values?.statut?.length == 0)*/}
+                                                                  {/*    )}*/}
+                                                                  {/*    renderValue={(selected) => {*/}
+                                                                  {/*        if (selected.length > 1) return `${selected.length} sous-motifs sélectionnés`*/}
+                                                                  {/*        return nomRefs.ROC_SOUS_MOTIFS[selected[0]];*/}
+                                                                  {/*    }}>*/}
 
-                                                                      {rln?.localSubMotif && <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.sousMotif?.length == rln.localSubMotif.length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>}
+                                                                  {/*    {rln?.localSubMotif && <MenuItem value="all" key='selectAll'>*/}
+                                                                  {/*        {(values?.sousMotif?.length == rln.localSubMotif.length) ?*/}
+                                                                  {/*                <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}*/}
+                                                                  {/*    </MenuItem>}*/}
 
-                                                                      {rln?.localSubMotif && rln.localSubMotif.map(code => (
-                                                                          <MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>
-                                                                              {nomRefs.ROC_SOUS_MOTIFS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
+                                                                  {/*    {rln?.localSubMotif && rln.localSubMotif.map(code => (*/}
+                                                                  {/*        <MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>*/}
+                                                                  {/*            {nomRefs.ROC_SOUS_MOTIFS[code]}*/}
+                                                                  {/*        </MenuItem>*/}
+                                                                  {/*    ))}*/}
 
-                                                                  </Select>
+                                                                  {/*</Select>*/}
+                                                                  {rln?.localSubMotif1 && <AutoCompleteCustom id="SubMotif"
+                                                                                       label={'Sous-motif de rejet'}
+                                                                                       meta={meta}
+                                                                                       input={input}
+                                                                                       options={rln.localSubMotif1}
+                                                                                       selectMsg={'Sélectionner tout'}
+                                                                                       deSelectMsg={'Désélectionner tout'}
+                                                                                       selectedMsg={'sous-motifs sélectionnés'}
+                                                                  />}
                                                               </FormControl>
                                                           )}
                                                       </Field>}
-
                                                   </AccordionDetails>
                                               </Accordion>
 
@@ -656,7 +685,7 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
+                                  <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (params) => {
                                       const {
                                           type, numEng, numAdh,
                                           domaine,
@@ -670,10 +699,11 @@ export default function SearchAccordion(props) {
                                           nom, prenom,
                                           dateNaiss, birdDate,
                                           nir, cle
-                                      } = values?.values;
+                                      } = params?.values;
 
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                      form.mutators.setValue(values)
+                                      console.log('form params > ', params)
+                                      form.mutators.setValue(params)
                                       /**
                                        * ****************************************************************
                                        */

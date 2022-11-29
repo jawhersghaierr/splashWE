@@ -9,12 +9,12 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	const [checkAll, setCheckAll] = useState({title: selectMsg, value: 'all'});
 
 	const selectAll = () => {
-		input?.onChange(options)
 		setCheckAll({title: deSelectMsg, value: 'none'})
+		input?.onChange(options)
 	};
 	const deSelectAll = () => {
-		input?.onChange(undefined)
 		setCheckAll({title: selectMsg, value: 'all'})
+		input?.onChange(undefined)
 	};
 
 	return (<Autocomplete className="RoundedEl"
@@ -68,17 +68,20 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 	                      }}
 
 	                      onChange={(event, newValue, reason) => {
+							  console.log('autocomplete event > ', event)
+
+							  event.target
 							  if (reason === "selectOption") {
 			                      if (newValue.find(el => el.value == 'all')) {
 				                      selectAll()
 			                      } else if (newValue.length == 0 || newValue.find(el => el.value == 'none')) {
 				                      deSelectAll()
-			                      } else input?.onChange(newValue);
+			                      } else input.onChange(newValue);
 
 		                      } else if (reason === "removeOption") {
 								  if(newValue.length == 0) {
-									  input?.onChange(undefined)
-								  } else input?.onChange(newValue)
+									  input.onChange(undefined)
+								  } else input.onChange(newValue)
 		                      } else if (reason === "clear") deSelectAll();
 	                      }}
 	                      onFocus={() => { setFocus(true) }}

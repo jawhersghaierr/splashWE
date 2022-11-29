@@ -6,6 +6,8 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 
 	utils.changeValue(state, field, (value) => {
 
+		console.log('state > ', state)
+
 		let _value = value;
 
 		if ( field?.modified?.birdDate && _value?.dateNaiss != null && value == null ) { _value.dateNaiss = null}
@@ -92,10 +94,12 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 					}
 
 					setRln({
-						amc: [...rln.amc],
-						localStatus: [...tmpStatut],
-						localMotif: [...tmpMotif],
-						localSubMotif: [...tmpSubMotif]
+						amc: rln.amc,
+						localStatus: tmpStatut,
+						localMotif: tmpMotif,
+						localSubMotif: tmpSubMotif,
+						localMotif1: tmpMotif.map(code => ({value: code, title: nomRefs.ROC_MOTIFS[code]})),
+						localSubMotif1: tmpSubMotif.map(code => ({value: code, title: nomRefs.ROC_SOUS_MOTIFS[code]})),
 					})
 
 				}
@@ -131,7 +135,7 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 
 				//____________________________________________________________________________________________________
 				if (_value.motif) {
-					let tmpSubMotif = {}
+					let tmpSubMotif = {}, localSubMotif1 = []
 					getSubMotifsFromMotif({motif: _value.motif, nomRefs})
 						.forEach(subCode => {
 							tmpSubMotif[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode]
@@ -143,10 +147,12 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 					}
 
 					setRln({
-						amc: [...rln.amc],
-						localStatus: [...rln.localStatus],
-						localMotif: [...rln.localMotif],
-						localSubMotif: [...tmpSubMotif]
+						amc: rln.amc,
+						localStatus: rln.localStatus,
+						localMotif: rln.localMotif,
+						localMotif1: rln.localMotif1,
+						localSubMotif: tmpSubMotif,
+						localSubMotif1: tmpSubMotif.map(code => ({value: code, title: nomRefs.ROC_SOUS_MOTIFS[code]})),
 					})
 
 				}
@@ -165,3 +171,18 @@ export const MutatorSetValue = ({rln, setRln, setDisableCle, nomRefs}) =>  ([fie
 		return _value
 
 })}
+export const setSubMotifs = (args, state, { setIn, changeValue }) => {
+	// console.log('setSubMotifs')
+	// console.log(args)
+	// console.log(state)
+	// console.log(changeValue)
+	// console.log(setIn)
+
+	changeValue(state, 'sousMotif', (value) => {
+		let _value = {...value}
+		console.log(' value > ', _value)
+		if (args.length == 1 && args[0] == '') return []
+
+	})
+
+};
