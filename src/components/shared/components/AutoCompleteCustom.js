@@ -21,10 +21,11 @@ export const AutoCompleteCustom = ({id, options, input, meta, label, selectMsg, 
 						  id={id}
 						  value={input.value}
 						  options={[checkAll, ...options]}
-						  disablePortal
+						  disablePortal={true}
 						  multiple
 						  disableClearable
 						  disableCloseOnSelect
+						  openOnFocus
 						  clearOnBlur={true}
 						  includeInputInList
 						  getOptionLabel={(option) => option.title}

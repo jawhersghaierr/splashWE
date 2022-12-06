@@ -12,15 +12,12 @@ export const checkInsidePanels = (values) => {
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        prenom,
-        nom,
+        prenom, nom,
         numeroAdherent,
-        birdDate,
-        dateNaissance,
+        birdDate, dateNaissance,
         numAdherentFamillial,
         envCodeList,
-        dateDebutSoins,
-        dateFinSoins
+        dateDebutSoins, dateFinSoins
     } = criterias;
 
     let filters = {...criterias}

@@ -12,21 +12,21 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 
-import { ListItemText } from "@material-ui/core";
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { fr } from "date-fns/locale";
 
-import { AutoCompleteCustom, ConfirmNir, PanelNIR, MaskedInput, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
+import { ConfirmNir, PanelNIR, MaskedInput, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
 import { selectCriterias, setCriterias, initCriterias } from '../rocEnLigneSlice';
 import { useGetRefsQuery } from "../../../services/refsApi";
 
-import { checkInsidePanels } from '../utils/utils';
+import { checkForRejeteOrAnuleOrMore, checkInsidePanels} from '../utils/utils';
 import { isValidDate } from "../../../utils/convertor-utils";
 import { validators, allowSearch } from '../../../utils/validator-utils';
 
-import { MutatorSetValue, setSubMotifs } from "./Mutators";
+import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
+import { handleFormChange} from "./Mutators";
 
 import './searchAccordion.scss'
 
@@ -62,6 +62,7 @@ export default function SearchAccordion(props) {
 
     const [rln, setRln] = useState({
         amc: null,
+        localDomaine: null,
         localStatus: null,
         localMotif: null,
         localMotif1: null,
@@ -77,15 +78,14 @@ export default function SearchAccordion(props) {
                 if ( nomRefs.ROC_AMCS.includes(cl) ) amc.push({value:cl, title: `(${cl}) ${nomRefs.CLIENT[cl]}`})
             })
 
-            console.log(amc)
-
             setRln({
                 amc,
-                localStatus: Object.keys( nomRefs.ROC_STATUSES ),
+                localDomaine: Object.keys( nomRefs.ROC_DOMAINS ).map(code => ({value: code, title: nomRefs.ROC_DOMAINS[code]})),
+                localStatus: Object.keys( nomRefs.ROC_STATUSES ).map(code => ({value: code, title: nomRefs.ROC_STATUSES[code]})),
+                localMotif1: Object.keys( nomRefs.ROC_MOTIFS ).map(code => ({value: code, title: nomRefs.ROC_MOTIFS[code]})),
+                localSubMotif1: Object.keys( nomRefs.ROC_SOUS_MOTIFS ).map(code => ({value: code, title: nomRefs.ROC_SOUS_MOTIFS[code]})),
                 localMotif: Object.keys( nomRefs.ROC_MOTIFS ),
-                localMotif1: Object.keys(nomRefs.ROC_MOTIFS).map(code => ({value: code, title: nomRefs.ROC_MOTIFS[code]})),
                 localSubMotif: Object.keys( nomRefs.ROC_SOUS_MOTIFS ),
-                localSubMotif1: Object.keys(nomRefs.ROC_SOUS_MOTIFS).map(code => ({value: code, title: nomRefs.ROC_SOUS_MOTIFS[code]})),
             })
 
             setFirstRender(false);
@@ -110,12 +110,14 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+
     if (nomRefsIsFetching || props.disciplinesIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias, cashe: undefined }}
-                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({rln, setRln, setDisableCle, nomRefs}), setSubMotifs }}
+                  mutators={{ ...arrayMutators, handleFormChange: handleFormChange({rln, setRln, setDisableCle, nomRefs}) }}
+                  // decorators={[Decorators]}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -155,6 +157,10 @@ export default function SearchAccordion(props) {
                                                                   </MenuItem>
                                                               ))}
                                                           </Select>
+                                                          <OnChange name={'type'}>
+                                                              { () => form.mutators.handleFormChange('type') }
+                                                          </OnChange>
+
                                                       </FormControl>
                                                   )}
                                               </Field>}
@@ -163,11 +169,11 @@ export default function SearchAccordion(props) {
                                                 {({ input, meta }) => (
                                                     <div style={{flex: 2, marginRight: '20px'}}>
                                                       <TextField id="NumEng" variant={'standard'}
-                                                          error={meta.invalid}
-                                                          {...input}
-                                                          placeholder={'Nº d\'engagement'}
-                                                          InputProps={{  disableUnderline: true }}
-                                                          sx={{width: '100%'}} className="RoundedEl"
+                                                                 error={meta.invalid}
+                                                                 {...input}
+                                                                 placeholder={'Nº d\'engagement'}
+                                                                 InputProps={{  disableUnderline: true }}
+                                                                 sx={{width: '100%'}} className="RoundedEl"
                                                       />
                                                       {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                     </div>
@@ -179,11 +185,11 @@ export default function SearchAccordion(props) {
                                                   {({ input, meta }) => (
                                                       <div style={{flex: 2}}>
                                                           <TextField id="NumAdh" variant="standard"
-                                                              error={meta.invalid}
-                                                              {...input}
-                                                              placeholder={'Nº adhérent'}
-                                                              sx={{width: '100%'}} className="RoundedEl"
-                                                              InputProps={{  disableUnderline: true }}
+                                                                     error={meta.invalid}
+                                                                     {...input}
+                                                                     placeholder={'Nº adhérent'}
+                                                                     InputProps={{  disableUnderline: true }}
+                                                                     sx={{width: '100%'}} className="RoundedEl"
                                                           />
                                                           {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                       </div>
@@ -217,36 +223,16 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
 
-                                                      {(nomRefs && nomRefs?.ROC_DOMAINS) && <Field name="domaine" format={value => value || []}>
+                                                      <AutoCompleteField id="Domaine" name="domaine"
+                                                                         multiple={true}
+                                                                         label={'Domaine'}
+                                                                         options={rln.localDomaine}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'domaines sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="Domaine-label">Domaine</InputLabel>
-                                                                  <Select id="Domaine" labelId="Domaine-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Domaine" sx={{minWidth: 200}}/>}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} domaines sélectionnés`
-                                                                          return nomRefs.ROC_DOMAINS[selected[0]];
-                                                                      }}
-                                                                      MenuProps={{autoFocus: false}}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.domaine?.length == Object.keys(nomRefs.ROC_DOMAINS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
-
-                                                                      {Object.keys(nomRefs.ROC_DOMAINS).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ROC_DOMAINS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
 
                                                       <Field name="dateAdmission">
                                                           {({ input, meta }) => (
@@ -256,9 +242,7 @@ export default function SearchAccordion(props) {
                                                                       value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                                       onChange={input?.onChange || null}
                                                                       inputFormat="dd/MM/yyyy"
-                                                                      renderInput={(params) =>
-                                                                          <TextField style={{flex: 2}}
-                                                                                     {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}/>}
+                                                                      renderInput={(params) => <TextField style={{flex: 2}} {...{...params, inputProps: {...params.inputProps, placeholder : "jj/mm/aaaa"}}}/>}
                                                                   />
                                                               </FormControl>
                                                           )}
@@ -330,129 +314,40 @@ export default function SearchAccordion(props) {
                                                       </Field>
 
 
-                                                      {(nomRefs && rln?.localStatus) && <Field name="statut" format={value => value || []}>
+                                                      <AutoCompleteField id="Statut" name="statut"
+                                                                         multiple={true}
+                                                                         label={'Statut'}
+                                                                         options={rln.localStatus}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'statuts sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '25%' }}>
-                                                                  <InputLabel id="Statut-label">Statut</InputLabel>
-                                                                  <Select id="Statut" labelId="Statut-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.ROC_STATUSES[selected[0]];
-                                                                      }}>
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.statut?.length == Object.keys(rln.localStatus).length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
+                                                      <AutoCompleteField id="Motif" name="motif"
+                                                                         multiple={true}
+                                                                         label={'Motif de rejet'}
+                                                                         options={rln.localMotif1}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'motifs sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                                         disabled={!checkForRejeteOrAnuleOrMore(form.getState().values['statut'])}
+                                                      />
 
-                                                                      {rln.localStatus.map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.ROC_STATUSES[code]}
-                                                                          </MenuItem>
-                                                                      ))}
 
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
+                                                      <AutoCompleteField id="SubMotif" name="sousMotif"
+                                                                         multiple={true}
+                                                                         label={'Sous-motif de rejet'}
+                                                                         options={rln.localSubMotif1}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'sous-motifs sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                                         disabled={!checkForRejeteOrAnuleOrMore(form.getState().values['statut'])}
+                                                      />
 
-                                                      {(nomRefs && nomRefs?.ROC_MOTIFS) && <Field name="motif" multiple={true} format={value => value || []}>
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  {/*<InputLabel id="Motif-label">Motif de rejet</InputLabel>*/}
-                                                                  {/*<Select id="Motif" labelId="Motif-label"*/}
-                                                                  {/*    multiple*/}
-                                                                  {/*    {...input}*/}
-                                                                  {/*    input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}*/}
-                                                                  {/*    MenuProps={{autoFocus: false}}*/}
-                                                                  {/*    disabled={!Boolean(*/}
-                                                                  {/*  ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))*/}
-                                                                  {/*        || (values?.statut == undefined || values?.statut?.length == 0)*/}
-                                                                  {/*    )}*/}
-                                                                  {/*    renderValue={(selected) => {*/}
-                                                                  {/*        if (selected.length > 1) return `${selected.length} motifs sélectionnés`*/}
-                                                                  {/*        return nomRefs.ROC_MOTIFS[selected[0]];*/}
-                                                                  {/*    }}>*/}
-
-                                                                  {/*    <MenuItem value="all" key='selectAll'>*/}
-                                                                  {/*        {(values?.motif?.length == nomRefs.ROC_MOTIFS.length) ?*/}
-                                                                  {/*            <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}*/}
-                                                                  {/*    </MenuItem>*/}
-
-                                                                  {/*    {rln?.localMotif && rln.localMotif.map(code => (<MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>*/}
-                                                                  {/*        {nomRefs.ROC_MOTIFS[code]}*/}
-                                                                  {/*    </MenuItem>))}*/}
-
-                                                                  {/*</Select>*/}
-                                                                  {rln?.localMotif1 && <AutoCompleteCustom id="Motif"
-                                                                                                      label={'Motif de rejet'}
-                                                                                                      meta={meta}
-                                                                                                      input={input}
-                                                                                                      options={rln.localMotif1}
-                                                                                                      selectMsg={'Sélectionner tout'}
-                                                                                                      deSelectMsg={'Désélectionner tout'}
-                                                                                                      selectedMsg={'motifs sélectionnés'}
-                                                                  />}
-                                                                  <OnChange name="motif">
-                                                                      {(value, previous) => {
-                                                                          console.log('OnChange motif > ',value, previous)
-                                                                          form.mutators.setSubMotifs(value)
-                                                                      }}
-                                                                  </OnChange>
-
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
-
-                                                      {nomRefs && <Field name="sousMotif" multiple={true} format={value => value || []}>
-
-                                                          {({input, meta}) => (
-
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24%' }}>
-                                                                  {/*<InputLabel id="SubMotif-label">Sous-motif de rejet</InputLabel>*/}
-                                                                  {/*<Select id="SubMotif" labelId="SubMotif-label"*/}
-                                                                  {/*    multiple*/}
-                                                                  {/*    {...input}*/}
-                                                                  {/*    input={<OutlinedInput className="RoundedEl" label="Sub Motif" sx={{minWidth: 200}}/>}*/}
-                                                                  {/*    MenuProps={{autoFocus: false}}*/}
-                                                                  {/*    disabled={!Boolean(*/}
-                                                                  {/*        ( values?.statut?.length > 0 && ( values?.statut?.includes('REJETEE') || values?.statut?.includes('INVALIDE') ))*/}
-                                                                  {/*        || (values?.statut == undefined || values?.statut?.length == 0)*/}
-                                                                  {/*    )}*/}
-                                                                  {/*    renderValue={(selected) => {*/}
-                                                                  {/*        if (selected.length > 1) return `${selected.length} sous-motifs sélectionnés`*/}
-                                                                  {/*        return nomRefs.ROC_SOUS_MOTIFS[selected[0]];*/}
-                                                                  {/*    }}>*/}
-
-                                                                  {/*    {rln?.localSubMotif && <MenuItem value="all" key='selectAll'>*/}
-                                                                  {/*        {(values?.sousMotif?.length == rln.localSubMotif.length) ?*/}
-                                                                  {/*                <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}*/}
-                                                                  {/*    </MenuItem>}*/}
-
-                                                                  {/*    {rln?.localSubMotif && rln.localSubMotif.map(code => (*/}
-                                                                  {/*        <MenuItem key={code} value={code} sx={{maxWidth: '350px', whiteSpace: 'normal'}}>*/}
-                                                                  {/*            {nomRefs.ROC_SOUS_MOTIFS[code]}*/}
-                                                                  {/*        </MenuItem>*/}
-                                                                  {/*    ))}*/}
-
-                                                                  {/*</Select>*/}
-                                                                  {rln?.localSubMotif1 && <AutoCompleteCustom id="SubMotif"
-                                                                                       label={'Sous-motif de rejet'}
-                                                                                       meta={meta}
-                                                                                       input={input}
-                                                                                       options={rln.localSubMotif1}
-                                                                                       selectMsg={'Sélectionner tout'}
-                                                                                       deSelectMsg={'Désélectionner tout'}
-                                                                                       selectedMsg={'sous-motifs sélectionnés'}
-                                                                  />}
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
                                                   </AccordionDetails>
                                               </Accordion>
 
@@ -515,12 +410,11 @@ export default function SearchAccordion(props) {
                                                       <Field name="dеpartement" validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(2), validators.maxValue(3))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField id="Department" label={'Nº département'}
-                                                                      type={"number"}
-                                                                      variant="outlined"
-                                                                      error={meta.invalid}
-                                                                      {...input}
-                                                                      className="RoundedEl"
+                                                                  <TextField id="Department" label={'Nº département'} variant="outlined"
+                                                                             type={"number"}
+                                                                             error={meta.invalid}
+                                                                             {...input}
+                                                                             className="RoundedEl"
                                                                   />
                                                                   {meta.error && meta.touched && <span className={'MetaErrInfo'}>{meta.error}</span>}
                                                               </FormControl>
@@ -537,22 +431,16 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="amc" format={value => value || []}>
+                                                      <AutoCompleteField id="Amc" name="amc"
+                                                                         multiple={true}
+                                                                         label={'AMC'}
+                                                                         options={rln.amc}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'AMC sélectionnées'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  {rln.amc && rln.amc.length > 0 &&
-                                                                    <AutoCompleteCustom id="amc" label={'AMC'}
-                                                                        meta={meta}
-                                                                        input={input}
-                                                                        options={rln.amc}
-                                                                        selectMsg={'Sélectionner tout'}
-                                                                        deSelectMsg={'Désélectionner tout'}
-                                                                        selectedMsg={'AMC sélectionnées'}
-                                                                    />}
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
 
                                                       <Field name="nom" validate={validators.composeValidators( validators.maxValue(51) )}>
                                                           {({ input, meta }) => (
@@ -650,13 +538,13 @@ export default function SearchAccordion(props) {
                                                         justifyContent: "start",
                                                     }}
                                                 >
-                                                    <PanelNIR validators={validators} disableCle={disableCle} />
-                                                    <ConfirmNir 
+                                                    <PanelNIR validators={validators} disableCle={disableCle} handleFormChange={form.mutators.handleFormChange}/>
+                                                    <ConfirmNir
                                                         agreed={()=> {
                                                             setOpenNIRDialog(false);
                                                             setExpanded({...expanded, ['panelNIR']: true});
-                                                        }} 
-                                                        disagreed={()=>setOpenNIRDialog(false)} 
+                                                        }}
+                                                        disagreed={()=>setOpenNIRDialog(false)}
                                                         opened={openNIRDialog}
                                                     />
                                                 </AccordionDetails>
@@ -702,11 +590,7 @@ export default function SearchAccordion(props) {
                                       } = params?.values;
 
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                      console.log('form params > ', params)
-                                      form.mutators.setValue(params)
-                                      /**
-                                       * ****************************************************************
-                                       */
+                                      // console.log('form params > ', params)
 
                                       if(
                                           domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||

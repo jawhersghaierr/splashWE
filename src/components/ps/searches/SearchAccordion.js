@@ -21,6 +21,7 @@ import { AutoCompleteCustom, StyledCard, Accordion, AccordionSummary, AccordionD
 
 import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
+import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
 
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -53,6 +54,7 @@ export default function SearchAccordion(props) {
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const [newDisciplines, setNewDisciplines] = useState([]);
+    const [newStatusesRIB, setNewStatusesRIB] = useState([]);
 
     useEffect(() => {
         if (disciplinesIsSuccess) {
@@ -145,22 +147,16 @@ export default function SearchAccordion(props) {
                                     <Typography>Discipline(s)</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    {disciplines && <Field name="disciplines" format={value => value || []}>
-
-                                        {({input, meta}) => (
-                                            <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
-                                                <AutoCompleteCustom id="Disciplines" label={'Discipline'}
-                                                    meta={meta}
-                                                    input={input}
-                                                    options={newDisciplines}
-                                                    selectMsg={'Sélectionner tout'}
-                                                    deSelectMsg={'Désélectionner tout'}
-                                                    selectedMsg={'disciplines sélectionnées'}
-                                                />
-                                            </FormControl>
-                                        )}
-                                    </Field>}
-
+                                    <AutoCompleteField id="Disciplines" name="disciplines"
+                                                       multiple={true}
+                                                       label={'Discipline'}
+                                                       options={newDisciplines}
+                                                       selectMsg={'Sélectionner tout'}
+                                                       deSelectMsg={'Désélectionner tout'}
+                                                       selectedMsg={'disciplines sélectionnées'}
+                                                       FormControlStyle={{ minWidth: '31%', flex: '1 0 31%'}}
+                                                       // handleFormChange={form.mutators.handleFormChange}
+                                    />
                                 </AccordionDetails>
                             </Accordion>
 
@@ -233,6 +229,16 @@ export default function SearchAccordion(props) {
                                             </FormControl>
                                         )}
                                     </Field>
+                                    {/*<AutoCompleteField id="StatutRibs" name="statutRibs"*/}
+                                    {/*                   multiple={true}*/}
+                                    {/*                   label={'Statut RIB'}*/}
+                                    {/*                   options={newDisciplines}*/}
+                                    {/*                   selectMsg={'Sélectionner tout'}*/}
+                                    {/*                   deSelectMsg={'Désélectionner tout'}*/}
+                                    {/*                   selectedMsg={'statuts sélectionnés'}*/}
+                                    {/*                   FormControlStyle={{ minWidth: '31%', flex: '1 0 31%'}}*/}
+                                    {/*    // handleFormChange={form.mutators.handleFormChange}*/}
+                                    {/*/>*/}
 
                                 </AccordionDetails>
                             </Accordion>

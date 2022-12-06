@@ -24,6 +24,8 @@ import { AutoCompleteCustom, Accordion, AccordionSummary, AccordionDetails, Styl
 import { initCriterias, setCriterias, selectCriterias } from '../beneficiaireSlice'
 
 import './searchAccordion.scss'
+import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
+import {checkForRejeteOrAnuleOrMore} from "../../rocEnLigne/utils/utils";
 
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -183,7 +185,7 @@ export default function SearchAccordion(props) {
 
                                     <Field name="dateNaissance">
                                         {({ input, meta }) => (
-                                            <div className={"RoundDate"}>
+                                            <div className={"RoundDate"} style={{ margin: '0 0 10px 15px'}}>
                                                 <DatePicker
 
                                                     error={false}
@@ -246,21 +248,34 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                    {enviroments && <Field name="envCodeList" format={value => value || []}>
+                                    {/*{enviroments && <Field name="envCodeList" format={value => value || []}>*/}
 
-                                        {({input, meta}) => (
-                                            <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
-                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
-                                                    meta={meta}
-                                                    input={input}
-                                                    options={newEnviroments}
-                                                    selectMsg={'Sélectionner tout'}
-                                                    deSelectMsg={'Désélectionner tout'}
-                                                    selectedMsg={'environnement sélectionnées'}
-                                                />
-                                            </FormControl>
-                                        )}
-                                    </Field>}
+                                    {/*    {({input, meta}) => (*/}
+                                    {/*        <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">*/}
+                                    {/*            <AutoCompleteCustom id="Enviroment" label={'Environnement'}*/}
+                                    {/*                meta={meta}*/}
+                                    {/*                input={input}*/}
+                                    {/*                options={newEnviroments}*/}
+                                    {/*                selectMsg={'Sélectionner tout'}*/}
+                                    {/*                deSelectMsg={'Désélectionner tout'}*/}
+                                    {/*                selectedMsg={'environnement sélectionnées'}*/}
+                                    {/*            />*/}
+                                    {/*        </FormControl>*/}
+                                    {/*    )}*/}
+                                    {/*</Field>}*/}
+
+                                    <AutoCompleteField id="Enviroment" name="envCodeList"
+                                                       multiple={true}
+                                                       label={'Environnement'}
+                                                       options={newEnviroments}
+                                                       selectMsg={'Sélectionner tout'}
+                                                       deSelectMsg={'Désélectionner tout'}
+                                                       selectedMsg={'environnement sélectionnées'}
+                                                       FormControlStyle={{ flex: '1 0 21%', margin: '0px 15px'}}
+                                                       // handleFormChange={form.mutators.handleFormChange}
+                                    />
+
+
 
                                     <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
                                         {({ input, meta }) => (
