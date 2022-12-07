@@ -39,9 +39,9 @@ export default function PanelNIR({ validators, disableCle, handleFormChange }) {
                   {meta.error && meta.touched && (
                     <span className={"MetaErrInfo"}>{meta.error}</span>
                   )}
-                <OnChange name={'nir'}>
-                    { () => handleFormChange('nir') }
-                </OnChange>
+                {handleFormChange && <OnChange name={'nir'}>
+                    {() => handleFormChange('nir')}
+                </OnChange>}
 
             </FormControl>
           );
