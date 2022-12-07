@@ -247,15 +247,11 @@ export const reshapeCriterias = ({criterias}) => {
                     if (nir && nir != undefined && cle && cle != undefined) {
                     filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
                 }
-
      */
-
-
 
     /**
      * Reshapes from AutoComplete
      */
-
     if (amc && amc !== undefined) {
         filters.amc = []
         amc.forEach(el => filters.amc.push(el.value))
@@ -276,6 +272,7 @@ export const reshapeCriterias = ({criterias}) => {
         filters.sousMotif = []
         sousMotif.forEach(el => filters.sousMotif.push(el.value))
     }
+    //^^^^^^^^^^^^^^^^^^Reshapes from AutoComplete^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
     filters.cashe = null

@@ -39,13 +39,6 @@ export default function SearchAccordion(props) {
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
-
-    const onSubmit = async (values) => {
-        await sleep(300);
-        dispatch(setCriterias({...values, cashe: Math.random()}));
-        setPanelExpanded(false);
-    };
-
     const [expanded, setExpanded] = useState({
         panelSoins: true,
         panelInformationsDuPaiement: true,
@@ -69,23 +62,14 @@ export default function SearchAccordion(props) {
 
     useEffect(() => {
         if (nomRefsIsSuccess) {
-            const paiementStatuses = Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]}));
-            setPaiementStatuses(paiementStatuses);
 
-            const environments = Object.keys(nomRefs.ENVIRONMENT).map(code => ({value: code, title: nomRefs.ENVIRONMENT[code]}));
-            setEnvironments(environments);
-
-            const provenances = Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`}));
-            setProvenances(provenances);
-
-            const grоupDisciplines = Object.keys(nomRefs.DISCIPLINE_GROUP).map(code => ({value: code, title: nomRefs.DISCIPLINE_GROUP[code]}));
-            setGrоupDisciplines(grоupDisciplines);
-
-            const disciplines = Object.keys(nomRefs.DISCIPLINE).map(code => ({value: code, title: nomRefs.DISCIPLINE[code]}));
-            setDisciplines(disciplines);
+            setPaiementStatuses(Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]})));
+            setEnvironments(Object.keys(nomRefs.ENVIRONMENT).map(code => ({value: code, title: nomRefs.ENVIRONMENT[code]})));
+            setProvenances(Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`})));
+            setGrоupDisciplines(Object.keys(nomRefs.DISCIPLINE_GROUP).map(code => ({value: code, title: nomRefs.DISCIPLINE_GROUP[code]})));
+            setDisciplines(Object.keys(nomRefs.DISCIPLINE).map(code => ({value: code, title: nomRefs.DISCIPLINE[code]})));
 
             setFirstRender(false);
-
         }
     }, [nomRefs, nomRefsIsSuccess]);
 
@@ -103,6 +87,12 @@ export default function SearchAccordion(props) {
             setExpanded(checkInsidePanels(values))
         }
         setPanelExpanded(!panelExpanded);
+    };
+
+    const onSubmit = async (values) => {
+        await sleep(300);
+        dispatch(setCriterias({...values, cashe: Math.random()}));
+        setPanelExpanded(false);
     };
 
     if (nomRefsIsFetching) return <div className={'formContent'} style={{height: '30%'}}><CircularProgress style={{margin: '100px 50%'}}/></div>
@@ -741,7 +731,7 @@ export default function SearchAccordion(props) {
                                       </Collapse>
                                   </StyledCard>
                                   <FormSpy onChange={firstRender? ()=>{}: (values) => {
-                                      // form.mutators.setValue(values)
+
                                       const {
                                           numeroFacture, numIdPs, numAdhInd,
                                           dateDebutSoin, dateDebutSoinFin,

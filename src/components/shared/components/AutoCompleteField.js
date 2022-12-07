@@ -5,7 +5,7 @@ import match from 'autosuggest-highlight/match';
 import {OnChange} from "react-final-form-listeners";
 import {Field} from "react-final-form";
 
-export const AutoCompleteField = ({id, name, options, label, selectMsg, deSelectMsg, selectedMsg, handleFormChange, multiple, disabled, FormControlStyle}) => {
+export const AutoCompleteField = ({id, name, options=[], label, selectMsg, deSelectMsg, selectedMsg, handleFormChange, multiple, disabled, FormControlStyle}) => {
 
 	const [focus, setFocus] = useState(false);
 	const [checkAll, setCheckAll] = useState({title: selectMsg, value: 'all'});

@@ -1,53 +1,33 @@
 import {calcCleFromNir} from "../../../utils/validator-utils";
 import {reshapeMotifVsStatus} from "../utils/utils";
 
-export const MutatorSetValue = ({setMotif, setDisableCle, nomRefs}) =>  ([field, value], state, utils) => {
+export const handleFormChange = ({nomRefs, setMotif, setDisableCle}) => ([name], state, { changeValue }) => {
 
-    utils.changeValue(state, field, (value) => {
+    // console.log('name ', name)
+    // console.log('nomRefs ', nomRefs)
+    console.log('state ', state)
+    let values = state.formState.values
 
-        let _value = value;
+    if ( state?.lastFormState?.modified?.birdDate && values?.dateNai != null && values?.birdDate == null ) {
+        changeValue(state, 'dateNai', (value) => undefined)
+    }
 
-	    if ( field?.modified?.birdDate && _value?.dateNai != null && value == null ) { _value.dateNai = null}
+    switch (name) {
 
-        let motif = reshapeMotifVsStatus({status: _value?.status, nomRefs})
-        if (motif) {
-            setMotif(motif)
-        } else motif = {}
+        case 'nir':
+            let cle = calcCleFromNir(values)
+            setDisableCle(cle ? false : true)
+            changeValue(state, 'cle', (value) => cle || undefined)
+        break
+
+        case 'status':
+            console.log('values?.status > ', values?.status)
+            console.log('values?.errorCode > ', values?.errorCode)
+            setMotif( reshapeMotifVsStatus({status: values?.status, nomRefs}) )
+            if (values?.errorCode !== undefined) changeValue(state, 'errorCode', (value) => undefined)
+        break
 
 
+    }
 
-        switch (state.formState.active) {
-
-            case 'nir':
-                let cle = calcCleFromNir(value)
-                _value.cle = cle || undefined
-                setDisableCle(cle ? false : true)
-            break
-
-            case 'numClient':
-                if (_value?.numClient?.length === 0 ||
-                    (_value?.numClient?.includes('all') && _value?.numClient?.length > Object.keys(nomRefs?.CLIENT).length)
-                ) _value = {..._value, numClient: undefined}
-                if (_value?.numClient?.includes('all')) _value = {..._value, numClient: Object.keys(nomRefs?.CLIENT)}
-            break
-
-            case 'errorCode':
-                if (_value?.errorCode?.length === 0 ||
-                    (_value?.errorCode?.includes('all') && _value?.errorCode?.length > Object.keys(motif).length)
-                ) _value = {..._value, errorCode: undefined}
-                if (_value?.errorCode?.includes('all')) _value = {..._value, errorCode: Object.keys(motif)}
-            break
-
-            case 'status':
-                if (_value?.status?.length === 0 ||
-                    (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs.FACTURE_STATUS).length)
-                ) _value = {..._value, status: undefined}
-                if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs.FACTURE_STATUS)}
-                if (_value.errorCode !== undefined) _value = {..._value, errorCode: undefined}
-            break
-
-        }
-
-        return _value
-
-})}
+}

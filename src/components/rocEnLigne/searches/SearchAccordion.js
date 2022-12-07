@@ -25,8 +25,8 @@ import { checkForRejeteOrAnuleOrMore, checkInsidePanels} from '../utils/utils';
 import { isValidDate } from "../../../utils/convertor-utils";
 import { validators, allowSearch } from '../../../utils/validator-utils';
 
-import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
-import { handleFormChange} from "./Mutators";
+import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
+import { handleFormChange } from "./Mutators";
 
 import './searchAccordion.scss'
 
@@ -531,13 +531,7 @@ export default function SearchAccordion(props) {
                                                 <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                     <Typography style={{ marginLeft: "5px" }}><b>Recherche par NIR</b></Typography>
                                                 </AccordionSummary>
-                                                <AccordionDetails
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexDirection: "row",
-                                                        justifyContent: "start",
-                                                    }}
-                                                >
+                                                <AccordionDetails sx={{ display: "flex", flexDirection: "row", justifyContent: "start" }} >
                                                     <PanelNIR validators={validators} disableCle={disableCle} handleFormChange={form.mutators.handleFormChange}/>
                                                     <ConfirmNir
                                                         agreed={()=> {

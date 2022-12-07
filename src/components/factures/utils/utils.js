@@ -1,5 +1,4 @@
-import {useEffect, useRef} from "react";
-import {statusesRIB} from "../../../utils/status-utils";
+// import {statusesRIB} from "../../../utils/status-utils";
 import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const checkInsidePanels = (values) => {
@@ -23,31 +22,36 @@ export const checkInsidePanels = (values) => {
     return result
 }
 
-export const statusRow = (formattedValue) => {
+// export const statusRow = (formattedValue) => {
+//
+//     let res = {}
+//     formattedValue?.forEach((stat, i) => {
+//         res[stat.statutRib] = {}
+//         res[stat.statutRib] = {...stat, ...statusesRIB[stat.statutRib]};
+//     })
+//     /*
+//         Ако има поне 1 ПС чийто риб е en attente - показваме En attente
+//         Aко има поне 1 ПС чийто риб е refused - показваме Refusé
+//         Ако ПС-ите нямат риб или той е деактивиран - показваме Manquant
+//         Ако ПС-ите нямат активна конвенция - тогава показваме Inactif
+//         Ако всичките рибове на ПС са валидирани - показваме Validé
+//     */
+//
+//     if (res.ATT?.count > 0) return {...res, ATT: {...res.ATT, shown: true}};
+//     if (res.REF?.count > 0) return {...res, REF: {...res.REF, shown: true}};
+//     if (res.MIS?.count > 0) return {...res, MIS: {...res.MIS, shown: true}};
+//     if (res.NA?.count > 0) return {...res, NA: {...res.NA, shown: true}};
+//     if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
+//
+//     return res;
+// }
 
-    let res = {}
-    formattedValue?.forEach((stat, i) => {
-        res[stat.statutRib] = {}
-        res[stat.statutRib] = {...stat, ...statusesRIB[stat.statutRib]};
-    })
-    /*
-        Ако има поне 1 ПС чийто риб е en attente - показваме En attente
-        Aко има поне 1 ПС чийто риб е refused - показваме Refusé
-        Ако ПС-ите нямат риб или той е деактивиран - показваме Manquant
-        Ако ПС-ите нямат активна конвенция - тогава показваме Inactif
-        Ако всичките рибове на ПС са валидирани - показваме Validé
-    */
-
-    if (res.ATT?.count > 0) return {...res, ATT: {...res.ATT, shown: true}};
-    if (res.REF?.count > 0) return {...res, REF: {...res.REF, shown: true}};
-    if (res.MIS?.count > 0) return {...res, MIS: {...res.MIS, shown: true}};
-    if (res.NA?.count > 0) return {...res, NA: {...res.NA, shown: true}};
-    if (res.ACT?.count > 0) return {...res, ACT: {...res.ACT, shown: true}};
-
-    return res;
-}
-
-
+/**
+ *
+ * @param status
+ * @param nomRefs
+ * @returns {null|{}}
+ */
 export const reshapeMotifVsStatus = ({status, nomRefs}) => {
     /**
      * reshaping nomRefs.FACTURE_ERROR trough nomRefs.FACTURE_RLTN_FACTURE_ERROR based on
@@ -58,24 +62,49 @@ export const reshapeMotifVsStatus = ({status, nomRefs}) => {
     Object.keys(nomRefs.FACTURE_RLTN_FACTURE_ERROR).forEach( el => {
         if (!selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]]) selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]] = []
         selectedStatusesForFactureError[nomRefs.FACTURE_RLTN_FACTURE_ERROR[el][0]].push(el)
-
     })
+    console.log('selectedStatusesForFactureError ', selectedStatusesForFactureError)
+    /**
+     * selectedStatusesForFactureError:
+     * {
+     *      REJETEE: [
+     *          doublon,
+     *          zero-total-rc,
+     *          no-id-periode-fact,
+     *          ...
+     *      ],
+     *      ANNULEE: [
+     *          error-taux,
+     *          error-fact
+     *      ]
+     * }
+     *
+     */
 
     if (status) {
-        let _motif = {}
+        let _motif = []
         if (nomRefs && status.length > 0) {
             status?.forEach(stat => {
-                if (selectedStatusesForFactureError[stat]) {
-                    selectedStatusesForFactureError[stat].forEach(facErr => _motif[facErr] = nomRefs.FACTURE_ERROR[facErr])
+                if (selectedStatusesForFactureError[stat.value]) {
+                    selectedStatusesForFactureError[stat.value].forEach(factErr =>
+                        _motif.push({value: factErr, title: nomRefs.FACTURE_ERROR[factErr]})
+                    )
                 }
             })
         }
 
+        console.log('_motif ', _motif)
         return _motif || null;
     }
     //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 }
 
+
+/**
+ *
+ * @param criterias
+ * @returns {*}
+ */
 export const reshapeCriterias = ({criterias}) => {
     let {
         dateEntree, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
@@ -117,6 +146,23 @@ export const reshapeCriterias = ({criterias}) => {
     if (nir && nir != undefined && cle && cle != undefined) {
         filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
     }
+
+    /**
+     * Reshapes from AutoComplete
+     */
+    if (numClient && numClient !== undefined) {
+        filters.numClient = []
+        numClient.forEach(el => filters.numClient.push(el.value))
+    }
+    if (errorCode && errorCode !== undefined) {
+        filters.errorCode = []
+        errorCode.forEach(el => filters.errorCode.push(el.value))
+    }
+    if (status && status !== undefined) {
+        filters.status = []
+        status.forEach(el => filters.status.push(el.value))
+    }
+    //^^^^^^^^^^^^^^^^^^Reshapes from AutoComplete^^^^^^^^^^^^^^^^^^^^^^^^^
 
     if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
         if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
