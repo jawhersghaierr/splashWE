@@ -19,14 +19,11 @@ import { fr } from "date-fns/locale";
 import { isValidDate } from '../../../utils/convertor-utils';
 import { allowSearch, validators } from '../../../utils/validator-utils';
 import { checkInsidePanels } from '../utils/utils';
-import { Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
 
 import { initCriterias, setCriterias, selectCriterias } from '../beneficiaireSlice'
 
 import './searchAccordion.scss'
-import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
-import {checkForRejeteOrAnuleOrMore} from "../../rocEnLigne/utils/utils";
-
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -83,18 +80,13 @@ export default function SearchAccordion(props) {
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
             mutators={{ ...arrayMutators, setValue: ([field, value], state, utils) => {
-
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-
                         if (field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
-
                         return _value;
-
                     });
                 }
             }}
-
             render = {({ handleSubmit, form, submitting, pristine, values, error }) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
@@ -248,22 +240,6 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                    {/*{enviroments && <Field name="envCodeList" format={value => value || []}>*/}
-
-                                    {/*    {({input, meta}) => (*/}
-                                    {/*        <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">*/}
-                                    {/*            <AutoCompleteCustom id="Enviroment" label={'Environnement'}*/}
-                                    {/*                meta={meta}*/}
-                                    {/*                input={input}*/}
-                                    {/*                options={newEnviroments}*/}
-                                    {/*                selectMsg={'Sélectionner tout'}*/}
-                                    {/*                deSelectMsg={'Désélectionner tout'}*/}
-                                    {/*                selectedMsg={'environnement sélectionnées'}*/}
-                                    {/*            />*/}
-                                    {/*        </FormControl>*/}
-                                    {/*    )}*/}
-                                    {/*</Field>}*/}
-
                                     <AutoCompleteField id="Enviroment" name="envCodeList"
                                                        multiple={true}
                                                        label={'Environnement'}
@@ -274,8 +250,6 @@ export default function SearchAccordion(props) {
                                                        FormControlStyle={{ flex: '1 0 21%', margin: '0px 15px'}}
                                                        // handleFormChange={form.mutators.handleFormChange}
                                     />
-
-
 
                                     <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
                                         {({ input, meta }) => (

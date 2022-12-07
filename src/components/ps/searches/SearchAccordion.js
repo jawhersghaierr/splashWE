@@ -2,10 +2,9 @@ import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FormSpy, Form, Field } from 'react-final-form';
-import arrayMutators from 'final-form-arrays'
 
 import { Collapse, CardActions, TextField}  from "@mui/material";
-import { Button, Badge, CardContent, CardHeader, FormControl, MenuItem, OutlinedInput, Select, IconButton, Typography } from '@mui/material';
+import { Button, Badge, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
@@ -13,14 +12,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { checkInsidePanels } from '../utils/utils';
 import { statusesRIB } from '../../../utils/status-utils';
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
+import { allowSearch, validators } from '../../../utils/validator-utils';
 
+import { AutoCompleteField, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice';
 
-import { StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
-
-import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
-import { MutatorSetValue } from "./Mutators";
 import './searchAccordion.scss'
 
 
@@ -78,7 +74,6 @@ export default function SearchAccordion(props) {
         <div className={'formContent'}>
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
-            mutators={{ ...arrayMutators, setValue: MutatorSetValue() }}
             render = {({ handleSubmit, form, submitting, pristine, values }) => (
                 <form onSubmit={handleSubmit} >
                 <StyledCard id="FinalForm" variant="outlined"
@@ -239,7 +234,6 @@ export default function SearchAccordion(props) {
                 </StyledCard>
 
                <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
-                   form.mutators.setValue(values)
                    const {disciplines, statutRibs, codePostal, ville} = values?.values;
                     if(disciplines || statutRibs || codePostal || ville) {
                         setDotShow(true)

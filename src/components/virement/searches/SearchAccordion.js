@@ -5,7 +5,7 @@ import arrayMutators from 'final-form-arrays'
 
 import {
     CardActions, TextField, Collapse, InputLabel,
-    Button, Badge, CardContent, CardHeader, FormControl, Typography, InputAdornment, IconButton, MenuItem, Select, OutlinedInput
+    Button, Badge, CardContent, CardHeader, FormControl, Typography, InputAdornment, IconButton
 } from "@mui/material";
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,7 +22,7 @@ import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'
 import { Accordion, AccordionDetails, StyledCard } from "../../shared";
 
 import { checkInsidePanels } from '../utils/utils'
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
+import { allowSearch, validators } from '../../../utils/validator-utils';
 
 import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
 import { handleFormChange } from "./Mutators";

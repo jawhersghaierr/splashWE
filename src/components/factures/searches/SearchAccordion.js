@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 
 import {Badge, CardHeader, Select, CardContent, FormControl, Typography, MenuItem, Button, OutlinedInput, InputAdornment} from "@mui/material";
@@ -11,23 +12,18 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { FormSpy, Form, Field } from 'react-final-form';
-
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 
-import { useGetRefsQuery } from "../../../services/refsApi";
-import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-
 import { checkInsidePanels } from '../utils/utils';
 import { isValidDate} from '../../../utils/convertor-utils';
 import { validators, allowSearch} from '../../../utils/validator-utils';
 
-import { Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput, StyledCard } from "../../shared";
-
-import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput, StyledCard } from "../../shared";
+import { useGetRefsQuery } from "../../../services/refsApi";
+import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
 import { handleFormChange } from "./Mutators";
 
 import './searchAccordion.scss'

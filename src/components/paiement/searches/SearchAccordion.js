@@ -1,8 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    CardActions, CircularProgress, Collapse, InputLabel, TextField,
-    Badge, Button, CardHeader, CardContent, FormControl, MenuItem, OutlinedInput, InputAdornment, IconButton, Select, Typography,
+    CardActions, CircularProgress, Collapse, TextField,
+    Badge, Button, CardHeader, CardContent, FormControl, InputAdornment, IconButton, Typography,
 } from "@mui/material";
 
 import { FormSpy, Form, Field } from 'react-final-form';
@@ -21,13 +21,11 @@ import { checkInsidePanels } from '../utils/utils'
 import { isValidDate } from '../../../utils/convertor-utils';
 import { validators, allowSearch } from '../../../utils/validator-utils';
 
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
+import { handleFormChange } from "./Mutators";
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 
-import { Accordion, AccordionSummary, AccordionDetails, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
-
-import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
-import { handleFormChange } from "./Mutators";
 import './searchAccordion.scss'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))

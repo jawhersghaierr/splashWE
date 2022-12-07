@@ -17,16 +17,14 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { fr } from "date-fns/locale";
 
-import { ConfirmNir, PanelNIR, MaskedInput, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
+import { AutoCompleteField, ConfirmNir, PanelNIR, MaskedInput, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
+import { handleFormChange } from "./Mutators";
 import { selectCriterias, setCriterias, initCriterias } from '../rocEnLigneSlice';
 import { useGetRefsQuery } from "../../../services/refsApi";
 
 import { checkForRejeteOrAnuleOrMore, checkInsidePanels} from '../utils/utils';
 import { isValidDate } from "../../../utils/convertor-utils";
 import { validators, allowSearch } from '../../../utils/validator-utils';
-
-import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
-import { handleFormChange } from "./Mutators";
 
 import './searchAccordion.scss'
 
@@ -584,7 +582,6 @@ export default function SearchAccordion(props) {
                                       } = params?.values;
 
                                       //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                                      // console.log('form params > ', params)
 
                                       if(
                                           domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact || statut ||
