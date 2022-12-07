@@ -26,6 +26,7 @@ export const AutoCompleteField = ({id, name, options=[], label, selectMsg, deSel
 					                          openOnFocus
 					                          clearOnBlur={true}
 					                          includeInputInList
+					                          noOptionsText="pas d'options disponibles"
 					                          getOptionLabel={(option, value) => {
 						                          // console.log('getOptionLabel option ', option)
 						                          // console.log('getOptionLabel value ', value)

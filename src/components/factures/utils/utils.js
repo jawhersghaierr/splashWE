@@ -174,5 +174,7 @@ export const reshapeCriterias = ({criterias}) => {
         }
     }
     filters.cashe = null
+
+    console.log('filters ', filters)
     return filters
 }

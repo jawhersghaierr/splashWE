@@ -12,7 +12,7 @@ import { selectCriterias } from '../facturesSlice'
 import {usePrevious} from '../../../utils/status-utils';
 import { allowSearch } from '../../../utils/validator-utils';
 import mainPS from "../../../../assets/PS.png";
-import {NoSearchResultsAlert, MoreThan200Results} from "../../shared";
+import {NoSearchResultsAlert, MoreThan200Results, MoreThan10000ResultsForDownload} from "../../shared";
 import {env_IP, ports} from "../../../../env-vars";
 import download from "../../../../assets/icons/download-blue.svg";
 import {addCriteriasForGetRequest} from "../../../utils/utils";
@@ -24,6 +24,7 @@ export const FacturesGrid = ({disciplines}) => {
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
     const [currentPage, setCurrentPage] = useState( 0);
+    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState( false);
     const [sortProperties, setSortProperties] = useState({
         sortDirection: null,
         sortProperty: null
@@ -49,6 +50,13 @@ export const FacturesGrid = ({disciplines}) => {
         }
     }, [criterias, currentPage]);
 
+    const openAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(true)
+    }
+    const closeAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(false)
+    }
+
     if (!isFetching && isSuccess  && !data?.results) return <NoSearchResultsAlert/>
     if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
@@ -70,6 +78,7 @@ export const FacturesGrid = ({disciplines}) => {
                     })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}&dateFormat=dateNai`}
                     className="RoundedEmptyButt"
                     download="result.csv"
+                    onClick={openAlertForMoreThan10000ResultsForDownload}
                 >
                     Еxporter
                 </Button>
@@ -125,6 +134,7 @@ export const FacturesGrid = ({disciplines}) => {
         </Stack>}
 
         <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
+        <MoreThan10000ResultsForDownload open={alertForMoreThan10000ResultsForDownload} handleMsgClose={closeAlertForMoreThan10000ResultsForDownload}/>
 
     </div>
 }

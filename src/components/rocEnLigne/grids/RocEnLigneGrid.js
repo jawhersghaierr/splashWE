@@ -7,17 +7,18 @@ import {DataGrid} from '@mui/x-data-grid';
 import {columns} from "./rocEnLigneGridColumns";
 import { selectCriterias } from '../rocEnLigneSlice'
 import {useGetRocEnLigneQuery} from "../services/rocEnLigneApi";
-import {usePrevious} from '../../../utils/status-utils'
 import {useGetRefsQuery} from "../../../services/refsApi";
-import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
+import {NoSearchResultsAlert, MoreThan200Results, MoreThan10000ResultsForDownload} from "../../shared/modals";
 import mainPS from "../../../../assets/PS.png";
-import '../../shared/styles/grid.scss';
 import {env_IP, ports} from "../../../../env-vars";
 import {baseUrl} from "../services/rocEnLigneApi";
+import {usePrevious} from '../../../utils/status-utils'
 import {addCriteriasForGetRequest} from "../../../utils/utils";
-import {reshapeCriterias} from "../../factures/utils/utils";
+import {reshapeCriterias} from "../utils/utils";
 import {reverseMapRocEnLigne} from "./rocEnLigneGridColumns";
 import download from "../../../../assets/icons/download-blue.svg";
+
+import '../../shared/styles/grid.scss';
 
 export const RocEnLigneGrid = () => {
 
@@ -52,6 +53,14 @@ export const RocEnLigneGrid = () => {
 
     }, [criterias, currentPage]);
 
+    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState( false);
+    const openAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(true)
+    }
+    const closeAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(false)
+    }
+
     if (!isFetching && isSuccess  && (!data?.results || data?.results?.length == 0)) return <NoSearchResultsAlert/>
     if (isFetching || nomRefsIsFetching) return  <CircularProgress style={{margin: '100px 50%'}}/>
 
@@ -73,6 +82,7 @@ export const RocEnLigneGrid = () => {
                     })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(reverseMapRocEnLigne)}&dateFormat=dateNaiss`}
                     className="RoundedEmptyButt"
                     download="result.csv"
+                    onClick={openAlertForMoreThan10000ResultsForDownload}
                 >
                     Еxporter
                 </Button>
@@ -126,6 +136,7 @@ export const RocEnLigneGrid = () => {
             />
         </Stack>}
         <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
+        <MoreThan10000ResultsForDownload open={alertForMoreThan10000ResultsForDownload} handleMsgClose={closeAlertForMoreThan10000ResultsForDownload}/>
 
     </div>
 }

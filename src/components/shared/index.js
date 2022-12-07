@@ -2,6 +2,7 @@ import {
     ConfirmNir,
     ModalInfo,
     MoreThan200Results,
+    MoreThan10000ResultsForDownload,
     NoGridResultsAlert,
     NoSearchResultsAlert,
     PanelNIR
@@ -25,6 +26,7 @@ export {
     ConfirmNir,
     ModalInfo,
     MoreThan200Results,
+    MoreThan10000ResultsForDownload,
     NoGridResultsAlert,
     NoSearchResultsAlert,
     PanelNIR,
