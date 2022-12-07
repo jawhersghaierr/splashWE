@@ -53,6 +53,10 @@ export const reshapeCriterias = ({criterias}) => {
         filters.disciplines = [];
         disciplines.forEach(el => filters.disciplines.push(el.value));
     }
+    if (statutRibs && statutRibs !== undefined) {
+        filters.statutRibs = [];
+        statutRibs.forEach(el => filters.statutRibs.push(el.value));
+    }
 
     filters.cashe = null;
     return filters;

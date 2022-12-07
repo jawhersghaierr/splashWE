@@ -24,7 +24,7 @@ import { validators, allowSearch } from '../../../utils/validator-utils';
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 
-import { Accordion, AccordionSummary, AccordionDetails, AutoCompleteCustom, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
+import { Accordion, AccordionSummary, AccordionDetails, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
 
 import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
 import { handleFormChange } from "./Mutators";

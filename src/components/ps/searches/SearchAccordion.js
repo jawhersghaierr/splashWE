@@ -1,10 +1,10 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
-import arrayMutators from 'final-form-arrays'
 import { FormSpy, Form, Field } from 'react-final-form';
+import arrayMutators from 'final-form-arrays'
 
-import { InputLabel, Collapse, CardActions, TextField}  from "@mui/material";
+import { Collapse, CardActions, TextField}  from "@mui/material";
 import { Button, Badge, CardContent, CardHeader, FormControl, MenuItem, OutlinedInput, Select, IconButton, Typography } from '@mui/material';
 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -17,11 +17,11 @@ import { allowSearch, selectDeselectAllValues, validators } from '../../../utils
 
 import { setCriterias, initCriterias, selectCriterias } from '../psSlice';
 
-import { AutoCompleteCustom, StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
+import { StyledCard, Accordion, AccordionSummary, AccordionDetails } from "../../shared";
 
-import {MutatorSetValue} from "./Mutators";
+import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
+import { MutatorSetValue } from "./Mutators";
 import './searchAccordion.scss'
-import {AutoCompleteField} from "../../shared/components/AutoCompleteField";
 
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -54,7 +54,7 @@ export default function SearchAccordion(props) {
     const [panelExpanded, setPanelExpanded] = useState(false);
 
     const [newDisciplines, setNewDisciplines] = useState([]);
-    const [newStatusesRIB, setNewStatusesRIB] = useState([]);
+    const newStatusesRIB = Object.keys(statusesRIB).map(ribKey => ({value: ribKey, title: statusesRIB[ribKey]?.label}))
 
     useEffect(() => {
         if (disciplinesIsSuccess) {
@@ -169,8 +169,8 @@ export default function SearchAccordion(props) {
                                     <Field name="codePostal"
                                            validate={validators.composeValidators(validators.mustBeNumber, validators.minValue(5), validators.maxValue(6))}>
                                         {({ input, meta }) => (
-                                            <div style={{marginRight: '15px'}}>
-                                                <TextField id="CodePostal" label="Code Postal" className="RoundedEl" sx={{width: 360}}
+                                            <div style={{marginRight: '15px'}} >
+                                                <TextField id="CodePostal" label="Code Postal" className="RoundedEl" sx={{minWidth: '31%', flex: '1 0 31%'}}
                                                     error={meta.invalid}
                                                     variant="outlined"
                                                     {...input}
@@ -200,45 +200,16 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails>
 
-                                    <Field name="statutRibs" format={value => value || []}>
-
-                                        {({ input, meta }) => (
-                                            <FormControl sx={{ m: 1, width: 300 }} className="RoundedEl">
-                                                <InputLabel id="StatutRib-label">Statut RIB</InputLabel>
-                                                <Select id="StatutRibs" labelId="StatutRib-label" className="RoundedEl"
-                                                    multiple
-                                                    MenuProps={{autoFocus: false}}
-                                                    {...input}
-                                                    input={<OutlinedInput className="RoundedEl" label="StatutRibs"/>}
-                                                    renderValue={(selected) => {
-                                                        if (selected.length > 1) {
-                                                            return `${selected.length} statuts sélectionnés`
-                                                        }
-                                                        return statusesRIB[selected[0]].label || '';
-                                                    }}>
-                                                    <MenuItem value="all" key='selectAll'>
-                                                        {(values?.statutRibs?.length == Object.keys(statusesRIB).length) ?
-                                                            <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                    </MenuItem>
-                                                    {Object.keys(statusesRIB).map(code => (
-                                                        <MenuItem key={code} value={code}>
-                                                            {statusesRIB[code].label}
-                                                        </MenuItem>
-                                                    ))}
-                                                </Select>
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                    {/*<AutoCompleteField id="StatutRibs" name="statutRibs"*/}
-                                    {/*                   multiple={true}*/}
-                                    {/*                   label={'Statut RIB'}*/}
-                                    {/*                   options={newDisciplines}*/}
-                                    {/*                   selectMsg={'Sélectionner tout'}*/}
-                                    {/*                   deSelectMsg={'Désélectionner tout'}*/}
-                                    {/*                   selectedMsg={'statuts sélectionnés'}*/}
-                                    {/*                   FormControlStyle={{ minWidth: '31%', flex: '1 0 31%'}}*/}
-                                    {/*    // handleFormChange={form.mutators.handleFormChange}*/}
-                                    {/*/>*/}
+                                    <AutoCompleteField id="StatutRibs" name="statutRibs"
+                                                       multiple={true}
+                                                       label={'Statut RIB'}
+                                                       options={newStatusesRIB}
+                                                       selectMsg={'Sélectionner tout'}
+                                                       deSelectMsg={'Désélectionner tout'}
+                                                       selectedMsg={'statuts sélectionnés'}
+                                                       FormControlStyle={{ minWidth: '31%', flex: '1 0 31%'}}
+                                                    // handleFormChange={form.mutators.handleFormChange}
+                                    />
 
                                 </AccordionDetails>
                             </Accordion>

@@ -19,7 +19,7 @@ import { fr } from "date-fns/locale";
 import { isValidDate } from '../../../utils/convertor-utils';
 import { allowSearch, validators } from '../../../utils/validator-utils';
 import { checkInsidePanels } from '../utils/utils';
-import { AutoCompleteCustom, Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
+import { Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
 
 import { initCriterias, setCriterias, selectCriterias } from '../beneficiaireSlice'
 

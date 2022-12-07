@@ -10,7 +10,7 @@ import {
 import {
     VirtLink,
     StyledCard,
-    AutoCompleteCustom
+    AutoCompleteField
 } from './components'
 
 import {TextMaskCustom, MaskedInput} from './customTextField/TextMaskCustom';
@@ -33,7 +33,7 @@ export {
 
     VirtLink,
     StyledCard,
-    AutoCompleteCustom,
+    AutoCompleteField,
 
     ActesGrid, actesGridColumns,
     Accordion, AccordionSummary, AccordionDetails,
