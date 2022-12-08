@@ -149,50 +149,57 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                     margin: '5px',
                     padding: '10px 25px 25px 25px'}}>
 
+                    {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
                     <div style={{display: 'flex', flexDirection: 'column', flex: 2}}>
-                        <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                            <b>Informations demande</b>
-                        </Typography>
-                        {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
-                        {isSuccess && nomRefsIsSuccess && <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
-                            <div style={{flex: 1, marginRight: '5%'}}>
-                                <RowInfo label={'Date de réception'}
-                                         value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)}
-                                         border={true} justify={true}
-                                         id={rocID} field="dateReception" />
-                                <RowInfo label={'ID période de facturation / Nº d\'occurrence'}
-                                         value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true}
-                                         justify={true} id={rocID} field="idPeriodeFacturationNumOccurence" />
-                                <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance}
-                                         border={true} justify={true} id={rocID} field="natureAssurance" />
-                                <RowInfo label={'Nature interruption séjour'}
-                                         value={data?.info?.demande?.natureInterruptionSejour} border={true}
-                                         justify={true} id={rocID} field="natureInterruptionSejour" />
-                                <RowInfo label={'Indicateur parcours de soins'}
-                                         value={data?.info?.demande?.indicateurParcours} border={true} justify={true}
-                                         id={rocID} field="indicateurParcours" />
-                                <RowInfo label={'Motif de rejet'}
-                                         value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true}
-                                         justify={true} id={rocID} field="motifRejets" />
+
+                        {(isSuccess && nomRefsIsSuccess) &&
+
+                            <div style={{display: 'flex', flexDirection: 'row', marginRight: '5%'}}>
+                                <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
+                                    <b>Informations demande</b>
+                                </Typography>
+                                <div style={{flex: 1, marginRight: '5%'}}>
+                                    <RowInfo label={'Date de réception'}
+                                             value={data?.info?.demande?.dateReception && convertDate(data?.info?.demande?.dateReception)}
+                                             border={true} justify={true}
+                                             id={rocID} field="dateReception" />
+                                    <RowInfo label={'ID période de facturation / Nº d\'occurrence'}
+                                             value={data?.info?.demande?.idPeriodeFacturationNumOccurence} border={true}
+                                             justify={true} id={rocID} field="idPeriodeFacturationNumOccurence" />
+                                    <RowInfo label={'Nature d\'assurance'} value={data?.info?.demande?.natureAssurance}
+                                             border={true} justify={true} id={rocID} field="natureAssurance" />
+                                    <RowInfo label={'Nature interruption séjour'}
+                                             value={data?.info?.demande?.natureInterruptionSejour} border={true}
+                                             justify={true} id={rocID} field="natureInterruptionSejour" />
+                                    <RowInfo label={'Indicateur parcours de soins'}
+                                             value={data?.info?.demande?.indicateurParcours} border={true} justify={true}
+                                             id={rocID} field="indicateurParcours" />
+                                    <RowInfo label={'Motif de rejet'}
+                                             value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true}
+                                             justify={true} id={rocID} field="motifRejets" />
+                                </div>
+
+                                {/*<div style={{flex: 1}}>*/}
+                                {/*    <RowInfo label={'Domaine'}*/}
+                                {/*             value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine}*/}
+                                {/*             border={true} justify={true} id={rocID} field="domaine" />*/}
+                                {/*    <RowInfo label={'Période des prestations'}*/}
+                                {/*             value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`}*/}
+                                {/*             border={true} justify={true} id={rocID} field="periodePrestationStart_periodePrestationEnd" />*/}
+                                {/*    <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange}*/}
+                                {/*             border={true} justify={true} id={rocID} field="contexteEchange" />*/}
+                                {/*    <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier}*/}
+                                {/*             border={true} justify={true} id={rocID} field="numDossier" />*/}
+                                {/*    <RowInfo label={'Date accident de travail'}*/}
+                                {/*             value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)}*/}
+                                {/*             border={true} justify={true} id={rocID} field="dateAccidentTravail" />*/}
+                                {/*    <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets}*/}
+                                {/*             border={true} justify={true} id={rocID} field="messageRejets" />*/}
+                                {/*</div>*/}
+
                             </div>
-                            <div style={{flex: 1}}>
-                                <RowInfo label={'Domaine'}
-                                         value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine}
-                                         border={true} justify={true} id={rocID} field="domaine" />
-                                <RowInfo label={'Période des prestations'}
-                                         value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`}
-                                         border={true} justify={true} id={rocID} field="periodePrestationStart_periodePrestationEnd" />
-                                <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange}
-                                         border={true} justify={true} id={rocID} field="contexteEchange" />
-                                <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier}
-                                         border={true} justify={true} id={rocID} field="numDossier" />
-                                <RowInfo label={'Date accident de travail'}
-                                         value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)}
-                                         border={true} justify={true} id={rocID} field="dateAccidentTravail" />
-                                <RowInfo label={'Sous-motif de rejet'} value={data?.info?.demande?.messageRejets}
-                                         border={true} justify={true} id={rocID} field="messageRejets" />
-                            </div>
-                        </div>}
+                        }
+
                     </div>
 
                     {isSuccess && <div style={{flex: 1}}>

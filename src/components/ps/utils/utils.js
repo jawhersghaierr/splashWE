@@ -26,13 +26,13 @@ export const statusRow = (formattedValue) => {
 
 export const checkInsidePanels = (values) => {
     const {disciplines, statutRibs, codePostal, ville} = values || {};
-    console.log(values)
+
     let result =  {
         panelDisciplines: (disciplines)? true: false,
         panelAdresse: (codePostal || ville)? true: false,
         panelStatutRibs: (statutRibs)? true: false,
     }
-    console.log(result)
+
     return result
 }
 

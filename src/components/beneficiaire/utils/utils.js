@@ -6,7 +6,6 @@ export const checkInsidePanels = (values) => {
         panelBeneficiaires: (dateNaissance || birdDate)? true: false,
         panelInfoOMC: (numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins)? true: false,
     }
-    console.log(result)
     return result
 }
 
