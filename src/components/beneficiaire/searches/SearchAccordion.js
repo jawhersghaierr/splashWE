@@ -87,7 +87,7 @@ export default function SearchAccordion(props) {
                     });
                 }
             }}
-            render = {({ handleSubmit, form, submitting, pristine, values, error }) => (
+            render = {({ handleSubmit, form, submitting, pristine, values, error , meta}) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
@@ -251,7 +251,7 @@ export default function SearchAccordion(props) {
                                                        // handleFormChange={form.mutators.handleFormChange}
                                     />
 
-                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
+                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au',  'Pour une recherche par période, veillez renseigner les deux dates.') )}>
                                         {({ input, meta }) => (
                                             <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
@@ -303,7 +303,7 @@ export default function SearchAccordion(props) {
                                         className="RoundedEl" style={{marginRight: '15px'}} >
                                     Effacer
                                 </Button>
-                                <Button variant="contained" type="submit" size="medium" disabled={!allowSearch(values) || error || pristine} className="RoundedEl">
+                                <Button variant="contained" type="submit" size="medium" disabled={!allowSearch(values) || error || pristine || form.getState().hasValidationErrors} className="RoundedEl" >
                                     <SearchIcon/>Rechercher
                                 </Button>
 
@@ -313,6 +313,7 @@ export default function SearchAccordion(props) {
                 </StyledCard>
                <FormSpy onChange={firstRender? ()=>{}: (values) => {
                    form.mutators.setValue(values)
+
                    const {
                        prenom, nom, numeroAdherent,
                        envCodeList,
@@ -326,6 +327,8 @@ export default function SearchAccordion(props) {
                     } else {
                         setDotShow(false)
                     }
+
+                    // console.log(form.getState().hasValidationErrors)
                }}/>
                 </LocalizationProvider></form>)}/>
         </div>

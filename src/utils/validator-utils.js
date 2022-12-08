@@ -96,7 +96,7 @@ const afterThan = (values, thanField) => (value) => {
  * @param associed array of strings (keys from form)
  * @returns {function(*=): string}
  */
-const associated = (values, associed, nameMsg) => (value) => {
+const associated = (values, associed, nameMsg, defaultMsg) => (value) => {
   let isOk = true;
 
   if (associed && value && value !== undefined && value !== "") {
@@ -114,7 +114,7 @@ const associated = (values, associed, nameMsg) => (value) => {
 
   return isOk
     ? undefined
-    : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;
+    : (defaultMsg)? defaultMsg : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;
 };
 
 const composeValidators =
