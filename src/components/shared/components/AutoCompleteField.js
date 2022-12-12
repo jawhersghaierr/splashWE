@@ -82,12 +82,12 @@ export const AutoCompleteField = ({id, name, options=[], label, selectMsg, deSel
 						                          const matches = match(option.title, inputValue, { insideWords: true });
 						                          const parts = parse(option.title, matches);
 
-						                          if (option && (option?.value == 'all' || option?.value == 'none')) return (<li {...props}>
+						                          if (option && (option?.value == 'all' || option?.value == 'none')) return (<li {...props} data-value={option?.value}>
 							                          <div style={{ fontWeight: 700 }}> {option?.title} </div>
 						                          </li>)
 
 						                          return (
-							                          <li {...props}><div> {parts.map((part, index) => (
+							                          <li {...props} data-value={option?.value}><div> {parts.map((part, index) => (
 								                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
 															{part.text}
 														  </span>
