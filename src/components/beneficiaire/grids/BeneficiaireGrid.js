@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Stack from "@mui/material/Stack";
-// import { DataGrid } from '@mui/x-data-grid';
-// import { CircularProgress, Pagination, Typography } from "@mui/material";
 import { columns } from "./beneficiaireGridColumns";
 import { selectCriterias } from "../beneficiaireSlice";
 import { useGetBenefQuery } from "../services/beneficiaireApi";
 import { usePrevious } from "../../../utils/status-utils";
 import { allowSearch } from "../../../utils/validator-utils";
-// import { MoreThan200Results, NoSearchResultsAlert } from "../../shared";
 import "./beneficiaireGrid.scss";
-// import mainPS from "../../../../assets/PS.png";
 import { MainGrid } from "../../shared/grids";
+// import { DataGrid } from '@mui/x-data-grid';
+// import { CircularProgress, Pagination, Typography } from "@mui/material";
+// import { MoreThan200Results, NoSearchResultsAlert } from "../../shared";
+// import mainPS from "../../../../assets/PS.png";
 
 export const BeneficiaireGrid = ({ enviroments }) => {
   const criterias = useSelector(selectCriterias);
