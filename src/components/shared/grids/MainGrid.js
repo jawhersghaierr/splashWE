@@ -41,6 +41,7 @@ export const MainGrid = (props) => {
   const { showMoreThan200Results, data, error, isSuccess, isError } = props;
   const {
     showMoreThan10000ResultsForDownload,
+    alertForMoreThan10000ResultsForDownload,
     openAlertForMoreThan10000ResultsForDownload,
     closeAlertForMoreThan10000ResultsForDownload,
   } = props;
@@ -83,6 +84,7 @@ export const MainGrid = (props) => {
                     href={downloadHref}
                     className="RoundedEmptyButt"
                     download="result.csv"
+                    onClick={openAlertForMoreThan10000ResultsForDownload}
                   >
                     Еxporter
                   </Button>
@@ -155,7 +157,7 @@ export const MainGrid = (props) => {
       )}
       {showMoreThan10000ResultsForDownload && (
         <MoreThan10000ResultsForDownload
-          open={openAlertForMoreThan10000ResultsForDownload}
+          open={alertForMoreThan10000ResultsForDownload}
           handleMsgClose={closeAlertForMoreThan10000ResultsForDownload}
         />
       )}

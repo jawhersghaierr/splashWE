@@ -118,6 +118,7 @@ export const FacturesGrid = ({disciplines}) => {
       isSuccess={isSuccess}
       isError={isError}
       showMoreThan10000ResultsForDownload={true}
+      alertForMoreThan10000ResultsForDownload={alertForMoreThan10000ResultsForDownload}
       openAlertForMoreThan10000ResultsForDownload={openAlertForMoreThan10000ResultsForDownload}
       closeAlertForMoreThan10000ResultsForDownload={closeAlertForMoreThan10000ResultsForDownload}
     />
