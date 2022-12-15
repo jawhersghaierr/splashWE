@@ -19,12 +19,11 @@ import { fr } from "date-fns/locale";
 import { isValidDate } from '../../../utils/convertor-utils';
 import { allowSearch, validators } from '../../../utils/validator-utils';
 import { checkInsidePanels } from '../utils/utils';
-import { AutoCompleteCustom, Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, StyledCard } from "../../shared";
 
 import { initCriterias, setCriterias, selectCriterias } from '../beneficiaireSlice'
 
 import './searchAccordion.scss'
-
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -81,19 +80,14 @@ export default function SearchAccordion(props) {
         <Form onSubmit={onSubmit}
             initialValues={{ ...criterias }}
             mutators={{ ...arrayMutators, setValue: ([field, value], state, utils) => {
-
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-
                         if (field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
-
                         return _value;
-
                     });
                 }
             }}
-
-            render = {({ handleSubmit, form, submitting, pristine, values, error }) => (
+            render = {({ handleSubmit, form, submitting, pristine, values, error , meta}) => (
                 formRef.current = form,
                 <form onSubmit={handleSubmit} >
                 <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
@@ -183,7 +177,7 @@ export default function SearchAccordion(props) {
 
                                     <Field name="dateNaissance">
                                         {({ input, meta }) => (
-                                            <div className={"RoundDate"}>
+                                            <div className={"RoundDate"} style={{ margin: '0 0 10px 15px'}}>
                                                 <DatePicker
 
                                                     error={false}
@@ -246,23 +240,18 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                    {enviroments && <Field name="envCodeList" format={value => value || []}>
+                                    <AutoCompleteField id="Enviroment" name="envCodeList"
+                                                       multiple={true}
+                                                       label={'Environnement'}
+                                                       options={newEnviroments}
+                                                       selectMsg={'Sélectionner tout'}
+                                                       deSelectMsg={'Désélectionner tout'}
+                                                       selectedMsg={'environnement sélectionnées'}
+                                                       FormControlStyle={{ flex: '1 0 21%', margin: '0px 15px'}}
+                                                       // handleFormChange={form.mutators.handleFormChange}
+                                    />
 
-                                        {({input, meta}) => (
-                                            <FormControl sx={{ m: 1, flex: 2, marginRight: '20px!important', maxWidth: '24.5%'}} className="RoundedEl">
-                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
-                                                    meta={meta}
-                                                    input={input}
-                                                    options={newEnviroments}
-                                                    selectMsg={'Sélectionner tout'}
-                                                    deSelectMsg={'Désélectionner tout'}
-                                                    selectedMsg={'environnement sélectionnées'}
-                                                />
-                                            </FormControl>
-                                        )}
-                                    </Field>}
-
-                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au') )}>
+                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au',  'Pour une recherche par période, veillez renseigner les deux dates.') )}>
                                         {({ input, meta }) => (
                                             <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
@@ -314,7 +303,7 @@ export default function SearchAccordion(props) {
                                         className="RoundedEl" style={{marginRight: '15px'}} >
                                     Effacer
                                 </Button>
-                                <Button variant="contained" type="submit" size="medium" disabled={!allowSearch(values) || error || pristine} className="RoundedEl">
+                                <Button variant="contained" type="submit" size="medium" disabled={!allowSearch(values) || error || pristine || form.getState().hasValidationErrors} className="RoundedEl" >
                                     <SearchIcon/>Rechercher
                                 </Button>
 
@@ -324,6 +313,7 @@ export default function SearchAccordion(props) {
                 </StyledCard>
                <FormSpy onChange={firstRender? ()=>{}: (values) => {
                    form.mutators.setValue(values)
+
                    const {
                        prenom, nom, numeroAdherent,
                        envCodeList,
@@ -337,6 +327,8 @@ export default function SearchAccordion(props) {
                     } else {
                         setDotShow(false)
                     }
+
+                    // console.log(form.getState().hasValidationErrors)
                }}/>
                 </LocalizationProvider></form>)}/>
         </div>

@@ -2,8 +2,9 @@
 import React from "react";
 import { Field } from "react-final-form";
 import { FormControl, TextField } from "@mui/material";
+import {OnChange} from "react-final-form-listeners";
 
-export default function PanelNIR({ validators, disableCle }) {
+export default function PanelNIR({ validators, disableCle, handleFormChange }) {
   return (
     <>
       <Field
@@ -22,22 +23,26 @@ export default function PanelNIR({ validators, disableCle }) {
                 margin: "15px 5px",
                 maxWidth: "200px",
                 minWidth: "175px",
-              }}
-            >
-              <TextField
-                id="Nir"
-                label={"NIR"}
-                variant="outlined"
-                {...input}
-                error={meta.invalid}
-                className="RoundedEl"
-                onChange={(e) => {
-                  return input.onChange(e);
-                }}
-              />
-              {meta.error && meta.touched && (
-                <span className={"MetaErrInfo"}>{meta.error}</span>
-              )}
+              }} >
+
+                  <TextField
+                    id="Nir"
+                    label={"NIR"}
+                    variant="outlined"
+                    {...input}
+                    error={meta.invalid}
+                    className="RoundedEl"
+                    onChange={(e) => {
+                      return input.onChange(e);
+                    }}
+                  />
+                  {meta.error && meta.touched && (
+                    <span className={"MetaErrInfo"}>{meta.error}</span>
+                  )}
+                {handleFormChange && <OnChange name={'nir'}>
+                    {() => handleFormChange('nir')}
+                </OnChange>}
+
             </FormControl>
           );
         }}

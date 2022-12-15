@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 
+import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 
 import {Badge, CardHeader, Select, CardContent, FormControl, Typography, MenuItem, Button, OutlinedInput, InputAdornment} from "@mui/material";
@@ -11,23 +12,20 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { FormSpy, Form, Field } from 'react-final-form';
-
 import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fr } from "date-fns/locale";
 
-import { useGetRefsQuery } from "../../../services/refsApi";
-import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
-
 import { checkInsidePanels } from '../utils/utils';
 import { isValidDate} from '../../../utils/convertor-utils';
 import { validators, allowSearch} from '../../../utils/validator-utils';
 
-import { Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput, StyledCard } from "../../shared";
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, ConfirmNir, PanelNIR, MaskedInput, StyledCard } from "../../shared";
+import { useGetRefsQuery } from "../../../services/refsApi";
+import { setCriterias, initCriterias, selectCriterias } from '../facturesSlice'
+import { handleFormChange } from "./Mutators";
 
-import { MutatorSetValue } from "./Mutators";
 import './searchAccordion.scss'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -47,9 +45,30 @@ export default function SearchAccordion() {
     });
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
     const [dotShow, setDotShow] = useState(false);
-    const [disableCle, setDisableCle] = useState(true);
-    const [motif, setMotif] = useState({});
     const [panelExpanded, setPanelExpanded] = useState(false);
+    const [disableCle, setDisableCle] = useState(true);
+    const [factureStatus, setFactureStatus] = useState([]);
+    const [numClient, setNumClient] = useState([]); //
+    const [motif, setMotif] = useState([]);
+
+    useEffect(() => {
+        if (nomRefsIsSuccess) {
+
+            setFactureStatus(Object.keys(nomRefs.FACTURE_STATUS).map(code => ({value: code, title: nomRefs.FACTURE_STATUS[code]})));
+            setMotif(Object.keys(nomRefs.FACTURE_ERROR).map(code => ({value: code, title: nomRefs.FACTURE_ERROR[code]})));
+            setNumClient(Object.keys(nomRefs.CLIENT).map(code => ({value: code, title: (code)? `(${code}) ${nomRefs.CLIENT[code]}`: nomRefs.CLIENT[code]})));
+
+            setFirstRender(false);
+        }
+    }, [nomRefs, nomRefsIsSuccess]);
+
+    const handleAccordionPanel = () => (event) => {
+        if (!panelExpanded) {
+            let {values} = formRef.current?.getState()
+            setExpanded(checkInsidePanels(values))
+        }
+        setPanelExpanded(!panelExpanded);
+    };
 
     const handleChange = (panel) => (event, newExpanded) => {
         if (panel == 'panelNIR' && !expanded.panelNIR) {
@@ -66,30 +85,20 @@ export default function SearchAccordion() {
         setPanelExpanded(false);
     };
 
-    const handleAccordionPanel = () => (event) => {
-        if (!panelExpanded) {
-            let {values} = formRef.current?.getState()
-            setExpanded(checkInsidePanels(values))
-        }
-        setPanelExpanded(!panelExpanded);
-    };
-
-    useEffect(() => {
-        if (nomRefsIsSuccess) setFirstRender(false);
-    }, [nomRefsIsSuccess]);
-
     if (nomRefsIsFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
 
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({motif, setMotif, setDisableCle, nomRefs}) }}
+                  mutators={{ ...arrayMutators, handleFormChange: handleFormChange({motif, setMotif, setDisableCle, nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775 }} id="FacturesSearchForm" variant="outlined">
+                                  <StyledCard id="FacturesSearchForm" variant="outlined" sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                                      '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                                  }}>
                                       <CardHeader
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -268,7 +277,6 @@ export default function SearchAccordion() {
 
                                                       <Field name="dateFact">
                                                           {({ input, meta }) => (
-                                                              // <div className={"RoundDate"}>
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
                                                                       label={'Date facture'}
@@ -282,57 +290,26 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      {(nomRefs && nomRefs?.FACTURE_STATUS) && <Field name="status" format={value => value || []}>
+                                                      <AutoCompleteField id="Statut" name="status"
+                                                                         multiple={true}
+                                                                         label={'Statut'}
+                                                                         options={factureStatus}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'statuts sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="Statut-label">Statut</InputLabel>
-                                                                  <Select id="Statut" labelId="Statut-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.FACTURE_STATUS[selected[0]];ю
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'> {(values?.status?.length == Object.keys(nomRefs.FACTURE_STATUS).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
-
-                                                                      {Object.keys(nomRefs.FACTURE_STATUS).map(code => ( <MenuItem key={code} value={code}> {nomRefs.FACTURE_STATUS[code]} </MenuItem> ))}
-
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
-
-                                                      {(nomRefs && nomRefs?.FACTURE_ERROR) && <Field name="errorCode" format={value => value || []}>
-
-                                                          {({input, meta}) => (
-
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="Motif-label">Motif</InputLabel>
-                                                                  <Select id="Motif" labelId="Motif-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Motif" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      disabled={!Boolean(Object.keys(motif)?.length > 0)}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} motifs sélectionnéеs`
-                                                                          return nomRefs.FACTURE_ERROR[selected[0]];
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'> {(values?.errorCode?.length == Object.keys(nomRefs.FACTURE_ERROR).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
-
-                                                                    {Object.keys(motif).map(code => (<MenuItem key={code} value={code}>
-                                                                            {motif[code]}
-                                                                    </MenuItem>))}
-
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
+                                                      <AutoCompleteField id="Motif" name="errorCode"
+                                                                         multiple={true}
+                                                                         label={'Motif'}
+                                                                         options={motif}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'motifs sélectionnéеs'}
+                                                                         disabled={(motif?.length > 0)? false: true}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
                                                   </AccordionDetails>
                                               </Accordion>
@@ -411,29 +388,16 @@ export default function SearchAccordion() {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      {(nomRefs && nomRefs?.CLIENT) && <Field name="numClient" format={value => value || []}>
+                                                      <AutoCompleteField id="NumClient" name="numClient"
+                                                                         multiple={true}
+                                                                         label={'AMC'}
+                                                                         options={numClient}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'AMC sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <InputLabel id="NumClient-label">AMC</InputLabel>
-                                                                  <Select id="NumClient" labelId="NumClient-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="NumClient" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} AMC sélectionnés`
-                                                                          return `(${selected[0]}) ${nomRefs.CLIENT[selected[0]]}`;
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'> {(values?.numClient?.length == Object.keys(nomRefs.CLIENT).length) ? <b>Désélectionner tout</b> : <b>Sélectionner tout</b>} </MenuItem>
-
-                                                                      {Object.keys(nomRefs.CLIENT).map(code => ( <MenuItem key={code} value={code}> {`(${code}) ${nomRefs.CLIENT[code]}`} </MenuItem> ))}
-
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
 
                                                       <Field name="nom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
@@ -523,14 +487,8 @@ export default function SearchAccordion() {
                                                 <AccordionSummary aria-controls="panelAdresse-content" id="panelAdresse-header">
                                                     <Typography style={{ marginLeft: "5px" }}><b>Recherche par NIR</b></Typography>
                                                 </AccordionSummary>
-                                                <AccordionDetails
-                                                    sx={{
-                                                        display: "flex",
-                                                        flexDirection: "row",
-                                                        justifyContent: "start",
-                                                    }}
-                                                >
-                                                    <PanelNIR validators={validators} disableCle={disableCle} />
+                                                <AccordionDetails sx={{ display: "flex", flexDirection: "row", justifyContent: "start" }}>
+                                                    <PanelNIR validators={validators} disableCle={disableCle} handleFormChange={form.mutators.handleFormChange}/>
                                                     <ConfirmNir 
                                                         agreed={()=> {
                                                             setOpenNIRDialog(false);
@@ -567,8 +525,6 @@ export default function SearchAccordion() {
                                       </Collapse>
                                   </StyledCard>
                                   <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
-
-                                      form.mutators.setValue(values)
 
                                       const {
                                           numFact, numEng, numAdh,

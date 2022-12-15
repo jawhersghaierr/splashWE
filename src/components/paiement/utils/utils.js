@@ -40,7 +40,7 @@ export const checkInsidePanels = (values) => {
 export const reshapeCriterias = ({criterias}) => {
 
     let {
-        dateDebutSoin, dateDebutSoinFin,
+        dateDebutSoin, dateDebutSoinFin, disciplines, grоupDisciplines,
         dateDebutHospitalisation, dateDebutHospitalisationFin,
         dateFacture, dateFactureFin,
         receivedDate, receivedDateFin,
@@ -86,15 +86,21 @@ export const reshapeCriterias = ({criterias}) => {
         filters.status = [];
         status.forEach(el => filters.status.push(el.value));
     }
-
     if (numEnv && numEnv !== undefined) {
         filters.numEnv = [];
         numEnv.forEach(el => filters.numEnv.push(el.value));
     }
-
     if (provenance && provenance !== undefined) {
         filters.provenance = [];
         provenance.forEach(el => filters.provenance.push(el.value));
+    }
+    if (grоupDisciplines && grоupDisciplines !== undefined) {
+        filters.grоupDisciplines = [];
+        grоupDisciplines.forEach(el => filters.grоupDisciplines.push(el.value));
+    }
+    if (disciplines && disciplines !== undefined) {
+        filters.disciplines = [];
+        disciplines.forEach(el => filters.disciplines.push(el.value));
     }
 
     filters.cashe = null;

@@ -1,20 +1,9 @@
-export const MutatorSetValue = ({nomRefs}) =>  ([field, value], state, utils) => {
+export const handleFormChange = ({nomRefs}) => ([name], state, { changeValue }) => {
+    // console.log('name ', name)
+    // console.log('nomRefs ', nomRefs)
+    // console.log('state ', state)
 
-    utils.changeValue(state, field, (value) => {
+    let values = state.formState.values
 
-        let _value = value;
-
-        switch (state.formState.active) {
-
-            case 'status':
-                if (_value?.status?.length === 0 ||
-                    (_value?.status?.includes('all') && _value?.status?.length > Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).length)
-                ) _value = {..._value, status: undefined}
-                if (_value?.status?.includes('all')) _value = {..._value, status: Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)}
-            break
-
-        }
-
-        return _value
-
-})}
+    // if ( field?.modified?.birdDate && _value?.dateNai != null && value == null ) { _value.dateNai = null}
+}

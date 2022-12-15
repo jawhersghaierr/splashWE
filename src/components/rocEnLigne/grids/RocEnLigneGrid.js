@@ -59,15 +59,21 @@ export const RocEnLigneGrid = () => {
     reverseMapRocEnLigne
   )}&dateFormat=dateNaiss`;
 
-  useEffect(() => {
-    if (
-      data &&
-      JSON.stringify(criterias) !== JSON.stringify(prevCriterias) &&
-      currentPage > 0
-    ) {
-      setCurrentPage(0);
+    useEffect(() => {
+
+            if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
+                setCurrentPage(0)
+            }
+
+    }, [criterias, currentPage]);
+
+    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState( false);
+    const openAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(true)
     }
-  }, [criterias, currentPage]);
+    const closeAlertForMoreThan10000ResultsForDownload = () => {
+        setAlertForMoreThan10000ResultsForDownload(false)
+    }
 
   return (
     <MainGrid

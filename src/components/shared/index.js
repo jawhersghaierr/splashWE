@@ -2,6 +2,7 @@ import {
     ConfirmNir,
     ModalInfo,
     MoreThan200Results,
+    MoreThan10000ResultsForDownload,
     NoGridResultsAlert,
     NoSearchResultsAlert,
     PanelNIR
@@ -10,7 +11,7 @@ import {
 import {
     VirtLink,
     StyledCard,
-    AutoCompleteCustom
+    AutoCompleteField
 } from './components'
 
 import {TextMaskCustom, MaskedInput} from './customTextField/TextMaskCustom';
@@ -25,6 +26,7 @@ export {
     ConfirmNir,
     ModalInfo,
     MoreThan200Results,
+    MoreThan10000ResultsForDownload,
     NoGridResultsAlert,
     NoSearchResultsAlert,
     PanelNIR,
@@ -33,7 +35,7 @@ export {
 
     VirtLink,
     StyledCard,
-    AutoCompleteCustom,
+    AutoCompleteField,
 
     ActesGrid, actesGridColumns,
     Accordion, AccordionSummary, AccordionDetails,

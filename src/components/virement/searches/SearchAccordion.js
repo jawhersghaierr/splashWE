@@ -1,11 +1,11 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
 
 import {
     CardActions, TextField, Collapse, InputLabel,
-    Button, Badge, CardContent, CardHeader, FormControl, Typography, InputAdornment, IconButton, MenuItem, Select, OutlinedInput
+    Button, Badge, CardContent, CardHeader, FormControl, Typography, InputAdornment, IconButton
 } from "@mui/material";
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,10 +22,11 @@ import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'
 import { Accordion, AccordionDetails, StyledCard } from "../../shared";
 
 import { checkInsidePanels } from '../utils/utils'
-import { allowSearch, selectDeselectAllValues, validators } from '../../../utils/validator-utils';
+import { allowSearch, validators } from '../../../utils/validator-utils';
 
+import { AutoCompleteField } from "../../shared/components/AutoCompleteField";
+import { handleFormChange } from "./Mutators";
 import './searchAccordion.scss'
-import {MutatorSetValue} from "./Mutators";
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -37,18 +38,22 @@ export default function SearchAccordion(props) {
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
-    const onSubmit = async (values) => {
-
-        await sleep(300);
-        dispatch(setCriterias({...values, cashe: Math.random()}));
-    };
-
     const [expanded, setExpanded] = useState({
         panelInformationsDuVirement: true,
     });
 
     const [dotShow, setDotShow] = useState(false);
     const [panelExpanded, setPanelExpanded] = useState(false);
+    const [paiementStatus, setPaiementStatus] = useState([]);
+    const [firstRender, setFirstRender] = useState(true);
+
+    useEffect(() => {
+        if (nomRefsIsSuccess) {
+            const paiementStatus = Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).map( code => ({ value: code, title: nomRefs.PAIEMENT_VIREMENT_STATUS[code] }) );
+            setPaiementStatus(paiementStatus);
+            setFirstRender(false);
+        }
+    }, [nomRefs, nomRefsIsSuccess])
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded({...expanded, [panel]: newExpanded});
@@ -62,37 +67,23 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+    const onSubmit = async (values) => {
+        await sleep(300);
+        dispatch(setCriterias({...values, cashe: Math.random()}));
+    };
+
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({nomRefs}) }}
-
-                  // mutators={{
-                  //     ...arrayMutators,
-                  //     setValue: MutatorSetValue([field, value], state, utils) => {
-                  //
-                  //         utils.changeValue(state, field, (value) => {
-                  //             let _value = value;
-                  //
-                  //               switch (field.active) {
-                  //                   case 'status'://Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS)
-                  //                       const statusObj = selectDeselectAllValues(value, nomRefs.PAIEMENT_VIREMENT_STATUS, field.active);
-                  //                       _value.status = statusObj ? statusObj[field.active] : value[field.active];
-                  //                   break
-                  //               }
-                  //
-                  //             return _value
-                  //
-                  //         })
-                  //     }
-                  // }}
-
+                  mutators={{ ...arrayMutators, handleFormChange: handleFormChange({nomRefs}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
                               <LocalizationProvider adapterLocale={fr} dateAdapter={AdapterDateFns}>
-                                  <StyledCard sx={{ display: 'block', minWidth: 775 }} id="VirementsSearchForm" variant="outlined">
+                                  <StyledCard id="VirementsSearchForm" variant="outlined" sx={{ display: 'block', minWidth: 775, overflow: 'visible',
+                                      '& .MuiCardHeader-root': {borderRadius: (panelExpanded)?'34px 34px 0 0 !important': '34px!important'}
+                                  }}>
                                       <CardHeader
                                           sx={{
                                               bgcolor: '#f1f1f1',
@@ -212,8 +203,6 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-
-
                                                       <div style={{width: 150, display: 'flex'}}>
                                                           {!panelExpanded && <IconButton onClick={handleAccordionPanel()} sx={{height: '45px'}}>
                                                               <Badge color="secondary" variant="dot" invisible={!dotShow}><AddCircleIcon/></Badge>
@@ -240,38 +229,15 @@ export default function SearchAccordion(props) {
 
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                                      {(nomRefs && nomRefs?.PAIEMENT_VIREMENT_STATUS) && <Field name="status" format={value => value || []}>
-
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                  <InputLabel id="Statut-label">Statut du virement</InputLabel>
-                                                                  <Select
-                                                                      id="Statut"
-                                                                      labelId="Statut-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Statut" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) return `${selected.length} statuts sélectionnés`
-                                                                          return nomRefs.PAIEMENT_VIREMENT_STATUS[selected[0]];
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.status?.length == Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).length) ?
-                                                                                  <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
-
-                                                                      {Object.keys(nomRefs.PAIEMENT_VIREMENT_STATUS).map(code => (
-                                                                          <MenuItem key={code} value={code}>
-                                                                              {nomRefs.PAIEMENT_VIREMENT_STATUS[code]}
-                                                                          </MenuItem>
-                                                                      ))}
-
-                                                                  </Select>
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
+                                                      <AutoCompleteField id="Statut" name="status"
+                                                                         multiple={true}
+                                                                         label={'Statut du virement'}
+                                                                         options={paiementStatus}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'statuts sélectionnés'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
                                                       <Field name="mntVirement" validate={validators.composeValidators(validators.notBiggerThan(10000000))}>
                                                           {({ input, meta }) => (
@@ -329,10 +295,11 @@ export default function SearchAccordion(props) {
                                           </CardActions>
                                       </Collapse>
                                   </StyledCard>
-                                  <FormSpy onChange={(values) => {
-                                      form.mutators.setValue(values)
+                                  <FormSpy onChange={firstRender? ()=>{}: (values) => {
+
                                       const {
-                                          numVirement, numDecompte, numAdhInd, numPsAPayer, dateTraitement, dateTraitementFin,
+                                          numVirement, numDecompte, numAdhInd,
+                                          numPsAPayer, dateTraitement, dateTraitementFin,
                                           status, mntVirement
                                       } = values?.values;
 

@@ -1,8 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    CardActions, CircularProgress, Collapse, InputLabel, TextField,
-    Badge, Button, CardHeader, CardContent, FormControl, MenuItem, OutlinedInput, InputAdornment, IconButton, Select, Typography,
+    CardActions, CircularProgress, Collapse, TextField,
+    Badge, Button, CardHeader, CardContent, FormControl, InputAdornment, IconButton, Typography,
 } from "@mui/material";
 
 import { FormSpy, Form, Field } from 'react-final-form';
@@ -21,12 +21,11 @@ import { checkInsidePanels } from '../utils/utils'
 import { isValidDate } from '../../../utils/convertor-utils';
 import { validators, allowSearch } from '../../../utils/validator-utils';
 
+import { AutoCompleteField, Accordion, AccordionSummary, AccordionDetails, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
+import { handleFormChange } from "./Mutators";
 import { setCriterias, initCriterias, selectCriterias } from '../paiementSlice'
 import { useGetRefsQuery } from "../../../services/refsApi";
 
-import { Accordion, AccordionSummary, AccordionDetails, AutoCompleteCustom, StyledCard, ConfirmNir, PanelNIR } from "../../shared";
-
-import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -38,13 +37,6 @@ export default function SearchAccordion(props) {
     const formRef= useRef(null);
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
 
-
-    const onSubmit = async (values) => {
-        await sleep(300);
-        dispatch(setCriterias({...values, cashe: Math.random()}));
-        setPanelExpanded(false);
-    };
-
     const [expanded, setExpanded] = useState({
         panelSoins: true,
         panelInformationsDuPaiement: true,
@@ -53,6 +45,7 @@ export default function SearchAccordion(props) {
         panelInformationbeneficiaires: true,
         panelNIR: true,
     });
+
     const [dotShow, setDotShow] = useState(false);
     const [disableCle, setDisableCle] = useState(true);
     const [openNIRDialog, setOpenNIRDialog] = useState(false);
@@ -60,22 +53,21 @@ export default function SearchAccordion(props) {
     const [paiementStatuses, setPaiementStatuses] = useState([]);
     const [environments, setEnvironments] = useState([]);
     const [provenances, setProvenances] = useState([]);
+    const [grоupDisciplines, setGrоupDisciplines] = useState([]);
+    const [disciplines, setDisciplines] = useState([]);
 
     const [firstRender, setFirstRender] = useState(true);
 
     useEffect(() => {
         if (nomRefsIsSuccess) {
-            const paiementStatuses = Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]}));
-            setPaiementStatuses(paiementStatuses);
 
-            const environments = Object.keys(nomRefs.ENVIRONMENT).map(code => ({value: code, title: nomRefs.ENVIRONMENT[code]}));
-            setEnvironments(environments);
-
-            const provenances = Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`}));
-            setProvenances(provenances);
+            setPaiementStatuses(Object.keys(nomRefs.PAIEMENT_STATUS).map(code => ({value: code, title: nomRefs.PAIEMENT_STATUS[code]})));
+            setEnvironments(Object.keys(nomRefs.ENVIRONMENT).map(code => ({value: code, title: nomRefs.ENVIRONMENT[code]})));
+            setProvenances(Object.keys(nomRefs.PROVENANCE).map(code => ({value: code, title: `(${code}) ${nomRefs.PROVENANCE[code]}`})));
+            setGrоupDisciplines(Object.keys(nomRefs.DISCIPLINE_GROUP).map(code => ({value: code, title: nomRefs.DISCIPLINE_GROUP[code]})));
+            setDisciplines(Object.keys(nomRefs.DISCIPLINE).map(code => ({value: code, title: nomRefs.DISCIPLINE[code]})));
 
             setFirstRender(false);
-
         }
     }, [nomRefs, nomRefsIsSuccess]);
 
@@ -95,13 +87,19 @@ export default function SearchAccordion(props) {
         setPanelExpanded(!panelExpanded);
     };
 
+    const onSubmit = async (values) => {
+        await sleep(300);
+        dispatch(setCriterias({...values, cashe: Math.random()}));
+        setPanelExpanded(false);
+    };
+
     if (nomRefsIsFetching) return <div className={'formContent'} style={{height: '30%'}}><CircularProgress style={{margin: '100px 50%'}}/></div>
 
     return (
         <div className={'formContent'}>
             <Form onSubmit={onSubmit}
                   initialValues={{ ...criterias }}
-                  mutators={{ ...arrayMutators, setValue: MutatorSetValue({setDisableCle, nomRefs}) }}
+                  mutators={{ ...arrayMutators, handleFormChange: handleFormChange({setDisableCle}) }}
                   render = {({ handleSubmit, form, submitting, pristine, values }) => (
                       formRef.current = form,
                           <form onSubmit={handleSubmit} >
@@ -247,69 +245,26 @@ export default function SearchAccordion(props) {
                                                           )}
                                                       </Field>
 
-                                                      {nomRefs && nomRefs?.DISCIPLINE_GROUP && <Field name="grоupDisciplines" format={value => value || []}>
+                                                      <AutoCompleteField id="GroupDisciplines" name="grоupDisciplines"
+                                                                         multiple={true}
+                                                                         label={'Groupe discipline'}
+                                                                         options={grоupDisciplines}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'disciplines sélectionnéеs'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl  style={{ flex: '1 0 21%', margin: '15px 5px'}} className="RoundedEl">
-                                                                  <InputLabel id="GroupDisciplines-label">Groupe discipline</InputLabel>
-                                                                  <Select
-                                                                      id="GroupDisciplines"
-                                                                      labelId="GroupDisciplines-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Group Disciplines" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) {
-                                                                              return `${selected.length} disciplines sélectionnéеs`
-                                                                          }
-                                                                          return nomRefs.DISCIPLINE_GROUP[selected.toString()] || '';
-                                                                      }}>
+                                                      <AutoCompleteField id="Disciplines" name="disciplines"
+                                                                         multiple={true}
+                                                                         label={'Discipline'}
+                                                                         options={disciplines}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'disciplines sélectionnéеs'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.grоupDisciplines?.length == Object.keys(nomRefs?.DISCIPLINE_GROUP).length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
-                                                                      {Object.keys(nomRefs.DISCIPLINE_GROUP).map(key => (
-                                                                          <MenuItem key={key} value={key}>
-                                                                              {nomRefs.DISCIPLINE_GROUP[key]}
-                                                                          </MenuItem>
-                                                                      ))}
-                                                                  </Select></FormControl>
-                                                          )}
-                                                      </Field>}
-
-                                                      {nomRefs && nomRefs?.DISCIPLINE && <Field name="disciplines" format={value => value || []}>
-
-                                                          {({input, meta}) => (
-                                                              <FormControl  style={{ flex: '1 0 21%', margin: '15px 5px'}} className="RoundedEl">
-                                                                  <InputLabel id="Disciplines-label">Discipline</InputLabel>
-                                                                  <Select
-                                                                      id="Disciplines"
-                                                                      labelId="Disciplines-label"
-                                                                      multiple
-                                                                      {...input}
-                                                                      input={<OutlinedInput className="RoundedEl" label="Disciplines" sx={{minWidth: 200}}/>}
-                                                                      MenuProps={{autoFocus: false}}
-                                                                      renderValue={(selected) => {
-                                                                          if (selected.length > 1) {
-                                                                              return `${selected.length} disciplines sélectionnéеs`
-                                                                          }
-                                                                          return nomRefs.DISCIPLINE[selected.toString()] || '';
-                                                                      }}>
-
-                                                                      <MenuItem value="all" key='selectAll'>
-                                                                          {(values?.disciplines?.length == Object.keys(nomRefs?.DISCIPLINE).length) ?
-                                                                              <b>Désélectionner tout</b> : <b>Sélectionner tout</b>}
-                                                                      </MenuItem>
-                                                                      {Object.keys(nomRefs.DISCIPLINE).map(key => (
-                                                                          <MenuItem key={key} value={key}>
-                                                                              {nomRefs.DISCIPLINE[key]}
-                                                                          </MenuItem>
-                                                                      ))}
-                                                                  </Select></FormControl>
-                                                          )}
-                                                      </Field>}
 
                                                       <Field name="numeroPsJuridique" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
@@ -402,21 +357,15 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                                      {(nomRefs && nomRefs?.PAIEMENT_STATUS) && <Field name="status" format={value => value || []}>
-
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                <AutoCompleteCustom id="Statut" label={'Statut du paiement'}
-                                                                    meta={meta}
-                                                                    input={input}
-                                                                    options={paiementStatuses}
-                                                                    selectMsg={'Sélectionner tout'}
-                                                                    deSelectMsg={'Désélectionner tout'}
-                                                                    selectedMsg={'statuts sélectionnées'}
-                                                                />
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
+                                                      <AutoCompleteField id="Statut" name="status"
+                                                                         multiple={true}
+                                                                         label={'Statut du paiement'}
+                                                                         options={paiementStatuses}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'statuts sélectionnées'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
                                                       <Field name="totalRc" validate={validators.composeValidators(validators.notBiggerThan(1000000))} >
                                                           {({ input, meta }) => (
@@ -604,37 +553,25 @@ export default function SearchAccordion(props) {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'start'}}>
 
-                                                      {(nomRefs && nomRefs?.ENVIRONMENT) && <Field name="numEnv" format={value => value || []}>
+                                                      <AutoCompleteField id="Enviroment" name="numEnv"
+                                                                         multiple={true}
+                                                                         label={'Environnement'}
+                                                                         options={environments}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'environnements sélectionnées'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                <AutoCompleteCustom id="Enviroment" label={'Environnement'}
-                                                                    meta={meta}
-                                                                    input={input}
-                                                                    options={environments}
-                                                                    selectMsg={'Sélectionner tout'}
-                                                                    deSelectMsg={'Désélectionner tout'}
-                                                                    selectedMsg={'environnements sélectionnées'}
-                                                                />
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
-
-                                                      {(nomRefs && nomRefs?.PROVENANCE) && <Field name="provenance" format={value => value || []}>
-
-                                                          {({input, meta}) => (
-                                                              <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px', maxWidth: '24.5%'}}>
-                                                                <AutoCompleteCustom id="Provenance" label={'Provenance'}
-                                                                    meta={meta}
-                                                                    input={input}
-                                                                    options={provenances}
-                                                                    selectMsg={'Sélectionner tout'}
-                                                                    deSelectMsg={'Désélectionner tout'}
-                                                                    selectedMsg={'provenances sélectionnées'}
-                                                                />
-                                                              </FormControl>
-                                                          )}
-                                                      </Field>}
+                                                      <AutoCompleteField id="Provenance" name="provenance"
+                                                                         multiple={true}
+                                                                         label={'Provenance'}
+                                                                         options={provenances}
+                                                                         selectMsg={'Sélectionner tout'}
+                                                                         deSelectMsg={'Désélectionner tout'}
+                                                                         selectedMsg={'provenances sélectionnées'}
+                                                                         handleFormChange={form.mutators.handleFormChange}
+                                                      />
 
                                                   </AccordionDetails>
 
@@ -753,7 +690,7 @@ export default function SearchAccordion(props) {
                                                 </AccordionSummary>
 
                                                 <AccordionDetails sx={{ display: "flex", flexDirection: "row", justifyContent: "start", }} >
-                                                    <PanelNIR validators={validators} disableCle={disableCle} />
+                                                    <PanelNIR validators={validators} disableCle={disableCle} handleFormChange={form.mutators.handleFormChange} />
                                                     <ConfirmNir 
                                                         agreed={()=> {
                                                             setOpenNIRDialog(false);
@@ -792,7 +729,7 @@ export default function SearchAccordion(props) {
                                       </Collapse>
                                   </StyledCard>
                                   <FormSpy onChange={firstRender? ()=>{}: (values) => {
-                                      form.mutators.setValue(values)
+
                                       const {
                                           numeroFacture, numIdPs, numAdhInd,
                                           dateDebutSoin, dateDebutSoinFin,

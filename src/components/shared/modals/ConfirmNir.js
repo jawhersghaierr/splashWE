@@ -25,10 +25,10 @@ export const ConfirmNir = ({opened, agreed, disagreed}) => {
 			<DialogContent>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={agreed} autoFocus className="RoundedEmptyButt" >
+				<Button onClick={agreed} autoFocus className="RoundedEmptyButt" id={'confirmYes'}>
 					Oui
 				</Button>
-				<Button onClick={disagreed} className="RoundedEl" >
+				<Button onClick={disagreed} className="RoundedEl" id={'confirmNo'}>
 					Non
 				</Button>
 			</DialogActions>

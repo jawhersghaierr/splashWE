@@ -6,21 +6,17 @@ export const checkInsidePanels = (values) => {
         panelBeneficiaires: (dateNaissance || birdDate)? true: false,
         panelInfoOMC: (numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins)? true: false,
     }
-    console.log(result)
     return result
 }
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        prenom,
-        nom,
+        prenom, nom,
         numeroAdherent,
-        birdDate,
-        dateNaissance,
+        birdDate, dateNaissance,
         numAdherentFamillial,
         envCodeList,
-        dateDebutSoins,
-        dateFinSoins
+        dateDebutSoins, dateFinSoins
     } = criterias;
 
     let filters = {...criterias}

@@ -1,6 +1,6 @@
 variables:
   PROJECT_NAME: host-ui
-  PROGECT_GROUP: COMMON
+  PROJECT_GROUP: COMMON
   COMPOSE_NAME: HOST-UI
   DOCKER_IMAGE_NAME_FE: common/host-ui
   DOCKER_SERVICE_NAME_FE: host-ui
@@ -10,7 +10,7 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: '2.0'
+    ref: 'feature/updates-fe-pipelines'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml

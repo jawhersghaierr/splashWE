@@ -96,7 +96,7 @@ const afterThan = (values, thanField) => (value) => {
  * @param associed array of strings (keys from form)
  * @returns {function(*=): string}
  */
-const associated = (values, associed, nameMsg) => (value) => {
+const associated = (values, associed, nameMsg, defaultMsg) => (value) => {
   let isOk = true;
 
   if (associed && value && value !== undefined && value !== "") {
@@ -114,7 +114,7 @@ const associated = (values, associed, nameMsg) => (value) => {
 
   return isOk
     ? undefined
-    : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;
+    : (defaultMsg)? defaultMsg : `Vous ne pouvez pas rechercher un bénéficiaire uniquement par ${nameMsg?.toLowerCase()}. Merci d'ajouter un critère de recherche.`;
 };
 
 const composeValidators =
@@ -204,22 +204,20 @@ export const calcCleFromNir = (values) => {
   }
 };
 
-export const selectDeselectAllValues = (fieldObj, ref, field) => {
-  if (fieldObj && fieldObj[field]) {
-    if (
-      fieldObj[field].length === 0 ||
-      (fieldObj[field].includes("all") &&
-        fieldObj[field].length > Object.keys(ref).length)
-    )
-      return { [field]: undefined };
-
-    if (fieldObj[field].includes("all")) return { [field]: Object.keys(ref) };
-  }
-};
+// export const selectDeselectAllValues = (fieldObj, ref, field) => {
+//   if (fieldObj && fieldObj[field]) {
+//     if (
+//       fieldObj[field].length === 0 ||
+//       (fieldObj[field].includes("all") &&
+//         fieldObj[field].length > Object.keys(ref).length)
+//     )
+//       return { [field]: undefined };
+//
+//     if (fieldObj[field].includes("all")) return { [field]: Object.keys(ref) };
+//   }
+// };
 
 export const allowSearch = (values) => {
-  // console.log('error > ', error)
-  // console.log('pristine > ', pristine)
 
   for (let key in values) {
       if (values[key]) return true;

@@ -67,12 +67,15 @@ const REL_TYPE_STATUS = {
 export const getStatusFromTypes = ({type = [], nomRefs}) => {
     let tmpStatus = []
     if (type.length > 0) {
-        type.forEach(_type => Object.keys(nomRefs.ROC_RLTN_STATUSES_TYPES).forEach(_stat => nomRefs.ROC_RLTN_STATUSES_TYPES[_stat].includes(_type) && tmpStatus.push(_stat)))
+        type.forEach(_type => Object.keys(nomRefs.ROC_RLTN_STATUSES_TYPES)
+                                .forEach(_stat => nomRefs.ROC_RLTN_STATUSES_TYPES[_stat]
+                                    .includes(_type)
+                                        && tmpStatus.push(_stat)
+                                )
+        )
         tmpStatus = [...new Set(tmpStatus)]
     } else tmpStatus = Object.keys( nomRefs.ROC_STATUSES )
 
-    // console.log('available types >', type)
-    // console.log('getStatusFromTypes >', tmpStatus)
     return tmpStatus
 }
 
@@ -88,32 +91,13 @@ export const getMotifsFromTypes = ({type = [], nomRefs}) => {
     return tmpMotifs
 }
 
-export const getSubMotifsFromMotifsFromTypes = ({type = [], nomRefs}) => {
-    let tmpMotifs = []
-    if (type.length > 0) {
-        type.forEach(_type => tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_MOTIFS[_type], ...tmpMotifs])
-        tmpMotifs = [...new Set(tmpMotifs)]
 
-    } else tmpMotifs = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
-
-    return tmpMotifs
-}
-
-
-export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
-    let tmpTypes = []
-    statut.forEach( _statut => {
-        if (_statut !== 'all') tmpTypes = [...nomRefs.ROC_RLTN_STATUSES_TYPES[_statut], ...tmpTypes]
-    })
-    tmpTypes = [...new Set(tmpTypes)]
-
-    return tmpTypes
-}
 
 export const getSubMotifsFromTypes = ({type = [], nomRefs}) => {
     let tmpMotifs = []
     if (type.length > 0 && nomRefs) {
         type.forEach(_type => {
+            // console.log('getSubMotifsFromTypes_type ', _type)
             if (_type !== 'all') tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_SUB_MOTIFS[_type], ...tmpMotifs]
         })
         tmpMotifs = [...new Set(tmpMotifs)]
@@ -129,13 +113,49 @@ export const getSubMotifsFromMotif = ({motif = [], nomRefs}) => {
     let tmpSubCode = []
     if (motif && motif.length > 0) {
         motif.forEach(_motif => {
-            if (_motif !== 'all' && nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif]) tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
+            // console.log('getSubMotifsFromMotif_motif ', _motif)
+            if (_motif !== 'all' && nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif.value]) {
+                tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif.value], ...tmpSubCode]
+            }
         })
         tmpSubCode = [...new Set(tmpSubCode)]
     } else return []
 
     return tmpSubCode
 }
+export const changeSubMotifsFromMotifs = ({motif = [], nomRefs, rln, setRln}) => {
+
+    let tmpSubCode = [], subMotifs = []
+    if (motif && motif.length > 0) {
+        motif.forEach(_motif => {
+            // console.log('changeSubMotifsFromMotifs _motif ', _motif)
+            if (_motif !== 'all' && nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif]) tmpSubCode = [...nomRefs.ROC_RLTN_MOTIFS_SOUS_MOTIFS[_motif], ...tmpSubCode]
+        })
+        tmpSubCode = [...new Set(tmpSubCode)]
+
+    } else return []
+
+    tmpSubCode.forEach( subCode => subMotifs[subCode] = nomRefs.ROC_SOUS_MOTIFS[subCode] )
+
+    return subMotifs
+}
+
+
+export const checkForRejeteOrAnuleOrMore = (statuses) => {
+    let result = true
+    if (statuses && statuses !== undefined) {
+        result = false
+        statuses.forEach(statut => {
+            if (statut.value == 'REJETEE' || statut.value == 'INVALIDE') result = true
+        })
+    }
+    return result
+}
+
+
+
+
+
 
 
 // TODO to be checked one more time and optimise
@@ -177,7 +197,8 @@ export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission, amc,
+        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
+        amc, domaine, statut, motif, sousMotif,
         errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
     } = criterias;
 
@@ -226,16 +247,59 @@ export const reshapeCriterias = ({criterias}) => {
                     if (nir && nir != undefined && cle && cle != undefined) {
                     filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
                 }
-
      */
 
+    /**
+     * Reshapes from AutoComplete
+     */
     if (amc && amc !== undefined) {
         filters.amc = []
         amc.forEach(el => filters.amc.push(el.value))
     }
+    if (domaine && domaine !== undefined) {
+        filters.domaine = []
+        domaine.forEach(el => filters.domaine.push(el.value))
+    }
+    if (statut && statut !== undefined) {
+        filters.statut = []
+        statut.forEach(el => filters.statut.push(el.value))
+    }
+    if (motif && motif !== undefined) {
+        filters.motif = []
+        motif.forEach(el => filters.motif.push(el.value))
+    }
+    if (sousMotif && sousMotif !== undefined) {
+        filters.sousMotif = []
+        sousMotif.forEach(el => filters.sousMotif.push(el.value))
+    }
+    //^^^^^^^^^^^^^^^^^^Reshapes from AutoComplete^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
     filters.cashe = null
     return filters
 
 }
+
+
+// export const getSubMotifsFromMotifsFromTypes = ({type = [], nomRefs}) => {
+//     let tmpMotifs = []
+//     if (type.length > 0) {
+//         type.forEach(_type => tmpMotifs = [...nomRefs.ROC_RLTN_TYPES_MOTIFS[_type], ...tmpMotifs])
+//         tmpMotifs = [...new Set(tmpMotifs)]
+//
+//     } else tmpMotifs = Object.keys( nomRefs.ROC_SOUS_MOTIFS )
+//
+//     return tmpMotifs
+// }
+//
+//
+// export const getAvailableTypesFromStatuses = ({statut = [], nomRefs}) => {
+//     let tmpTypes = []
+//     statut.forEach( _statut => {
+//         // console.log('getAvailableTypesFromStatuses_statut ', _statut)
+//         if (_statut !== 'all') tmpTypes = [...nomRefs.ROC_RLTN_STATUSES_TYPES[_statut], ...tmpTypes]
+//     })
+//     tmpTypes = [...new Set(tmpTypes)]
+//
+//     return tmpTypes
+// }
