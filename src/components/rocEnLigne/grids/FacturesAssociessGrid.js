@@ -53,15 +53,15 @@ export const FacturesAssociessGrid = ({ engagements, nomRefs, noModal }) => {
       showNoGridResultsAlert={(isSuccess && data?.meta?.status == 204) || !engagements || engagements?.length == 0}
       showCircularProgress={isFetching}
       showGrid={isSuccess}
-      showPagination={data}
+      showPagination={true}
       rows={data?.results}
       columns={columns({nomRefs, handleModalOpen})}
       pageSize={20}
       currentPage={currentPage}
       totalPages={data?.totalPages}
-      totalElements={data?.totalElements}
       disableColumnMenu={true}
       disableColumnResize={false}
+      hideFooter={true}
       components={{
         NoRowsOverlay: () => (
           <Stack height="75px" alignItems="center" justifyContent="center">
@@ -77,6 +77,7 @@ export const FacturesAssociessGrid = ({ engagements, nomRefs, noModal }) => {
       }}
       sortingMode="server"
       onSortModelChange={handleOrdering}
+      handlePageChange={handlePageChange}
       showModalInfo={true}
       openModal={openModal}
       handleModalClose={handleModalClose}

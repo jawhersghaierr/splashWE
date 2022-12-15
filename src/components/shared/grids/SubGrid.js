@@ -1,6 +1,7 @@
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 import { CircularProgress } from "@mui/material";
 import { ModalInfo, NoGridResultsAlert, MoreThan200Results } from "../modals";
 
@@ -12,6 +13,8 @@ export const SubGrid = (props) => {
     columns,
     pageSize,
     rowsPerPageOptions,
+    totalPages,
+    currentPage,
     hideFooter,
     disableColumnMenu,
     disableColumnResize,
@@ -23,6 +26,7 @@ export const SubGrid = (props) => {
     onSortModelChange,
     openModal,
     handleModalClose,
+    handlePageChange,
   } = props;
   const { showModalInfo, showModalComponent, modalComponent } = props;
   const { showMoreThan200Results, data, error, isSuccess, isError } = props;
