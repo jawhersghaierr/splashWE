@@ -9,7 +9,7 @@ import { selectCriterias } from "../rocEnLigneSlice";
 import { useGetRocEnLigneQuery } from "../services/rocEnLigneApi";
 import { usePrevious } from "../../../utils/status-utils";
 import { useGetRefsQuery } from "../../../services/refsApi";
-// import { NoSearchResultsAlert, MoreThan200Results } from "../../shared/modals";
+// import { NoSearchResultsAlert, MoreThan200Results, MoreThan10000ResultsForDownload } from "../../shared/modals";
 // import mainPS from "../../../../assets/PS.png";
 import "../../shared/styles/grid.scss";
 import { env_IP, ports } from "../../../../env-vars";
@@ -67,7 +67,7 @@ export const RocEnLigneGrid = () => {
 
     }, [criterias, currentPage]);
 
-    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState( false);
+    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState(false);
     const openAlertForMoreThan10000ResultsForDownload = () => {
         setAlertForMoreThan10000ResultsForDownload(true)
     }
@@ -126,6 +126,9 @@ export const RocEnLigneGrid = () => {
       error={error}
       isSuccess={isSuccess}
       isError={isError}
+      showMoreThan10000ResultsForDownload={true}
+      openAlertForMoreThan10000ResultsForDownload={openAlertForMoreThan10000ResultsForDownload}
+      closeAlertForMoreThan10000ResultsForDownload={closeAlertForMoreThan10000ResultsForDownload}
     />
   );
   // if (!isFetching && isSuccess && (!data?.results || data?.results?.length == 0)) return <NoSearchResultsAlert/>

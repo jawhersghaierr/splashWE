@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button, CircularProgress, Link, Typography } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import { NoSearchResultsAlert, MoreThan200Results } from "../modals";
+import { NoSearchResultsAlert, MoreThan200Results, MoreThan10000ResultsForDownload } from "../modals";
 import mainPS from "../../../../assets/PS.png";
 import download from "../../../../assets/icons/download-blue.svg";
 
@@ -39,6 +39,11 @@ export const MainGrid = (props) => {
     handlePageChange,
   } = props;
   const { showMoreThan200Results, data, error, isSuccess, isError } = props;
+  const {
+    showMoreThan10000ResultsForDownload,
+    openAlertForMoreThan10000ResultsForDownload,
+    closeAlertForMoreThan10000ResultsForDownload,
+  } = props;
 
   if (showNoSearchResultsAlert) return <NoSearchResultsAlert />;
   if (showCircularProgress)
@@ -146,6 +151,12 @@ export const MainGrid = (props) => {
           error={error}
           isSuccess={isSuccess}
           isError={isError}
+        />
+      )}
+      {showMoreThan10000ResultsForDownload && (
+        <MoreThan10000ResultsForDownload
+          open={openAlertForMoreThan10000ResultsForDownload}
+          handleMsgClose={closeAlertForMoreThan10000ResultsForDownload}
         />
       )}
     </div>

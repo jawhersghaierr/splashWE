@@ -25,7 +25,7 @@ export const FacturesGrid = ({disciplines}) => {
     const criterias = useSelector(selectCriterias);
     const prevCriterias = usePrevious(criterias)
     const [currentPage, setCurrentPage] = useState( 0);
-    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState( false);
+    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState(false);
     const [sortProperties, setSortProperties] = useState({
         sortDirection: null,
         sortProperty: null
@@ -117,6 +117,9 @@ export const FacturesGrid = ({disciplines}) => {
       error={error}
       isSuccess={isSuccess}
       isError={isError}
+      showMoreThan10000ResultsForDownload={true}
+      openAlertForMoreThan10000ResultsForDownload={openAlertForMoreThan10000ResultsForDownload}
+      closeAlertForMoreThan10000ResultsForDownload={closeAlertForMoreThan10000ResultsForDownload}
     />
   );
 
