@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { env_IP, ports } from '../../../../env-vars'
+import { apiUrls } from '../../../../env-vars'
 import { actesGridMapper } from '../../../utils/reshaper-utils'
 import { reshapeCriterias } from "../utils/utils";
 import { addCriteriasForGetRequest, pageSize } from "../../../utils/utils";
 
-export const baseUrl = `http://${env_IP}:${ports.factures}/api/v1`
+export const baseUrl = apiUrls.factures;
 
 export const facturesApi = createApi({
     reducerPath: 'facturesApi',

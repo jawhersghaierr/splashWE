@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP, ports} from '../../../../env-vars'
+import { apiUrls } from '../../../../env-vars'
 import {addCriteriasForGetRequest, pageSize} from "../../../utils/utils";
 import {reshapeCriterias} from "../utils/utils";
 
-export const baseUrl = `http://${env_IP}:${ports?.beneficiaire}/api/v1`
+export const baseUrl = apiUrls.beneficiaire;
 
 export const beneficiaireApi = createApi({
     reducerPath: 'beneficiaireApi',
