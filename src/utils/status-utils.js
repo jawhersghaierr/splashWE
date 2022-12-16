@@ -67,6 +67,7 @@ export const benefStatuses = {
   Valide: { label: "Valide", color: "#C7F99F" },
   Radié: { label: "Radié", color: "#FFA3A3" },
   Suspendu: { label: "Suspendu", color: "#FFD4AD" },
+  Invalide: { label: "Invalide", color: "#EBEBEB" },
 };
 
 /**
