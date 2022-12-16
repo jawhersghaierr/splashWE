@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {env_IP} from '../../env-vars'
+import { apiUrls } from '../../env-vars'
 
 export const entityApi = createApi({
     reducerPath: 'entityApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `http://${env_IP}:8031/api/entities`,
+        baseUrl: apiUrls.entities,
     }),
     endpoints: (builder) => ({
         getUsers: builder.query({

@@ -13,23 +13,24 @@ import { usePrevious } from "../../../utils/status-utils";
 import { allowSearch } from "../../../utils/validator-utils";
 // import mainPS from "../../../../assets/PS.png";
 // import { NoSearchResultsAlert, MoreThan200Results } from "../../shared";
-import { env_IP, ports } from "../../../../env-vars";
+import { apiUrls } from "../../../../env-vars";
 // import download from "../../../../assets/icons/download-blue.svg";
 import { addCriteriasForGetRequest } from "../../../utils/utils";
 import { reshapeCriterias } from "../utils/utils";
 import { MainGrid } from "../../shared/grids";
 
-
-export const FacturesGrid = ({disciplines}) => {
-
-    const criterias = useSelector(selectCriterias);
-    const prevCriterias = usePrevious(criterias)
-    const [currentPage, setCurrentPage] = useState( 0);
-    const [alertForMoreThan10000ResultsForDownload, setAlertForMoreThan10000ResultsForDownload] = useState(false);
-    const [sortProperties, setSortProperties] = useState({
-        sortDirection: null,
-        sortProperty: null
-    });
+export const FacturesGrid = ({ disciplines }) => {
+  const criterias = useSelector(selectCriterias);
+  const prevCriterias = usePrevious(criterias);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [
+    alertForMoreThan10000ResultsForDownload,
+    setAlertForMoreThan10000ResultsForDownload,
+  ] = useState(false);
+  const [sortProperties, setSortProperties] = useState({
+    sortDirection: null,
+    sortProperty: null,
+  });
 
   const size = 20;
 
@@ -47,28 +48,32 @@ export const FacturesGrid = ({disciplines}) => {
       sortDirection: value[0]?.sort?.toUpperCase() || null,
     });
   };
-  const downloadHref = `http://${env_IP}:${
-    ports.download
-  }/api/v1/download?target=${baseUrl}/${addCriteriasForGetRequest({
-    url: "factures",
-    filters: reshapeCriterias({ criterias }),
-    prepareForDownload: true,
-  })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(
+  const downloadHref = `${apiUrls.downloadFacture}/download?target=${baseUrl}/${addCriteriasForGetRequest(
+    {
+      url: "factures",
+      filters: reshapeCriterias({ criterias }),
+      prepareForDownload: true,
+    }
+  )}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(
     reverseMapFacturation
   )}&dateFormat=dateNai`;
 
-    useEffect(() => {
-        if (data && JSON.stringify(criterias) !== JSON.stringify(prevCriterias) && currentPage > 0 ) {
-            setCurrentPage(0)
-        }
-    }, [criterias, currentPage]);
+  useEffect(() => {
+    if (
+      data &&
+      JSON.stringify(criterias) !== JSON.stringify(prevCriterias) &&
+      currentPage > 0
+    ) {
+      setCurrentPage(0);
+    }
+  }, [criterias, currentPage]);
 
-    const openAlertForMoreThan10000ResultsForDownload = () => {
-        setAlertForMoreThan10000ResultsForDownload(true)
-    }
-    const closeAlertForMoreThan10000ResultsForDownload = () => {
-        setAlertForMoreThan10000ResultsForDownload(false)
-    }
+  const openAlertForMoreThan10000ResultsForDownload = () => {
+    setAlertForMoreThan10000ResultsForDownload(true);
+  };
+  const closeAlertForMoreThan10000ResultsForDownload = () => {
+    setAlertForMoreThan10000ResultsForDownload(false);
+  };
 
   return (
     <MainGrid
@@ -118,9 +123,15 @@ export const FacturesGrid = ({disciplines}) => {
       isSuccess={isSuccess}
       isError={isError}
       showMoreThan10000ResultsForDownload={true}
-      alertForMoreThan10000ResultsForDownload={alertForMoreThan10000ResultsForDownload}
-      openAlertForMoreThan10000ResultsForDownload={openAlertForMoreThan10000ResultsForDownload}
-      closeAlertForMoreThan10000ResultsForDownload={closeAlertForMoreThan10000ResultsForDownload}
+      alertForMoreThan10000ResultsForDownload={
+        alertForMoreThan10000ResultsForDownload
+      }
+      openAlertForMoreThan10000ResultsForDownload={
+        openAlertForMoreThan10000ResultsForDownload
+      }
+      closeAlertForMoreThan10000ResultsForDownload={
+        closeAlertForMoreThan10000ResultsForDownload
+      }
     />
   );
 
