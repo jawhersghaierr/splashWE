@@ -251,13 +251,13 @@ export default function SearchAccordion(props) {
                                                        // handleFormChange={form.mutators.handleFormChange}
                                     />
 
-                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.associated(values, ['dateFinSoins'], 'Date de référence au',  'Pour une recherche par période, veillez renseigner les deux dates.') )}>
+                                    <Field name="dateDebutSoins" validate={validators.composeValidators( validators.associated(values, ['dateFinSoins'], 'Date de référence au',  'Pour une recherche par période, veillez renseigner les deux dates.') )}>
                                         {({ input, meta }) => (
                                             <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
-                                                    label="Date de référence du"
+                                                    label="Date de référence du1"
                                                     inputFormat="dd/MM/yyyy"
-                                                    maxDate={new Date()}
+                                                    // maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
@@ -270,13 +270,13 @@ export default function SearchAccordion(props) {
                                         )}
                                     </Field>
 
-                                    <Field name="dateFinSoins" validate={validators.composeValidators( validators.noFutureDate(), validators.beforeThan(values, 'dateDebutSoins'), validators.associated(values, ['dateDebutSoins'], 'Date de référence du') )}>
+                                    <Field name="dateFinSoins" validate={validators.composeValidators( validators.beforeThan(values, 'dateDebutSoins'), validators.associated(values, ['dateDebutSoins'], 'Date de référence du') )}>
                                         {({ input, meta }) => (
                                             <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0 15px'}}>
                                                 <DatePicker
                                                     label="au"
                                                     inputFormat="dd/MM/yyyy"
-                                                    maxDate={new Date()}
+                                                    // maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
                                                     onChange={input?.onChange || null}
                                                     renderInput={(params) =>
