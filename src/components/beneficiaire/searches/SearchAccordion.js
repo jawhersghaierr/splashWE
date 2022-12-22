@@ -255,7 +255,7 @@ export default function SearchAccordion(props) {
                                         {({ input, meta }) => (
                                             <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '0px 15px'}}>
                                                 <DatePicker
-                                                    label="Date de référence du1"
+                                                    label="Date de référence du"
                                                     inputFormat="dd/MM/yyyy"
                                                     // maxDate={new Date()}
                                                     value={(input?.value === '' || input?.value == undefined)  ? null : input?.value}
