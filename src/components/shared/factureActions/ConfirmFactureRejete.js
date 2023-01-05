@@ -15,7 +15,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import {useEffect, useState} from "react";
 import {reshapeMotifVsStatus} from "../../factures/utils/utils";
-import {env_IP, ports} from "../../../../env-vars";
+import {apiUrls} from "../../../../env-vars";
 
 export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {
 
@@ -72,7 +72,7 @@ export const ConfirmFactureRejete = ({opened, close, nomRefs, data, setOpenMsg, 
 		}
 	}
 
-	let url = `http://${env_IP}:${ports.factures}/api/v1/factures/status`;
+	let url = `http://${apiUrls.factures}/factures/status`;
 
 	useEffect(() => {
 		if (motif) setRequired(null)
