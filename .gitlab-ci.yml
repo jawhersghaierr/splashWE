@@ -10,7 +10,7 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'feature/updates-fe-pipelines'
+    ref: 'master'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
