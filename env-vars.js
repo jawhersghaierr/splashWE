@@ -28,6 +28,14 @@ module.exports = {
         //     port: 8033,
         // }
     ],
+    remotes1 : {
+        ps_ui: {
+            title: 'ps_ui',
+            url: 'http://localhost',
+            port: 8034,
+            component: 'RemotePsApp'
+        }
+    },
     // ports: {
     //     untreatable: 8031,
     //     configurations: 8015,

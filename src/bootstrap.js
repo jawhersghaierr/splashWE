@@ -45,6 +45,9 @@ import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxIn
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 
+import { loadComponent } from './utils/remote-utils';
+import { remotes1 } from '../env-vars';
+
 let theme = createTheme({
   typography: {
     allVariants: {
@@ -82,7 +85,6 @@ const theme1 = createTheme({
   }
 });
 
-
 const dynamicFederation = async (scope, module) => {
   const container = window[scope]; // or get the container somewhere else
 
@@ -95,14 +97,21 @@ const dynamicFederation = async (scope, module) => {
 
 
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
-const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
+// const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
+const RemotePsApp = React.lazy(loadComponent(
+  remotes1.ps_ui.title,
+  'default',
+  `./${remotes1.ps_ui.component}`,
+  `${remotes1.ps_ui.url}:${remotes1.ps_ui.port}/remoteEntry.js`
+));
 
 const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
   <b>Dashboard Page</b>
 </Typography>
 
 const Hospi = () => <Comp1/>
-const PSremote = () => <RemotePsApp  store={store} />
+// const PSremote = () => <RemotePsApp store={store} />
+const PSremote = () => <RemotePsApp store={store} />
 const RemoteTest = () => <RemoteApp store={store} />
 
 
@@ -138,8 +147,8 @@ const App = () => {
                 <Switch>
                   <Route exact path="/" component={PageDashboard} />
                   <Route path="/Hospi" component={Hospi} />
-                  <Route exact={true} path="/PS" component={Ps} />
-                  <Route path="/PS/:id?" component={PsDetailsById}/>
+                  <Route exact={true} path="/PS" component={PSremote} />
+                  {/* <Route path="/PS/:id?" component={PsDetailsById}/> */}
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
                   <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>
                   <Route path="/ligne" component={RemoteTest}/>

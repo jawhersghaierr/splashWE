@@ -50,8 +50,8 @@ module.exports = {
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
-                hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
-                ps_ui: `ps_ui@http://${env_IP}:8034/remotePsEntry.js`,
+                // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
+                // ps_ui: `ps_ui@http://http://${env_IP}:8034/remotePsEntry.js`,
             },
             shared: {
                 ...deps,
