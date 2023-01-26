@@ -33,12 +33,12 @@ module.exports = {
         },
     },
 
-    output: {
-        publicPath: 'http://localhost:8031/',
-    },
     // output: {
-    //     publicPath: 'auto',
+    //     publicPath: 'http://localhost:8031/',
     // },
+    output: {
+        publicPath: 'auto',
+    },
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
@@ -47,7 +47,7 @@ module.exports = {
         // Only update what has changed on hot reload
         new ModuleFederationPlugin({
             name: 'host',
-            library: { type: 'var', name: 'host' },
+            // library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
