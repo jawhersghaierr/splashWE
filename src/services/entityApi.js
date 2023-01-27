@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { apiUrls } from '../../env-vars'
+// import { apiUrls } from '../../env-vars'
 
 export const entityApi = createApi({
     reducerPath: 'entityApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: apiUrls.entities,
+        baseUrl: window?._env_?.apiUrls?.entities,
+        // baseUrl: apiUrls.entities,
     }),
     endpoints: (builder) => ({
         getUsers: builder.query({

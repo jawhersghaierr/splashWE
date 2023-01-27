@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { apiUrls } from '../../../../env-vars'
+// import { apiUrls } from '../../../../env-vars'
 
 export const intraitablesApi = createApi({
     reducerPath: 'intraitablesApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: apiUrls.intraitables,
+        baseUrl: window?._env_?.apiUrls?.intraitables,
+        // baseUrl: apiUrls.intraitables,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

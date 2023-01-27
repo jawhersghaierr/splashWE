@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { apiUrls } from '../../env-vars'
+// import { apiUrls } from '../../env-vars'
 
 export const refsApi = createApi({
 
     reducerPath: 'refsApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: apiUrls.refs,
+        baseUrl: window?._env_?.apiUrls?.refs,
+        // baseUrl: apiUrls.refs,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
