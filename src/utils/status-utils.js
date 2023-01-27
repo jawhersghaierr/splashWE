@@ -32,6 +32,7 @@ export const paiementsStatus = {
   PAYE: { label: "Payé", color: "#C7F99F" },
   REMBOURSE: { label: "Remboursé", color: "#B3EFF8" },
   EN_COURS: { label: "En cours", color: "#FFD4AD" },
+  A_RECYCLER: { label: "A recycler", color: "#FFD4AD" },
 };
 
 export const factureConfigurationStatus = {

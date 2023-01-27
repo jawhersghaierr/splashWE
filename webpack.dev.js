@@ -68,6 +68,7 @@ module.exports = {
                      }
                      document.body.appendChild(script);
                    })`,
+                lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
             },
             // remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
