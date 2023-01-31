@@ -1,9 +1,7 @@
-import React, {Suspense, useState} from 'react';
-import ReactDOM from 'react-dom';
-
-import {Switch, Route, BrowserRouter, matchPath} from 'react-router-dom'
-
-import { Provider } from 'react-redux';
+import React, {Suspense, useState} from 'lib_ui/react';
+import ReactDOM from 'lib_ui/react-dom';
+import {Switch, Route, BrowserRouter, matchPath} from 'lib_ui/react-router-dom'
+import { Provider } from 'lib_ui/react-redux';
 
 import {Typography, CssBaseline} from "@mui/material";
 import {
@@ -20,13 +18,13 @@ import { store } from './store';
 import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
 import Drawer from "./components/shared/Drawer"
-import {Ps} from './components/ps/PS'
+// import {Ps} from './components/ps/PS'
 import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 import {Test} from './components/beneficiaire/Test'
 
 // import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
 import './theme.scss'
-import PsDetailsById from "./components/ps/PsDetailsById";
+// import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
 import FacturesDetailsById from "./components/factures/FacturesDetailsById";
 import {Factures} from "./components/factures/Factures";
@@ -44,9 +42,10 @@ import {FluxInfo as FacturesFluxInfo} from "./components/factures/components/Flu
 import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxInfo";
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
+import RemotePsApp from "ps_ui/RemotePsApp";
 
-import { loadComponent } from './utils/remote-utils';
-import { remotes1 } from '../env-vars';
+// import { loadComponent } from './utils/remote-utils';
+// import { remotes1 } from '../env-vars';
 
 let theme = createTheme({
   typography: {
@@ -98,12 +97,12 @@ const dynamicFederation = async (scope, module) => {
 
 const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
 // const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
-const RemotePsApp = React.lazy(loadComponent(
-  remotes1.ps_ui.title,
-  'default',
-  `./${remotes1.ps_ui.component}`,
-  `${remotes1.ps_ui.url}:${remotes1.ps_ui.port}/remoteEntry.js`
-));
+// const RemotePsApp = React.lazy(loadComponent(
+//   remotes1.ps_ui.title,
+//   'default',
+//   `./${remotes1.ps_ui.component}`,
+//   `${remotes1.ps_ui.url}:${remotes1.ps_ui.port}/remoteEntry.js`
+// ));
 
 const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
   <b>Dashboard Page</b>
