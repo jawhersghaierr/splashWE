@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "lib_ui/redux";
 import thunk from "redux-thunk";
 import thunkMiddleware from "redux-thunk";
-import dynamicMiddlewares from "redux-dynamic-middlewares";
+import dynamicMiddlewares from "lib_ui/redux-dynamic-middlewares";
 //TODO need automation - import object/array index files from slice folders
 // import { entityApi } from './services/entityApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
@@ -9,7 +9,7 @@ import comp1Reducer from "./component1/comp1Slice";
 
 import { referentielApi } from "./services/referentielApi";
 import { refsApi } from "./services/refsApi";
-import { psApi } from "./components/ps/services/psApi";
+// import { psApi } from "./components/ps/services/psApi";
 import { facturesApi } from "./components/factures/services/facturesApi";
 import { beneficiaireApi } from "./components/beneficiaire/services/beneficiaireApi";
 import { paiementsApi } from "./components/paiement/services/paiementsApi";
@@ -20,7 +20,7 @@ import { intraitablesApi } from "./components/intraitables/services/intraitables
 import { configurationsApi } from "./components/configurations/services/configurationsApi";
 import { rocEnLigneApi } from "./components/rocEnLigne/services/rocEnLigneApi";
 
-import psReducer from "./components/ps/psSlice";
+// import psReducer from "./components/ps/psSlice";
 import paiementsReducer from "./components/paiement/paiementSlice";
 import virementsReducer from "./components/virement/virementsSlice";
 import benefReducer from "./components/beneficiaire/beneficiaireSlice";

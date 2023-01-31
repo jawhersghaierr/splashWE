@@ -33,12 +33,12 @@ module.exports = {
         },
     },
 
-    // output: {
-    //     publicPath: 'http://localhost:8031/',
-    // },
     output: {
-        publicPath: 'auto',
+        publicPath: 'http://localhost:8031/',
     },
+    // output: {
+    //     publicPath: 'auto',
+    // },
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
