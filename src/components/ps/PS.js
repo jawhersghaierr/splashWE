@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import {matchPath} from "react-router-dom";
+
 import {Typography} from "@mui/material";
 import SearchAccordion from "../ps/searches/SearchAccordion";
 import {PsGrid} from "./grids/PsGrid";
 import {useGetDisciplinesQuery} from "../../services/referentielApi"
-import mainPS from '../../../assets/PS.png'
 
+import mainPS from '../../../assets/PS.png'
 import './ps.scss'
-import {matchPath} from "react-router-dom";
 
 export const Ps = (props) => {
 

@@ -1,7 +1,9 @@
-import Chip from "@mui/material/Chip";
 import React from "react";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {Link} from "react-router-dom";
+
+import Chip from "@mui/material/Chip";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+
 import {benefStatuses} from '../../../utils/status-utils';
 import {dateConvertNaissanceRAW, convertDate} from "../../../utils/convertor-utils";
 import {renderCell} from "../../../utils/utils";

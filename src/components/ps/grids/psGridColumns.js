@@ -1,10 +1,12 @@
-import {statusRow} from "../utils/utils";
-import Chip from "@mui/material/Chip";
 import React from "react";
+import {Link} from "react-router-dom";
+
+import Chip from "@mui/material/Chip";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom";
+
+import {statusRow} from "../utils/utils";
 import {renderCell} from "../../../utils/utils";
 
 const LightTooltip = styled(({ className, ...props }) => (

@@ -1,4 +1,4 @@
-import { createStore, compose, applyMiddleware, combineReducers } from "redux";
+import { createStore, compose, applyMiddleware, combineReducers } from "lib_ui/redux";
 import thunk from "redux-thunk";
 import thunkMiddleware from "redux-thunk";
 import dynamicMiddlewares from "redux-dynamic-middlewares";

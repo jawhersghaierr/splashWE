@@ -12,10 +12,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DoDisturbOnIcon from '@mui/icons-material/DoDisturbOn';
 
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { fr } from "date-fns/locale";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { fr } from "date-fns/locale";
 
 import {useGetRefsQuery} from "../../../services/refsApi";
 import { setCriterias, initCriterias, selectCriterias } from '../virementsSlice'

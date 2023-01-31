@@ -17,7 +17,7 @@ import Divider from '@mui/material/Divider';
 
 import { store } from './store';
 
-import {Comp1} from "./component1/Comp1";
+// import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
 import Drawer from "./components/shared/Drawer"
 import {Ps} from './components/ps/PS'
@@ -109,7 +109,7 @@ const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={
   <b>Dashboard Page</b>
 </Typography>
 
-const Hospi = () => <Comp1/>
+// const Hospi = () => <Comp1/>
 // const PSremote = () => <RemotePsApp store={store} />
 const PSremote = () => <RemotePsApp store={store} />
 const RemoteTest = () => <RemoteApp store={store} />
@@ -146,8 +146,11 @@ const App = () => {
               <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
                   <Route exact path="/" component={PageDashboard} />
-                  <Route path="/Hospi" component={Hospi} />
-                  <Route exact={true} path="/PS" component={PSremote} />
+                  {/*<Route path="/Hospi" component={Hospi} />*/}
+                  {/*<Route exact={true} path="/PS" component={PSremote} />*/}
+                  <Route path="/PS">
+                    <PSremote />
+                  </Route>
                   {/* <Route path="/PS/:id?" component={PsDetailsById}/> */}
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
                   <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>

@@ -1,24 +1,26 @@
 import React, {useState} from 'react';
 import { matchPath, Link } from 'react-router-dom';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {useGetFactureByIdQuery} from "./services/facturesApi";
 import {Button, CircularProgress, Typography} from "@mui/material";
-import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "../shared/grids";
-import {ConfirmFactureRejete, ConfirmFactureAnule, ConfirmFactureRecyclage} from "../shared/factureActions";
-
-import {PaimentsGrid, SelAssociesGrid} from "./grids";
-import {FluxInfo} from "./components/FluxInfo";
-import {facturesStatus} from "../../utils/status-utils";
-import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
-import {useGetRefsQuery} from "../../services/refsApi";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle';
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+
+import {useGetFactureByIdQuery} from "./services/facturesApi";
+import {RowInfo} from "./components/RowInfo";
+import {FluxInfo} from "./components/FluxInfo";
+import {ActesGrid} from "../shared/grids";
+import {PaimentsGrid, SelAssociesGrid} from "./grids";
+
+import {ConfirmFactureRejete, ConfirmFactureAnule, ConfirmFactureRecyclage} from "../shared/factureActions";
+import {facturesStatus} from "../../utils/status-utils";
+import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
+import {useGetRefsQuery} from "../../services/refsApi";
 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
