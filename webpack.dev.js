@@ -51,7 +51,9 @@ module.exports = {
             filename: 'remoteEntry.js',
             remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
-                ps_ui: `ps_ui@http://http://${env_IP}:8034/remotePsEntry.js`,
+                ps_ui: `ps_ui@http://localhost:8034/remoteEntry.js`,
+                lib_ui: `lib_ui@http://localhost:3005/remoteEntry.js`,
+                shared_lib_ui: `shared_lib_ui@http://localhost:8051/remoteEntry.js`,
             },
             shared: {
                 ...deps,
