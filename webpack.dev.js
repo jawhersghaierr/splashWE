@@ -57,20 +57,44 @@ module.exports = {
             },
             shared: {
                 ...deps,
-                'react': {
+                "react": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                'react-dom': {
+                "react-dom": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                '@mui/material': {
+                "react-router-dom": {
                     singleton: true,
-                    strictVersion: true,
-                    requiredVersion: '5.5.2'
+                    version: "5.3.4",
+                },
+                "redux": {
+                    singleton: true,
+                    version: "4.2.1",
+                },
+                "react-redux": {
+                    singleton: true,
+                    version: "7.2.9",
+                },
+                // "thunk": {
+                //     singleton: true,
+                //     version: "2.4.2"
+                // },
+                // "@reduxjs/toolkit": {
+                //     singleton: true,
+                //     strictVersion: true,
+                //     version: "1.9.2",
+                // },
+                "react-final-form": {
+                    singleton: true,
+                    version: "6.5.9",
+                },
+                "dynamicMiddlewares": {
+                    singleton: true,
+                    version: "2.2.0"
                 },
                 // '@viamedis-boilerPlate/shared-library': {
                 //     import: '@viamedis-boilerPlate/shared-library',

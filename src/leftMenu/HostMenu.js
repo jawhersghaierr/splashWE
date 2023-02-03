@@ -1,15 +1,15 @@
 import React, { forwardRef, useRef, useState } from "lib_ui/react";
 import { NavLink } from "lib_ui/react-router-dom";
+
 import { makeStyles, createStyles } from "@mui/styles";
-
-import { Collapse, ListItemButton, List } from "@mui/material";
-
-import { drawerWidth } from "../utils/consts";
-
 import { MenuList, Popper } from "@material-ui/core";
+import { Collapse, ListItemButton, List } from "@mui/material";
 
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+
+import { drawerWidth } from "../utils/consts";
 
 import HomeIcon from "../../assets/icons/HomeIcon";
 import ROCIcon from "../../assets/icons/ROCIcon";
@@ -21,7 +21,8 @@ import ConfigurationIcon from "../../assets/icons/ConfigurationIcon";
 import IndusIcon from "../../assets/icons/IndusIcon";
 import DevisIcon from "../../assets/icons/DevisIcon";
 
-import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+
+
 import "./menu.scss";
 
 const hostMenuItems = [
@@ -40,11 +41,6 @@ const hostMenuItems = [
         link: '/PS',
         icon: PSIcon,
     },
-    // {
-    //     name: 'PS Remote',
-    //     link: '/PSremote',
-    //     icon: IconPeople,
-    // },
     {
         name: 'Bénéficiaires',
         link: '/beneficiaire',
@@ -57,16 +53,6 @@ const hostMenuItems = [
             {name: 'Virements',icon: VirementIcon, link: '/virements'},
         ]
     },
-    // {
-    //     icon: IconBarChart,
-    //     name: 'Paiements',
-    //     link: '/paiement'
-    // },
-    // {
-    //     icon: IconBarChart,
-    //     name: 'Virements',
-    //     link: '/virements'
-    // },
     {
         name: 'ROC', icon: ROCIcon,
         popitems: [
@@ -75,35 +61,10 @@ const hostMenuItems = [
             {name: 'Factures intraitables',icon: IndusIcon, link: '/intraitables'},
         ]
     },
-    // {
-    //     icon: IconLibraryBooks,
-    //     name: 'Services en ligne',
-    //     link: '/serviceEnLigne'
-    // },
-    // {
-    //     icon: IconPeople,
-    //     name: 'Factures',
-    //     link: '/factures'
-    // },
-    // {
-    //     name: 'Intraitables',
-    //     link: '/intraitables',
-    //     icon: IconBarChart,
-    // },
-
-  // {
-  //     name: 'Remote test App',
-  //     link: '/test',
-  //     icon: IconBarChart,
-  // },
-  // {
-  //     name: 'Hospi App',
-  //     link: '/Hospi',
-  //     icon: AccountBalance,
-  // },
 ];
 
 const RecursiveMenuItem = (props) => {
+
   const { name, link, icon: Icon } = props;
   const classes = useStyles();
   const [openPopper, setOpenPopper] = useState(false);
