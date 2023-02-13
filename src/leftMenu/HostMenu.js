@@ -1,15 +1,14 @@
-import React, { forwardRef, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { forwardRef, useRef, useState } from "lib_ui/react";
+import { NavLink } from "lib_ui/react-router-dom";
+
 import { makeStyles, createStyles } from "@mui/styles";
-
 import { Collapse, ListItemButton, List } from "@mui/material";
-
-import { drawerWidth } from "../utils/consts";
-
 import { MenuList, Popper } from "@material-ui/core";
-
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+
+import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+
 import HomeIcon from "../../assets/icons/HomeIcon";
 import ROCIcon from "../../assets/icons/ROCIcon";
 import PaymentIcon from "../../assets/icons/PaymentIcon";
@@ -20,7 +19,8 @@ import ConfigurationIcon from "../../assets/icons/ConfigurationIcon";
 import IndusIcon from "../../assets/icons/IndusIcon";
 import DevisIcon from "../../assets/icons/DevisIcon";
 
-import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
+import { drawerWidth } from "shared_lib_ui/Lib";
+
 import "./menu.scss";
 
 const hostMenuItems = [

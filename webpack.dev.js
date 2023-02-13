@@ -68,7 +68,9 @@ module.exports = {
                      }
                      document.body.appendChild(script);
                    })`,
-                lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
+                // lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
+                lib_ui: `lib_ui@${getRemoteEntryUrl(3005)}`,
+                shared_lib_ui: `shared_lib_ui@${getRemoteEntryUrl(8051)}`,
             },
             // remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
@@ -165,3 +167,15 @@ module.exports = {
         ],
     },
 };
+
+
+
+function getRemoteEntryUrl(port) {
+    const { HOST } = process.env;
+
+    if (!HOST) {
+        return `//localhost:${port}/remoteEntry.js`;
+    }
+
+    return `//${HOST}/remoteEntry.js`;
+}
