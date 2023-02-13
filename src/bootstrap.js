@@ -17,11 +17,11 @@ import Divider from '@mui/material/Divider';
 import { store } from 'shared_lib_ui/store';
 
 import HostMenu from "./leftMenu/HostMenu";
+// import {Drawer} from "shared_lib_ui/Lib"
 import Drawer from "./components/shared/Drawer"
 // import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 // import {Test} from './components/beneficiaire/Test'
 
-import './theme.scss'
 // import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
 // import FacturesDetailsById from "./components/factures/FacturesDetailsById";
 // import {Factures} from "./components/factures/Factures";
@@ -40,7 +40,11 @@ import './theme.scss'
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 import RemotePsApp from "ps_ui/RemotePsApp";
+import RemoteBenefApp from "benef/RemoteBenefApp";
+import RemotePayementApp from "payment_ui/RemotePayementApp";
+import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 
+import './theme.scss'
 
 let theme = createTheme({
   typography: {
@@ -97,6 +101,9 @@ const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={
 </Typography>
 
 const PSremote = () => <RemotePsApp store={store} />
+const BenefRemote = () => <RemoteBenefApp store={store} />
+const PayementRemote = () => <RemotePayementApp store={store} />
+const HospiRemote = () => <RemoteHospiApp store={store} />
 const RemoteTest = () => <RemoteApp store={store} />
 
 
@@ -132,6 +139,24 @@ const App = () => {
                   <Route exact path="/" component={PageDashboard} />
                   <Route path="/PS">
                     <PSremote />
+                  </Route>
+                  <Route path="/beneficiaire">
+                    <BenefRemote />
+                  </Route>
+                  <Route path="/paiement">
+                    <PayementRemote />
+                  </Route>
+                  <Route path="/virements">
+                    <PayementRemote />
+                  </Route>
+                  <Route path="/factures">
+                    <HospiRemote />
+                  </Route>
+                  <Route path="/serviceEnLigne">
+                    <HospiRemote />
+                  </Route>
+                  <Route path="/intraitables">
+                    <HospiRemote />
                   </Route>
                   {/*<Route exact={true} path="/beneficiaire" component={Beneficiaire}/>*/}
                   {/*<Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>*/}

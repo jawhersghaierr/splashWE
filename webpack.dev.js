@@ -51,7 +51,10 @@ module.exports = {
             filename: 'remoteEntry.js',
             remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
+                benef: `benef@http://localhost:8033/remoteEntry.js`,
                 ps_ui: `ps_ui@http://localhost:8034/remoteEntry.js`,
+                payment_ui: `payment_ui@http://localhost:8036/remoteEntry.js`,
+                hospi_ui: `hospi_ui@http://localhost:8035/remoteEntry.js`,
                 lib_ui: `lib_ui@http://localhost:3005/remoteEntry.js`,
                 shared_lib_ui: `shared_lib_ui@http://localhost:8051/remoteEntry.js`,
             },
@@ -96,6 +99,12 @@ module.exports = {
                     singleton: true,
                     version: "2.2.0"
                 },
+
+                // "@emotion/react": {
+                //     singleton: true,
+                //     version: "11.10.5"
+                // },
+
                 // '@viamedis-boilerPlate/shared-library': {
                 //     import: '@viamedis-boilerPlate/shared-library',
                 //     requiredVersion: require('../shared-library/package.json').version,

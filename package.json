@@ -24,9 +24,9 @@
     "@reduxjs/toolkit": "1.9.2",
     "redux-dynamic-middlewares": "^2.2.0",
 
-    "@emotion/css": "^11.7.1",
-    "@emotion/react": "^11.8.2",
-    "@emotion/styled": "^11.8.1",
+    "@emotion/css": "11.10.5",
+    "@emotion/react": "11.10.5",
+    "@emotion/styled": "11.10.5",
 
     "module-federation-import-remote": "^1.0.18",
 
