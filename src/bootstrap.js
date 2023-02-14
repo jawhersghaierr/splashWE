@@ -143,21 +143,32 @@ const App = () => {
                   <Route path="/beneficiaire">
                     <BenefRemote />
                   </Route>
+
                   <Route path="/paiement">
                     <PayementRemote />
                   </Route>
                   <Route path="/virements">
                     <PayementRemote />
                   </Route>
-                  <Route path="/factures">
-                    <HospiRemote />
-                  </Route>
-                  <Route path="/serviceEnLigne">
-                    <HospiRemote />
-                  </Route>
-                  <Route path="/intraitables">
-                    <HospiRemote />
-                  </Route>
+
+                  {/*<Route path="/factures">*/}
+                  {/*  <HospiRemote par={'12'}/>*/}
+                  {/*</Route>*/}
+                  {/*<Route path="/serviceEnLigne">*/}
+                  {/*  <HospiRemote par={'23'}/>*/}
+                  {/*</Route>*/}
+
+                  {/*<Route path={"/intraitables" | "/serviceEnLigne" | "/factures"} render={(props) => (*/}
+                  {/*    <HospiRemote match={props.match}/>*/}
+                  {/*)}/>*/}
+
+                  <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
+                      <HospiRemote match={props.match}/>
+                  )}/>
+
+
+
+
                   {/*<Route exact={true} path="/beneficiaire" component={Beneficiaire}/>*/}
                   {/*<Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>*/}
                   {/*<Route path="/ligne" component={RemoteTest}/>*/}
