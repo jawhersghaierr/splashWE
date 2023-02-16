@@ -1,12 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Stack from "@mui/material/Stack";
-// import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "./configutationGridColumns";
 import { getConfigurations } from "../configurationsSlice";
-// import { MoreThan200Results, NoSearchResultsAlert } from "../../shared";
-import "./configutationGrid.scss";
 import { MainGrid } from "../../shared/grids";
+import "./configutationGrid.scss";
 
 export const ConfigutationsGrid = ({
   data,

@@ -1,22 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import { Redirect } from "react-router-dom";
+import { Link, matchPath, Redirect } from "react-router-dom";
+
 import {useDispatch, useSelector} from "react-redux";
 
-import {CircularProgress, Typography} from "@mui/material";
-import {matchPath} from "react-router-dom";
+import {selectCriterias} from './configurationsSlice'
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {useGetRefsQuery} from "../../services/refsApi";
-import './configuration.scss'
+
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import SearchAccordion from "./searches/SearchAccordion";
-import {selectCriterias} from './configurationsSlice'
+
+import {CircularProgress, Typography} from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+
+import './configuration.scss'
 // import Link from '@mui/material/Link';
-import {Link} from "react-router-dom";
 
 function handleClick(event) {
     event.preventDefault();
