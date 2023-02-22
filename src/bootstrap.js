@@ -106,7 +106,6 @@ const PSremote = () => <RemotePsApp store={store} />
 const BenefRemote = () => <RemoteBenefApp store={store} />
 const PayementRemote = () => <RemotePayementApp store={store} />
 const HospiRemote = () => <RemoteHospiApp store={store} />
-const RemoteTest = () => <RemoteApp store={store} />
 
 
 const App = () => {

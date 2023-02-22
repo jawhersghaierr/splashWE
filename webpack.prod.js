@@ -4,9 +4,10 @@ const webpack = require("webpack");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackShellPluginNext = require('webpack-shell-plugin-next');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const { ModuleFederationPlugin } = require("webpack").container;
+const modules = require(`./public/modules`);
+
 const deps = require('./package.json').dependencies;
-const env_IP = require('./env-vars').env_IP;
 
 module.exports = {
     // Set the mode to development or production
@@ -38,10 +39,7 @@ module.exports = {
             name: 'host',
             library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
-            remotes: {
-                hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
-                ps_ui: `ps_ui@http://${env_IP}:8034/remotePsEntry.js`,
-            },
+            remotes: getRemotes(),
             shared: {
                 ...deps,
                 'react': {
@@ -131,3 +129,32 @@ module.exports = {
         ],
     },
 };
+
+
+
+function getRemotes () {
+    console.log('modules: ', modules)
+    let _remotes = {}
+    Object.keys(modules.remoteApps).forEach(remote => {
+        _remotes[remote] = `promise new Promise(resolve => {
+                     const script = document.createElement('script')
+                     script.src = window._env_.remoteApps.${remote}
+                     script.onload = () => {
+                       const proxy = {
+                         get: (request) => window.${remote}.get(request),
+                         init: (arg) => {
+                           try {
+                             return window.${remote}.init(arg)
+                           } catch(e) {
+                             console.log('remote container already initialized')
+                           }
+                         }
+                       }
+                       resolve(proxy)
+                     }
+                     document.body.appendChild(script);
+                   })`
+    })
+
+    return (_remotes)
+}
