@@ -43,10 +43,10 @@ import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef/RemoteBenefApp";
-import RemotePayementApp from "payment_ui/RemotePayementApp";
-import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
+// import RemotePayementApp from "payment_ui/RemotePayementApp";
+// import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 
-import './theme.scss'
+import 'shared_lib_ui/theme';
 
 let theme = createTheme({
   typography: {
@@ -145,12 +145,12 @@ const App = () => {
                     <BenefRemote />
                   </Route>
 
-                  <Route path="/paiement">
+                  {/* <Route path="/paiement">
                     <PayementRemote />
                   </Route>
                   <Route path="/virements">
                     <PayementRemote />
-                  </Route>
+                  </Route> */}
 
                   {/*<Route path="/factures">*/}
                   {/*  <HospiRemote par={'12'}/>*/}
@@ -163,9 +163,9 @@ const App = () => {
                   {/*    <HospiRemote match={props.match}/>*/}
                   {/*)}/>*/}
 
-                  <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
+                  {/* <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
                       <HospiRemote match={props.match}/>
-                  )}/>
+                  )}/> */}
 
 
 
@@ -198,7 +198,7 @@ const App = () => {
                   {/*<Route path="/intraitables" component={Intraitables}/>*/}
                   {/*<Route path="/intraitFactures" component={RemoteTest}/>*/}
                   {/*<Route path="/test" component={Test}/>*/}
-                  <Route path="/PSremote" component={PSremote} />
+                  {/* <Route path="/PSremote" component={PSremote} /> */}
                 </Switch>
 
               </Box>
