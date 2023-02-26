@@ -23,22 +23,17 @@ module.exports = {
     // Spin up a server for quick development
     devServer: {
         historyApiFallback: true,
-        static: paths.build,
+        // static: paths.build,
         open: true,
         compress: true,
         hot: true,
         port: 8031,
-        historyApiFallback: {
-            disableDotRule: true
-        },
     },
 
-    // output: {
-    //     publicPath: 'http://localhost:8031/',
-    // },
     output: {
-        publicPath: 'auto',
+        publicPath: "auto",
     },
+
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
@@ -47,35 +42,12 @@ module.exports = {
         // Only update what has changed on hot reload
         new ModuleFederationPlugin({
             name: 'host',
-            // library: { type: 'var', name: 'host' },
-            // filename: 'remoteEntry.js',
+            library: { type: 'var', name: 'host' },
+            filename: 'remoteEntry.js',
             remotes: {
-                libTmp: `promise new Promise(resolve => {
-                     const script = document.createElement('script')
-                     script.src = window._env_.hostRmUrl
-                     script.onload = () => {
-                       const proxy = {
-                         get: (request) => window.host.get(request),
-                         init: (arg) => {
-                           try {
-                             return window.host.init(arg)
-                           } catch(e) {
-                             console.log('remote container already initialized')
-                           }
-                         }
-                       }
-                       resolve(proxy)
-                     }
-                     document.body.appendChild(script);
-                   })`,
-                // lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
-                lib_ui: `lib_ui@${getRemoteEntryUrl(3005)}`,
-                shared_lib_ui: `shared_lib_ui@${getRemoteEntryUrl(8051)}`,
+                hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
+                ps_ui: `ps_ui@http://${env_IP}:8034/remotePsEntry.js`,
             },
-            // remotes: {
-                // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
-                // ps_ui: `ps_ui@http://http://${env_IP}:8034/remotePsEntry.js`,
-            // },
             shared: {
                 ...deps,
                 'react': {
@@ -168,14 +140,29 @@ module.exports = {
     },
 };
 
+function getRemotes () {
+    console.log('modules: ', modules)
+    let _remotes = {}
+    Object.keys(modules.remoteApps).forEach(remote => {
+        _remotes[remote] = `promise new Promise(resolve => {
+                     const script = document.createElement('script')
+                     script.src = window._env_.remoteApps.${remote}
+                     script.onload = () => {
+                       const proxy = {
+                         get: (request) => window.${remote}.get(request),
+                         init: (arg) => {
+                           try {
+                             return window.${remote}.init(arg)
+                           } catch(e) {
+                             console.log('remote container already initialized')
+                           }
+                         }
+                       }
+                       resolve(proxy)
+                     }
+                     document.body.appendChild(script);
+                   })`
+    })
 
-
-function getRemoteEntryUrl(port) {
-    const { HOST } = process.env;
-
-    if (!HOST) {
-        return `//localhost:${port}/remoteEntry.js`;
-    }
-
-    return `//${HOST}/remoteEntry.js`;
+    return (_remotes)
 }

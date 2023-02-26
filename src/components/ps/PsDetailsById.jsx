@@ -1,15 +1,17 @@
 import * as React from 'react';
+import {Link, matchPath} from "react-router-dom";
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import {useGetEtsByIdQuery} from "./services/psApi";
-import {statusRow} from "./utils/utils";
-import {useGetDisciplinesQuery} from "../../services/referentielApi";
-import {Link, matchPath} from "react-router-dom";
 import {Button, CircularProgress, Typography} from "@mui/material";
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import Tooltip from '@mui/material/Tooltip';
+
+import {useGetEtsByIdQuery} from "./services/psApi";
+import {statusRow} from "./utils/utils";
+import {useGetDisciplinesQuery} from "../../services/referentielApi";
 import {useState} from "react";
 
 

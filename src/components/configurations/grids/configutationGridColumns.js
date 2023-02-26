@@ -1,7 +1,9 @@
 import React from "react";
+import {Link} from "react-router-dom";
+
 import Chip from "@mui/material/Chip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom";
+
 import {factureConfigurationStatus} from "../../../utils/status-utils";
 import {convertDate} from "../../../utils/convertor-utils";
 import {renderCell} from "../../../utils/utils";

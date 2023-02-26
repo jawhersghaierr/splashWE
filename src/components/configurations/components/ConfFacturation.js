@@ -1,18 +1,22 @@
 import React, {useState} from 'react'
+import {Link} from "react-router-dom";
+
 import Chip from '@mui/material/Chip';
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { Typography } from "@mui/material";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
 import { RowInfo } from "../../beneficiaire/components/RowInfo";
 import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
+
 import { NoGridResultsAlert } from "../../shared";
 import { convertDate } from "../../../utils/convertor-utils";
 import { factureConfigurationStatus } from "../../../utils/status-utils";
-import {Link} from "react-router-dom";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
