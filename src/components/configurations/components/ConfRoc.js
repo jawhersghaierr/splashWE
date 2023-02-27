@@ -1,12 +1,14 @@
-import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import React, {useState, useRef, useEffect} from 'lib_ui/react'
+import {Link} from 'lib_ui/react-router-dom';
 
-import Chip from '@mui/material/Chip';
-import {Typography} from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import {
+    Box,
+    Chip,
+    Typography,
+    Tab, Tabs,
+} from "@mui/material";
+
 import {styled} from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -14,8 +16,12 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import {DetailsRocConfAMC} from "./DetailsRocConfAMC";
 import {DetailsRocConfTypeConvention} from "./DetailsRocConfTypeConvention";
 import {RowInfo} from "./RowInfo";
-import {convertDate} from "../../../utils/convertor-utils";
-import {factureConfigurationStatus} from "../../../utils/status-utils";
+
+import {
+    convertDate,
+    factureConfigurationStatus
+} from "shared_lib_ui/Lib";
+
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />

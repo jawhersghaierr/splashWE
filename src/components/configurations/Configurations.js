@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react';
-import {Typography} from "@mui/material";
-import {useGetConfigsQuery} from "./services/configurationsApi";
-import {Link} from "react-router-dom";
-import './configuration.scss'
-import {initCriterias} from "./configurationsSlice";
+import React, {useState, useEffect} from 'lib_ui/react'
+import {Link} from 'lib_ui/react-router-dom';
+
 import {useDispatch} from "react-redux";
+
+import {useGetConfigsQuery} from "./services/configurationsApi";
+import {initCriterias} from "./configurationsSlice";
+
+import {Typography} from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
 import background1 from '../../../assets/Config1.png'
 import background2 from '../../../assets/Config2.png'
+import './configuration.scss'
 
 
 export const Configurations = (props) => {

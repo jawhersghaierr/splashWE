@@ -9,7 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { ExpandLess, ExpandMore, StarBorder } from "@material-ui/icons";
 
-import { drawerWidth } from "../utils/consts";
+import { drawerWidth } from "shared_lib_ui/Lib";
 
 import { icons } from "shared_lib_ui/assets";
 // import HomeIcon from "../../assets/icons/HomeIcon";

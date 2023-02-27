@@ -13,38 +13,22 @@ import {
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
-// import { store } from './store';
 import { store } from 'shared_lib_ui/store';
 
 import HostMenu from "./leftMenu/HostMenu";
 // import {Drawer} from "shared_lib_ui/Lib"
-import Drawer from "./components/shared/Drawer"
-// import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
-// import {Test} from './components/beneficiaire/Test'
-
-// import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
-// import FacturesDetailsById from "./components/factures/FacturesDetailsById";
-// import {Factures} from "./components/factures/Factures";
+import Drawer from "./components/Drawer"
 
 import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
 import {ListConfiguration} from "./components/configurations/ListConfiguration";
 import {Configurations} from "./components/configurations/Configurations";
 
-// import {Intraitables} from "./components/intraitables/Intraitables";
-// import {Paiement} from "./components/paiement/Paiement";
-// import PaiementDetailsById from "./components/paiement/PaiementDetailsById";
-// import {Virement} from "./components/virement/Virement";
-// import VirementDetailsById from "./components/virement/VirementDetailsById";
-// import {RocEnLigne} from "./components/rocEnLigne/RocEnLigne";
-// import RocEnLigneDetailsById from "./components/rocEnLigne/RocEnLigneDetailsById";
-// import {FluxInfo as FacturesFluxInfo} from "./components/factures/components/FluxInfo";
-// import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxInfo";
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef/RemoteBenefApp";
-// import RemotePayementApp from "payment_ui/RemotePayementApp";
-// import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
+import RemotePayementApp from "payment_ui/RemotePayementApp";
+import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 
 import 'shared_lib_ui/theme';
 
@@ -96,7 +80,7 @@ const dynamicFederation = async (scope, module) => {
 };
 
 
-const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
+// const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
 
 const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
   <b>Dashboard Page</b>
@@ -145,60 +129,30 @@ const App = () => {
                     <BenefRemote />
                   </Route>
 
-                  {/* <Route path="/paiement">
+                  {/*<Route path={ "/paiement" | "/virements" } render={(props) => (*/}
+                  {/*    <PayementRemote/>*/}
+                  {/*)}/>*/}
+
+                  <Route path="/paiement">
                     <PayementRemote />
                   </Route>
                   <Route path="/virements">
                     <PayementRemote />
-                  </Route> */}
+                  </Route>
 
-                  {/*<Route path="/factures">*/}
-                  {/*  <HospiRemote par={'12'}/>*/}
-                  {/*</Route>*/}
-                  {/*<Route path="/serviceEnLigne">*/}
-                  {/*  <HospiRemote par={'23'}/>*/}
-                  {/*</Route>*/}
-
-                  {/*<Route path={"/intraitables" | "/serviceEnLigne" | "/factures"} render={(props) => (*/}
-                  {/*    <HospiRemote match={props.match}/>*/}
-                  {/*)}/>*/}
-
-                  {/* <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
+                  <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
                       <HospiRemote match={props.match}/>
-                  )}/> */}
+                  )}/>
 
 
-
-
-                  {/*<Route exact={true} path="/beneficiaire" component={Beneficiaire}/>*/}
-                  {/*<Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>*/}
-                  {/*<Route path="/ligne" component={RemoteTest}/>*/}
-
-                  {/*<Route exact name={'FactureFluxInfo'} path="/factures/FluxInfo/:id?" render={(props) => (*/}
-                  {/*    <FacturesFluxInfo factId={props.match.params.id} menu={setShown}/>*/}
-                  {/*)} />*/}
-                  {/*<Route path="/factures/:id" component={FacturesDetailsById}/>*/}
-                  {/*<Route exact={true} path="/factures" component={Factures}/>*/}
-
-                  <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
-                  <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
-                  <Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>
-
-                  {/*<Route exact={true} path="/paiement" component={Paiement}/>*/}
-                  {/*<Route path="/paiement/:id?" component={PaiementDetailsById}/>*/}
+                  {/*<Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>*/}
+                  {/*<Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>*/}
+                  {/*<Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>*/}
 
                   {/*<Route exact name={'RocFluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" render={(props) => (*/}
                   {/*    <RocFluxInfo factId={props.match.params.id} menu={setShown}/>*/}
                   {/*)} />*/}
-                  {/*<Route exact name={'RocEnLigneDetailsById'} path="/serviceEnLigne/:id" component={RocEnLigneDetailsById}/>*/}
-                  {/*<Route exact index={true} name={'RocEnLigne'} path="/serviceEnLigne" component={RocEnLigne}/>*/}
 
-                  {/*<Route exact={true} path="/virements" component={Virement}/>*/}
-                  {/*<Route path="/virements/:id?" component={VirementDetailsById}/>*/}
-                  {/*<Route path="/intraitables" component={Intraitables}/>*/}
-                  {/*<Route path="/intraitFactures" component={RemoteTest}/>*/}
-                  {/*<Route path="/test" component={Test}/>*/}
-                  {/* <Route path="/PSremote" component={PSremote} /> */}
                 </Switch>
 
               </Box>

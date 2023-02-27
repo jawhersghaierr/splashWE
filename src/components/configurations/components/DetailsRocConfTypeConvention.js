@@ -1,7 +1,10 @@
-import React from 'react'
-import Box from "@mui/material/Box";
-import {Typography} from "@material-ui/core";
-import {RowInfo} from "../../beneficiaire/components/RowInfo";
+import React from 'lib_ui/react'
+import {
+    Box,
+    Typography,
+} from "@mui/material";
+
+import {RowInfo} from "./RowInfo";
 
 export const DetailsRocConfTypeConvention = ({data, nomRefs}) => {
 

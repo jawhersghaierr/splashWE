@@ -1,5 +1,5 @@
-import React from 'react'
-import Box from "@mui/material/Box";
+import React from 'lib_ui/react'
+import { Box } from "@mui/material";
 import {RowInfo} from "./RowInfo";
 
 function separetedMails (data) {

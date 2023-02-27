@@ -1,21 +1,26 @@
-import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import React, {useState, useRef, useEffect} from 'lib_ui/react'
+import {Link} from 'lib_ui/react-router-dom';
 
-import Chip from '@mui/material/Chip';
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { Typography } from "@mui/material";
+
+import {
+    Box,
+    Chip,
+    Typography,
+    Tab, Tabs,
+} from "@mui/material";
+
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
-import { RowInfo } from "../../beneficiaire/components/RowInfo";
+import { RowInfo } from "./RowInfo";
 import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
 
-import { NoGridResultsAlert } from "../../shared";
-import { convertDate } from "../../../utils/convertor-utils";
-import { factureConfigurationStatus } from "../../../utils/status-utils";
+import {
+    NoGridResultsAlert,
+    convertDate,
+    factureConfigurationStatus
+} from "shared_lib_ui/Lib";
 
 
 function TabPanel(props) {

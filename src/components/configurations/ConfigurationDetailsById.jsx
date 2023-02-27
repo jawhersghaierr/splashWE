@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {useEffect, useState} from "react";
-import {matchPath} from "react-router-dom";
-import {useGetRefsQuery} from "../../services/refsApi";
-import {factureConfigurationStatus} from "../../utils/status-utils";
+import React, {useState, useEffect} from 'lib_ui/react'
+import {matchPath} from 'lib_ui/react-router-dom';
+
+import { refsApi } from "shared_lib_ui/services";
+
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {ConfFacturation} from "./components/ConfFacturation";
 import {ConfRoc} from "./components/ConfRoc";
@@ -18,7 +18,7 @@ export default function ConfigurationDetailsById(props) {
 
     // LOC === listOfConfigs
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery();
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = refsApi?.useGetRefsQuery();
 
     const {domain, code, id} = match?.params
     const [error, setError] = useState(null);

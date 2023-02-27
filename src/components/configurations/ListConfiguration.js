@@ -1,24 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import { Link, matchPath, Redirect } from "react-router-dom";
+import React, {useState, useEffect} from 'lib_ui/react'
+import { Link,matchPath } from 'lib_ui/react-router-dom';
 
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector } from 'lib_ui/react-redux';
 
 import {selectCriterias} from './configurationsSlice'
 import {useGetConfigsQuery} from "./services/configurationsApi";
-import {useGetRefsQuery} from "../../services/refsApi";
+
+import { refsApi } from "shared_lib_ui/services";
 
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import SearchAccordion from "./searches/SearchAccordion";
 
-import {CircularProgress, Typography} from "@mui/material";
-import Snackbar from '@mui/material/Snackbar';
+import {
+    AlertTitle,
+    Breadcrumbs,
+    Snackbar,
+    CircularProgress,
+    Typography,
+} from "@mui/material";
+
 import MuiAlert from '@mui/material/Alert'
-import AlertTitle from '@mui/material/AlertTitle';
+
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 
 import './configuration.scss'
-// import Link from '@mui/material/Link';
 
 function handleClick(event) {
     event.preventDefault();
@@ -54,7 +59,7 @@ export const ListConfiguration = (props) => {
         setOpenMsg({...openMsg, open: false})
     };
 
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = refsApi?.useGetRefsQuery();
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess, isError: LOCIsError, error: LOCError} = useGetConfigsQuery(); // LOC === listOfConfigs
 
     let moreCriterias = null

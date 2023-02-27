@@ -1,5 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState, useRef, useEffect} from 'lib_ui/react'
+import { useSelector, useDispatch } from 'lib_ui/react-redux';
+
+import { refsApi } from "shared_lib_ui/services";
+import {
+    validators,
+    allowSearch,
+    StyledCard,
+} from "shared_lib_ui/Lib";
 
 import { FormSpy, Form, Field } from 'react-final-form';
 import arrayMutators from 'final-form-arrays'
@@ -20,12 +27,10 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { fr } from "date-fns/locale";
 
-import { StyledCard } from "../../shared";
-import { useGetRefsQuery } from "../../../services/refsApi";
+
 
 import { setCriterias, initCriterias, selectCriterias } from '../configurationsSlice'
 
-import { allowSearch, validators } from '../../../utils/validator-utils';
 import {MutatorSetValue} from "./Mutators";
 import './searchAccordion.scss'
 
@@ -33,7 +38,7 @@ import './searchAccordion.scss'
 
 export default function SearchAccordion(props) {
 
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = refsApi?.useGetRefsQuery();
     const dispatch = useDispatch();
     const criterias = useSelector(selectCriterias);
     const formRef= useRef(null);

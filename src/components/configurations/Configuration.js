@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'lib_ui/react'
+
 import SearchAccordion from "./searches/SearchAccordion";
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import ConfigurationDetailsById from "./ConfigurationDetailsById";
