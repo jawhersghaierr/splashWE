@@ -102,6 +102,7 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
+            publicPath: "/"
         }),
     ],
     module: {

@@ -20,7 +20,7 @@ export const columns = ({nomRefs, handleModalOpen}) => [
     }},
     { field: 'numero', headerName: 'N° virement', type: 'number', flex: 1, renderCell },
     { field: 'montant', headerName: 'Montant', flex: 1, renderCell, valueGetter: ({ value }) => currencyFormatter.format(value), cellClassName: 'boldValue'},
-    { field: 'statut', headerName: 'Statut', flex: 1, renderCell, valueGetter: (params) => {
+    { field: 'status', headerName: 'Statut', flex: 1, renderCell, valueGetter: (params) => {
         let statusType = {status: params.value, type: params.row.type}
 
         if (nomRefs.PAIEMENT_TYPE[params.row.type]) {

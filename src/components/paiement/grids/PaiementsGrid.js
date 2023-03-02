@@ -52,16 +52,16 @@ export const PaiementsGrid = () => {
 
   return (
     <MainGrid
-      showNoSearchResultsAlert={!isFetching && isSuccess && !data?.results}
+      showNoSearchResultsAlert={!isFetching && isSuccess && !data?.resultList}
       showCircularProgress={isFetching}
       showGridHeader={true}
-      showGrid={isSuccess && data?.results}
-      showPagination={isSuccess && data?.results}
+      showGrid={isSuccess && data?.resultList}
+      showPagination={isSuccess && data?.resultList}
       showNoData={!data}
       showNoDataAdition={true}
       showDownload={false}
       gridHeaderStyle={{ margin: "25px" }}
-      rows={data?.results}
+      rows={data?.resultList}
       columns={columns()}
       pageSize={size}
       totalPages={data?.totalPages}

@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import { columns } from "./virementGridColumns";
 import { selectCriterias } from "../virementsSlice";
 import { useGetVirementsQuery } from "../services/virementsApi";
-import { NoSearchResultsAlert } from "../../shared/modals";
+// import { NoSearchResultsAlert } from "../../shared/modals";
 import { usePrevious } from "../../../utils/status-utils";
 // import mainPS from "../../../../assets/PS.png";
 import { useGetRefsQuery } from "../../../services/refsApi";
@@ -58,16 +58,16 @@ export const VirementsGrid = () => {
 
   return (
     <MainGrid
-      showNoSearchResultsAlert={!isFetching && isSuccess && !data?.results}
+      showNoSearchResultsAlert={!isFetching && isSuccess && !data?.resultList}
       showCircularProgress={isFetching || nomRefsIsFetching}
       showGridHeader={true}
-      showGrid={isSuccess && data?.results && nomRefs}
-      showPagination={isSuccess && data?.results}
+      showGrid={isSuccess && data?.resultList && nomRefs}
+      showPagination={isSuccess && data?.resultList}
       showNoData={!data}
       showNoDataAdition={true}
       showDownload={false}
       gridHeaderStyle={{ margin: "25px" }}
-      rows={data?.results}
+      rows={data?.resultList}
       columns={columns(nomRefs)}
       pageSize={size}
       totalPages={data?.totalPages}

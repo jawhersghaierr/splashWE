@@ -1,292 +1,565 @@
-import React, {useState} from 'react';
-import { matchPath, Link } from 'react-router-dom';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import {useGetFactureByIdQuery} from "./services/facturesApi";
-import {Button, CircularProgress, Typography} from "@mui/material";
-import {RowInfo} from "./components/RowInfo";
-import {ActesGrid} from "../shared/grids";
-import {ConfirmFactureRejete, ConfirmFactureAnule, ConfirmFactureRecyclage} from "../shared/factureActions";
+import React, { useState } from "react";
+import { matchPath, Link } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import { useGetFactureByIdQuery } from "./services/facturesApi";
+import { Button, CircularProgress, Typography } from "@mui/material";
+import { RowInfo } from "./components/RowInfo";
+import { ActesGrid } from "../shared/grids";
+import {
+  ConfirmFactureRejete,
+  ConfirmFactureAnule,
+  ConfirmFactureRecyclage,
+} from "../shared/factureActions";
 
-import {PaimentsGrid, SelAssociesGrid} from "./grids";
-import {FluxInfo} from "./components/FluxInfo";
-import {facturesStatus} from "../../utils/status-utils";
-import {dateConvertNaissance, convertDate, currencyFormatter} from "../../utils/convertor-utils";
-import {useGetRefsQuery} from "../../services/refsApi";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert'
-import AlertTitle from '@mui/material/AlertTitle';
+import { PaimentsGrid, SelAssociesGrid } from "./grids";
+import { FluxInfo } from "./components/FluxInfo";
+import { facturesStatus } from "../../utils/status-utils";
+import {
+  dateConvertNaissance,
+  convertDate,
+  currencyFormatter,
+} from "../../utils/convertor-utils";
+import { useGetRefsQuery } from "../../services/refsApi";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-
 const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-
 function TabPanel(props) {
+  const { children, value, index, data, ...other } = props;
 
-    const { children, value, index, data, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`full-width-tabpanel-${index}`}
-            aria-labelledby={`full-width-tab-${index}`}
-            {...other}
-            style={{minHeight: '300px', background: 'white', padding: '15px'}}>
-            {data && <pre style={{
-                whiteSpace: 'pre-wrap',
-                overflowWrap: 'break-word',
-                background: 'white',
-                margin: 0,
-                padding: 0
-            }}>
-                {value === index && children}
-                {/*{JSON.stringify(data)}*/}
-            </pre>}
-        </div>
-    );
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+      style={{ minHeight: "300px", background: "white", padding: "15px" }}
+    >
+      {data && (
+        <pre
+          style={{
+            whiteSpace: "pre-wrap",
+            overflowWrap: "break-word",
+            background: "white",
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          {value === index && children}
+          {/*{JSON.stringify(data)}*/}
+        </pre>
+      )}
+    </div>
+  );
 }
 
 function a11yProps(index) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
 }
 
+export default function FacturesDetailsById({ location, modalId = null }) {
+  const match = matchPath(location?.pathname, {
+    path: "/factures/:id",
+    exact: true,
+    strict: false,
+  });
 
-export default function FacturesDetailsById({location, modalId = null}) {
+  const factureID = modalId ? modalId : match?.params?.id;
 
-    const match = matchPath(location?.pathname, {
-        path: "/factures/:id",
-        exact: true,
-        strict: false
-    });
+  const [openMsg, setOpenMsg] = useState({
+    open: false,
+    success: null,
+    error: null,
+    data: null,
+  });
 
-    const factureID = (modalId)? modalId: match?.params?.id;
+  const handleMsgClose = () => {
+    if (!modalId) setOpenMsg({ ...openMsg, open: false });
+  };
 
-    const [openMsg, setOpenMsg] = useState({
-        open: false,
-        success: null,
-        error: null,
-        data: null,
-    })
+  const [value, setValue] = React.useState(0);
+  const [openRecyclageDialog, setOpenRecyclageDialog] = useState(false);
+  const [openRejeteDialog, setOpenRejeteDialog] = useState(false);
+  const [openAnuleDialog, setOpenAnuleDialog] = useState(false);
 
-    const handleMsgClose = () => {
-        if (!modalId) setOpenMsg({...openMsg, open: false})
-    };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-    const [value, setValue] = React.useState(0);
-    const [openRecyclageDialog, setOpenRecyclageDialog] = useState(false);
-    const [openRejeteDialog, setOpenRejeteDialog] = useState(false);
-    const [openAnuleDialog, setOpenAnuleDialog] = useState(false);
+  let {
+    refetch,
+    data = null,
+    isFetching,
+  } = useGetFactureByIdQuery(factureID, { forceRefetch: true });
+  const reload = () => {
+    refetch();
+  };
+  const {
+    data: nomRefs,
+    isFetching: nomRefsIsFetching,
+    isSuccess: nomRefsIsSuccess,
+  } = useGetRefsQuery();
 
-    const handleChange = (event, newValue) => { setValue(newValue) };
+  let factureLineList = [];
+  if (data?.factureLineList)
+    data?.factureLineList.forEach((e, id) => factureLineList.push({ id, ...e }));
 
-    let {refetch, data = null, isFetching} = useGetFactureByIdQuery(factureID, {forceRefetch: true });
-    const reload = () => {
-        refetch()
-    }
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+  return (
+    <Box sx={{ padding: "15px 25px", bgcolor: "background.paper" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography
+          variant="h5"
+          noWrap
+          component="div"
+          sx={{ color: "#003154" }}
+        >
+          <b>Détails de la facture</b>
+        </Typography>
 
-    let factLines = []
-    if (data?.factLines) data?.factLines.forEach((e, id)=>factLines.push({id, ...e}))
-
-    return (
-
-        <Box sx={{padding: '15px 25px',  bgcolor: 'background.paper'}}>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Typography variant="h5" noWrap component="div" sx={{color: '#003154'}}>
-                    <b>Détails de la facture</b>
-                </Typography>
-
-                {!!!modalId && <Link to={`/factures`} style={{textDecoration: 'none'}}>
-                    <Button variant="contained" size="medium" className="RoundedEmptyButt" style={{marginRight: '10px'}}>
-                        Revenir
-                    </Button>
-                </Link>}
-
-            </div>
-            {(nomRefsIsFetching || isFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
-            <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                {data?.numFact}
-            </Typography>
-
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                {
-                    data?.status && <Chip label={`${facturesStatus[data?.status]?.label}`}  sx={{color: 'black', bgcolor: facturesStatus[data?.status]?.color, margin: '15px 0 0 0' }}/>
-                }
-            
-                {!modalId && <div>
-                    {data?.status == 'A_RECYCLER' && <Button variant="contained"
-                                                             size="medium"
-                                                             onClick={(e) => {
-                                                                 setOpenRejeteDialog(true)
-                                                             }}
-                                                             className="RoundedEmptyButt" style={{marginRight: '10px'}}>
-                        Confirm le rejet
-                    </Button>}
-
-                    {data?.status == 'A_RECYCLER' && <Button variant="contained" size="medium"
-                                                             onClick={(e) => {
-                                                                 setOpenRecyclageDialog(true)
-                                                             }}
-                                                             style={{marginRight: '10px'}} className="RoundedEl">
-                        Recycler
-                    </Button>}
-
-                    {['BAP', 'PAYEE', 'REJETEE', 'REMBOURSEE'].includes(data?.status) && <Button variant="contained"
-                                                                                                 size="medium"
-                                                                                                 onClick={(e) => {
-                                                                                                     setOpenAnuleDialog(true)
-                                                                                                 }}
-                                                                                                 className="RoundedEl"
-                                                                                                 style={{marginRight: '10px'}}>
-                        Annuler
-                    </Button>}
-
-                </div>}
-
-            </div>
-
-            <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
-                <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Date d\'admission'} value={convertDate(data?.factData?.dateEntree)} id={factureID} field="dateEntree" />
-                    <RowInfo label={'Bénéficiaire'} value={(data?.ben)?
-                        <span><b>{data?.ben?.nom}</b> {data?.ben?.prenom}</span> :
-                        <span><b>{data?.benInputData?.nom}</b> {data?.benInputData?.prenom}</span>}
-                        id={factureID} field="nom_prenom" />
-                    <RowInfo label={'Environnement'} value={data?.numEnv} id={factureID} field="numEnv" />
-                    <RowInfo label={'Date de création'} value={convertDate(data?.factTransData?.receivedDateTime)} id={factureID} field="receivedDateTime"/>
-                </div>
-                <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.ps?.numId} id={factureID} field="numId" />
-                    <RowInfo label={'Nº adhérent'} value={(data?.ben)? data?.ben?.numAdhInd : data?.benInputData?.numAdh} id={factureID} field="numAdh" />
-                    <RowInfo label={'AMC'} value={data?.numClient} id={factureID} field="numClient" />
-                    <RowInfo label={'Dernière modification'} value={convertDate(data?.timestamp)} id={factureID} field="timestamp" />
-                </div>
-                <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.ps?.numJur} id={factureID} field="numJur" />
-                    <RowInfo label={'Date et rang de naissance'}
-                             value={(data?.ben)? dateConvertNaissance(data?.ben?.dateNai) : dateConvertNaissance(data?.benInputData?.dateNai)}
-                             chip={(data?.ben)? data?.ben?.rangNai : data?.benInputData?.rangNai}
-                             id={factureID} field="dateNai"
-                    />
-                    <RowInfo label={'Montant RC'} value={data?.totalRc && currencyFormatter.format(data?.totalRc)} id={factureID} field="totalRc" />
-                </div>
-            </div>
-
-            <Tabs
-                TabIndicatorProps={{sx: {top: 0, bgcolor: 'black'}}}
-                value={value}
-                onChange={handleChange}
-                variant="scrollable"
-                scrollButtons="auto"
-                sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
+        {!!!modalId && (
+          <Link to={`/factures`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              size="medium"
+              className="RoundedEmptyButt"
+              style={{ marginRight: "10px" }}
             >
-                <Tab label="Informations generales"  {...a11yProps(0)}/>
-                <Tab label={<div>Actes&nbsp;{(data?.factLines && data?.factLines.length) && <Chip label={data?.factLines.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)} />
-                <Tab label="Sel associes"  {...a11yProps(2)}/>
-                <Tab label="Paiements" {...a11yProps(3)} />
-                <Tab label="Flux" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
-            </Tabs>
+              Revenir
+            </Button>
+          </Link>
+        )}
+      </div>
+      {(nomRefsIsFetching || isFetching) && (
+        <CircularProgress style={{ margin: "100px auto" }} />
+      )}
+      <Typography variant="h6" noWrap component="div" sx={{ color: "#003154" }}>
+        {data?.numeroFacture}
+      </Typography>
 
-            <TabPanel value={value} index={0} data={data}>
-                {data && <Box style={{
-                    backgroundColor: '#F6F8FC',
-                    flex: 1,
-                    minWidth: '300px',
-                    margin: '5px',
-                    padding: '10px 25px 25px 25px'}}>
-                    <Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>
-                        <b>Informations demande</b>
-                    </Typography>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <div style={{flex: 1, marginRight: '5%'}}>
-                            <RowInfo label={'Nº d\'engagement'} value={data?.factData?.numEng} border={true} justify={true} id={factureID} field="numEng" />
-                            <RowInfo label={'Date de réception'} value={convertDate(data?.factTransData?.receivedDateTime)} border={true} justify={true} id={factureID} field="receivedDateTime" />
-                            <RowInfo label={'Domaine'} value={data?.factData?.domaine} border={true} justify={true} id={factureID} field="domaine" />
-                            <RowInfo label={'Motif de rejet'} value={data?.errorLabel || data?.errorCode} border={true} justify={true} id={factureID} field="errorLabel_errorCode" />
-                        </div>
-                        <div style={{flex: 1}}>
-                            <RowInfo label={'Date facture'} value={convertDate(data?.factData?.dateFact)} border={true} justify={true} id={factureID} field="dateFact" />
-                            <RowInfo label={'ID période de facturation / Nº d\'occurrence'} value={data?.factData && `${data?.factData?.idPeriodeFact} - ${data?.factData?.occId}`} border={true} justify={true} id={factureID} field="factData"/>
-                            <RowInfo label={'Date accident de travail'} value={data?.factData?.numDateAccident} border={true} justify={true} id={factureID} field="numDateAccident" />
-                            <RowInfo label={'Commentaire'} value={data?.comment} border={true} justify={true} id={factureID} field="comment" />
-                        </div>
-                    </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        {data?.status && (
+          <Chip
+            label={`${facturesStatus[data?.status]?.label}`}
+            sx={{
+              color: "black",
+              bgcolor: facturesStatus[data?.status]?.color,
+              margin: "15px 0 0 0",
+            }}
+          />
+        )}
 
-                </Box>}
-            </TabPanel>
+        {!modalId && (
+          <div>
+            {data?.status == "A_RECYCLER" && (
+              <Button
+                variant="contained"
+                size="medium"
+                onClick={(e) => {
+                  setOpenRejeteDialog(true);
+                }}
+                className="RoundedEmptyButt"
+                style={{ marginRight: "10px" }}
+              >
+                Confirm le rejet
+              </Button>
+            )}
 
-            <TabPanel value={value} index={1} data={data}>
-                {(data?.factLines && factLines.length > 0 && nomRefs) && <ActesGrid data={factLines} nomRefs={nomRefs}/>}
-            </TabPanel>
+            {data?.status == "A_RECYCLER" && (
+              <Button
+                variant="contained"
+                size="medium"
+                onClick={(e) => {
+                  setOpenRecyclageDialog(true);
+                }}
+                style={{ marginRight: "10px" }}
+                className="RoundedEl"
+              >
+                Recycler
+              </Button>
+            )}
 
-            <TabPanel value={value} index={2} data={data}>
-                {data?.factData?.numEng && <SelAssociesGrid numEng={data?.factData?.numEng} noModal={!!!modalId}/>}
-            </TabPanel>
+            {["BAP", "PAYEE", "REJETEE", "REMBOURSEE"].includes(
+              data?.status
+            ) && (
+              <Button
+                variant="contained"
+                size="medium"
+                onClick={(e) => {
+                  setOpenAnuleDialog(true);
+                }}
+                className="RoundedEl"
+                style={{ marginRight: "10px" }}
+              >
+                Annuler
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
 
-            <TabPanel value={value} index={3} data={data}>
-                {factureID && nomRefs && <PaimentsGrid factId={factureID} nomRefs={nomRefs} noModal={!!!modalId}/>}
-            </TabPanel>
+      <div
+        style={{ display: "flex", flexDirection: "row", margin: "0 0 25px 0" }}
+      >
+        <div style={{ flex: 1, marginRight: "25px", maxWidth: "375px" }}>
+          <RowInfo
+            label={"Date d'admission"}
+            value={convertDate(data?.factureData?.dateEntree)}
+            id={factureID}
+            field="dateEntree"
+          />
+          <RowInfo
+            label={"Bénéficiaire"}
+            value={
+              data?.beneficiaire ? (
+                <span>
+                  <b>{data?.beneficiaire?.nom}</b> {data?.beneficiaire?.prenom}
+                </span>
+              ) : (
+                <span>
+                  <b>{data?.beneficiaireInputData?.nom}</b>{" "}
+                  {data?.beneficiaireInputData?.prenom}
+                </span>
+              )
+            }
+            id={factureID}
+            field="nom_prenom"
+          />
+          <RowInfo
+            label={"Environnement"}
+            value={data?.numeroEnvironnement}
+            id={factureID}
+            field="numeroEnvironnement"
+          />
+          <RowInfo
+            label={"Date de création"}
+            value={convertDate(data?.factureTransferData?.dateTimeReceived)}
+            id={factureID}
+            field="dateTimeReceived"
+          />
+        </div>
+        <div style={{ flex: 1, marginRight: "25px", maxWidth: "405px" }}>
+          <RowInfo
+            label={"FINESS géographique"}
+            value={data?.ps?.numeroPartenaire}
+            id={factureID}
+            field="numeroPartenaire"
+          />
+          <RowInfo
+            label={"Nº adhérent"}
+            value={
+              data?.beneficiaire
+                ? data?.beneficiaire?.numeroAdherentIndividuel
+                : data?.beneficiaireInputData?.numeroAdherent
+            }
+            id={factureID}
+            field="numeroAdherent"
+          />
+          <RowInfo
+            label={"AMC"}
+            value={data?.numeroClient}
+            id={factureID}
+            field="numeroClient"
+          />
+          <RowInfo
+            label={"Dernière modification"}
+            value={convertDate(data?.timestamp)}
+            id={factureID}
+            field="timestamp"
+          />
+        </div>
+        <div style={{ flex: 1, maxWidth: "375px" }}>
+          <RowInfo
+            label={"FINESS juridique"}
+            value={data?.ps?.finessJuridique}
+            id={factureID}
+            field="finessJuridique"
+          />
+          <RowInfo
+            label={"Date et rang de naissance"}
+            value={
+              data?.beneficiaire
+                ? dateConvertNaissance(data?.beneficiaire?.dateNaissance)
+                : dateConvertNaissance(
+                    data?.beneficiaireInputData?.dateNaissance
+                  )
+            }
+            chip={
+              data?.beneficiaire
+                ? data?.beneficiaire?.rangNaissance
+                : data?.beneficiaireInputData?.rangNaissance
+            }
+            id={factureID}
+            field="dateNaissance"
+          />
+          <RowInfo
+            label={"Montant RC"}
+            value={data?.totalRc && currencyFormatter.format(data?.totalRc)}
+            id={factureID}
+            field="totalRc"
+          />
+        </div>
+      </div>
 
-            <TabPanel value={value} index={4} data={data}>
-                { data?.factTransData?.factId && <><OpenInNewIcon
-                    sx={{color: '#99ACBB', cursor: 'pointer', float: 'right'}}
-                    onClick={()=>
-                    window.open(`FluxInfo/${data?.factTransData?.factId}`, 'FluxInfo', "height=735,width=1350,toolbar=no,menubar=no,scrollbars=no,location=no,status=no")
-                }/> </>}
+      <Tabs
+        TabIndicatorProps={{ sx: { top: 0, bgcolor: "black" } }}
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons="auto"
+        sx={{
+          color: "black",
+          "& .Mui-selected": {
+            backgroundColor: "white",
+            color: "#000!important",
+          },
+        }}
+      >
+        <Tab label="Informations generales" {...a11yProps(0)} />
+        <Tab
+          label={
+            <div>
+              Actes&nbsp;
+              {data?.factureLineList && data?.factureLineList.length && (
+                <Chip label={data?.factureLineList.length} sx={{ color: "black" }} />
+              )}{" "}
+            </div>
+          }
+          {...a11yProps(1)}
+        />
+        <Tab label="Sel associes" {...a11yProps(2)} />
+        <Tab label="Paiements" {...a11yProps(3)} />
+        <Tab
+          label="Flux"
+          {...a11yProps(4)}
+          style={{ alignSelf: "end", marginLeft: "auto" }}
+        />
+      </Tabs>
 
-                { data?.factTransData?.factId && <FluxInfo factId={data?.factTransData?.factId}/> }
-            </TabPanel>
+      <TabPanel value={value} index={0} data={data}>
+        {data && (
+          <Box
+            style={{
+              backgroundColor: "#F6F8FC",
+              flex: 1,
+              minWidth: "300px",
+              margin: "5px",
+              padding: "10px 25px 25px 25px",
+            }}
+          >
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ color: "#003154" }}
+            >
+              <b>Informations demande</b>
+            </Typography>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <div style={{ flex: 1, marginRight: "5%" }}>
+                <RowInfo
+                  label={"Nº d'engagement"}
+                  value={data?.factureData?.numeroEngagement}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="numeroEngagement"
+                />
+                <RowInfo
+                  label={"Date de réception"}
+                  value={convertDate(data?.factureTransferData?.dateTimeReceived)}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="dateTimeReceived"
+                />
+                <RowInfo
+                  label={"Domaine"}
+                  value={data?.factureData?.domaine}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="domaine"
+                />
+                <RowInfo
+                  label={"Motif de rejet"}
+                  value={data?.libelleErreur || data?.codeErreur}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="libelleErreur_codeErreur"
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <RowInfo
+                  label={"Date facture"}
+                  value={convertDate(data?.factureData?.dateFacture)}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="dateFacture"
+                />
+                <RowInfo
+                  label={"ID période de facturation / Nº d'occurrence"}
+                  value={
+                    data?.factureData &&
+                    `${data?.factureData?.identifiantPeriodeFacturation} - ${data?.factureData?.occurrenceId}`
+                  }
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="identifiantPeriodeFacturation_occurrenceId"
+                />
+                <RowInfo
+                  label={"Date accident de travail"}
+                  value={data?.factureData?.numeroDateAccident}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="numeroDateAccident"
+                />
+                <RowInfo
+                  label={"Commentaire"}
+                  value={data?.commentaire}
+                  border={true}
+                  justify={true}
+                  id={factureID}
+                  field="commentaire"
+                />
+              </div>
+            </div>
+          </Box>
+        )}
+      </TabPanel>
 
-            <ConfirmFactureRecyclage data={data}
-                 setOpenMsg={setOpenMsg}
-                 close={()=>setOpenRecyclageDialog(false)}
-                 opened={openRecyclageDialog}/>
+      <TabPanel value={value} index={1} data={data}>
+        {data?.factureLineList && factureLineList.length > 0 && nomRefs && (
+          <ActesGrid data={factureLineList} nomRefs={nomRefs} />
+        )}
+      </TabPanel>
 
-            {nomRefs && <ConfirmFactureRejete nomRefs={nomRefs}
-                data={data}
-                reload={reload}
-                setOpenMsg={setOpenMsg}
-                close={()=>setOpenRejeteDialog(false)}
-                opened={openRejeteDialog}/>}
+      <TabPanel value={value} index={2} data={data}>
+        {data?.factureData?.numeroEngagement && (
+          <SelAssociesGrid
+            numEng={data?.factureData?.numeroEngagement}
+            noModal={!!!modalId}
+          />
+        )}
+      </TabPanel>
 
-            {nomRefs && <ConfirmFactureAnule nomRefs={nomRefs}
-                data={data}
-                reload={reload}
-                setOpenMsg={setOpenMsg}
-                close={()=>setOpenAnuleDialog(false)}
-                opened={openAnuleDialog}/>}
+      <TabPanel value={value} index={3} data={data}>
+        {factureID && nomRefs && (
+          <PaimentsGrid
+            factId={factureID}
+            nomRefs={nomRefs}
+            noModal={!!!modalId}
+          />
+        )}
+      </TabPanel>
 
-            <Snackbar open={openMsg.open}
-                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                      autoHideDuration={3000}
-                      onClose={handleMsgClose}
-                      key={'bottom' + 'right'}>
+      <TabPanel value={value} index={4} data={data}>
+        {data?.factureTransferData?.factureIntegrationId && (
+          <>
+            <OpenInNewIcon
+              sx={{ color: "#99ACBB", cursor: "pointer", float: "right" }}
+              onClick={() =>
+                window.open(
+                  `FluxInfo/${data?.factureTransferData?.factureIntegrationId}`,
+                  "FluxInfo",
+                  "height=735,width=1350,toolbar=no,menubar=no,scrollbars=no,location=no,status=no"
+                )
+              }
+            />{" "}
+          </>
+        )}
 
-                <Alert onClose={handleMsgClose}
-                       severity={(openMsg.success)? 'success': 'error'}
-                       sx={{ width: '100%' }}>
+        {data?.factureTransferData?.factureIntegrationId && (
+          <FluxInfo factId={data?.factureTransferData?.factureIntegrationId} />
+        )}
+      </TabPanel>
 
-                    {openMsg.success && <AlertTitle><b>Succès</b></AlertTitle>}
-                    {!openMsg.success && <AlertTitle><b>Error</b></AlertTitle>}
-                    {openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
-                        {openMsg.data}
-                    </div>}
-                    {!openMsg.success && <div style={{padding: '5px 95px 0 0'}}>
-                        {openMsg.error}
-                    </div>}
+      <ConfirmFactureRecyclage
+        data={data}
+        setOpenMsg={setOpenMsg}
+        close={() => setOpenRecyclageDialog(false)}
+        opened={openRecyclageDialog}
+      />
 
-                </Alert>
-            </Snackbar>
+      {nomRefs && (
+        <ConfirmFactureRejete
+          nomRefs={nomRefs}
+          data={data}
+          reload={reload}
+          setOpenMsg={setOpenMsg}
+          close={() => setOpenRejeteDialog(false)}
+          opened={openRejeteDialog}
+        />
+      )}
 
-        </Box>
-    );
+      {nomRefs && (
+        <ConfirmFactureAnule
+          nomRefs={nomRefs}
+          data={data}
+          reload={reload}
+          setOpenMsg={setOpenMsg}
+          close={() => setOpenAnuleDialog(false)}
+          opened={openAnuleDialog}
+        />
+      )}
+
+      <Snackbar
+        open={openMsg.open}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        autoHideDuration={3000}
+        onClose={handleMsgClose}
+        key={"bottom" + "right"}
+      >
+        <Alert
+          onClose={handleMsgClose}
+          severity={openMsg.success ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {openMsg.success && (
+            <AlertTitle>
+              <b>Succès</b>
+            </AlertTitle>
+          )}
+          {!openMsg.success && (
+            <AlertTitle>
+              <b>Error</b>
+            </AlertTitle>
+          )}
+          {openMsg.success && (
+            <div style={{ padding: "5px 95px 0 0" }}>{openMsg.data}</div>
+          )}
+          {!openMsg.success && (
+            <div style={{ padding: "5px 95px 0 0" }}>{openMsg.error}</div>
+          )}
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
 }

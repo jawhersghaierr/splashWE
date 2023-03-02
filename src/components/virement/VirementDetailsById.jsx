@@ -46,21 +46,17 @@ function a11yProps(index) {
     };
 }
 
-
-const oneRowHeader = ({ creationDate, statusDate, id}) => {
+const oneRowHeader = ({ dateCreation, dateStatus, id}) => {
 
     return <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-            <RowInfo label={'Date de création'} value={convertDate(creationDate)} id={id} field="creationDate" />
+            <RowInfo label={'Date de création'} value={convertDate(dateCreation)} id={id} field="dateCreation" />
         </div>
         <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-            <RowInfo label={'Dernière modification'} value={convertDate(statusDate)} id={id} field="statusDate" />
+            <RowInfo label={'Dernière modification'} value={convertDate(dateStatus)} id={id} field="dateStatus" />
         </div>
     </div>
 }
-
-
-
 
 export default function VirementDetailsById({location, modalId = null}) {
 
@@ -102,13 +98,13 @@ export default function VirementDetailsById({location, modalId = null}) {
 
             {isSuccess && <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Nº virement'} value={data?.numVirement} id={virementID} field="numVirement" />
+                    <RowInfo label={'Nº virement'} value={data?.numeroVirement} id={virementID} field="numVirement" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Nº décompte'} value={data?.numDecompte} id={virementID} field="numDecompte" />
+                    <RowInfo label={'Nº décompte'} value={data?.numeroDecompte} id={virementID} field="numDecompte" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Montant'} value={currencyFormatter.format(data?.mntVirement)} id={virementID} field="mntVirement" />
+                    <RowInfo label={'Montant'} value={currencyFormatter.format(data?.montantVirement)} id={virementID} field="mntVirement" />
                 </div>
             </div>}
 
@@ -147,8 +143,8 @@ export default function VirementDetailsById({location, modalId = null}) {
                                              justify={true} id={virementID} field="bic" />
                                 </div>
                             </div>
-                            <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaire} border={true}
-                                     justify={true} id={virementID} field="titulaire" />
+                            <RowInfo label={'Titulaire'} value={data?.virementGeneralInfo?.titulaireCompte} border={true}
+                                     justify={true} id={virementID} field="titulaireCompte" />
                             <RowInfo label={'Date d\'émission'}
                                      value={convertDate(data?.virementGeneralInfo?.dateTraitement) || ''} border={true}
                                      justify={true} id={virementID} field="dateTraitement" />
@@ -156,8 +152,8 @@ export default function VirementDetailsById({location, modalId = null}) {
                         <div style={{flex: 1}}>
                             <RowInfo label={'Emetteur'} value={data?.virementGeneralInfo?.emetteur} border={true}
                                      justify={true} id={virementID} field="emetteur" />
-                            <RowInfo label={'Nº PS à payer'} value={data?.virementGeneralInfo?.numPsAPayer}
-                                     border={true} justify={true} id={virementID} field="numPsAPayer" />
+                            <RowInfo label={'Nº PS à payer'} value={data?.virementGeneralInfo?.numeroPsAPayer}
+                                     border={true} justify={true} id={virementID} field="numeroPsAPayer" />
                             <RowInfo label={'Date de rapprochement bancaire'}
                                      value={convertDate(data?.virementGeneralInfo?.dateReconciliationBancaire)}
                                      border={true} justify={true} id={virementID} field="dateReconciliationBancaire" />
@@ -171,7 +167,7 @@ export default function VirementDetailsById({location, modalId = null}) {
             <TabPanel value={value} index={1} data={data}>
                 {isFetching && <CircularProgress style={{margin: '100px auto'}}/>}
                 {data && oneRowHeader(data)}
-                {(nomRefs) && <AssociesGrid data={data?.associatedElements} nomRefs={nomRefs} noModal={!!!modalId}/>}
+                {(nomRefs) && <AssociesGrid data={data?.associatedElementList} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
         </Box>

@@ -68,7 +68,7 @@ export const paiementsApi = createApi({
             },
             transformResponse: (response, meta, arg) => {
                 if (meta.response.status == 204) return {meta: {status: meta.response.status}}
-                response?.historyElements?.forEach((el, id)=>el.id = id)
+                response?.historyElementList?.forEach((el, id)=>el.id = id)
                 return response;
             }
 

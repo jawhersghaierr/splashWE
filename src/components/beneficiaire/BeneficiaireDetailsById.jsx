@@ -195,7 +195,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                     <h3><b>Régime</b></h3>
                     {isFetching && <CircularProgress/>}
                     {data && <div>
-                        <RowInfo label={'Grand Régime'} value={data?.grandRegime} id={benefId} field="grandRegime" />
+                        <RowInfo label={'Grand Régime'} value={data?.codeGrandRegime} id={benefId} field="codeGrandRegime" />
                         <RowInfo label={'Caisse'} value={data?.caisseAffiliation} id={benefId} field="caisseAffiliation" />
                         <RowInfo label={'Centre gestion AMO'} value={data?.centreGestionAmo} id={benefId} field="centreGestionAmo" />
                     </div>}
@@ -208,10 +208,10 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                         <h2>Information</h2>
                         {isFetching && <CircularProgress/>}
                         {nomEnviroments && <RowInfo label={'Environnement'}
-                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.libelle} id={benefId} field="libelle" />}
+                                  value={nomEnviroments.find(e => e.code == data?.codeEnvironnement)?.libelle} id={benefId} field="libelle" />}
 
                         {nomEnviroments && <RowInfo label={'N° Client Viamedis'}
-                                  value={nomEnviroments.find(e => e.code == data?.environmentCode)?.numero} id={benefId} field="numero" />}
+                                  value={nomEnviroments.find(e => e.code == data?.codeEnvironnement)?.numero} id={benefId} field="numero" />}
 
                         <RowInfo label={'Type de contrat'} value={data?.contratIndividuelCollectifLabel} id={benefId} field="contratIndividuelCollectifLabel" />
                         <RowInfo label={'N° de contrat'} value={data?.numeroContratClient} id={benefId} field="numeroContratClient" />
@@ -223,12 +223,12 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
                         <h2>Appartenance réseau du bénéficiaire</h2>
                         {isFetching && <CircularProgress/>}
-                        {(data?.reseauSoins && nomReseaux) && data?.reseauSoins.map( (reseau, i) => {
+                        {(data?.reseauSoinsList && nomReseaux) && data?.reseauSoinsList.map( (reseau, i) => {
                             let objReseau = nomReseaux.find(e=>e.code === reseau.reseauSoins)
                             return <div key={`reseau_${i}`} style={{margin: '25px 0 '}}>
                                 <b>{objReseau?.libelle}</b>
                                 {(nomGaranties && objReseau?.codesGarantie) &&
-                                    reseau.garanties.map((resoGarant, i) =>
+                                    reseau.garantieList.map((resoGarant, i) =>
                                         <div key={`garant_${i}`} style={{margin: '15px'}}>
                                             {nomGaranties.find(e => e.code === resoGarant)?.libelle}
                                         </div>)}

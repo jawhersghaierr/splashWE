@@ -28,10 +28,10 @@ export const PaimentsGrid = ({ factId, nomRefs, noModal }) => {
 
   return (
     <SubGrid
-      showNoGridResultsAlert={isSuccess && !data?.elements}
+      showNoGridResultsAlert={isSuccess && !data?.elementList}
       showCircularProgress={isFetching}
       showGrid={isSuccess}
-      rows={data?.elements}
+      rows={data?.elementList}
       columns={columns({ nomRefs, handleModalOpen })}
       pageSize={20}
       disableColumnMenu={true}

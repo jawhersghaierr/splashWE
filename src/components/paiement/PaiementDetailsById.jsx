@@ -110,11 +110,11 @@ export default function PaiementDetailsById({location, modalId = null}) {
 
             <div style={{display: 'flex', flexDirection: 'row', margin: '0 0 25px 0'}}>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '375px'}}>
-                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.rc)} id={paiementID} field="rc" />
+                    <RowInfo label={'Montant RC'} value={currencyFormatter.format(data?.montantRc)} id={paiementID} field="montantRc" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '405px'}}>
-                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numFacture || ' '} onclick={() => handleModalOpen({id: data?.numFacture})}
-                    id={paiementID} field="dateModification" /> }/>
+                    <RowInfo label={'Facture'} value={ <VirtLink label={data?.numeroFacture || ' '} onclick={() => handleModalOpen({id: data?.factureId})}
+                    id={paiementID} field="numeroFacture" /> }/>
                 </div>
             </div>
 
@@ -133,12 +133,12 @@ export default function PaiementDetailsById({location, modalId = null}) {
 
             <TabPanel value={value} index={0} data={data}>
                 {data && oneRowHeader(data)}
-                <AssociesGrid data={data?.associatedElements} noModal={!!!modalId}/>
+                <AssociesGrid data={data?.associatedElementList} noModal={!!!modalId}/>
             </TabPanel>
 
             <TabPanel value={value} index={1} data={data}>
                 {data && oneRowHeader(data)}
-                {(data?.historyElements && data?.historyElements.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElements} nomRefs={nomRefs}/>}
+                {(data?.historyElementList && data?.historyElementList.length > 0 && nomRefs) && <HistoryGrid data={data?.historyElementList} nomRefs={nomRefs}/>}
             </TabPanel>
 
             <ModalInfo openModal={openModal} handleModalClose={handleModalClose} modalTitle={`modal-Payement-${openModal?.data?.id}`}>

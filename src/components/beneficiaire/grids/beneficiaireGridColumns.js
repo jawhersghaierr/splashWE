@@ -17,7 +17,7 @@ export const columns = () => [
     { field: 'dateNaissance', headerName: 'Date et rang de naissance', flex: 3, sortable: false, renderCell, valueGetter: ({row}) => (<>
             {dateConvertNaissanceRAW(row?.dateNaissance)}&nbsp;<Chip label={row.rangNaissance}/>
         </>)},
-    { field: 'environmentCode', headerName: 'Environnement', flex: 1, renderCell, valueGetter: ({row}) => row?.environmentCode },
+    { field: 'environmentCode', headerName: 'Environnement', flex: 1, renderCell, valueGetter: ({row}) => row?.codeEnvironnement },
     { field: 'timestamp', headerName: 'Date de mise à jour', flex: 2, renderCell, valueGetter: ({row}) => convertDate(row?.dateMiseaJour) },
     { field: 'dateOuvertureDroits', headerName: 'Date de validité', flex: 2, sortable: false, renderCell, valueGetter: ({row}) => (<>
             {convertDate(row?.dateOuvertureDroits)}<br/>

@@ -26,7 +26,7 @@ const reformatCurrencyAtLastRow = ({ id, value }) => {
 
 export const columns = (nomRefs) => [
   {
-    field: "ligne",
+    field: "numeroLigne",
     headerName: "N°",
     maxWidth: "20px",
     flex: 1,
@@ -35,8 +35,8 @@ export const columns = (nomRefs) => [
       return params.value;
     },
   },
-  { field: "code", headerName: "ACTE", flex: 1 },
-  { field: "modeTraitment", headerName: "MT", flex: 1 },
+  { field: "codeActe", headerName: "ACTE", flex: 1 },
+  { field: "modeTraitement", headerName: "MT", flex: 1 },
   {
     field: "dcs",
     headerName: "DCS",
@@ -47,7 +47,7 @@ export const columns = (nomRefs) => [
   },
   { field: "dmt", headerName: "DMT", flex: 1 },
   {
-    field: "idExecutant",
+    field: "numeroExecutant",
     headerName: "Identifiant exécutant",
     flex: 1,
   },
@@ -58,11 +58,11 @@ export const columns = (nomRefs) => [
     minWeight: "150px",
     renderCell: (params) => {
       return (
-        (params?.row?.periodeEnd &&
-          `${convertDate(params?.row?.periodeStart)} - ${convertDate(
-            params?.row?.periodeEnd
+        (params?.row?.dateFinSoins &&
+          `${convertDate(params?.row?.dateDebutSoins)} - ${convertDate(
+            params?.row?.dateFinSoins
           )}`) ||
-        convertDate(params?.row?.periodeStart)
+        convertDate(params?.row?.dateDebutSoins)
       );
     },
   },
@@ -77,7 +77,7 @@ export const columns = (nomRefs) => [
     cellClassName: "boldValue",
   },
   {
-    field: "baseSS",
+    field: "baseRo",
     headerName: "Base SS",
     type: "number",
     flex: 1,
@@ -118,7 +118,7 @@ export const columns = (nomRefs) => [
     cellClassName: "boldValue",
   },
   {
-    field: "montantRAC",
+    field: "rac",
     headerName: "RAC",
     type: "number",
     flex: 1,
