@@ -50,27 +50,9 @@ module.exports = {
             // library: { type: 'var', name: 'host' },
             // filename: 'remoteEntry.js',
             remotes: {
-                libTmp: `promise new Promise(resolve => {
-                     const script = document.createElement('script')
-                     script.src = window._env_.hostRmUrl
-                     script.onload = () => {
-                       const proxy = {
-                         get: (request) => window.host.get(request),
-                         init: (arg) => {
-                           try {
-                             return window.host.init(arg)
-                           } catch(e) {
-                             console.log('remote container already initialized')
-                           }
-                         }
-                       }
-                       resolve(proxy)
-                     }
-                     document.body.appendChild(script);
-                   })`,
                 // lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
-                lib_ui: `lib_ui@${getRemoteEntryUrl(3005)}`,
-                shared_lib_ui: `shared_lib_ui@${getRemoteEntryUrl(8051)}`,
+                // lib_ui: `lib_ui@${getRemoteEntryUrl(3005)}`,
+                // shared_lib_ui: `shared_lib_ui@${getRemoteEntryUrl(8051)}`,
             },
             // remotes: {
                 // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
