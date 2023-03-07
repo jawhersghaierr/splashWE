@@ -1,4 +1,4 @@
-FROM registry-pull.viamedis.fr/nginx:1.22-alpine
+FROM registry-pull.viamedis.fr/nginx:1.23-alpine
 
 RUN mkdir -p /etc/nginx/logs
 
