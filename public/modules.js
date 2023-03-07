@@ -14,7 +14,7 @@ module.exports = {
 		"downloadSelAndIdb": "http://10.241.25.10:8015/api/v1",
 		"entities": "http://10.241.25.10:8031/api/entities",
 		"factures": "http://10.241.25.10:8005/api/v1",
-		"fluxFactures": "http://10.241.25.10:8031/api/v1",
+		"fluxFactures": "http://10.241.25.10:8014/api/v1",
 		"intraitables": "http://10.241.25.10:8014/api/v1",
 		"paiements": "http://10.241.25.10:8003/api/v1",
 		"ps": "http://10.241.25.10:8002/api/v1",

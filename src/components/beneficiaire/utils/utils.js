@@ -1,21 +1,18 @@
 
 export const checkInsidePanels = (values) => {
 
-    const {birdDate, prenom, nom, numeroAdherent, dateNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins} = values || {};
+    const {birthDate, dateNaissance, codeEnvironnementList, dateDebutSoins, dateFinSoins} = values || {};
     let result =  {
-        panelBeneficiaires: (dateNaissance || birdDate)? true: false,
-        panelInfoOMC: (numAdherentFamillial || envCodeList || dateDebutSoins || dateFinSoins)? true: false,
+        panelBeneficiaires: (dateNaissance || birthDate)? true: false,
+        panelInfoOMC: (codeEnvironnementList || dateDebutSoins || dateFinSoins)? true: false,
     }
     return result
 }
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        prenom, nom,
-        numeroAdherent,
-        birdDate, dateNaissance,
-        numAdherentFamillial,
-        envCodeList,
+        birthDate, dateNaissance,
+        codeEnvironnementList,
         dateDebutSoins, dateFinSoins
     } = criterias;
 
@@ -33,15 +30,15 @@ export const reshapeCriterias = ({criterias}) => {
         filters.dateNaissance = new Date(dateNaissance).toLocaleDateString('sv').replaceAll('-', '');
     }
 
-    if (birdDate && birdDate != '' && birdDate != undefined) {
-        if (birdDate instanceof Date && !isNaN(birdDate)){
-            filters.dateNaissance = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-        } else filters.dateNaissance = birdDate.split('/').reverse().join('');
+    if (birthDate && birthDate != '' && birthDate != undefined) {
+        if (birthDate instanceof Date && !isNaN(birthDate)){
+            filters.dateNaissance = new Date(birthDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateNaissance = birthDate.split('/').reverse().join('');
     }
 
-    if (envCodeList && envCodeList !== undefined) {
-        filters.envCodeList = [];
-        envCodeList.forEach(el => filters.envCodeList.push(el.value));
+    if (codeEnvironnementList && codeEnvironnementList !== undefined) {
+        filters.codeEnvironnementList = [];
+        codeEnvironnementList.forEach(el => filters.codeEnvironnementList.push(el.value));
     }
 
     filters.cashe = null;

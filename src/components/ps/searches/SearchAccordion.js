@@ -107,7 +107,7 @@ export default function SearchAccordion(props) {
                             {({ input, meta }) => (
                                 <div style={{flex: 2}}>
                                     <TextField
-                                        id="РaisonSociale"
+                                        id="RaisonSociale"
                                         variant="standard"
                                         error={meta.invalid}
                                         {...input}

@@ -10,13 +10,12 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        birdDate: null,
+        birthDate: null,
         prenom: undefined,
         nom: undefined,
         numeroAdherent: undefined,
         dateNaissance: null,
-        numAdherentFamillial: undefined,
-        envCodeList: undefined,
+        codeEnvironnementList: undefined,
         dateDebutSoins: null,
         dateFinSoins: null
     }
@@ -60,7 +59,7 @@ export const beneficiaireSlice = createSlice({
         setCriterias: (state, action) => {
 
             const {
-                birdDate, prenom, nom, numeroAdherent, dateNaissance, numAdherentFamillial, envCodeList, dateDebutSoins, dateFinSoins
+                birthDate, prenom, nom, numeroAdherent, dateNaissance, codeEnvironnementList, dateDebutSoins, dateFinSoins
             } = action?.payload
 
             state.criterias = {...initialState.criterias};
@@ -70,10 +69,9 @@ export const beneficiaireSlice = createSlice({
             state.criterias.prenom = prenom;
             state.criterias.nom = nom;
             state.criterias.numeroAdherent = numeroAdherent;
-            state.criterias.birdDate = birdDate;
+            state.criterias.birthDate = birthDate;
             state.criterias.dateNaissance = dateNaissance;
-            state.criterias.numAdherentFamillial = numAdherentFamillial;
-            state.criterias.envCodeList = envCodeList;
+            state.criterias.codeEnvironnementList = codeEnvironnementList;
             state.criterias.dateDebutSoins = dateDebutSoins;
             state.criterias.dateFinSoins = dateFinSoins;
 

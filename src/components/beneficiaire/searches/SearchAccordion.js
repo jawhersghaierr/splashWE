@@ -82,7 +82,7 @@ export default function SearchAccordion(props) {
             mutators={{ ...arrayMutators, setValue: ([field, value], state, utils) => {
                     utils.changeValue(state, field, (value) => {
                         let _value = value;
-                        if (field?.modified?.birdDate && value == null) { _value.dateNaissance = null}
+                        if (field?.modified?.birthDate && value == null) { _value.dateNaissance = null}
                         return _value;
                     });
                 }
@@ -135,7 +135,7 @@ export default function SearchAccordion(props) {
                             <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(16))}>
                                 {({ input, meta }) => (
                                     <div style={{flex: 2}}>
-                                        <TextField id="AdherentIndividuel" variant="standard"
+                                        <TextField id="NumeroAdherent" variant="standard"
                                             error={meta.invalid}
                                             {...input}
                                             placeholder={'Nº adhérent'}
@@ -183,8 +183,8 @@ export default function SearchAccordion(props) {
                                                     error={false}
                                                     sx={{borderRadius: '20px'}}
                                                     onChange={(newDate) => {
-                                                        if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
-                                                            form.getFieldState('birdDate').change(newDate)
+                                                        if (isValidDate(newDate) || form.getFieldState('birthDate').value == null) {
+                                                            form.getFieldState('birthDate').change(newDate)
                                                             input.onChange(newDate)
                                                         }
                                                     }}
@@ -202,7 +202,7 @@ export default function SearchAccordion(props) {
                                                                 ref={inputRef}
                                                                 disabled={disabled}
                                                                 onChange={(event)=> {
-                                                                    form.getFieldState('birdDate').change(event.target.value)
+                                                                    form.getFieldState('birthDate').change(event.target.value)
                                                                     onChange(event)
                                                                 }}
                                                                 placeholder={"jj/mm/aaaa"}
@@ -227,8 +227,8 @@ export default function SearchAccordion(props) {
                                             </div>
                                         )}
                                     </Field>
-                                    <Field name="birdDate">
-                                        {({input}) => ( <input {...input} type="hidden" name="birdDate"/> )}
+                                    <Field name="birthDate">
+                                        {({input}) => ( <input {...input} type="hidden" name="birthDate"/> )}
                                     </Field>
 
                                 </AccordionDetails>
@@ -240,7 +240,7 @@ export default function SearchAccordion(props) {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
 
-                                    <AutoCompleteField id="Enviroment" name="envCodeList"
+                                    <AutoCompleteField id="Enviroment" name="codeEnvironnementList"
                                                        multiple={true}
                                                        label={'Environnement'}
                                                        options={newEnviroments}
@@ -315,14 +315,12 @@ export default function SearchAccordion(props) {
                    form.mutators.setValue(values)
 
                    const {
-                       prenom, nom, numeroAdherent,
-                       envCodeList,
-                       birdDate, dateNaissance,
-                       numAdherentFamillial,
+                       codeEnvironnementList,
+                       birthDate, dateNaissance,
                        dateDebutSoins, dateFinSoins
                    } = values?.values;
 
-                    if(birdDate || envCodeList || dateNaissance || numAdherentFamillial || dateDebutSoins || dateFinSoins) {
+                    if(birthDate || codeEnvironnementList || dateNaissance || dateDebutSoins || dateFinSoins) {
                         setDotShow(true)
                     } else {
                         setDotShow(false)
