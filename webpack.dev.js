@@ -23,7 +23,7 @@ module.exports = {
     // Spin up a server for quick development
     devServer: {
         historyApiFallback: true,
-        static: paths.build,
+        // static: paths.build,
         open: true,
         compress: true,
         hot: true,

@@ -15,7 +15,7 @@ import "../../shared/styles/grid.scss";
 import { apiUrls } from "../../../../env-vars";
 import { baseUrl } from "../services/rocEnLigneApi";
 import { addCriteriasForGetRequest } from "../../../utils/utils";
-import { reshapeCriterias } from "../../factures/utils/utils";
+import { reshapeCriterias } from "../utils/utils";
 import { reverseMapRocEnLigne } from "./rocEnLigneGridColumns";
 // import download from "../../../../assets/icons/download-blue.svg";
 import { MainGrid } from "../../shared/grids";
@@ -50,7 +50,7 @@ export const RocEnLigneGrid = () => {
     });
   };
   const downloadHref = `${apiUrls.downloadSelAndIdb}/download?target=${baseUrl}/${addCriteriasForGetRequest({
-    url: "sel/search/",
+    url: "sel/rechercher",
     filters: reshapeCriterias({ criterias }),
     prepareForDownload: true,
   })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(
@@ -78,12 +78,12 @@ export const RocEnLigneGrid = () => {
       showNoSearchResultsAlert={
         !isFetching &&
         isSuccess &&
-        (!data?.results || data?.results?.length == 0)
+        (!data?.resultList || data?.resultList?.length == 0)
       }
       showCircularProgress={isFetching || nomRefsIsFetching}
       showGridHeader={true}
-      showGrid={isSuccess && data?.results && nomRefs}
-      showPagination={isSuccess && data?.results && nomRefs}
+      showGrid={isSuccess && data?.resultList && nomRefs}
+      showPagination={isSuccess && data?.resultList && nomRefs}
       showNoData={!data}
       showNoDataAdition={true}
       showDownload={true}
@@ -94,7 +94,7 @@ export const RocEnLigneGrid = () => {
         flexDirection: "row",
         justifyContent: "space-between",
       }}
-      rows={data?.results}
+      rows={data?.resultList}
       columns={columns({ nomRefs })}
       pageSize={size}
       currentPage={currentPage}

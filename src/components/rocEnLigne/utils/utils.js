@@ -6,17 +6,17 @@ export const checkInsidePanels = (values) => {
     const {
         type, numEng, numAdh,
         domaine, dateAdmission,
-        receptionDateStart, receptionDateEnd,
-        idPerFact, dateFact, statut, motif,
+        dateDebutReception, dateFinReception,
+        identifiantPeriodeFacturation, dateFact, statut, motif,
         finessGeo, finessJur, raisonSociale,
         dеpartement, amc, sousMotif,
-        nom, prenom, dateNaiss, birdDate,
+        nom, prenom, dateNaiss, birthDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateAdmission || receptionDateStart || receptionDateEnd || idPerFact || dateFact )? true: true,
+        panelInformationGenerales: (domaine || dateAdmission || dateDebutReception || dateFinReception || identifiantPeriodeFacturation || dateFact )? true: true,
         panelInformationsEstablishement: (finessGeo || finessJur || raisonSociale || dеpartement)? true: true,
-        panelInformationsBeneficiaires: (amc || nom || prenom || dateNaiss || birdDate)? true: true,
+        panelInformationsBeneficiaires: (amc || nom || prenom || dateNaiss || birthDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     return result
@@ -197,48 +197,49 @@ export const reshapeMotifFromStatus = ({statut, nomRefs}) => {
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        dateDeSoins, receptionDateStart, receptionDateEnd, idPerFact, dateFact, status, dateAdmission,
-        amc, domaine, statut, motif, sousMotif,
-        errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNaiss, birdDate, nir, cle
+        dateDebutReception, dateFinReception, identifiantPeriodeFacturation, dateAdmission,
+        domaine, statut, motif, sousMotif,
+        numeroAmc, dateNaissance, birthDate
     } = criterias;
 
     let filters = {...criterias}
 
-    if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
-        filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
-    }
+    // if (dateDeSoins && dateDeSoins != '' && dateDeSoins != undefined) {
+    //     filters.dateDeSoins = new Date(dateDeSoins).toLocaleDateString('sv');
+    // }
     if (dateAdmission && dateAdmission != '' && dateAdmission != undefined) {
         filters.dateAdmission = new Date(dateAdmission).toLocaleDateString('sv');
     }
-    if (receptionDateStart && receptionDateStart != '' && receptionDateStart != undefined) {
-        filters.receptionDateStart = IntlDateWithHHMM(receptionDateStart)
+
+    if (dateDebutReception && dateDebutReception != '' && dateDebutReception != undefined) {
+        filters.dateDebutReception = IntlDateWithHHMM(dateDebutReception)
         // filters.receptionDateStart = new Date(receptionDateStart).toISOString()//.toLocaleDateString('sv');
     }
 
-    if (receptionDateEnd && receptionDateEnd != '' && receptionDateEnd != undefined) {
-        filters.receptionDateEnd = IntlDateWithHHMM(receptionDateEnd)
+    if (dateFinReception && dateFinReception != '' && dateFinReception != undefined) {
+        filters.dateFinReception = IntlDateWithHHMM(dateFinReception)
         // filters.receptionDateEnd = new Date(receptionDateEnd).toISOString()//.toLocaleDateString('sv');//
     }
 
-    if (dateNaiss && dateNaiss != '' && dateNaiss != undefined) {
-        filters.dateNaiss = new Date(dateNaiss).toLocaleDateString('sv').replaceAll('-', '');
+    if (dateNaissance && dateNaissance != '' && dateNaissance != undefined) {
+        filters.dateNaissance = new Date(dateNaissance).toLocaleDateString('sv').replaceAll('-', '');
     }
 
-    if (birdDate && birdDate != '' && birdDate != undefined) {
-        if (birdDate instanceof Date && !isNaN(birdDate)){
-            filters.dateNaiss = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-        } else filters.dateNaiss = birdDate.split('/').reverse().join('');
+    if (birthDate && birthDate != '' && birthDate != undefined) {
+        if (birthDate instanceof Date && !isNaN(birthDate)){
+            filters.dateNaissance = new Date(birthDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateNaissance = birthDate.split('/').reverse().join('');
     }
 
-    delete filters.birdDate;
+    delete filters.birthDate;
 
-    if (idPerFact && idPerFact !== '' && idPerFact !== undefined) {
-        if (idPerFact.length > 22 && idPerFact.length < 27) filters.idPerFact = idPerFact.substring(0, 22);
+    if (identifiantPeriodeFacturation && identifiantPeriodeFacturation !== '' && identifiantPeriodeFacturation !== undefined) {
+        if (identifiantPeriodeFacturation.length > 22 && identifiantPeriodeFacturation.length < 27) filters.identifiantPeriodeFacturation = identifiantPeriodeFacturation.substring(0, 22);
 
-        if (idPerFact.length == 27) {
-            idPerFact = idPerFact.split(' / ')
-            filters.occId = idPerFact[1]
-            filters.idPerFact = idPerFact[0]
+        if (identifiantPeriodeFacturation.length == 27) {
+            identifiantPeriodeFacturation = identifiantPeriodeFacturation.split(' / ')
+            filters.occurrenceId = identifiantPeriodeFacturation[1]
+            filters.identifiantPeriodeFacturation = identifiantPeriodeFacturation[0]
         }
     }
     /**
@@ -252,9 +253,9 @@ export const reshapeCriterias = ({criterias}) => {
     /**
      * Reshapes from AutoComplete
      */
-    if (amc && amc !== undefined) {
-        filters.amc = []
-        amc.forEach(el => filters.amc.push(el.value))
+    if (numeroAmc && numeroAmc !== undefined) {
+        filters.numeroAmc = []
+        numeroAmc.forEach(el => filters.numeroAmc.push(el.value))
     }
     if (domaine && domaine !== undefined) {
         filters.domaine = []
