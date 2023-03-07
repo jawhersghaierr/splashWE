@@ -64,13 +64,13 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
 
     const {data = null, isFetching, isSuccess} = useGetRocEnLigneByIdQuery(rocID);
 
-    let actes = []
-    if (data?.actes) data?.actes.forEach((e, id)=>actes.push({id, ...e}))
+    let acteList = []
+    if (data?.acteList) data?.acteList.forEach((e, id)=>acteList.push({id, ...e}))
 
     let engagements = []
     if (data?.common?.numeroEngagement) engagements.push(data?.common?.numeroEngagement)
-    if (data?.assosiete) {
-        data?.assosiete.forEach(e => e?.numeroEngagement && engagements.push(e.numeroEngagement))
+    if (data?.assosieteList) {
+        data?.assosieteList.forEach(e => e?.numeroEngagement && engagements.push(e.numeroEngagement))
     }
 
     const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
@@ -100,22 +100,22 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '455px'}}>
                     <RowInfo label={'Date d\'admission'} value={convertDate(data?.common?.dateAdmission)} id={rocID} field="dateAdmission" />
                     <RowInfo label={'Bénéficiaire'} value={
-                        <span>{data?.common?.beneficiaryNom}&nbsp;{data?.common?.beneficiaryPrenom} </span>} id={rocID} field="beneficiaryNom_beneficiaryPrenom" />
-                    <RowInfo label={'Environnement'} value={data?.common?.environment} id={rocID} field="environment" />
-                    <RowInfo label={'N° facturation'} value={data?.common?.numFacturation} id={rocID} field="numFacturation" />
+                        <span>{data?.common?.beneficiaireNom}&nbsp;{data?.common?.beneficiairePrenom} </span>} id={rocID} field="beneficiaireNom_beneficiairePrenom" />
+                    <RowInfo label={'Environnement'} value={data?.common?.numeroEnvironnement} id={rocID} field="numeroEnvironnement" />
+                    <RowInfo label={'N° facturation'} value={data?.common?.numeroFacturation} id={rocID} field="numeroFacturation" />
                 </div>
                 <div style={{flex: 1, marginRight: '25px', maxWidth: '425px'}}>
-                    <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeo} id={rocID} field="finessGeo" />
-                    <RowInfo label={'Nº adhérent'} value={data?.common?.numAdherent} id={rocID} field="numAdherent" />
-                    <RowInfo label={'AMC'} value={data?.common?.amc} id={rocID} field="amc" />
+                    <RowInfo label={'FINESS géographique'} value={data?.common?.finessGeographique} id={rocID} field="finessGeographique" />
+                    <RowInfo label={'Nº adhérent'} value={data?.common?.numeroAdherent} id={rocID} field="numeroAdherent" />
+                    <RowInfo label={'AMC'} value={data?.common?.numeroAmc} id={rocID} field="numeroAmc" />
                 </div>
                 <div style={{flex: 1, maxWidth: '375px'}}>
-                    <RowInfo label={'FINESS juridique'} value={data?.common?.finessJur} id={rocID} field="finessJur" />
+                    <RowInfo label={'FINESS juridique'} value={data?.common?.finessJuridique} id={rocID} field="finessJuridique" />
                     <RowInfo label={'Date et rang de naissance'}
-                             value={data?.common?.dateNaiss && dateConvertNaissanceRAW(data?.common?.dateNaiss)}
-                             chip={data?.common?.rang && data?.common?.rang || null}
+                             value={data?.common?.dateNaissance && dateConvertNaissanceRAW(data?.common?.dateNaissance)}
+                             chip={data?.common?.rangNaissance && data?.common?.rangNaissance || null}
                              id={rocID}
-                             field="dateNaiss"
+                             field="dateNaissance"
                     />
                     <RowInfo label={'Montant RC'}
                              value={data?.common?.montantRc && currencyFormatter.format(data?.common?.montantRc)}
@@ -134,9 +134,9 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                 sx={{color: 'black', '& .Mui-selected': {backgroundColor: 'white', color: '#000!important'}}}
             >
                 <Tab label="INFORMATIONS GENERALES"  {...a11yProps(0)}/>
-                <Tab label={<div>Actes&nbsp;{(data?.common?.typeDemande !== 'IDB' && data?.actes && data?.actes.length) &&
-                <Chip label={data?.actes.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)}
-                      disabled={!(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB')}/>}
+                <Tab label={<div>Actes&nbsp;{(data?.common?.typeDemande !== 'IDB' && data?.acteList && data?.acteList.length) &&
+                <Chip label={data?.acteList.length} sx={{color: 'black'}}/>} </div>}  {...a11yProps(1)}
+                      disabled={!(data?.common?.typeDemande && data?.common?.typeDemande !== 'IDB')}/>
                 <Tab label="SEL ASSOCIES"  {...a11yProps(2)}/>
                 <Tab label="FACTURES ASSOCIEES" {...a11yProps(3)} />
                 <Tab label="FLUX" {...a11yProps(4)} style={{alignSelf: 'end', marginLeft: 'auto'}}/>
@@ -179,7 +179,7 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                                                  value={data?.info?.demande?.indicateurParcours} border={true} justify={true}
                                                  id={rocID} field="indicateurParcours" />
                                         <RowInfo label={'Motif de rejet'}
-                                                 value={data?.info?.demande?.motifRejets || data?.motifRejets} border={true}
+                                                 value={data?.info?.demande?.motifRejets} border={true}
                                                  justify={true} id={rocID} field="motifRejets" />
                                     </div>
 
@@ -188,12 +188,12 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
                                                  value={nomRefs && nomRefs?.ROC_DOMAINS[data?.info?.demande?.domaine] || data?.info?.demande?.domaine}
                                                  border={true} justify={true} id={rocID} field="domaine" />
                                         <RowInfo label={'Période des prestations'}
-                                                 value={`${convertDate(data?.info?.demande?.periodePrestationStart)} - ${convertDate(data?.info?.demande?.periodePrestationEnd)}`}
-                                                 border={true} justify={true} id={rocID} field="periodePrestationStart_periodePrestationEnd" />
+                                                 value={`${convertDate(data?.info?.demande?.periodePrestationDebut)} - ${convertDate(data?.info?.demande?.periodePrestationFin)}`}
+                                                 border={true} justify={true} id={rocID} field="periodePrestationDebut_periodePrestationFin" />
                                         <RowInfo label={'Contexte d\'échange'} value={data?.info?.demande?.contexteEchange}
                                                  border={true} justify={true} id={rocID} field="contexteEchange" />
-                                        <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numDossier}
-                                                 border={true} justify={true} id={rocID} field="numDossier" />
+                                        <RowInfo label={'N° dossier hospitalisation'} value={data?.info?.demande?.numeroDossier}
+                                                 border={true} justify={true} id={rocID} field="numeroDossier" />
                                         <RowInfo label={'Date accident de travail'}
                                                  value={data?.info?.demande?.dateAccidentTravail && convertDate(data?.info?.demande?.dateAccidentTravail)}
                                                  border={true} justify={true} id={rocID} field="dateAccidentTravail" />
@@ -225,13 +225,13 @@ export default function RocEnLigneDetailsById({location, modalId = null}) {
             </TabPanel>
 
             {data?.common?.typeDemande !== 'IDB' && <TabPanel value={value} index={1} data={data}>
-                {(actes?.length > 0 && nomRefs) && <ActesGrid data={actes} nomRefs={nomRefs}/>}
+                {(acteList?.length > 0 && nomRefs) && <ActesGrid data={acteList} nomRefs={nomRefs}/>}
                 {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
             </TabPanel>}
 
             <TabPanel value={value} index={2} data={data}>
                 {(isFetching || nomRefsIsFetching) && <CircularProgress style={{margin: '100px auto'}}/>}
-                {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosiete} nomRefs={nomRefs} noModal={!!!modalId}/>}
+                {isSuccess && nomRefsIsSuccess && <SelAssociesGrid selAssosiete={data?.assosieteList} nomRefs={nomRefs} noModal={!!!modalId}/>}
             </TabPanel>
 
             <TabPanel value={value} index={3} data={data}>

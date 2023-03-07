@@ -11,9 +11,9 @@ export const columns = ({handleModalOpen, nomRefs}) => [
     { field: 'type', headerName: 'Type', flex: 2, sortable: false, renderCell },
     { field: 'domaine', headerName: 'Domaine', flex: 2, renderCell, valueGetter: ({value}) => (nomRefs?.ROC_DOMAINS[value] || value)},
     { field: 'dateAdmission', headerName: 'Date d\'admission', flex: 1, renderCell, valueGetter: ({value}) => (convertDate(value)) },
-    { field: 'statut', headerName: 'Statut', flex: 2, renderCell, valueGetter: ({value}) => ( <Chip label={`${value?.label}`} sx={{color: 'black', bgcolor: rocStatus[value?.code]?.color || 'rgba(0, 0, 0, 0.08)'}}/> ) },
+    { field: 'statut', headerName: 'Statut', flex: 2, renderCell, valueGetter: ({value}) => ( <Chip label={`${value?.libelle}`} sx={{color: 'black', bgcolor: rocStatus[value?.code]?.color || 'rgba(0, 0, 0, 0.08)'}}/> ) },
     { field: 'beneficiaryName', headerName: 'Nom et date de naissance bénéficiaire', flex: 3, renderCell, valueGetter: (params) => {
-            let {nom, prenom, dateNaissance} = params?.row?.beneficiary;
+            let {nom, prenom, dateNaissance} = params?.row?.beneficiaire;
             return <span><b>{nom}</b> {prenom}<br/>{dateConvertNaissanceRAW(dateNaissance && dateNaissance)}</span>
         }},
     { field: 'montantRC', headerName: 'Montant RC', flex: 1, renderCell, valueGetter: ({ value }) => (value !== undefined) && currencyFormatter.format(value), cellClassName: 'boldValue'},
