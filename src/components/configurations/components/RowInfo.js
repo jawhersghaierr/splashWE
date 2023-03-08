@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'lib_ui/react'
 import Chip from '@mui/material/Chip';
 import {Typography} from "@mui/material";
 

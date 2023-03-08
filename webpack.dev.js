@@ -48,34 +48,18 @@ module.exports = {
             // library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             // remotes: {
+            //
             //     lib_ui: "lib_ui@http://localhost:3005/remoteEntry.js",
             //     shared_lib_ui: "shared_lib_ui@http://localhost:8051/remoteEntry.js",
+            //
+            //     ps_ui: "ps_ui@http://localhost:8034/remoteEntry.js",
+            //     benef: "benef@http://localhost:8033/remoteEntry.js",
+            //
             //     hospi_ui: `hospi_ui@http://localhost:8035/remoteEntry.js`,
-            //     // payment_ui: "payment_ui@http://localhost:8036/remoteEntry.js"
+            //     payment_ui: "payment_ui@http://localhost:8036/remoteEntry.js"
+            //
             // },
             remotes: getRemotes(),
-            // shared: {
-            //     ...deps,
-            //     'react': {
-            //         singleton: true,
-            //         strictVersion: true,
-            //         requiredVersion: '17.0.2'
-            //     },
-            //     'react-dom': {
-            //         singleton: true,
-            //         strictVersion: true,
-            //         requiredVersion: '17.0.2'
-            //     },
-            //     '@mui/material': {
-            //         singleton: true,
-            //         strictVersion: true,
-            //         requiredVersion: '5.5.2'
-            //     },
-            //     // '@viamedis-boilerPlate/shared-library': {
-            //     //     import: '@viamedis-boilerPlate/shared-library',
-            //     //     requiredVersion: require('../shared-library/package.json').version,
-            //     // },
-            // },
             shared: {
                 "react": {
                     eager: true,
@@ -133,7 +117,7 @@ module.exports = {
             },
 
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             assets: './public/assets',

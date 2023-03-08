@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'lib_ui/react'
-import { Link,matchPath } from 'lib_ui/react-router-dom';
+import { Link,matchPath, useRouteMatch } from 'lib_ui/react-router-dom';
 
 import { useSelector } from 'lib_ui/react-redux';
 
@@ -36,7 +36,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export const ListConfiguration = (props) => {
 
-    const match = matchPath(props?.location?.pathname, {
+    const { store } = props;
+    let { path, url: _url } = useRouteMatch();
+
+    const match = matchPath(_url, { //matchPath(props?.location?.pathname, {
         path: "/configuration/:domain/:code",
         exact: true,
         strict: true

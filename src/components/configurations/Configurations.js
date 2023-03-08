@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'lib_ui/react'
 import {Link} from 'lib_ui/react-router-dom';
+import { Switch, Route, useRouteMatch } from "lib_ui/react-router-dom";
 
-import {useDispatch} from "react-redux";
+import {useDispatch} from "lib_ui/react-redux";
+import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
 
-import {useGetConfigsQuery} from "./services/configurationsApi";
-import {initCriterias} from "./configurationsSlice";
+import {configurationsApi, useGetConfigsQuery} from "./services/configurationsApi";
+import configurationsReducer, {initCriterias} from "./configurationsSlice";
 
 import {Typography} from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -15,12 +17,25 @@ import './configuration.scss'
 
 export const Configurations = (props) => {
 
+    const { store } = props;
+    let { path, url } = useRouteMatch();
+    const [loadDataID, setLoadDataID] = useState(false);
+
     const dispatch = useDispatch();
-    const {data, isFetching, isSuccess} = useGetConfigsQuery();
 
     useEffect(() => {
+        console.log('store: ', store?.asyncReducers?.configurationsApi)
+
+        store.injectReducer("configurations", configurationsReducer);
+        store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
+        addMiddleware( configurationsApi.middleware );
+        if (store) setLoadDataID(true)
+
         dispatch(initCriterias());
-    }, [])
+    }, [store?.asyncReducers?.configurationsApi])
+
+    // let data, isFetching, isSuccess
+    const {data, isFetching, isSuccess} = configurationsApi.useGetConfigsQuery({ skip: !loadDataID, forceRefetch: true });
 
     return <div style={{padding: '0', margin: 0}}>
         <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
@@ -42,7 +57,7 @@ export const Configurations = (props) => {
                 }} key={data[tConf].code}>
                     <h3 style={{marginBottom: '10px', color: '#003154', display: 'flex'}}><SettingsIcon style={{marginRight: '5px'}}/>{data[tConf].label}</h3>
                     {data[tConf]?.items.map(e => <div key={e?.code}>
-                        <Link to={`configuration/${tConf}/${e?.code}`} style={{cursor: 'pointer', color: '#00C9E9', paddingLeft: '5px'}}>{e.label}</Link>
+                        <Link to={`/configuration/${tConf}/${e?.code}`} style={{cursor: 'pointer', color: '#00C9E9', paddingLeft: '5px'}}>{e.label}</Link>
                     </div>)}
                 </div>
             )}
