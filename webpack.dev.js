@@ -1,29 +1,26 @@
-const paths = require("./paths");
-
-const webpack = require("webpack");
+// const paths = require("./paths");
+// const webpack = require("webpack");
+// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+// const deps = require('./package.json').dependencies;
+// const env_IP = require('./env-vars').env_IP;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const { ModuleFederationPlugin } = require("webpack").container;
 
-const deps = require('./package.json').dependencies;
-const env_IP = require('./env-vars').env_IP;
 const modules = require(`./public/modules`);
 
 module.exports = {
-    // Set the mode to development or production
+
     mode: "development",
 
     entry: './src/index',
 
-    // Control how source maps are generated
     devtool: 'source-map',
 
     optimization: {
         minimize: false,
     },
 
-    // Spin up a server for quick development
     devServer: {
         historyApiFallback: true,
         // static: paths.build,
@@ -42,7 +39,7 @@ module.exports = {
     },
 
     plugins: [
-        // Only update what has changed on hot reload
+
         new ModuleFederationPlugin({
             name: 'host',
             // library: { type: 'var', name: 'host' },
@@ -88,15 +85,6 @@ module.exports = {
                     singleton: true,
                     version: "7.2.9",
                 },
-                // "thunk": {
-                //   singleton: true,
-                //   version: "2.4.2"
-                // },
-                // "@reduxjs/toolkit": {
-                //   singleton: true,
-                //   strictVersion: true,
-                //   version: "1.9.2",
-                // },
                 "react-final-form": {
                     eager: true,
                     singleton: true,
@@ -107,13 +95,6 @@ module.exports = {
                     singleton: true,
                     version: "2.2.0"
                 },
-                // "payment_ui": {
-                //     singleton: true,
-                // },
-                // "hospi_ui": {
-                //     singleton: true,
-                // },
-
             },
 
         }),
