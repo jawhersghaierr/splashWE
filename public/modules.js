@@ -1,8 +1,6 @@
 module.exports = {
 	"remoteApps": {
-		// "lib_ui": "http://localhost:3005/remoteEntry.js",
 		"lib_ui": "http://10.241.25.10:8038/remoteEntry.js",
-		// "shared_lib_ui": "http://localhost:8051/remoteEntry.js",
 		"shared_lib_ui": "http://10.241.25.10:8039/remoteEntry.js",
 		"ps_ui": "http://10.241.25.10:8034/remoteEntry.js",
 		"benef": "http://10.241.25.10:8035/remoteEntry.js",
