@@ -1,11 +1,19 @@
 module.exports = {
-	"remoteApps": {
+	"remoteApps1": {
 		"lib_ui": "http://10.241.25.10:8038/remoteEntry.js",
 		"shared_lib_ui": "http://10.241.25.10:8039/remoteEntry.js",
 		"ps_ui": "http://10.241.25.10:8034/remoteEntry.js",
 		"benef": "http://10.241.25.10:8035/remoteEntry.js",
 		"hospi_ui": "http://10.241.25.10:8032/remoteEntry.js",
 		"payment_ui": "http://10.241.25.10:8033/remoteEntry.js"
+	},
+	"remoteApps": {
+		"lib_ui": "http://localhost:8038/remoteEntry.js",
+		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
+		"ps_ui": "http://localhost:8034/remoteEntry.js",
+		"benef": "http://localhost:8035/remoteEntry.js",
+		"hospi_ui": "http://localhost:8032/remoteEntry.js",
+		"payment_ui": "http://localhost:8033/remoteEntry.js"
 	},
 	"apiUrls": {
 		"beneficiaire": "http://10.241.25.20:8007/api/v1",
