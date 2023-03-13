@@ -56,7 +56,7 @@ export const FacturesGrid = ({ disciplines }) => {
     }
   )}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(
     reverseMapFacturation
-  )}&dateFormat=dateNai`;
+  )}&dateFormat=dateNaissance`;
 
   useEffect(() => {
     if (
@@ -153,7 +153,7 @@ export const FacturesGrid = ({ disciplines }) => {
   //                     url: 'factures',
   //                     filters: reshapeCriterias({criterias}),
   //                     prepareForDownload: true
-  //                 })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}&dateFormat=dateNai`}
+  //                 })}&columns=${Object.values(reverseMapFacturation)}&mapping=${Object.keys(reverseMapFacturation)}&dateFormat=dateNaissance`}
   //                 className="RoundedEmptyButt"
   //                 download="result.csv"
   //             >

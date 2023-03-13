@@ -1,9 +1,9 @@
 export const checkInsidePanels = (values) => {
 
-    const {
-        numVirement, numDecompte, numAdhInd, numPsAPayer, dateTraitement, dateTraitementFin,
-        status, mntVirement
-    } = values || {};
+    // const {
+    //     numVirement, numDecompte, numAdhInd, numPsAPayer, dateTraitement, dateTraitementFin,
+    //     status, mntVirement
+    // } = values || {};
 
     let result =  {
         panelInformationsDuVirement: true,
@@ -15,10 +15,8 @@ export const checkInsidePanels = (values) => {
 
 export const reshapeCriterias = ({criterias}) => {
     let {
-        numVirement, numDecompte,
-        numAdhInd, numPsAPayer,
-        dateTraitement, dateTraitementFin,
-        status, mntVirement
+        dateTraitementStart, dateTraitementEnd,
+        status
     } = criterias;
 
     let filters = {...criterias}
@@ -29,8 +27,8 @@ export const reshapeCriterias = ({criterias}) => {
     }
 
 
-    if (dateTraitement && dateTraitement != '' && dateTraitement != undefined) filters.dateTraitement = new Date(dateTraitement).toLocaleDateString('sv');
-    if (dateTraitementFin && dateTraitementFin != '' && dateTraitementFin != undefined) filters.dateTraitementFin = new Date(dateTraitementFin).toLocaleDateString('sv');
+    if (dateTraitementStart && dateTraitementStart != '' && dateTraitementStart != undefined) filters.dateTraitementStart = new Date(dateTraitementStart).toLocaleDateString('sv');
+    if (dateTraitementEnd && dateTraitementEnd != '' && dateTraitementEnd != undefined) filters.dateTraitementEnd = new Date(dateTraitementEnd).toLocaleDateString('sv');
 
     filters.cashe = null
     return filters

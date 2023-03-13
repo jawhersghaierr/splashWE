@@ -102,8 +102,8 @@ const associated = (values, associed, nameMsg, defaultMsg) => (value) => {
   if (associed && value && value !== undefined && value !== "") {
     isOk = false;
     associed.forEach((el) => {
-      if ( (el == "dateDeNaissance" || el == "dateNaissance" || el == "dateNaiss" || el == "dateNai") && (!values[el] || values[el] == undefined || values[el] == "") ) {
-        if ( !( !values["birdDate"] || values["birdDate"] == undefined || values["birdDate"] == "" ) ) {
+      if ( (el == "dateNaissance") && (!values[el] || values[el] == undefined || values[el] == "") ) {
+        if ( !( !values["birthDate"] || values["birthDate"] == undefined || values["birthDate"] == "" ) ) {
           isOk = true;
         }
       } else if ( !(!values[el] || values[el] == undefined || values[el] == "") ) {

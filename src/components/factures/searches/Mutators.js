@@ -8,8 +8,8 @@ export const handleFormChange = ({nomRefs, setMotif, setDisableCle}) => ([name],
     console.log('state ', state)
     let values = state.formState.values
 
-    if ( state?.lastFormState?.modified?.birdDate && values?.dateNai != null && values?.birdDate == null ) {
-        changeValue(state, 'dateNai', (value) => undefined)
+    if ( state?.lastFormState?.modified?.birthDate && values?.dateNaissance != null && values?.birthDate == null ) {
+        changeValue(state, 'dateNaissance', (value) => undefined)
     }
 
     switch (name) {

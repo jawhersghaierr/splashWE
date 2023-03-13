@@ -1,22 +1,20 @@
-// import {statusesRIB} from "../../../utils/status-utils";
 import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 
 export const checkInsidePanels = (values) => {
 
     const {
-        numFact, numEng, numAdh,
         domaine, dateEntree,
         dateReceivedStart, dateReceivedEnd,
-        idPeriodeFact, dateFact, status, errorCode,
-        numId, numJur, raisonSociale,
-        department, numClient,
-        nom, prenom, dateNai, birdDate,
+        identifiantPeriodeFacturation, dateFacture, status, codeErreur,
+        finessGeographique, finessJuridique, raisonSociale,
+        department, numeroAmc,
+        nom, prenom, dateNaissance, birthDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateEntree || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status || errorCode)? true: true,
-        panelInformationsEstablishement: (numId || numJur || raisonSociale || department)? true: true,
-        panelInformationsBeneficiaires: (numClient || nom || prenom || dateNai || birdDate)? true: true,
+        panelInformationGenerales: (domaine || dateEntree || dateReceivedStart || dateReceivedEnd || identifiantPeriodeFacturation || dateFacture || status || codeErreur)? true: true,
+        panelInformationsEstablishement: (finessGeographique || finessJuridique || raisonSociale || department)? true: true,
+        panelInformationsBeneficiaires: (numeroAmc || nom || prenom || dateNaissance || birthDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     return result
@@ -107,8 +105,8 @@ export const reshapeMotifVsStatus = ({status, nomRefs}) => {
  */
 export const reshapeCriterias = ({criterias}) => {
     let {
-        dateEntree, dateReceivedStart, dateReceivedEnd, idPeriodeFact, dateFact, status,
-        errorCode, numId, numJur, raisonSociale, department, numClient, nom, prenom, dateNai, birdDate, nir, cle
+        dateEntree, dateReceivedStart, dateReceivedEnd, identifiantPeriodeFacturation, dateFacture, status,
+        codeErreur, numeroAmc, dateNaissance, birthDate, nir, cle
     } = criterias;
 
     let filters = {...criterias}
@@ -127,21 +125,21 @@ export const reshapeCriterias = ({criterias}) => {
         // filters.dateReceivedEnd = new Date(dateReceivedEnd).toLocaleDateString('sv');//.toISOString()
     }
 
-    if (dateFact && dateFact != '' && dateFact != undefined) {
-        filters.dateFact = new Date(dateFact).toLocaleDateString('sv');//.toISOString()
+    if (dateFacture && dateFacture != '' && dateFacture != undefined) {
+        filters.dateFacture = new Date(dateFacture).toLocaleDateString('sv');//.toISOString()
     }
 
-    if (dateNai && dateNai != '' && dateNai != undefined) {
-        filters.dateNai = new Date(dateNai).toLocaleDateString('sv').replaceAll('-', '');
+    if (dateNaissance && dateNaissance != '' && dateNaissance != undefined) {
+        filters.dateNaissance = new Date(dateNaissance).toLocaleDateString('sv').replaceAll('-', '');
     }
 
-    if (birdDate && birdDate != '' && birdDate != undefined) {
-        if (birdDate instanceof Date && !isNaN(birdDate)){
-            filters.dateNai = new Date(birdDate).toLocaleDateString('sv').replaceAll('-', '');
-        } else filters.dateNai = birdDate.split('/').reverse().join('');
+    if (birthDate && birthDate != '' && birthDate != undefined) {
+        if (birthDate instanceof Date && !isNaN(birthDate)){
+            filters.dateNaissance = new Date(birthDate).toLocaleDateString('sv').replaceAll('-', '');
+        } else filters.dateNaissance = birthDate.split('/').reverse().join('');
     }
 
-    delete filters.birdDate;
+    delete filters.birthDate;
 
     if (nir && nir != undefined && cle && cle != undefined) {
         filters.nir = `${nir}${(cle.length < 2 )? '0' + cle: cle}`
@@ -150,13 +148,13 @@ export const reshapeCriterias = ({criterias}) => {
     /**
      * Reshapes from AutoComplete
      */
-    if (numClient && numClient !== undefined) {
-        filters.numClient = []
-        numClient.forEach(el => filters.numClient.push(el.value))
+    if (numeroAmc && numeroAmc !== undefined) {
+        filters.numeroAmc = []
+        numeroAmc.forEach(el => filters.numeroAmc.push(el.value))
     }
-    if (errorCode && errorCode !== undefined) {
-        filters.errorCode = []
-        errorCode.forEach(el => filters.errorCode.push(el.value))
+    if (codeErreur && codeErreur !== undefined) {
+        filters.codeErreur = []
+        codeErreur.forEach(el => filters.codeErreur.push(el.value))
     }
     if (status && status !== undefined) {
         filters.status = []
@@ -164,13 +162,13 @@ export const reshapeCriterias = ({criterias}) => {
     }
     //^^^^^^^^^^^^^^^^^^Reshapes from AutoComplete^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    if (idPeriodeFact && idPeriodeFact !== '' && idPeriodeFact !== undefined) {
-        if (idPeriodeFact.length > 22 && idPeriodeFact.length < 27) filters.idPeriodeFact = idPeriodeFact.substring(0, 22);
+    if (identifiantPeriodeFacturation && identifiantPeriodeFacturation !== '' && identifiantPeriodeFacturation !== undefined) {
+        if (identifiantPeriodeFacturation.length > 22 && identifiantPeriodeFacturation.length < 27) filters.identifiantPeriodeFacturation = identifiantPeriodeFacturation.substring(0, 22);
 
-        if (idPeriodeFact.length == 27) {
-            idPeriodeFact = idPeriodeFact.split(' / ')
-            filters.occId = idPeriodeFact[1]
-            filters.idPeriodeFact = idPeriodeFact[0]
+        if (identifiantPeriodeFacturation.length == 27) {
+            identifiantPeriodeFacturation = identifiantPeriodeFacturation.split(' / ')
+            filters.occurrenceId = identifiantPeriodeFacturation[1]
+            filters.identifiantPeriodeFacturation = identifiantPeriodeFacturation[0]
         }
     }
     filters.cashe = null

@@ -30,8 +30,8 @@ export const reverseMapFacturation = {
     status: 'Statut',
     numeroClient: 'AMC',
     numeroAdherent: 'N° adhérent',
-    nom: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
-    prenom: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
-    dateNaissance: 'Nom et date de naissance bénéficiaire', // prenom, dateNai
+    nom: 'Nom et date de naissance bénéficiaire', // prenom, dateNaissance
+    prenom: 'Nom et date de naissance bénéficiaire', // prenom, dateNaissance
+    dateNaissance: 'Nom et date de naissance bénéficiaire', // prenom, dateNaissance
     montantRc: 'Montant Rc',
 }

@@ -103,17 +103,17 @@ export default function SearchAccordion() {
                                           sx={{ bgcolor: '#f1f1f1', display: "flex",  }}
                                           title={<div style={{ display: "flex", flexDirection: 'row', justifyContent: 'space-between' }}>
 
-                                                      <Field name="numFact" validate={validators.composeValidators(validators.maxValue(10))}>
+                                                      <Field name="numeroFacture" validate={validators.composeValidators(validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField id="NumFact" type={'number'} variant="standard"
+                                                                  <TextField id="NumeroFacture" type={'number'} variant="standard"
                                                                       error={meta.invalid}
                                                                       placeholder={'Nº facture'}
                                                                       sx={{width: '100%'}}
                                                                       className="RoundedEl"
                                                                       InputProps={{  disableUnderline: true }}
                                                                       {...{...input, inputProps: { ...input.inputProps, step: 1, lang: 'fr', inputMode: 'numeric', pattern: '[0-9]*',
-                                                                              onKeyDown: (е) => ["e", "E", "+", "-", ".", ","].includes(е.key) && е.preventDefault()
+                                                                              onKeyDown: (e) => ["e", "E", "+", "-", ".", ","].includes(e.key) && e.preventDefault()
                                                                           }
                                                                       }}
                                                                   />
@@ -122,10 +122,10 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numEng" validate={validators.composeValidators(validators.maxValue(17))}>
+                                                      <Field name="numeroEngagement" validate={validators.composeValidators(validators.maxValue(17))}>
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2, marginRight: '20px'}}>
-                                                                  <TextField id="NumEng" variant={'standard'}
+                                                                  <TextField id="NumeroEngagement" variant={'standard'}
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       placeholder={'Nº d\'engagement'}
@@ -137,11 +137,11 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numAdh" validate={validators.composeValidators(validators.maxValue(16))}>
+                                                      <Field name="numeroAdherent" validate={validators.composeValidators(validators.maxValue(16))}>
 
                                                           {({ input, meta }) => (
                                                               <div style={{flex: 2}}>
-                                                                  <TextField id="NumAdh" variant="standard"
+                                                                  <TextField id="NumeroAdherent" variant="standard"
                                                                      error={meta.invalid}
                                                                      {...input}
                                                                      placeholder={'Nº adhérent'}
@@ -261,10 +261,10 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="idPeriodeFact" validate={validators.composeValidators(validators.minValue(22))}>
+                                                      <Field name="identifiantPeriodeFacturation" validate={validators.composeValidators(validators.minValue(22))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" sx={{ flex: '1 0 22%', label: {marginTop: '15px!important'}}}>
-                                                                  <MaskedInput id="IdPeriodeFact" autoFocus fullWidth
+                                                                  <MaskedInput id="identifiantPeriodeFacturation" autoFocus fullWidth
                                                                       mask={"********************** / 00"}
                                                                       placeholder={"********************** / 00"}
                                                                       color="primary"
@@ -275,7 +275,7 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateFact">
+                                                      <Field name="dateFacture">
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundDate" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -300,7 +300,7 @@ export default function SearchAccordion() {
                                                                          handleFormChange={form.mutators.handleFormChange}
                                                       />
 
-                                                      <AutoCompleteField id="Motif" name="errorCode"
+                                                      <AutoCompleteField id="Motif" name="codeErreur"
                                                                          multiple={true}
                                                                          label={'Motif'}
                                                                          options={motif}
@@ -320,10 +320,10 @@ export default function SearchAccordion() {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      <Field name="numId" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
+                                                      <Field name="finessGeographique" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField id="FINESSgeographique" label={'FINESS géographique'}
+                                                                  <TextField id="FinessGeographique" label={'FINESS géographique'}
                                                                       variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
@@ -337,10 +337,10 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="numJur" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
+                                                      <Field name="finessJuridique" validate={validators.composeValidators(validators.minValue(8), validators.maxValue(10))}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
-                                                                  <TextField id="FINESSJuridique" label={'FINESS juridique'} variant="outlined"
+                                                                  <TextField id="FinessJuridique" label={'FINESS juridique'} variant="outlined"
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
@@ -388,7 +388,7 @@ export default function SearchAccordion() {
                                                   </AccordionSummary>
                                                   <AccordionDetails sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
-                                                      <AutoCompleteField id="NumClient" name="numClient"
+                                                      <AutoCompleteField id="NumeroAmc" name="numeroAmc"
                                                                          multiple={true}
                                                                          label={'AMC'}
                                                                          options={numClient}
@@ -401,7 +401,7 @@ export default function SearchAccordion() {
 
                                                       <Field name="nom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['prenom', 'dateNai'], 'Nom')
+                                                          validators.associated(values, ['prenom', 'dateNaissance'], 'Nom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -415,7 +415,7 @@ export default function SearchAccordion() {
 
                                                       <Field name="prenom" validate={validators.composeValidators(
                                                           validators.maxValue(51),
-                                                          validators.associated(values, ['nom', 'dateNai'], 'Prénom')
+                                                          validators.associated(values, ['nom', 'dateNaissance'], 'Prénom')
                                                       )}>
                                                           {({ input, meta }) => (
                                                               <FormControl className="RoundedEl" style={{ flex: '1 0 21%', margin: '15px 5px'}}>
@@ -427,7 +427,7 @@ export default function SearchAccordion() {
                                                           )}
                                                       </Field>
 
-                                                      <Field name="dateNai" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
+                                                      <Field name="dateNaissance" validate={validators.composeValidators(validators.associated(values, ['nom', 'prenom'], 'Date de naissance'))}>
                                                           {({ input, meta }) => (
                                                               <div className={"RoundDate"} style={{ flex: '1 0 21%', margin: '15px 5px'}}>
                                                                   <DatePicker
@@ -435,8 +435,8 @@ export default function SearchAccordion() {
                                                                       error={false}
                                                                       sx={{borderRadius: '20px', flex: 2}}
                                                                       onChange={(newDate) => {
-                                                                          if (isValidDate(newDate) || form.getFieldState('birdDate').value == null) {
-                                                                              form.getFieldState('birdDate').change(newDate)
+                                                                          if (isValidDate(newDate) || form.getFieldState('birthDate').value == null) {
+                                                                              form.getFieldState('birthDate').change(newDate)
                                                                               input.onChange(newDate)
                                                                           }
                                                                       }}
@@ -454,7 +454,7 @@ export default function SearchAccordion() {
                                                                                   ref={inputRef}
                                                                                   disabled={disabled}
                                                                                   onChange={(event)=> {
-                                                                                      form.getFieldState('birdDate').change(event.target.value)
+                                                                                      form.getFieldState('birthDate').change(event.target.value)
                                                                                       onChange(event)
                                                                                   }}
                                                                                   placeholder={'jj/mm/aaaa'}
@@ -464,7 +464,7 @@ export default function SearchAccordion() {
                                                                                   style={{width: '100%'}}
                                                                                   InputProps={{ endAdornment: ( <InputAdornment position="end"> {InputProps?.endAdornment} </InputAdornment>) }}
                                                                                   onBlur={(e)=> {
-                                                                                      if (e.target.value.length !== 10) form.getFieldState('dateNai').change(undefined)
+                                                                                      if (e.target.value.length !== 10) form.getFieldState('dateNaissance').change(undefined)
                                                                                       return input.onBlur(e)
                                                                                   }}
                                                                           />
@@ -475,8 +475,8 @@ export default function SearchAccordion() {
                                                               </div>
                                                           )}
                                                       </Field>
-                                                      <Field name="birdDate">
-                                                          {({input}) => ( <input {...input} type="hidden" name="birdDate"/> )}
+                                                      <Field name="birthDate">
+                                                          {({input}) => ( <input {...input} type="hidden" name="birthDate"/> )}
                                                       </Field>
 
                                                   </AccordionDetails>
@@ -527,18 +527,17 @@ export default function SearchAccordion() {
                                   <FormSpy subscription={{values: true}} onChange={firstRender? ()=>{}: (values) => {
 
                                       const {
-                                          numFact, numEng, numAdh,
                                           domaine, dateEntree, dateReceivedStart, dateReceivedEnd,
-                                          idPeriodeFact, dateFact, status, errorCode,
-                                          numId, numJur, raisonSociale,
-                                          department, numClient,
-                                          nom, prenom, dateNai, birdDate, nir, cle
+                                          identifiantPeriodeFacturation, dateFacture, status, codeErreur,
+                                          finessGeographique, finessJuridique, raisonSociale,
+                                          department, numeroAmc,
+                                          nom, prenom, dateNaissance, birthDate, nir, cle
                                       } = values?.values;
 
                                       if(
-                                          domaine || dateEntree || dateReceivedStart || dateReceivedEnd || idPeriodeFact || dateFact || status ||
-                                          errorCode || numId || numJur || raisonSociale || department || numClient || nom || prenom || dateNai ||
-                                          birdDate || nir || cle
+                                          domaine || dateEntree || dateReceivedStart || dateReceivedEnd || identifiantPeriodeFacturation || dateFacture || status ||
+                                          codeErreur || finessGeographique || finessJuridique || raisonSociale || department || numeroAmc || nom || prenom || dateNaissance ||
+                                          birthDate || nir || cle
                                       ) {
                                           setDotShow(true)
                                       } else {

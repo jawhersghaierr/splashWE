@@ -4,19 +4,18 @@ import {IntlDateWithHHMM} from "../../../utils/convertor-utils";
 export const checkInsidePanels = (values) => {
 
     const {
-        type, numEng, numAdh,
         domaine, dateAdmission,
         dateDebutReception, dateFinReception,
-        identifiantPeriodeFacturation, dateFact, statut, motif,
-        finessGeo, finessJur, raisonSociale,
-        dеpartement, amc, sousMotif,
-        nom, prenom, dateNaiss, birthDate,
+        identifiantPeriodeFacturation, statut, motif, sousMotif,
+        finessGeographique, finessJuridique, raisonSociale,
+        departement, numeroAmc,
+        nom, prenom, dateNaissance, birthDate,
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateAdmission || dateDebutReception || dateFinReception || identifiantPeriodeFacturation || dateFact )? true: true,
-        panelInformationsEstablishement: (finessGeo || finessJur || raisonSociale || dеpartement)? true: true,
-        panelInformationsBeneficiaires: (amc || nom || prenom || dateNaiss || birthDate)? true: true,
+        panelInformationGenerales: (domaine || dateAdmission || dateDebutReception || dateFinReception || identifiantPeriodeFacturation, statut, motif, sousMotif)? true: true,
+        panelInformationsEstablishement: (finessGeographique || finessJuridique || raisonSociale || departement)? true: true,
+        panelInformationsBeneficiaires: (numeroAmc || nom || prenom || dateNaissance || birthDate)? true: true,
         panelNIR: (nir || cle)? true: false,
     }
     return result
@@ -199,7 +198,8 @@ export const reshapeCriterias = ({criterias}) => {
     let {
         dateDebutReception, dateFinReception, identifiantPeriodeFacturation, dateAdmission,
         domaine, statut, motif, sousMotif,
-        numeroAmc, dateNaissance, birthDate
+        numeroAmc, dateNaissance, birthDate,
+        nir, cle
     } = criterias;
 
     let filters = {...criterias}
@@ -241,6 +241,14 @@ export const reshapeCriterias = ({criterias}) => {
             filters.occurrenceId = identifiantPeriodeFacturation[1]
             filters.identifiantPeriodeFacturation = identifiantPeriodeFacturation[0]
         }
+    }
+
+    if (nir && nir != undefined) {
+        filters.nirNumero = nir;
+    }
+
+    if (cle && cle != undefined) {
+        filters.nirCle = cle;
     }
     /**
      * just for Facturation

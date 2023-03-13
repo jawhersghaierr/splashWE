@@ -10,14 +10,13 @@ const initialState = {
         sortPropert: null
     },
     criterias: {
-        numVirement: undefined,
-        numDecompte: undefined,
-        numAdhInd: undefined,
-        numPsAPayer: undefined,
-        dateTraitement: undefined,
-        dateTraitementFin: undefined,
+        numeroVirement: undefined,
+        numeroDecompte: undefined,
+        numeroPsAPayer: undefined,
+        dateTraitementStart: undefined,
+        dateTraitementEnd: undefined,
         status: undefined,
-        mntVirement: undefined
+        montantVirement: undefined
     }
     // isLoading: null,
     // isError: null,
@@ -58,16 +57,16 @@ export const virementsSlice = createSlice({
         },
         setCriterias: (state, action) => {
 
-            const {
-                numVirement,
-                numDecompte,
-                numAdhInd,
-                numPsAPayer,
-                dateTraitement,
-                dateTraitementFin,
-                status,
-                mntVirement
-            } = action?.payload
+            // const {
+            //     numVirement,
+            //     numDecompte,
+            //     numAdhInd,
+            //     numPsAPayer,
+            //     dateTraitement,
+            //     dateTraitementFin,
+            //     status,
+            //     mntVirement
+            // } = action?.payload
 
             state.criterias = {};
 
