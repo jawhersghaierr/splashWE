@@ -5,7 +5,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const deps = require('./package.json').dependencies;
-const env_IP = require('./env-vars').env_IP;
+// const env_IP = require('./env-vars').env_IP;
 
 module.exports = {
     // Set the mode to development or production

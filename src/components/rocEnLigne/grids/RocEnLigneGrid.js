@@ -12,7 +12,7 @@ import { useGetRefsQuery } from "../../../services/refsApi";
 // import { NoSearchResultsAlert, MoreThan200Results, MoreThan10000ResultsForDownload } from "../../shared/modals";
 // import mainPS from "../../../../assets/PS.png";
 import "../../shared/styles/grid.scss";
-import { apiUrls } from "../../../../env-vars";
+// import { apiUrls } from "../../../../env-vars";
 import { baseUrl } from "../services/rocEnLigneApi";
 import { addCriteriasForGetRequest } from "../../../utils/utils";
 import { reshapeCriterias } from "../utils/utils";
@@ -49,13 +49,13 @@ export const RocEnLigneGrid = () => {
       sortDirection: value[0]?.sort?.toUpperCase() || null,
     });
   };
-  const downloadHref = `${apiUrls.downloadSelAndIdb}/download?target=${baseUrl}/${addCriteriasForGetRequest({
+  const downloadHref = `${window?._env_?.apiUrls?.downloadSelAndIdb}/download?target=${baseUrl}/${addCriteriasForGetRequest({
     url: "sel/rechercher",
     filters: reshapeCriterias({ criterias }),
     prepareForDownload: true,
   })}&columns=${Object.values(reverseMapRocEnLigne)}&mapping=${Object.keys(
     reverseMapRocEnLigne
-  )}&dateFormat=dateNaiss`;
+  )}&dateFormat=dateNaissance`;
 
     useEffect(() => {
 

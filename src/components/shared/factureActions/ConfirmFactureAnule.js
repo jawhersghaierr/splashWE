@@ -14,7 +14,7 @@ import {
 	DialogTitle, TextField, InputLabel
 } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
-import {apiUrls} from "../../../../env-vars";
+// import {apiUrls} from "../../../../env-vars";
 import {reshapeMotifVsStatus} from "../../factures/utils/utils";
 
 export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {
@@ -73,7 +73,7 @@ export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, r
 		}
 	}
 
-	let url = `http://${apiUrls.factures}/factures/status`;
+	let url = `http://${window?._env_?.apiUrls?.factures}/factures/status`;
 
 	useEffect(() => {
 		if (motif) setRequired(null)

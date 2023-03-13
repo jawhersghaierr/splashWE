@@ -8,7 +8,7 @@ import {
 	DialogTitle, CircularProgress
 } from "@mui/material";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-import {apiUrls} from "../../../../env-vars";
+// import {apiUrls} from "../../../../env-vars";
 import {useState} from "react";
 
 export const ConfirmFactureRecyclage = ({data, opened, setOpenMsg, close}) => {
@@ -20,7 +20,7 @@ export const ConfirmFactureRecyclage = ({data, opened, setOpenMsg, close}) => {
 	const confirme = () => {
 
 		if (data?.id) {
-			let url = `http://${apiUrls.factures}/factures/${data?.id}/resend`;
+			let url = `http://${window?._env_?.apiUrls?.factures}/factures/${data?.id}/resend`;
 			setIsFetching(true)
 			fetch(url,{
 				method: 'POST',

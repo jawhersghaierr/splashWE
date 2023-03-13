@@ -13,7 +13,7 @@ import { usePrevious } from "../../../utils/status-utils";
 import { allowSearch } from "../../../utils/validator-utils";
 // import mainPS from "../../../../assets/PS.png";
 // import { NoSearchResultsAlert, MoreThan200Results } from "../../shared";
-import { apiUrls } from "../../../../env-vars";
+// import { apiUrls } from "../../../../env-vars";
 // import download from "../../../../assets/icons/download-blue.svg";
 import { addCriteriasForGetRequest } from "../../../utils/utils";
 import { reshapeCriterias } from "../utils/utils";
@@ -48,7 +48,7 @@ export const FacturesGrid = ({ disciplines }) => {
       sortDirection: value[0]?.sort?.toUpperCase() || null,
     });
   };
-  const downloadHref = `${apiUrls.downloadFacture}/download?target=${baseUrl}/${addCriteriasForGetRequest(
+  const downloadHref = `${window?._env_?.apiUrls?.downloadFacture}/download?target=${baseUrl}/${addCriteriasForGetRequest(
     {
       url: "factures",
       filters: reshapeCriterias({ criterias }),
