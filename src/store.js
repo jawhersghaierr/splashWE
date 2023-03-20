@@ -1,10 +1,10 @@
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from "redux-thunk";
 import thunkMiddleware from 'redux-thunk';
+
 //TODO need automation - import object/array index files from slice folders
 // import { entityApi } from './services/entityApi';
 // import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import comp1Reducer from './component1/comp1Slice';
 
 import { referentielApi } from './services/referentielApi';
 import { refsApi } from './services/refsApi';
@@ -107,11 +107,10 @@ export default function configureStore(initialState) {
 
 function createReducer(asyncReducers) {
   return combineReducers({
-    // [entityApi.reducerPath]: entityApi.reducer,
+
     [refsApi.reducerPath]: refsApi.reducer,
     [referentielApi.reducerPath]: referentielApi.reducer,
-    //TODO need automation - received object/array with reducers by index files from slice folders
-    comp1: comp1Reducer,
+
     [psApi.reducerPath]: psApi.reducer,
     [paiementsApi.reducerPath]: paiementsApi.reducer,
     [virementsApi.reducerPath]: virementsApi.reducer,
@@ -122,6 +121,7 @@ function createReducer(asyncReducers) {
     [configurationsApi.reducerPath]: configurationsApi.reducer,
     [intraitablesApi.reducerPath]: intraitablesApi.reducer,
     [rocEnLigneApi.reducerPath]: rocEnLigneApi.reducer,
+
     ps: psReducer,
     benef: benefReducer,
     factures: facturesReducer,

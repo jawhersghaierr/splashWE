@@ -17,15 +17,12 @@ import Divider from '@mui/material/Divider';
 
 import { store } from './store';
 
-import {Comp1} from "./component1/Comp1";
 import HostMenu from "./leftMenu/HostMenu";
 import Drawer from "./components/shared/Drawer"
 import {Ps} from './components/ps/PS'
 import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
 import {Test} from './components/beneficiaire/Test'
 
-// import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
-import './theme.scss'
 import PsDetailsById from "./components/ps/PsDetailsById";
 import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
 import FacturesDetailsById from "./components/factures/FacturesDetailsById";
@@ -45,6 +42,8 @@ import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxIn
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 
+import './theme.scss'
+
 let theme = createTheme({
   typography: {
     allVariants: {
@@ -55,30 +54,6 @@ let theme = createTheme({
   },
   boldTypography: {
     fontWeight: 'inherit',
-  }
-});
-
-const theme1 = createTheme({
-  palette: {
-    // augmentColor is a step that Material-UI automatically does for the standard palette colors.
-    badg1: {
-      main: '#FF5D5D',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg2: {
-      main: '#C7F99F',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg3: {
-      main: '#FFD4AD',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
   }
 });
 
@@ -101,7 +76,6 @@ const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={
   <b>Dashboard Page</b>
 </Typography>
 
-const Hospi = () => <Comp1/>
 const PSremote = () => <RemotePsApp  store={store} />
 const RemoteTest = () => <RemoteApp store={store} />
 
@@ -137,7 +111,6 @@ const App = () => {
               <Box component="main" sx={{ flexGrow: 1}}>
                 <Switch>
                   <Route exact path="/" component={PageDashboard} />
-                  <Route path="/Hospi" component={Hospi} />
                   <Route exact={true} path="/PS" component={Ps} />
                   <Route path="/PS/:id?" component={PsDetailsById}/>
                   <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
