@@ -328,7 +328,7 @@ export default function SearchAccordion() {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numId').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('finessGeographique').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       className="RoundedEl" />
@@ -344,7 +344,7 @@ export default function SearchAccordion() {
                                                                       error={meta.invalid}
                                                                       {...input}
                                                                       onBlur={(e)=> {
-                                                                          if (e.target.value.length == 8) form.getFieldState('numJur').change('0' + e.target.value)
+                                                                          if (e.target.value.length == 8) form.getFieldState('finessJuridique').change('0' + e.target.value)
                                                                           return input.onBlur(e)
                                                                       }}
                                                                       className="RoundedEl" />

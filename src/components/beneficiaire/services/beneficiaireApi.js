@@ -39,7 +39,7 @@ export const beneficiaireApi = createApi({
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
                 if (sortProperty) url += `&sortProperty=${sortProperty}`;
 
-                url += '&applyEnvCriteria=true';
+                url += '&applyEnvironnementCriteria=true';
 
                 console.log('params to be send > ', url);
 

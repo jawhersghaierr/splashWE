@@ -13,7 +13,7 @@ export const checkInsidePanels = (values) => {
         nir, cle
     } = values || {};
     let result =  {
-        panelInformationGenerales: (domaine || dateAdmission || dateDebutReception || dateFinReception || identifiantPeriodeFacturation, statut, motif, sousMotif)? true: true,
+        panelInformationGenerales: (domaine || dateAdmission || dateDebutReception || dateFinReception || identifiantPeriodeFacturation || statut || motif || sousMotif)? true: true,
         panelInformationsEstablishement: (finessGeographique || finessJuridique || raisonSociale || departement)? true: true,
         panelInformationsBeneficiaires: (numeroAmc || nom || prenom || dateNaissance || birthDate)? true: true,
         panelNIR: (nir || cle)? true: false,

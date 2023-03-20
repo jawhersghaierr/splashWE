@@ -7,7 +7,7 @@ import {convertDate, currencyFormatter} from "../../../utils/convertor-utils";
 import {renderCell} from "../../../utils/utils";
 
 export const columns = disciplines => [
-    { field: 'numAdhInd', headerName: 'N° adhérent Nom et prénom', sortable: false, flex: 3, minWidth: '200px', renderCell, valueGetter: ({row, value}) => {
+    { field: 'numeroAdherentIndividuel', headerName: 'N° adhérent Nom et prénom', sortable: false, flex: 3, minWidth: '200px', renderCell, valueGetter: ({row, value}) => {
         let nom = row?.nomPrenom?.split(' ')
         return <span>{value}<br/><b>{nom[0]}</b>&nbsp;{nom[1]}</span>
     }},
@@ -24,11 +24,11 @@ export const columns = disciplines => [
 
 
 export const reverseMapPaiement = {
-    numAdhInd: 'N° adhérent Nom et prénom',
+    numeroAdherentIndividuel: 'N° adhérent Nom et prénom',
     nomPrenom: 'N° adhérent Nom et prénom',
-    numIdPs: 'N° de facturation PS / TC',
+    numeroPartenaire: 'N° de facturation PS / TC',
     provenance: 'Provenance',
-    creationDate: 'Date de paiement',
+    dateCreation: 'Date de paiement',
     dateFacture: 'Date de facture',
     numeroFacture: 'N° facture / titre',
     factureStatus: 'Statut facture',

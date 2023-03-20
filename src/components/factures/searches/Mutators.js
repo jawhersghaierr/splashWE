@@ -22,9 +22,9 @@ export const handleFormChange = ({nomRefs, setMotif, setDisableCle}) => ([name],
 
         case 'status':
             console.log('values?.status > ', values?.status)
-            console.log('values?.errorCode > ', values?.errorCode)
+            console.log('values?.codeErreur > ', values?.codeErreur)
             setMotif( reshapeMotifVsStatus({status: values?.status, nomRefs}) )
-            if (values?.errorCode !== undefined) changeValue(state, 'errorCode', (value) => undefined)
+            if (values?.codeErreur !== undefined) changeValue(state, 'codeErreur', (value) => undefined)
         break
 
 

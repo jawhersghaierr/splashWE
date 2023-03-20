@@ -84,7 +84,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
 
     if (data) {
 
-        let {adresse, dateFermetureDroits, dateDesactivationDroits, } = data;
+        let {adresse, dateFermetureDroits, dateDesactivationDroits } = data;
         dateFermetureDroits = dateFermetureDroits && new Date(dateFermetureDroits) || null;
         dateDesactivationDroits = dateDesactivationDroits && new Date(dateDesactivationDroits) || null;
 
@@ -95,14 +95,14 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
             dateFin = dateFermetureDroits;
         }
 
-        adress = `${adresse?.numeroVoie} ${adresse?.nomVoie} ${adresse?.batimentresidence} ${adresse?.appartementEscalierEtage} ${adresse?.complementAdresse} ${adresse?.codePostal} ${adresse?.ville} ${adresse?.pays} `
-        telephone = adresse?.telephone
-        email = adresse?.email
+        adress = adresse ? `${adresse?.numeroVoie} ${adresse?.nomVoie} ${adresse?.batimentresidence} ${adresse?.appartementEscalierEtage} ${adresse?.complementAdresse} ${adresse?.codePostal} ${adresse?.ville} ${adresse?.pays}` : "";
+        telephone = adresse?.telephone;
+        email = adresse?.email;
 
-        if (data?.garanties && nomRefs && nomGaranties && nomSousGaranties) {
+        if (data?.garantieList && nomRefs && nomGaranties && nomSousGaranties) {
             garanties = [];
             garantiesComplex = [];
-            data?.garanties.forEach((_garan, id) => {
+            data?.garantieList.forEach((_garan, id) => {
                 let garantie = nomGaranties.filter(e=>e.code == _garan.garantie)[0];
 
                 if (garantie?.type == 'TP simple') {
@@ -277,17 +277,17 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
             <TabPanel value={value} index={3} data={data} sx={{display: 'flex'}}>
                 {data?.ouvrantDroit && <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         <DroitInfoBox droit={data?.ouvrantDroit} />
-                        {data?.ouvrantDroit?.ayantDroit.map(ouvrantDroit => {
+                        {data?.ouvrantDroit?.ayantDroitList.map(ouvrantDroit => {
                             if (ouvrantDroit.id !== data.id) {
                                 return <DroitInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
                             } else return ''
                         })}
                     </div>}
-                {(data?.ayantDroit && data?.ayantDroit?.length > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {(data?.ayantDroitList && data?.ayantDroit?.ayantDroitList > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
                     {data?.ayantDroit.map(ayantDroit => <DroitInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
                 </div>}
 
-                {(!data?.ouvrantDroit || data?.ouvrantDroit?.length == 0)
+                {(!data?.ouvrantDroit?.ayantDroitList || data?.ouvrantDroit?.ayantDroitList?.length == 0)
                 && (!data?.ayantDroit || data?.ayantDroit?.length == 0) && <NoGridResultsAlert/>}
 
             </TabPanel>

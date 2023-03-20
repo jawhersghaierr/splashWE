@@ -28,7 +28,7 @@ export const DroitInfoBox = ({droit}) => {
         <RowInfo label={'Date début droits'} value={convertDate(droit?.dateOuvertureDroits)} id={droit.id} field="dateOuvertureDroits" />
         <RowInfo label={'Date fin droits'} value={convertDate(droit?.dateFermetureDroits)} id={droit.id} field="dateFermetureDroits" />
         <RowInfo label={'Date désactivation droits'} value={convertDate(droit?.dateDesactivationDroits)} id={droit.id} field="dateDesactivationDroits" />
-        <RowInfo label={'Grand régime'} value={droit?.grandRegime} id={droit.id} field="grandRegime" />
+        <RowInfo label={'Grand régime'} value={droit?.codeGrandRegime} id={droit.id} field="codeGrandRegime" />
         <RowInfo label={'Caisse'} value={droit?.caisseAffiliation} id={droit.id} field="caisseAffiliation" />
         <RowInfo label={'Centre gestion AMO'} value={droit?.centreGestionAmo} id={droit.id} field="centreGestionAmo" />
     </Box>
