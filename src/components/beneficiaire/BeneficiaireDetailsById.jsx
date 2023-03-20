@@ -108,9 +108,9 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                 if (garantie?.type == 'TP simple') {
                     garanties.push({id, ..._garan})
                 } else {
-                    if (_garan.dcsFormulas && _garan.dcsFormulas.length > 0) {
-                        _garan.dcsFormulas.forEach((e, i)=>garantiesComplex.push({..._garan, id:`${id}_${i}`, dcs:nomRefs.DCS[e?.codeDcs], formula: e?.formula}))
-                    } else garantiesComplex.push({id, ..._garan});
+                    if (_garan.formule.formuleDcsList && _garan.formule.formuleDcsList.length > 0) {
+                        _garan.formule.formuleDcsList.forEach((e, i)=>garantiesComplex.push({..._garan, id:`${id}_${i}`, dcs:nomRefs.DCS[e?.codeDcs], formule: e?.formule}))
+                    } else garantiesComplex.push({id, ..._garan, formule: _garan.formule.formuleGenerique});
                 }
             });
         }
@@ -188,7 +188,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                     {data && <div>
                             <RowInfo label={'Adresse'} value={adress} id={benefId} field="adress" />
                             <RowInfo label={'Téléphone'} value={telephone} id={benefId} field="telephone" />
-                            <RowInfo label={'E-mail'} value={<Link to={''} onClick={() => window.location =`mailTo:${email}`}>{email}</Link>} id={benefId} field="email" />
+                            <RowInfo label={'E-mail'} value={<Link to={'#'} onClick={() => window.location =`mailTo:${email}`}>{email}</Link>} id={benefId} field="email" />
                         </div>}
                 </Box>
                 <Box style={{backgroundColor: '#F6F8FC', flex: 1, margin: '5px', padding: '0 25px'}}>
@@ -277,18 +277,18 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
             <TabPanel value={value} index={3} data={data} sx={{display: 'flex'}}>
                 {data?.ouvrantDroit && <div style={{display: 'flex', flexWrap: 'wrap'}}>
                         <DroitInfoBox droit={data?.ouvrantDroit} />
-                        {data?.ouvrantDroit?.ayantDroitList.map(ouvrantDroit => {
+                        {(data?.ouvrantDroit?.ayantDroitList && data?.ouvrantDroit?.ayantDroitList?.length > 0) && data?.ouvrantDroit?.ayantDroitList.map(ouvrantDroit => {
                             if (ouvrantDroit.id !== data.id) {
                                 return <DroitInfoBox droit={ouvrantDroit} key={ouvrantDroit.id} />
                             } else return ''
                         })}
                     </div>}
-                {(data?.ayantDroitList && data?.ayantDroit?.ayantDroitList > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                    {data?.ayantDroit.map(ayantDroit => <DroitInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
+                {(data?.ayantDroitList && data?.ayantDroitList?.length > 0) && <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                    {data?.ayantDroitList.map(ayantDroit => <DroitInfoBox droit={ayantDroit} key={ayantDroit.id}/>)}
                 </div>}
 
                 {(!data?.ouvrantDroit?.ayantDroitList || data?.ouvrantDroit?.ayantDroitList?.length == 0)
-                && (!data?.ayantDroit || data?.ayantDroit?.length == 0) && <NoGridResultsAlert/>}
+                && (!data?.ayantDroitList || data?.ayantDroitList?.length == 0) && <NoGridResultsAlert/>}
 
             </TabPanel>
 

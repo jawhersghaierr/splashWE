@@ -24,7 +24,7 @@ export const selAndIdbApi = createApi({
         getSelsAndIdbOfFactureEngN: builder.query({
             query: (numEng) => {
 
-                const url = `sel/details?type=assosiete&numEng=${numEng}`;
+                const url = `sel/details?type=assosiete&numeroEngagement=${numEng}`;
 
                 return ({
                     url,

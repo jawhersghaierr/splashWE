@@ -17,7 +17,7 @@ export const GarantiesGrid = ({ garanties, nom, simple = true }) => {
       columns={simple ? simpleGarantieColumns(nom): complexGarantieColumns(nom)}
       pageSize={10}
       rowsPerPageOptions={[10]}
-      hideFooter={true}
+      hideFooter={false}
       disableColumnMenu={true}
       disableColumnResize={false}
       components={{

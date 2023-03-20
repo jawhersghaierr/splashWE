@@ -22,10 +22,10 @@ export const SelAssociesGrid = ({ numEng, noModal }) => {
 
   return (
     <SubGrid
-      showNoGridResultsAlert={isSuccess && !data?.assosiete}
+      showNoGridResultsAlert={isSuccess && !data?.assosieteList}
       showCircularProgress={isFetching}
       showGrid={isSuccess && data}
-      rows={data?.assosiete}
+      rows={data?.assosieteList}
       columns={columns({ handleModalOpen })}
       pageSize={20}
       disableColumnMenu={true}
