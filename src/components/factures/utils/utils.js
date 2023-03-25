@@ -83,8 +83,8 @@ export const reshapeMotifVsStatus = ({status, nomRefs}) => {
         let _motif = []
         if (nomRefs && status.length > 0) {
             status?.forEach(stat => {
-                if (selectedStatusesForFactureError[stat.value]) {
-                    selectedStatusesForFactureError[stat.value].forEach(factErr =>
+                if (selectedStatusesForFactureError[stat]) {
+                    selectedStatusesForFactureError[stat].forEach(factErr =>
                         _motif.push({value: factErr, title: nomRefs.FACTURE_ERROR[factErr]})
                     )
                 }

@@ -105,8 +105,8 @@ export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, r
 							label="Motif de rejet"
 							sx={{minWidth: 200}}/>}
 						id="motif">
-						{Object.keys(motifOptions).map(code => (<MenuItem key={code} value={code}>
-							{motifOptions[code]}
+						{motifOptions.map(option => (<MenuItem key={option.value} value={option.value}>
+							{option.title}
 						</MenuItem>))}
 					</Select>
 					<span style={{padding: '0 10px'}}>{required || ''}</span>
