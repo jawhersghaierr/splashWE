@@ -31,7 +31,7 @@ export const rocEnLigneApi = createApi({
                     sortProperty,
                 } = sortProperties;
 
-                let url = addCriteriasForGetRequest({url: 'sel/rechercher/', filters: reshapeCriterias({criterias})})
+                let url = addCriteriasForGetRequest({url: 'sel/rechercher', filters: reshapeCriterias({criterias})})
 
                 url += `${(url.includes('?')? '&': '?')}pageNumber=${currentPage}&pageSize=${pageSize}`;
                 if (sortDirection) url += `&sortDirection=${sortDirection}`;
