@@ -7,3 +7,21 @@ services:
     restart: unless-stopped
     ports:
       - "8030:8080"
+    environment:
+      - REMOTE_LIB_UI=http://10.241.25.20:8038/remoteEntry.js
+      - REMOTE_SHARED_LIB_UI=http://10.241.25.20:8039/remoteEntry.js
+      - APIURL_BENEFICIAIRE=http://10.241.25.20:8007/api/v1
+      - APIURL_CONFIGURATIONS=http://10.241.25.20:8015/api/v1
+      - APIURL_DOWNLOAD_FACTURE=http://10.241.25.20:8015/api/v1
+      - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.20:8015/api/v1
+      - APIURL_ENTITIES=http://10.241.25.20:8031/api/entities
+      - APIURL_FACTURES=http://10.241.25.20:8005/api/v1
+      - APIURL_FLUX_FACTURES=http://10.241.25.20:8031/api/v1
+      - APIURL_INTRAITABLES=http://10.241.25.20:8014/api/v1
+      - APIURL_PAIEMENTS=http://10.241.25.20:8003/api/v1
+      - APIURL_PS=http://10.241.25.20:8002/api/v1
+      - APIURL_SEL_IDB=http://10.241.25.20:8001/api/v1
+      - APIURL_FLUX_SEL_IDB=http://10.241.25.20:8001/api/v1
+      - APIURL_VIREMENTS=http://10.241.25.20:8003/api/v1
+      - APIURL_REFS=http://10.241.25.20:8015/api/v1
+      - APIURL_REFERENTIELS=http://10.241.25.20:8004/api/v1
