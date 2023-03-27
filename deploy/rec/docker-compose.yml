@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_DEPLOY}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
     restart: unless-stopped
     ports:
       - "8030:8080"
