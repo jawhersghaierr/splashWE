@@ -1,5 +1,5 @@
-// import { createApi, fetchBaseQuery } from 'lib_ui/@reduxjs-toolkit'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from 'lib_ui/@reduxjs-toolkit'
+// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // import { apiUrls } from '../../../../env-vars'
 
 export const configurationsApi = createApi({

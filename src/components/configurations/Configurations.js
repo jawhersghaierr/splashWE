@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'lib_ui/react'
 import {Link} from 'lib_ui/react-router-dom';
-import { Switch, Route, useRouteMatch } from "lib_ui/react-router-dom";
+// import { Switch, Route, useRouteMatch } from "lib_ui/react-router-dom";
 
 import {useDispatch} from "lib_ui/react-redux";
-import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
+// import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
 
-import {configurationsApi, useGetConfigsQuery} from "./services/configurationsApi";
-import configurationsReducer, {initCriterias} from "./configurationsSlice";
+import {configurationsApi} from "./services/configurationsApi";
+import {initCriterias} from "./configurationsSlice";
 
 import {Typography} from "@mui/material";
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -18,17 +18,18 @@ import './configuration.scss'
 export const Configurations = (props) => {
 
     const { store } = props;
-    let { path, url } = useRouteMatch();
+    // let { path, url } = useRouteMatch();
     const [loadDataID, setLoadDataID] = useState(false);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log('store: ', store)
         console.log('store: ', store?.asyncReducers?.configurationsApi)
 
-        store.injectReducer("configurations", configurationsReducer);
-        store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
-        addMiddleware( configurationsApi.middleware );
+        // store.injectReducer("configurations", configurationsReducer);
+        // store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
+        // addMiddleware( configurationsApi.middleware );
         if (store) setLoadDataID(true)
 
         dispatch(initCriterias());

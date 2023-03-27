@@ -24,8 +24,8 @@ import intraitablesReducer from "hospi_ui/intraitablesSlice";
 import {virementsApi} from "payment_ui/virementsApi";
 import virementsReducer from "payment_ui/virementsSlice";
 
-// import {configurationsApi} from "./components/configurations/services/configurationsApi";
-// import configurationsReducer from "./components/configurations/configurationsSlice";
+import {configurationsApi} from "./components/configurations/services/configurationsApi";
+import configurationsReducer from "./components/configurations/configurationsSlice";
 
 
 import {Typography, CssBaseline} from "@mui/material";
@@ -130,8 +130,8 @@ const App = () => {
   useEffect(() => {
     // console.log('configurationsReducer > ', configurationsReducer)
     //
-    // store.injectReducer("configurations", configurationsReducer);
-    // store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
+    store.injectReducer("configurations", configurationsReducer);
+    store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
 
     store.injectReducer("paiements", paiementReducer);
     store.injectReducer([paiementsApi.reducerPath], paiementsApi.reducer);
@@ -154,7 +154,7 @@ const App = () => {
     store.injectReducer([intraitablesApi.reducerPath], intraitablesApi.reducer);
 
     addMiddleware(
-        // configurationsApi.middleware,
+        configurationsApi.middleware,
 
         paiementsApi.middleware,
         virementsApi.middleware,
