@@ -1,30 +1,33 @@
-import React, {Suspense, useState, useEffect} from 'lib_ui/react';
+import React, { Suspense, useState, useEffect } from 'lib_ui/react';
 import ReactDOM from 'lib_ui/react-dom';
-import {Switch, Route, BrowserRouter, matchPath} from 'lib_ui/react-router-dom'
+import { Switch, Route, BrowserRouter } from 'lib_ui/react-router-dom';
 import { Provider } from 'lib_ui/react-redux';
 
-import { refsApi, referentielApi } from "shared_lib_ui/services";
-import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
+// import { refsApi, referentielApi } from "shared_lib_ui/services";
+// import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
 
-import paiementReducer from "payment_ui/paiementSlice";
-import { paiementsApi } from "payment_ui/paiementsApi";
-import facturesReducer from "hospi_ui/facturesSlice";
-import {facturesApi} from "hospi_ui/facturesApi";
-import {factureFluxApi} from "hospi_ui/factureFluxApi";
-import {factureSelAndIdbApi} from "hospi_ui/factureSelAndIdbApi";
+// import psReducer from "ps_ui/psSlice";
+// import beneficiaireReducer from "benef_ui/beneficiaireSlice.js";
 
-import {rocSelAndIdbApi} from "hospi_ui/rocSelAndIdbApi";
-import {rocEnLigneApi} from "hospi_ui/rocEnLigneApi";
-import {rocFluxApi} from "hospi_ui/rocFluxApi";
-import rocEnLigneReducer from "hospi_ui/rocEnLigneSlice";
+// import paiementReducer from "payment_ui/paiementSlice";
+// import { paiementsApi } from "payment_ui/paiementsApi";
+// import facturesReducer from "hospi_ui/facturesSlice";
+// import {facturesApi} from "hospi_ui/facturesApi";
+// import {factureFluxApi} from "hospi_ui/factureFluxApi";
+// import {factureSelAndIdbApi} from "hospi_ui/factureSelAndIdbApi";
 
-import {intraitablesApi} from "hospi_ui/intraitablesApi";
-import intraitablesReducer from "hospi_ui/intraitablesSlice";
+// import {rocSelAndIdbApi} from "hospi_ui/rocSelAndIdbApi";
+// import {rocEnLigneApi} from "hospi_ui/rocEnLigneApi";
+// import {rocFluxApi} from "hospi_ui/rocFluxApi";
+// import rocEnLigneReducer from "hospi_ui/rocEnLigneSlice";
 
-import {virementsApi} from "payment_ui/virementsApi";
-import virementsReducer from "payment_ui/virementsSlice";
+// import {intraitablesApi} from "hospi_ui/intraitablesApi";
+// import intraitablesReducer from "hospi_ui/intraitablesSlice";
 
-import {configurationsApi} from "./components/configurations/services/configurationsApi";
+// import {virementsApi} from "payment_ui/virementsApi";
+// import virementsReducer from "payment_ui/virementsSlice";
+
+// import {configurationsApi} from "./components/configurations/services/configurationsApi";
 import configurationsReducer from "./components/configurations/configurationsSlice";
 
 
@@ -51,7 +54,7 @@ import {Configurations} from "./components/configurations/Configurations";
 import LogoIcon from '../assets/icons/LogoIcon';
 import LogoTextIcon from '../assets/icons/LogoTextIcon';
 import RemotePsApp from "ps_ui/RemotePsApp";
-import RemoteBenefApp from "benef/RemoteBenefApp";
+import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 
@@ -70,39 +73,39 @@ let theme = createTheme({
   }
 });
 
-const theme1 = createTheme({
-  palette: {
-    // augmentColor is a step that Material-UI automatically does for the standard palette colors.
-    badg1: {
-      main: '#FF5D5D',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg2: {
-      main: '#C7F99F',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg3: {
-      main: '#FFD4AD',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-  }
-});
+// const theme1 = createTheme({
+//   palette: {
+//     // augmentColor is a step that Material-UI automatically does for the standard palette colors.
+//     badg1: {
+//       main: '#FF5D5D',
+//       light: '#90a4ae',
+//       dark: '#37474f',
+//       contrastText: '#ffffff',
+//     },
+//     badg2: {
+//       main: '#C7F99F',
+//       light: '#90a4ae',
+//       dark: '#37474f',
+//       contrastText: '#ffffff',
+//     },
+//     badg3: {
+//       main: '#FFD4AD',
+//       light: '#90a4ae',
+//       dark: '#37474f',
+//       contrastText: '#ffffff',
+//     },
+//   }
+// });
 
-const dynamicFederation = async (scope, module) => {
-  const container = window[scope]; // or get the container somewhere else
+// const dynamicFederation = async (scope, module) => {
+//   const container = window[scope]; // or get the container somewhere else
 
-  await container.init(__webpack_share_scopes__.default);
-  return container.get(module).then(factory => {
-    const Module = factory();
-    return Module;
-  });
-};
+//   await container.init(__webpack_share_scopes__.default);
+//   return container.get(module).then(factory => {
+//     const Module = factory();
+//     return Module;
+//   });
+// };
 
 
 // const RemoteHospiApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
@@ -131,47 +134,51 @@ const App = () => {
     // console.log('configurationsReducer > ', configurationsReducer)
     //
     store.injectReducer("configurations", configurationsReducer);
-    store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
+    // store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
 
-    store.injectReducer("paiements", paiementReducer);
-    store.injectReducer([paiementsApi.reducerPath], paiementsApi.reducer);
+    // store.injectReducer("ps", psReducer);
 
-    store.injectReducer("virements", virementsReducer);
-    store.injectReducer([virementsApi.reducerPath], virementsApi.reducer);
+    // store.injectReducer("benef", beneficiaireReducer);
 
-    store.injectReducer("factures", facturesReducer);
-    store.injectReducer([facturesApi.reducerPath], facturesApi.reducer);
+    // store.injectReducer("paiements", paiementReducer);
+    // store.injectReducer([paiementsApi.reducerPath], paiementsApi.reducer);
 
-    store.injectReducer([factureFluxApi.reducerPath], factureFluxApi.reducer);
-    store.injectReducer([factureSelAndIdbApi.reducerPath], factureSelAndIdbApi.reducer);
+    // store.injectReducer("virements", virementsReducer);
+    // store.injectReducer([virementsApi.reducerPath], virementsApi.reducer);
 
-    store.injectReducer("RocEnLigne", rocEnLigneReducer);
-    store.injectReducer([rocEnLigneApi.reducerPath], rocEnLigneApi.reducer);
-    store.injectReducer([rocFluxApi.reducerPath], rocFluxApi.reducer);
-    store.injectReducer([rocSelAndIdbApi.reducerPath], rocSelAndIdbApi.reducer);
+    // store.injectReducer("factures", facturesReducer);
+    // store.injectReducer([facturesApi.reducerPath], facturesApi.reducer);
 
-    store.injectReducer("intraitables", intraitablesReducer);
-    store.injectReducer([intraitablesApi.reducerPath], intraitablesApi.reducer);
+    // store.injectReducer([factureFluxApi.reducerPath], factureFluxApi.reducer);
+    // store.injectReducer([factureSelAndIdbApi.reducerPath], factureSelAndIdbApi.reducer);
 
-    addMiddleware(
-        configurationsApi.middleware,
+    // store.injectReducer("RocEnLigne", rocEnLigneReducer);
+    // store.injectReducer([rocEnLigneApi.reducerPath], rocEnLigneApi.reducer);
+    // store.injectReducer([rocFluxApi.reducerPath], rocFluxApi.reducer);
+    // store.injectReducer([rocSelAndIdbApi.reducerPath], rocSelAndIdbApi.reducer);
 
-        paiementsApi.middleware,
-        virementsApi.middleware,
+    // store.injectReducer("intraitables", intraitablesReducer);
+    // store.injectReducer([intraitablesApi.reducerPath], intraitablesApi.reducer);
 
-        refsApi.middleware,
-        referentielApi.middleware,
+    // addMiddleware(
+    //     configurationsApi.middleware,
 
-        facturesApi.middleware,
-        factureFluxApi.middleware,
-        factureSelAndIdbApi.middleware,
+    //     paiementsApi.middleware,
+    //     virementsApi.middleware,
 
-        rocEnLigneApi.middleware,
-        rocSelAndIdbApi.middleware,
-        rocFluxApi.middleware,
+    //     refsApi.middleware,
+    //     referentielApi.middleware,
 
-        intraitablesApi.middleware,
-    );
+    //     facturesApi.middleware,
+    //     factureFluxApi.middleware,
+    //     factureSelAndIdbApi.middleware,
+
+    //     rocEnLigneApi.middleware,
+    //     rocSelAndIdbApi.middleware,
+    //     rocFluxApi.middleware,
+
+    //     intraitablesApi.middleware,
+    // );
   }, []);
 
 
