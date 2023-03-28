@@ -22,7 +22,9 @@ module.exports = {
 
     // Spin up a server for quick development
     devServer: {
-        historyApiFallback: true,
+        historyApiFallback: {
+            disableDotRule: true
+        },
         // static: paths.build,
         open: true,
         compress: true,
