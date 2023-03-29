@@ -129,29 +129,32 @@ module.exports = {
 };
 
 
-
 function getRemotes () {
-    console.log('modules: ', modules)
+
     let _remotes = {}
     Object.keys(modules.remoteApps).forEach(remote => {
+
         _remotes[remote] = `promise new Promise(resolve => {
-                     const script = document.createElement('script')
-                     script.src = window._env_.remoteApps.${remote}
-                     script.onload = () => {
-                       const proxy = {
-                         get: (request) => window.${remote}.get(request),
-                         init: (arg) => {
+        
+            if (window.${remote} == undefined) {
+                const script = document.createElement('script')
+                script.src = window._env_.remoteApps.${remote}
+                script.onload = () => {
+                    const proxy = {
+                        get: (request) => window.${remote}.get(request),
+                        init: (arg) => {
                            try {
-                             return window.${remote}.init(arg)
+                                return window.${remote}.init(arg)
                            } catch(e) {
-                             console.log('remote container already initialized')
+                                console.log('remote container already initialized')
                            }
-                         }
-                       }
-                       resolve(proxy)
-                     }
-                     document.body.appendChild(script);
-                   })`
+                        }
+                    }
+                    resolve(proxy)
+                }
+                if (!script.src.includes('undefined')) document.body.appendChild(script);
+            } else resolve('')
+        })`
     })
 
     return (_remotes)
