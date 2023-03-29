@@ -79,6 +79,7 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: './public/index.html',
+            assets: './public/assets',
             publicPath: '/'
         })
 
