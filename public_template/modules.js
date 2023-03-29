@@ -2,10 +2,10 @@ module.exports = {
     "remoteApps": {
         "lib_ui": "${REMOTE_LIB_UI}",
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
-        "ps_ui": "${REMOTE_PS}",
-        "benef": "${REMOTE_BENEF}",
-        "payment_ui": "${REMOTE_PAYEMENTS}",
         "hospi_ui": "${REMOTE_HOSPI}",
+        "payment_ui": "${REMOTE_PAYEMENTS}",
+        "ps_ui": "${REMOTE_PS}",
+        "benef_ui": "${REMOTE_BENEF}",
 
     },
     "apiUrls": {
