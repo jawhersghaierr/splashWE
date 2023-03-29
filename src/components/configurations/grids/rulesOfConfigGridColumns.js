@@ -1,9 +1,10 @@
+import React from "lib_ui/react";
+
 import Chip from "@mui/material/Chip";
-import React from "react";
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
-import {renderCell} from "../../../utils/utils";
 
+import { renderCell } from "shared_lib_ui/Lib";
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />

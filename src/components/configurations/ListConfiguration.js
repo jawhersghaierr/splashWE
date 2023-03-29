@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
+import React, {useState, useEffect} from 'lib_ui/react'
+import { Link,matchPath, useRouteMatch } from 'lib_ui/react-router-dom';
 
-import {CircularProgress, Typography} from "@mui/material";
-import {matchPath} from "react-router-dom";
+import { useSelector } from 'lib_ui/react-redux';
+
+import {selectCriterias} from './configurationsSlice'
 import {useGetConfigsQuery} from "./services/configurationsApi";
-import {useGetRefsQuery} from "../../services/refsApi";
-import './configuration.scss'
+
+import { refsApi } from "shared_lib_ui/services";
+
 import {ConfigutationsGrid} from "./grids/ConfigutationsGrid";
 import SearchAccordion from "./searches/SearchAccordion";
-import {selectCriterias} from './configurationsSlice'
-import Snackbar from '@mui/material/Snackbar';
+
+import {
+    AlertTitle,
+    Breadcrumbs,
+    Snackbar,
+    CircularProgress,
+    Typography,
+} from "@mui/material";
+
 import MuiAlert from '@mui/material/Alert'
-import AlertTitle from '@mui/material/AlertTitle';
+
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-// import Link from '@mui/material/Link';
-import {Link} from "react-router-dom";
+
+import './configuration.scss'
 
 function handleClick(event) {
     event.preventDefault();
@@ -28,7 +36,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 export const ListConfiguration = (props) => {
 
-    const match = matchPath(props?.location?.pathname, {
+    const { store } = props;
+    let { path, url: _url } = useRouteMatch();
+
+    const match = matchPath(_url, { //matchPath(props?.location?.pathname, {
         path: "/configuration/:domain/:code",
         exact: true,
         strict: true
@@ -51,7 +62,7 @@ export const ListConfiguration = (props) => {
         setOpenMsg({...openMsg, open: false})
     };
 
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = refsApi?.useGetRefsQuery();
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess, isError: LOCIsError, error: LOCError} = useGetConfigsQuery(); // LOC === listOfConfigs
 
     let moreCriterias = null

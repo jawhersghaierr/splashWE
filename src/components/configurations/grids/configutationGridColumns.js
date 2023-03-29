@@ -1,10 +1,14 @@
-import React from "react";
+import React from "lib_ui/react";
+import {Link} from 'lib_ui/react-router-dom';
+
 import Chip from "@mui/material/Chip";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Link} from "react-router-dom";
-import {factureConfigurationStatus} from "../../../utils/status-utils";
-import {convertDate} from "../../../utils/convertor-utils";
-import {renderCell} from "../../../utils/utils";
+
+import {
+    factureConfigurationStatus,
+    convertDate,
+    renderCell
+} from "shared_lib_ui/Lib";
 
 export const columns = ({nomRefs, configurations, domain, code}) => [
     { field: 'id', headerName: 'Code', flex: 2, renderCell },

@@ -1,10 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from "lib_ui/react";
+import { useSelector } from 'lib_ui/react-redux';
+
 import Stack from "@mui/material/Stack";
 import { columns } from "./configutationGridColumns";
+import { MainGrid } from "shared_lib_ui/Lib";
+
+
 import { getConfigurations } from "../configurationsSlice";
 import "./configutationGrid.scss";
-import { MainGrid } from "../../shared/grids";
 
 export const ConfigutationsGrid = ({
   data,

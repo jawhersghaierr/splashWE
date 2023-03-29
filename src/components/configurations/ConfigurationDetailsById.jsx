@@ -1,23 +1,32 @@
-import * as React from 'react';
-import {useEffect, useState} from "react";
-import {matchPath} from "react-router-dom";
-import {useGetRefsQuery} from "../../services/refsApi";
+import React, {useState, useEffect} from 'lib_ui/react'
+import {useRouteMatch, matchPath} from 'lib_ui/react-router-dom';
+
+import { refsApi } from "shared_lib_ui/services";
+
 import {useGetConfigsQuery} from "./services/configurationsApi";
 import {ConfFacturation} from "./components/ConfFacturation";
 import {ConfRoc} from "./components/ConfRoc";
 import {CircularProgress} from "@mui/material";
 
 export default function ConfigurationDetailsById(props) {
-
-    const match = matchPath(props?.location?.pathname, {
+    let { path, url: _url } = useRouteMatch();
+    console.log('RemoteHospiApp props ', props)
+    console.log('path, url ', path, _url)
+    // debugger
+    // const match = matchPath(props?.location?.pathname, {
+    //     path: "/configuration/:domain?/:code?/:id?",
+    //     exact: true,
+    //     strict: false
+    // });
+    const match = matchPath(_url, {
         path: "/configuration/:domain?/:code?/:id?",
         exact: true,
         strict: false
     });
-
+    console.log('pathname: ', props)
     // LOC === listOfConfigs
     const {data: LOC, isFetching: LOCIsFetching, isSuccess: LOCIsSuccess} = useGetConfigsQuery();
-    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = useGetRefsQuery();
+    const {data: nomRefs, isFetching: nomRefsIsFetching, isSuccess: nomRefsIsSuccess} = refsApi?.useGetRefsQuery();
 
     const {domain, code, id} = match?.params
     const [error, setError] = useState(null);
