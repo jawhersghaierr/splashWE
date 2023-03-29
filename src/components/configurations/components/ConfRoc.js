@@ -167,6 +167,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
         </Tabs>
 
         <TabPanel value={value} index={0}>
+
             {code == 'amc' && <DetailsRocConfAMC data={data}/>}
             {code == 'limit-sim' && nomRefs && <DetailsRocConfTypeConvention data={data} nomRefs={nomRefs}/>}
             {code == 'type-convention' &&
@@ -184,7 +185,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
                     <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} {data?.contentType} </div>}
                         id={data?.id} field="content_contentType" />
                 </Box>}
-            {/*{JSON.stringify(data)}*/}
+
         </TabPanel>
 
     </Box>

@@ -12,12 +12,6 @@ export default function ConfigurationDetailsById(props) {
     let { path, url: _url } = useRouteMatch();
     console.log('RemoteHospiApp props ', props)
     console.log('path, url ', path, _url)
-    // debugger
-    // const match = matchPath(props?.location?.pathname, {
-    //     path: "/configuration/:domain?/:code?/:id?",
-    //     exact: true,
-    //     strict: false
-    // });
     const match = matchPath(_url, {
         path: "/configuration/:domain?/:code?/:id?",
         exact: true,

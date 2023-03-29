@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'lib_ui/react'
+import React, { useState } from 'lib_ui/react'
 import {Link} from 'lib_ui/react-router-dom';
 
 
@@ -71,10 +71,6 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             {breadcrumbs}
         </Breadcrumbs>
 
-        {/*<Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>*/}
-        {/*    {nomRefs && nomRefs.FACTURE_CONFIGURATION_TYPE[data?.type] || data?.type}*/}
-        {/*</Typography>*/}
-
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
         <div style={{display: 'flex', flexDirection: 'rows', margin: '25px 0 25px 0'}}>
@@ -119,7 +115,6 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             </Box>}
             {(domainForPanel == 'email') && <DetailsFactureMailConf data={data} />}
 
-            {/*{JSON.stringify(data)}*/}
         </TabPanel>
 
     </Box>

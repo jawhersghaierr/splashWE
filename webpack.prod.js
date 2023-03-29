@@ -57,12 +57,9 @@ module.exports = {
                     strictVersion: true,
                     requiredVersion: '5.5.2'
                 },
-                // '@viamedis-boilerPlate/shared-library': {
-                //     import: '@viamedis-boilerPlate/shared-library',
-                //     requiredVersion: require('../shared-library/package.json').version,
-                // },
             },
         }),
+
         new WebpackShellPluginNext(
             {
 
@@ -77,7 +74,7 @@ module.exports = {
                     parallel: false
                 }
         }),
-        new webpack.HotModuleReplacementPlugin(),
+
         new HtmlWebpackPlugin({
             template: paths.public + "/index.html", // template file
             filename: "index.html", // output file
@@ -117,15 +114,16 @@ module.exports = {
 
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-                type: 'asset/inline'
+                type: "asset/resource"
+            },
+            {
+                test: /\.json/,
+                type: 'asset/resource',
+                generator: {
+                    filename: './conf/[name][ext]',
+                },
             },
 
-
-            // Images: Copy image files to build folder
-            // { test: /\.(?:ico|gif|png|jpg|jpeg)$/i, type: "asset/resource" },
-
-            // Fonts and SVGs: Inline files
-            // { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
         ],
     },
 };

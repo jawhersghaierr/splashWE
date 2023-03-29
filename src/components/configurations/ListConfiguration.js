@@ -39,7 +39,7 @@ export const ListConfiguration = (props) => {
     const { store } = props;
     let { path, url: _url } = useRouteMatch();
 
-    const match = matchPath(_url, { //matchPath(props?.location?.pathname, {
+    const match = matchPath(_url, {
         path: "/configuration/:domain/:code",
         exact: true,
         strict: true

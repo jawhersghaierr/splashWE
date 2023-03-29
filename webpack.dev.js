@@ -2,7 +2,6 @@
 // const webpack = require("webpack");
 // const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 // const deps = require('./package.json').dependencies;
-// const env_IP = require('./env-vars').env_IP;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -22,8 +21,9 @@ module.exports = {
     },
 
     devServer: {
-        historyApiFallback: true,
-        // static: paths.build,
+        historyApiFallback: {
+            disableDotRule: true
+        },
         open: true,
         compress: true,
         hot: true,
@@ -42,20 +42,7 @@ module.exports = {
 
         new ModuleFederationPlugin({
             name: 'host',
-            // library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
-            // remotes: {
-            //
-            //     lib_ui: "lib_ui@http://localhost:3005/remoteEntry.js",
-            //     shared_lib_ui: "shared_lib_ui@http://localhost:8051/remoteEntry.js",
-            //
-            //     ps_ui: "ps_ui@http://localhost:8034/remoteEntry.js",
-            //     benef: "benef@http://localhost:8033/remoteEntry.js",
-            //
-            //     hospi_ui: `hospi_ui@http://localhost:8035/remoteEntry.js`,
-            //     payment_ui: "payment_ui@http://localhost:8036/remoteEntry.js"
-            //
-            // },
             remotes: getRemotes(),
             shared: {
                 "react": {
@@ -123,7 +110,6 @@ module.exports = {
                 },
             },
 
-            // Styles: Inject CSS into the head with source maps
             {
                 test: /\.(scss|css)$/,
                 use: [
@@ -139,10 +125,6 @@ module.exports = {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
                 type: "asset/resource"
             },
-            // {
-            //     test: /\.svg/,
-            //     type: 'asset/resource'
-            // },
             {
                 test: /\.json/,
                 type: 'asset/resource',
@@ -150,21 +132,7 @@ module.exports = {
                     filename: './conf/[name][ext]',
                 },
             },
-            // {
-            //     test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-            //     type: 'asset/inline',
-            //     // test: /\.svg/,
-            //     // type: 'asset/inline'
-            // },
 
-            // Images: Copy image files to build folder
-            // {
-            //     test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-            //     type: "asset",
-            //     loader: 'url-loader?limit=100000'
-            // },
-            // Fonts and SVGs: Inline files
-            // { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
         ],
     },
 };

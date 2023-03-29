@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'lib_ui/react'
 import {Link} from 'lib_ui/react-router-dom';
-// import { Switch, Route, useRouteMatch } from "lib_ui/react-router-dom";
 
 import {useDispatch} from "lib_ui/react-redux";
-// import { addMiddleware } from "lib_ui/redux-dynamic-middlewares";
 
 import {configurationsApi} from "./services/configurationsApi";
 import {initCriterias} from "./configurationsSlice";
@@ -24,18 +22,12 @@ export const Configurations = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log('store: ', store)
-        console.log('store: ', store?.asyncReducers?.configurationsApi)
 
-        // store.injectReducer("configurations", configurationsReducer);
-        // store.injectReducer([configurationsApi.reducerPath], configurationsApi.reducer);
-        // addMiddleware( configurationsApi.middleware );
         if (store) setLoadDataID(true)
 
         dispatch(initCriterias());
     }, [store?.asyncReducers?.configurationsApi])
 
-    // let data, isFetching, isSuccess
     const {data, isFetching, isSuccess} = configurationsApi.useGetConfigsQuery({ skip: !loadDataID, forceRefetch: true });
 
     return <div style={{padding: '0', margin: 0}}>
