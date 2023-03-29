@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import {useState} from "react";
 
 
-
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
 
@@ -127,13 +126,13 @@ export default function PsDetailsById({location, modalId = null}) {
                 </Box>}
             </TabPanel>
             <TabPanel value={value} index={1} data={data}>
-                {/*<div>Item two</div>*/}
+                <div></div>
             </TabPanel>
             <TabPanel value={value} index={2} data={data}>
-                {/*<div>Item tree</div>*/}
+                <div></div>
             </TabPanel>
             <TabPanel value={value} index={3} data={data}>
-                {/*<div>Item four</div>*/}
+                <div></div>
             </TabPanel>
 
         </Box>

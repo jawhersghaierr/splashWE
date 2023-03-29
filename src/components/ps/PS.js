@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Typography} from "@mui/material";
+import React from 'react';
+import { matchPath } from "react-router-dom";
+import { Typography } from "@mui/material";
 import SearchAccordion from "../ps/searches/SearchAccordion";
-import {PsGrid} from "./grids/PsGrid";
-import {useGetDisciplinesQuery} from "../../services/referentielApi"
-import mainPS from '../../../assets/PS.png'
+import { PsGrid } from "./grids/PsGrid";
 
+import { useGetDisciplinesQuery } from "../../services/referentielApi"
 import './ps.scss'
-import {matchPath} from "react-router-dom";
 
 export const Ps = (props) => {
 
@@ -29,8 +28,6 @@ export const Ps = (props) => {
             disciplinesIsFetching={disciplinesIsFetching}
             className="searchContainer"
             disciplinesIsSuccess={disciplinesIsSuccess}/>
-
-        {/*const {data: resultData} = useGetDisciplinesQuery(undefined, { selectFromResult: result => ({ data: result?.data }) })*/}
 
         <PsGrid disciplines={disciplines}/>
 

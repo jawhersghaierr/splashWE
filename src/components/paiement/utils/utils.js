@@ -1,4 +1,3 @@
-// import {statusesRIB} from "../../../utils/status-utils";
 
 export const checkInsidePanels = (values) => {
 

@@ -39,11 +39,6 @@ const hostMenuItems = [
         link: '/PS',
         icon: PSIcon,
     },
-    // {
-    //     name: 'PS Remote',
-    //     link: '/PSremote',
-    //     icon: IconPeople,
-    // },
     {
         name: 'Bénéficiaires',
         link: '/beneficiaire',
@@ -56,16 +51,6 @@ const hostMenuItems = [
             {name: 'Virements',icon: VirementIcon, link: '/virements'},
         ]
     },
-    // {
-    //     icon: IconBarChart,
-    //     name: 'Paiements',
-    //     link: '/paiement'
-    // },
-    // {
-    //     icon: IconBarChart,
-    //     name: 'Virements',
-    //     link: '/virements'
-    // },
     {
         name: 'ROC', icon: ROCIcon,
         popitems: [
@@ -74,32 +59,7 @@ const hostMenuItems = [
             {name: 'Factures intraitables',icon: IndusIcon, link: '/intraitables'},
         ]
     },
-    // {
-    //     icon: IconLibraryBooks,
-    //     name: 'Services en ligne',
-    //     link: '/serviceEnLigne'
-    // },
-    // {
-    //     icon: IconPeople,
-    //     name: 'Factures',
-    //     link: '/factures'
-    // },
-    // {
-    //     name: 'Intraitables',
-    //     link: '/intraitables',
-    //     icon: IconBarChart,
-    // },
 
-  // {
-  //     name: 'Remote test App',
-  //     link: '/test',
-  //     icon: IconBarChart,
-  // },
-  // {
-  //     name: 'Hospi App',
-  //     link: '/Hospi',
-  //     icon: AccountBalance,
-  // },
 ];
 
 const RecursiveMenuItem = (props) => {

@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// import { apiUrls } from '../../../../env-vars'
 
 export const fluxApi = createApi({
     reducerPath: 'fluxApi',
     baseQuery: fetchBaseQuery({
 
         baseUrl: window?._env_?.apiUrls?.fluxSelAndIdb,
-        // baseUrl: apiUrls.fluxSelAndIdb,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

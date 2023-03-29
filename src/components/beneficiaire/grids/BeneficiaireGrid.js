@@ -8,10 +8,6 @@ import { usePrevious } from "../../../utils/status-utils";
 import { allowSearch } from "../../../utils/validator-utils";
 import "./beneficiaireGrid.scss";
 import { MainGrid } from "../../shared/grids";
-// import { DataGrid } from '@mui/x-data-grid';
-// import { CircularProgress, Pagination, Typography } from "@mui/material";
-// import { MoreThan200Results, NoSearchResultsAlert } from "../../shared";
-// import mainPS from "../../../../assets/PS.png";
 
 export const BeneficiaireGrid = ({ enviroments }) => {
   const criterias = useSelector(selectCriterias);
@@ -93,65 +89,4 @@ export const BeneficiaireGrid = ({ enviroments }) => {
       isError={isError}
     />
   );
-
-  // if (!isFetching && isSuccess && data && data?.result?.length == 0) return <NoSearchResultsAlert/>
-  // if (isFetching) return <CircularProgress style={{margin: '100px 50%'}}/>
-
-  // return <div className="gridContent">
-
-  //     {!isFetching && isSuccess && data?.totPages && data?.totElements && <div>
-  //         <div style={{margin: '25px'}}>
-  //             <Typography variant="h6" noWrap component="div" sx={{color: '#99ACBB'}}>
-  //                 {currentPage*20+1} - {currentPage*20 + ((Number(currentPage + 1) == Number(data.totPages))? Number(data.totElements) - currentPage*20 : 20)} sur {data.totElements} résultats
-  //             </Typography>
-  //         </div>
-  //         <DataGrid
-  //             rows={data?.result || []}
-  //             columns={columns(enviroments)}
-  //             pageSize={20}
-  //             autoHeight
-  //             hideFooter={true}
-  //             disableColumnMenu={true}
-  //             disableColumnResize={false}
-  //             components={{
-  //                 NoRowsOverlay: () => (
-  //                     <Stack height="75px" alignItems="center" justifyContent="center">
-  //                         <b>Aucun résultat pour ces critères de recherche</b>
-  //                     </Stack>
-  //                 )
-  //             }}
-  //             getRowClassName={(params) =>
-  //                 params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
-  //             }
-  //             onCellClick={(params, event) => {
-  //                 event.defaultMuiPrevented = true;
-  //             }}
-
-  //             sortingMode="server"
-  //             onSortModelChange={handleOrdering}
-  //             sx={{
-  //                 '& .MuiDataGrid-columnHeaderTitle': {
-  //                     textOverflow: "clip",
-  //                     whiteSpace: "break-spaces",
-  //                     lineHeight: 1
-  //                 },
-  //                 '& .boldValue': {fontWeight: 'bold',},
-  //             }}
-  //             rowHeight={85}
-  //         />
-  //     </div>}
-
-  //     {!data && <img  src={mainPS} alt="mainPS" className={'imgContext'}/>}
-
-  //     {!isFetching && isSuccess && data?.totPages > 1 && <Stack spacing={2} sx={{margin: '25px'}}>
-  //         <Pagination
-  //             count={data.totPages}
-  //             page={currentPage+1}
-  //             onChange={handlePageChange}
-  //         />
-  //     </Stack>}
-
-  //     <MoreThan200Results data={data} error={error} isSuccess={isSuccess} isError={isError}/>
-
-  // </div>
 };

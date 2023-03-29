@@ -28,15 +28,9 @@ export const AutoCompleteField = ({id, name, options=[], label, selectMsg, deSel
 					                          includeInputInList
 					                          noOptionsText="pas d'options disponibles"
 					                          getOptionLabel={(option, value) => {
-						                          // console.log('getOptionLabel option ', option)
-						                          // console.log('getOptionLabel value ', value)
-
 						                          return option.title
 					                          }}
 					                          isOptionEqualToValue={(option, value) => {
-												  // console.log('isOptionEqualToValue option ', option)
-												  // console.log('isOptionEqualToValue value ', value)
-
 						                          return option.value === value.value
 					                          }}
 					                          sx={{ '& .MuiAutocomplete-input': {minWidth: '0 !important', padding: '5px !important'} }}

@@ -29,7 +29,6 @@
   }
   .MuiMenuItem-root {
     padding: 10px;
-    //margin: 5px 0;
     .MuiButtonBase-root {
       padding-left: 0;
       padding-top: 0;
@@ -69,11 +68,7 @@
   & .MuiInputLabel-formControl{
       top: -6px;
   }
-  & .MuiFormControl-root > label {
-      //top: -12px!important;
-  }
 
-  //border: 0;
   &.MuiButton-root {
     padding: 5px 15px;
     background: #003154;
@@ -118,13 +113,9 @@
   }
 }
 
-//input:-webkit-autofill{
-//  -webkit-text-fill-color: yellow !important;
-//}
 input:-webkit-autofill {
   -webkit-background-clip: text;
 }
-//.css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper
 .MuiPopover-paper {
   max-height: 300px;
 }
@@ -135,9 +126,7 @@ input:-webkit-autofill {
 }
 
 .MuiBox-root {
-  //padding: 0;
   background: #F6F8FC;
-  //margin-bottom: 35px;
   height: 60px;
 }
 .MuiCardActions-root>:not(:first-of-type) {

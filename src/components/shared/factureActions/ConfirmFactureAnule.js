@@ -14,7 +14,6 @@ import {
 	DialogTitle, TextField, InputLabel
 } from "@mui/material";
 import CancelIcon from '@mui/icons-material/Cancel';
-// import {apiUrls} from "../../../../env-vars";
 import {reshapeMotifVsStatus} from "../../factures/utils/utils";
 
 export const ConfirmFactureAnule = ({opened, close, nomRefs, data, setOpenMsg, reload}) => {

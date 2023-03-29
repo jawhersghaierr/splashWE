@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { Redirect } from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 
 import {CircularProgress, Typography} from "@mui/material";
 import {matchPath} from "react-router-dom";

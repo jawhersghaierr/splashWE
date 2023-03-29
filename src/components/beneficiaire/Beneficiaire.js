@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Typography, CircularProgress} from "@mui/material";
 import SearchAccordion from "../beneficiaire/searches/SearchAccordion";
 import { useGetEnvironmentsQuery } from "../../services/referentielApi";
 import {BeneficiaireGrid} from './grids/BeneficiaireGrid'
-import './beneficiaire.scss'
 import {matchPath} from "react-router-dom";
+import './beneficiaire.scss'
 
 export const Beneficiaire = (props) => {
 

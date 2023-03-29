@@ -1,11 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// import { apiUrls } from '../../../../env-vars'
 
 export const intraitablesApi = createApi({
     reducerPath: 'intraitablesApi',
     baseQuery: fetchBaseQuery({
         baseUrl: window?._env_?.apiUrls?.intraitables,
-        // baseUrl: apiUrls.intraitables,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)
@@ -81,61 +79,3 @@ export const {
     useGetIntraitablesByIdQuery,
 } = intraitablesApi
 
-/*
-
-
-const api = mainApi.injectEndpoints({
-  endpoints: (builder) => ({
-    reportExcel: builder.mutation<any, IReportExcelQuery>({
-      query(args) {
-        return {
-          url: `/admin/api/v3/hso/loans/download`,
-          method: "POST",
-          body: args.dataset,
-          responseHandler: async (response) => window.location.assign(window.URL.createObjectURL(await response.blob())),
-          cache: "no-cache",
-        };
-      },
-    }),
-  }),
-  overrideExisting: false,
-});
-
-
-
-
-
-
-
-
-import { apiSlice } from '../../api/apiSlice';
-import { fetchBaseQuery } from '@reduxjs/toolkit/query'
-
-export const pdfsSlice = apiSlice.injectEndpoints({
-    baseQuery: fetchBaseQuery({ baseUrl: '/ ' }),
-    endpoints: builder => ({
-        downloadPDFFile: builder.mutation({
-            queryFn: async ({ setupId, name }, api, extraOptions, baseQuery) => {
-                const result = await baseQuery({
-                    url: `/setups/${setupId}/file`,
-                    responseHandler: ((response) => response.blob())
-                })
-                var hiddenElement = document.createElement('a');
-                var url = window.URL || window.webkitURL;
-                var blobPDF = url.createObjectURL(result.data);
-                hiddenElement.href = blobPDF;
-                hiddenElement.target = '_blank';
-                hiddenElement.download = `${name}_report.pdf`;
-                hiddenElement.click();
-                return { data: null }
-            }
-        })
-    })
-})
-
-export const {
-    useDownloadPDFFileMutation
-} = pdfsSlice;
-
-
- */

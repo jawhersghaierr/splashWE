@@ -1,32 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-// import { apiUrls } from '../../env-vars'
-
-
-/*
-http://10.241.25.10:8004/api/v1/
-
-<dependency>
-  <groupId>net.viamedis</groupId>
-  <artifactId>referentiel-api-specification</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-</dependency>
-
-Контракта се намира тук
-https://git.viamedis.fr/groupe-vdhm/vdhm-platform/referentiel-transverse/referentiel-transverse-web/-/blob/develop/referentiel-api-specification/src/main/resources/referentiel.yaml
-
-Налични са
-- Client http://10.241.25.10:8004/api/v1/clients
-- Environment http://10.241.25.10:8004/api/v1/environments
-- Nature d'assurance http://10.241.25.10:8004/api/v1/natures
-- Parcours de soins http://10.241.25.10:8004/api/v1/parcours
- */
 
 export const referentielApi = createApi({
 
     reducerPath: 'referentielApi',
     baseQuery: fetchBaseQuery({
         baseUrl: window?._env_?.apiUrls?.referentiels,
-        // baseUrl: apiUrls.referentiels,
         prepareHeaders: (headers, { getState }) => {
 
             headers.set('Access-Control-Allow-Origin', `*`)

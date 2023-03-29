@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Stack from "@mui/material/Stack";
-// import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "./associesGridColumns";
 import VirementDetailsById from "../VirementDetailsById";
 import PaiementDetailsById from "../../paiement/PaiementDetailsById";
-// import { ModalInfo, NoGridResultsAlert } from "../../shared/modals";
-import "./virementsGrid.scss";
 import { SubGrid } from "../../shared/grids";
+import "./virementsGrid.scss";
 
 export const AssociesGrid = ({ data, nomRefs, noModal }) => {
   const [openModal, setOpenModal] = useState({ open: false, data: null });

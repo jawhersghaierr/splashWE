@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Typography} from "@mui/material";
 import SearchAccordion from "./searches/SearchAccordion";
 import {VirementsGrid} from "./grids/VirementsGrid";

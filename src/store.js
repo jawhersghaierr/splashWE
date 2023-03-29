@@ -2,10 +2,6 @@ import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import thunk from "redux-thunk";
 import thunkMiddleware from 'redux-thunk';
 
-//TODO need automation - import object/array index files from slice folders
-// import { entityApi } from './services/entityApi';
-// import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-
 import { referentielApi } from './services/referentielApi';
 import { refsApi } from './services/refsApi';
 import { psApi } from "./components/ps/services/psApi";
@@ -30,15 +26,9 @@ import rocEnLigneReducer from "./components/rocEnLigne/rocEnLigneSlice";
 
 function logger({ getState }) {
   return next => action => {
-    // console.log('will dispatch', action)
 
-    // Call the next dispatch method in the middleware chain.
     const returnValue = next(action)
 
-    // console.log('state after dispatch', getState())
-
-    // This will likely be the action itself, unless
-    // a middleware further in chain changed it.
     return returnValue
   }
 }
@@ -58,11 +48,6 @@ const staticReducers = {
   host: hostReducer,
 };
 
-
-/**
- * Cf. redux docs:
- * https://redux.js.org/recipes/code-splitting/#defining-an-injectreducer-function
- */
 export default function configureStore(initialState) {
 
   const middleware = applyMiddleware(

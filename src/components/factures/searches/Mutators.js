@@ -3,9 +3,6 @@ import {reshapeMotifVsStatus} from "../utils/utils";
 
 export const handleFormChange = ({nomRefs, setMotif, setDisableCle}) => ([name], state, { changeValue }) => {
 
-    // console.log('name ', name)
-    // console.log('nomRefs ', nomRefs)
-    console.log('state ', state)
     let values = state.formState.values
 
     if ( state?.lastFormState?.modified?.birthDate && values?.dateNaissance != null && values?.birthDate == null ) {

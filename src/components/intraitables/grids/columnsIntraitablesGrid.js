@@ -1,7 +1,6 @@
 import React from "react";
 import {Link} from "@material-ui/core";
 import {convertDate} from "../../../utils/convertor-utils";
-// import { apiUrls } from '../../../../env-vars'
 import download from '../../../../assets/icons/download-blue.svg'
 import {renderCell} from "../../../utils/utils";
 

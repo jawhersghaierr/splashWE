@@ -2,8 +2,8 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "./actesGridColumns";
-import "../styles/grid.scss";
 import {NoGridResultsAlert} from "../modals/NoGridResultsAlert";
+import "../styles/grid.scss";
 
 export const ActesGrid = ({ data, nomRefs }) => {
   let _data = {

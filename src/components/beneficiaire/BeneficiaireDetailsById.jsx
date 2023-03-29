@@ -36,7 +36,6 @@ function TabPanel(props) {
                 display: 'flex'
             }}>
                 {value === index && children}
-                {/*{JSON.stringify(data)}*/}
             </div>}
         </div>
     );
@@ -205,7 +204,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
             <TabPanel value={value} index={1} data={data}>
                 <div style={{display: 'flex', flexDirection: 'row', width: '100%'}}>
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
-                        <h2>Information</h2>
+                        <h3>Information</h3>
                         {isFetching && <CircularProgress/>}
                         {nomEnviroments && <RowInfo label={'Environnement'}
                                   value={nomEnviroments.find(e => e.code == data?.codeEnvironnement)?.libelle} id={benefId} field="libelle" />}
@@ -221,7 +220,7 @@ export default function BeneficiaireDetailsById({location, modalId = null}) {
                     </Box>
 
                     <Box style={{backgroundColor: '#F6F8FC', margin: '5px', padding: '0 25px', flex: 1}}>
-                        <h2>Appartenance réseau du bénéficiaire</h2>
+                        <h3>Appartenance réseau du bénéficiaire</h3>
                         {isFetching && <CircularProgress/>}
                         {(data?.reseauSoinsList && nomReseaux) && data?.reseauSoinsList.map( (reseau, i) => {
                             let objReseau = nomReseaux.find(e=>e.code === reseau.reseauSoins)

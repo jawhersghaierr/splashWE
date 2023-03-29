@@ -8,7 +8,6 @@ import {
 	DialogTitle, CircularProgress
 } from "@mui/material";
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
-// import {apiUrls} from "../../../../env-vars";
 import {useState} from "react";
 
 export const ConfirmFactureRecyclage = ({data, opened, setOpenMsg, close}) => {
