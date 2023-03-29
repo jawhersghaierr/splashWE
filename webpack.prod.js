@@ -32,7 +32,7 @@ module.exports = {
     plugins: [
 
         new ModuleFederationPlugin({
-            name: 'host',
+            name: 'host_ui',
             filename: 'remoteEntry.js',
             remotes: getRemotes(),
             shared: {
