@@ -81,7 +81,7 @@
     "lint": "eslint src --ext .jsx --ext .js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "build": "cross-env IP_ENV=development webpack --mode production --config webpack.prod.js",
+    "build": "cross-env webpack --mode production --config webpack.prod.js",
     "serve": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
     "clean": "rm -rf dist"
   }
