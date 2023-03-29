@@ -13,10 +13,10 @@ module.exports = {
 
     entry: './src/index',
 
-    // devtool: 'source-map',
+    devtool: 'source-map',
 
     optimization: {
-        minimize: true,
+        minimize: false,
     },
 
     devServer: {
