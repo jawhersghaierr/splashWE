@@ -1,4 +1,4 @@
-// const paths = require("./paths");
+const paths = require("./paths");
 // const webpack = require("webpack");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const WebpackShellPluginNext = require('webpack-shell-plugin-next');
