@@ -1,4 +1,4 @@
-const paths = require("./paths");
+// const paths = require("./paths");
 // const webpack = require("webpack");
 // const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 // const WebpackShellPluginNext = require('webpack-shell-plugin-next');
@@ -13,17 +13,17 @@ module.exports = {
     cache: false,
 
     optimization: {
-        minimize: false,
+        minimize: true,
     },
     mode: "production",
-    devtool: "source-map",
+    // devtool: "source-map",
 
-    // output: {
-    //     publicPath: "auto",
-    // },
     output: {
-        path: paths.build,
+        publicPath: "auto",
     },
+    // output: {
+    //     path: paths.build,
+    // },
 
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
@@ -76,11 +76,12 @@ module.exports = {
             },
 
         }),
-        // new webpack.HotModuleReplacementPlugin(),
+
         new HtmlWebpackPlugin({
             template: './public/index.html',
             publicPath: '/'
-        }),
+        })
+
     ],
     module: {
         rules: [
@@ -129,15 +130,12 @@ module.exports = {
 
 
 function getRemotes () {
-    console.log('modules: ', modules)
+
     let _remotes = {}
     Object.keys(modules.remoteApps).forEach(remote => {
-        console.log('remote : ', remote)
+
         _remotes[remote] = `promise new Promise(resolve => {
         
-            console.log('**********************************************')
-            console.log('window.${remote} >', window.${remote})
-            console.log('**********************************************')
             if (window.${remote} == undefined) {
                 const script = document.createElement('script')
                 script.src = window._env_.remoteApps.${remote}
@@ -154,12 +152,10 @@ function getRemotes () {
                     }
                     resolve(proxy)
                 }
-                // if (!script.src.includes('undefined')) document.body.appendChild(script);
-                document.body.appendChild(script);
+                if (!script.src.includes('undefined')) document.body.appendChild(script);
             } else resolve('')
         })`
     })
-    console.log('_remotes: ', _remotes)
 
     return (_remotes)
 }
