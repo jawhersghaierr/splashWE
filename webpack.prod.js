@@ -11,74 +11,94 @@ const deps = require('./package.json').dependencies;
 
 module.exports = {
     // Set the mode to development or production
-    mode: "development",
+    mode: "production",
 
     entry: './src/index',
 
     // Control how source maps are generated
-    devtool: 'source-map',
+    // devtool: 'source-map',
 
     optimization: {
-        minimize: false,
+        minimize: true,
     },
 
-    output: {
-        path: paths.build,
-    },
     // output: {
-    //     publicPath: 'auto',
+    //     path: paths.build,
     // },
+    output: {
+        publicPath: 'auto',
+    },
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
 
     plugins: [
-        new CleanWebpackPlugin(),
+        // new CleanWebpackPlugin(),
         // Only update what has changed on hot reload
         new ModuleFederationPlugin({
             name: 'host',
-            library: { type: 'var', name: 'host' },
             filename: 'remoteEntry.js',
             remotes: getRemotes(),
             shared: {
-                ...deps,
-                'react': {
+                "react": {
+                    eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                'react-dom': {
+                "react-dom": {
+                    eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                '@mui/material': {
+                "react-router-dom": {
+                    eager: true,
                     singleton: true,
-                    strictVersion: true,
-                    requiredVersion: '5.5.2'
+                    version: "5.3.4",
+                },
+                "redux": {
+                    eager: true,
+                    singleton: true,
+                    version: "4.2.1",
+                },
+                "react-redux": {
+                    eager: true,
+                    singleton: true,
+                    version: "7.2.9",
+                },
+                "react-final-form": {
+                    eager: true,
+                    singleton: true,
+                    version: "6.5.9",
+                },
+                "dynamicMiddlewares": {
+                    eager: true,
+                    singleton: true,
+                    version: "2.2.0"
                 },
             },
         }),
 
-        new WebpackShellPluginNext(
-            {
-
-                onBuildStart: {
-                    scripts: ['echo "Webpack Start"'],
-                    blocking: true,
-                    parallel: false
-                },
-                onBuildExit: {
-                    scripts: ['node configure-script'],
-                    blocking: true,
-                    parallel: false
-                }
-        }),
+        // new WebpackShellPluginNext(
+        //     {
+        //
+        //         onBuildStart: {
+        //             scripts: ['echo "Webpack Start"'],
+        //             blocking: true,
+        //             parallel: false
+        //         },
+        //         onBuildExit: {
+        //             scripts: ['node configure-script'],
+        //             blocking: true,
+        //             parallel: false
+        //         }
+        // }),
 
         new HtmlWebpackPlugin({
-            template: paths.public + "/index.html", // template file
-            filename: "index.html", // output file
-            publicPath: "/"
+            template: './public/index.html',
+            assets: './public/assets',
+            publicPath: '/'
         }),
     ],
     module: {
