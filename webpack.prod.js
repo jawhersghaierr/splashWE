@@ -1,40 +1,32 @@
-const paths = require("./paths");
+// const paths = require("./paths");
+// const webpack = require("webpack");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+// const WebpackShellPluginNext = require('webpack-shell-plugin-next');
+// const deps = require('./package.json').dependencies;
 
-const webpack = require("webpack");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
 
-const deps = require('./package.json').dependencies;
-
 module.exports = {
-    // Set the mode to development or production
-    mode: "production",
-
     entry: './src/index',
-
-    // Control how source maps are generated
-    // devtool: 'source-map',
+    cache: false,
 
     optimization: {
-        minimize: true,
+        minimize: false,
     },
+    mode: "production",
+    devtool: "source-map",
 
-    // output: {
-    //     path: paths.build,
-    // },
     output: {
-        publicPath: 'auto',
+        publicPath: "auto",
     },
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
 
     plugins: [
-        // new CleanWebpackPlugin(),
-        // Only update what has changed on hot reload
+
         new ModuleFederationPlugin({
             name: 'host',
             filename: 'remoteEntry.js',
@@ -78,26 +70,11 @@ module.exports = {
                     version: "2.2.0"
                 },
             },
+
         }),
-
-        // new WebpackShellPluginNext(
-        //     {
-        //
-        //         onBuildStart: {
-        //             scripts: ['echo "Webpack Start"'],
-        //             blocking: true,
-        //             parallel: false
-        //         },
-        //         onBuildExit: {
-        //             scripts: ['node configure-script'],
-        //             blocking: true,
-        //             parallel: false
-        //         }
-        // }),
-
+        // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            assets: './public/assets',
             publicPath: '/'
         }),
     ],
@@ -119,7 +96,6 @@ module.exports = {
                 },
             },
 
-            // Styles: Inject CSS into the head with source maps
             {
                 test: /\.(scss|css)$/,
                 use: [
@@ -131,7 +107,6 @@ module.exports = {
                     { loader: "sass-loader", options: { sourceMap: true } },
                 ],
             },
-
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
                 type: "asset/resource"
@@ -150,12 +125,15 @@ module.exports = {
 
 
 function getRemotes () {
-
+    console.log('modules: ', modules)
     let _remotes = {}
     Object.keys(modules.remoteApps).forEach(remote => {
-
+        console.log('remote : ', remote)
         _remotes[remote] = `promise new Promise(resolve => {
         
+            console.log('**********************************************')
+            console.log('window.${remote} >', window.${remote})
+            console.log('**********************************************')
             if (window.${remote} == undefined) {
                 const script = document.createElement('script')
                 script.src = window._env_.remoteApps.${remote}
@@ -176,6 +154,7 @@ function getRemotes () {
             } else resolve('')
         })`
     })
+    console.log('_remotes: ', _remotes)
 
     return (_remotes)
 }

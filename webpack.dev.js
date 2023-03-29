@@ -5,7 +5,6 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require("webpack").container;
-
 const modules = require(`./public/modules`);
 
 module.exports = {
