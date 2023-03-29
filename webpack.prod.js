@@ -18,9 +18,13 @@ module.exports = {
     mode: "production",
     devtool: "source-map",
 
+    // output: {
+    //     publicPath: "auto",
+    // },
     output: {
-        publicPath: "auto",
+        path: paths.build,
     },
+
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
@@ -150,7 +154,8 @@ function getRemotes () {
                     }
                     resolve(proxy)
                 }
-                if (!script.src.includes('undefined')) document.body.appendChild(script);
+                // if (!script.src.includes('undefined')) document.body.appendChild(script);
+                document.body.appendChild(script);
             } else resolve('')
         })`
     })

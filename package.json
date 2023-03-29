@@ -1,8 +1,7 @@
 {
-  "name": "@viamedis/host_ui",
-  "version": "0.0.0",
+  "name": "host_ui",
+  "version": "0.0.1",
   "private": true,
-  "main": "./src/index.js",
   "dependencies": {
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.2",
