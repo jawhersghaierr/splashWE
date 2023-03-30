@@ -68,10 +68,10 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
 
     let environnements = null
 
-    if (code == 'limit-sim' && data && data?.environments && data?.environments.length > 0 && nomRefs?.RLTN_CLIENT_ENV) {
+    if (code == 'limit-sim' && data && data?.numeroEnvironnements && data?.numeroEnvironnements.length > 0 && nomRefs?.RLTN_CLIENT_ENV) {
 
         let tmpEnv = []
-        data.environments.forEach( env => tmpEnv.push(nomRefs?.RLTN_ENV_CLIENT[env]) )
+        data.numeroEnvironnements.forEach( env => tmpEnv.push(nomRefs?.RLTN_ENV_CLIENT[env]) )
         tmpEnv = [...new Set(tmpEnv)]
 
         if (tmpEnv.length > 0) {
@@ -131,7 +131,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
             {(code == 'delai' || code == 'limit-sim') &&
             <RowInfo
                 label={'Période de validité'}
-                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`}
+                value={`${convertDate(data?.dateDebut)} - ${convertDate(data?.dateFin)}`}
                 styles={{flex: 2}} border={false} id={data?.id} field="endDate" />}
 
             {code == 'limit-sim' &&
@@ -142,7 +142,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
 
             {code == 'type-convention' &&
             <RowInfo label={'Période de validité'}
-                      value={`${convertDate(data?.startDate)}${(data?.endDate) ? ' - ' : ''}${convertDate(data?.endDate)}`}
+                      value={`${convertDate(data?.dateDebut)} - ${convertDate(data?.dateFin)}`}
                       border={false} styles={{flex: 2}} id={data?.id} field="endDate" />}
 
             {nomRefs && code == 'amc' && <RowInfo label={'Groupement clients'} value={nomRefs.RLTN_CLIENT_GROUP[data?.content] || data?.content} border={false}

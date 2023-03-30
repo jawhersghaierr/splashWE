@@ -101,6 +101,8 @@ export const ListConfiguration = (props) => {
                     return res.json()
                 })
                 .then( (res) => {
+
+                    console.log('items : ', res)
                         setIsLoaded(true);
                         setItems(res);
                         return res
