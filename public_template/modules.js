@@ -12,7 +12,7 @@ module.exports = {
         "beneficiaire": "${APIURL_BENEFICIAIRE}",
         "configurations": "${APIURL_CONFIGURATIONS}",
         "downloadFacture": "${APIURL_DOWNLOAD_FACTURE}",
-        "downloadSelAndIDB": "${APIURL_DOWNLOAD_SEL_IDB}",
+        "downloadSelAndIdb": "${APIURL_DOWNLOAD_SEL_IDB}",
         "entities": "${APIURL_ENTITIES}",
         "factures": "${APIURL_FACTURES}",
         "fluxFactures": "${APIURL_FLUX_FACTURES}",
