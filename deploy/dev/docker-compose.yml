@@ -21,7 +21,7 @@ services:
       - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.10:8015/api/v1
       - APIURL_ENTITIES=http://10.241.25.10:8031/api/entities
       - APIURL_FACTURES=http://10.241.25.10:8005/api/v1
-      - APIURL_FLUX_FACTURES=http://10.241.25.10:8031/api/v1
+      - APIURL_FLUX_FACTURES=http://10.241.25.10:8014/api/v1
       - APIURL_INTRAITABLES=http://10.241.25.10:8014/api/v1
       - APIURL_PAIEMENTS=http://10.241.25.10:8003/api/v1
       - APIURL_PS=http://10.241.25.10:8002/api/v1
