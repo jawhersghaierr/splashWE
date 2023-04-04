@@ -61,7 +61,7 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             </Typography>
         </Link>,
         <Typography key="3" variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
-            {data?.label}
+            {data?.libelle}
         </Typography>,
     ];
 
@@ -77,7 +77,7 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             <RowInfo label={'Code'} value={data?.id} id={data?.id} field="id" />
 
             <RowInfo label={'Période de validité'}
-                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`} id={data?.id} field="startDate_endDate" />
+                value={`${convertDate(data?.dateDebut)}${(data?.dateFin)? ' - ' :''}${convertDate(data?.dateFin)}`} id={data?.id} field="startDate_endDate" />
 
                 {/*{domainForPanel !== 'delai' && domain !== 'roc' && <RowInfo label={'Détails du paramètre'}*/}
                 {/*     value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} />}*/}
