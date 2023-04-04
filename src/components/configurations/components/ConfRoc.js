@@ -111,7 +111,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
             </Typography>
         </Link>,
         <Typography key="3" variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
-            {data?.label}
+            {data?.libelle}
         </Typography>,
     ];
 
