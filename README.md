@@ -1,7 +1,24 @@
 # Host UI
 
-FE project that will host other apps
+Purpose of this FE container is to consume micro-frontend modules
+like PS-ui, Droits-Beneficiaire-ui, Hospi-ui (Factures, Intritables and RocEnLigne), Payement-ui (Paiement and Virement)
 
+also in this container is located the CONFIG module, which is of general purpose
+
+The following technologies are in use:
+
+* Module Federation (Webpack 5) 
+* React
+* Redux
+* Redux Toolkit
+* REACT FINAL FORM
+* MUI 5 (material design)
+
+## Project
+
+### Structure
+![API-flow.png](documentation/API-flow.png)
+![UsageModules.png](documentation/UsageModules.png)
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
