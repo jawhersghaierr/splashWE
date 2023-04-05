@@ -114,7 +114,7 @@ const App = () => {
                   </Route>
 
                   <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
-                      <HospiRemote match={props.match}/>
+                      <HospiRemote match={props.match} menu={setShown}/>
                   )}/>
 
                 </Switch>
