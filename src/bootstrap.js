@@ -52,7 +52,7 @@ const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={
 const PSremote = () => <RemotePsApp store={store} />
 const BenefRemote = () => <RemoteBenefApp store={store} />
 const PayementRemote = () => <RemotePayementApp store={store} />
-const HospiRemote = () => <RemoteHospiApp store={store} />
+const HospiRemote = (props) => <RemoteHospiApp store={store} additionalProps={props} />
 
 const ConfigurationBase = () => <Configurations store={store} />
 const ListConfigurationBase = () => <ListConfiguration store={store} />
@@ -114,8 +114,8 @@ const App = () => {
                   </Route>
 
                   <Route path={["/intraitables", "/serviceEnLigne", "/factures"]} render={(props) => (
-                      <HospiRemote match={props.match} menu={setShown}/>
-                  )}/>
+                    <HospiRemote menu={setShown} />
+                  )} />
 
                 </Switch>
 
@@ -131,7 +131,7 @@ const App = () => {
 
 ReactDOM.render(
     <StyledEngineProvider injectFirst>
-      <App />,
+      <App />
     </StyledEngineProvider>,
     document.getElementById('root')
 );
