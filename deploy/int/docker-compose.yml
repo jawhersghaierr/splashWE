@@ -29,4 +29,4 @@ services:
       - APIURL_FLUX_SEL_IDB=http://10.241.25.20:8001/api/v1
       - APIURL_VIREMENTS=http://10.241.25.20:8003/api/v1
       - APIURL_REFS=http://10.241.25.20:8015/api/v1
-      - APIURL_REFERENTIELS=http://10.241.25.20:8004/api/v1
+      - APIURL_REFERENTIELS=http://10.241.25.20:8004/api/v1.1
