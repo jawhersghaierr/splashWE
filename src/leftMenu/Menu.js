@@ -96,6 +96,9 @@ const RecursiveMenuItem = (props) => {
         if (activeLink === link && !popitem) {
             return {
                 backgroundColor: activeLink === link && theme.palette.primary.main,
+                // "&:hover": {
+                //     backgroundColor: activeLink === link && theme.palette.primary.background,
+                // }
             };
         }
 
@@ -163,7 +166,7 @@ const RecursiveMenuItem = (props) => {
                 >
                     {!!Icon && (
                         <ListItemIcon>
-                            <Icon color={`${activeLink === link ? theme.palette.grey.grey0 : theme.palette.grey.grey7}`} />
+                            <Icon color={activeLink === link ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />
                         </ListItemIcon>
                     )}
                     {!collapsed && (
@@ -292,7 +295,7 @@ const Menu = (props) => {
     return (
         <Box component="nav" className={classes.hostMenu + " " + collapsedClass}>
             <MenuList
-                disablePadding={true}
+                disablePadding
                 sx={{
                     height: height - 300,
                     overflowY: "auto",
@@ -309,6 +312,9 @@ const Menu = (props) => {
                         borderRadius: "10px !important",
                         boxShadow: "inset 0 0 6px rgba(0,0,0,.3) !important",
                         backgroundColor: "#F5F5F5 !important",
+                    },
+                    "& .MuiListItemButton-root:hover": {
+                        backgroundColor: (theme) => theme.palette.primary.hover,
                     },
                 }}
             >
