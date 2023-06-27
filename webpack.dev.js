@@ -48,65 +48,62 @@ module.exports = {
             remotes: getRemotes(),
             shared: {
                 "react": {
-                    eager: true,
+                    //   eager: true,
                     singleton: true,
                     strictVersion: true,
                     requiredVersion: "17.0.2",
                 },
                 "react-dom": {
-                    eager: true,
                     singleton: true,
                     strictVersion: true,
                     requiredVersion: "17.0.2",
                 },
+                
                 "react-router-dom": {
-                    eager: true,
+                    requiredVersion: deps['react-dom-dom'],
                     singleton: true,
-                    version: "5.3.4",
                 },
                 "redux": {
-                    eager: true,
+                    requiredVersion: deps['redux'],
                     singleton: true,
-                    version: "4.2.1",
                 },
                 "react-redux": {
-                    eager: true,
+                    requiredVersion: deps['react-redux'],
                     singleton: true,
-                    version: "7.2.9",
                 },
                 "react-final-form": {
-                    eager: true,
+                    requiredVersion: deps['react-final-form'],
                     singleton: true,
-                    version: "6.5.9",
                 },
+                
+                // '@mui/styles': {
+                //   requiredVersion: deps['@mui/styles'],
+                //   singleton: true,
+                // },
                 '@mui/material': {
-                    requiredVersion: dependencies['@mui/material'] || devDependencies['@mui/material'] || peerDependencies['@mui/material'],
+                    requiredVersion: deps['@mui/material'],
                     singleton: true,
                 },
                 "@mui/system": {
                     singleton: true,
-                    requiredVersion: dependencies['@mui/system'] || devDependencies['@mui/system'] || peerDependencies['@mui/system'],
+                    requiredVersion: deps['@mui/system'],
                 },
                 '@mui/icons-material': {
-                    requiredVersion: dependencies['@mui/icons-material'] || devDependencies['@mui/icons-material'] || peerDependencies['@mui/icons-material'],
+                    requiredVersion: deps['@mui/icons-material'],
                     singleton: true,
                 },
                 '@emotion/react': {
-                    requiredVersion: dependencies['@emotion/react'] || devDependencies['@emotion/react'] || peerDependencies['@emotion/react'],
-                    strictVersion: false,
-                    singleton: true,
-                },
-                '@emotion/styled': {
-                    requiredVersion: dependencies['@emotion/styled'] || devDependencies['@emotion/styled'] || peerDependencies['@emotion/styled'],
-                    strictVersion: false,
+                    requiredVersion: deps['@emotion/react'],
                     singleton: true,
                 },
                 '@mui/x-date-pickers': {
-                    requiredVersion: dependencies['@mui/x-date-pickers'] || devDependencies['@mui/x-date-pickers'] || peerDependencies['@mui/x-date-pickers'],
+                    requiredVersion: deps['@mui/x-date-pickers'],
                     singleton: true,
                 },
-            },
-
+                // '@mui/x-date-pickers/AdapterDateFns': {
+                //   singleton: true,
+                // },
+            }
         }),
         // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

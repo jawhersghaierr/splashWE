@@ -1,12 +1,15 @@
 // const paths = require("./paths");
 // const webpack = require("webpack");
-// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-// const WebpackShellPluginNext = require('webpack-shell-plugin-next');
+// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 // const deps = require('./package.json').dependencies;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
+const dependencies = require('./package.json').dependencies;
+const devDependencies = require('./package.json').devDependencies;
+const peerDependencies = require('./package.json').peerDependencies;
+
 
 module.exports = {
     entry: './src/index',
@@ -35,46 +38,66 @@ module.exports = {
             name: 'host_ui',
             filename: 'remoteEntry.js',
             remotes: getRemotes(),
+            
             shared: {
                 "react": {
-                    eager: true,
+                    //   eager: true,
                     singleton: true,
                     strictVersion: true,
                     requiredVersion: "17.0.2",
                 },
                 "react-dom": {
-                    eager: true,
                     singleton: true,
                     strictVersion: true,
                     requiredVersion: "17.0.2",
                 },
+                
                 "react-router-dom": {
-                    eager: true,
+                    requiredVersion: deps['react-dom-dom'],
                     singleton: true,
-                    version: "5.3.4",
                 },
                 "redux": {
-                    eager: true,
+                    requiredVersion: deps['redux'],
                     singleton: true,
-                    version: "4.2.1",
                 },
                 "react-redux": {
-                    eager: true,
+                    requiredVersion: deps['react-redux'],
                     singleton: true,
-                    version: "7.2.9",
                 },
                 "react-final-form": {
-                    eager: true,
+                    requiredVersion: deps['react-final-form'],
                     singleton: true,
-                    version: "6.5.9",
                 },
-                "dynamicMiddlewares": {
-                    eager: true,
+                
+                // '@mui/styles': {
+                //   requiredVersion: deps['@mui/styles'],
+                //   singleton: true,
+                // },
+                '@mui/material': {
+                    requiredVersion: deps['@mui/material'],
                     singleton: true,
-                    version: "2.2.0"
                 },
-            },
-
+                "@mui/system": {
+                    singleton: true,
+                    requiredVersion: deps['@mui/system'],
+                },
+                '@mui/icons-material': {
+                    requiredVersion: deps['@mui/icons-material'],
+                    singleton: true,
+                },
+                '@emotion/react': {
+                    requiredVersion: deps['@emotion/react'],
+                    singleton: true,
+                },
+                '@mui/x-date-pickers': {
+                    requiredVersion: deps['@mui/x-date-pickers'],
+                    singleton: true,
+                },
+                // '@mui/x-date-pickers/AdapterDateFns': {
+                //   singleton: true,
+                // },
+            }
+            
         }),
 
         new HtmlWebpackPlugin({
