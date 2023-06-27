@@ -6,6 +6,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
+const dependencies = require('./package.json').dependencies;
+const devDependencies = require('./package.json').devDependencies;
+const peerDependencies = require('./package.json').peerDependencies;
 
 module.exports = {
 
@@ -76,10 +79,31 @@ module.exports = {
                     singleton: true,
                     version: "6.5.9",
                 },
-                "dynamicMiddlewares": {
-                    eager: true,
+                '@mui/material': {
+                    requiredVersion: dependencies['@mui/material'] || devDependencies['@mui/material'] || peerDependencies['@mui/material'],
                     singleton: true,
-                    version: "2.2.0"
+                },
+                "@mui/system": {
+                    singleton: true,
+                    requiredVersion: dependencies['@mui/system'] || devDependencies['@mui/system'] || peerDependencies['@mui/system'],
+                },
+                '@mui/icons-material': {
+                    requiredVersion: dependencies['@mui/icons-material'] || devDependencies['@mui/icons-material'] || peerDependencies['@mui/icons-material'],
+                    singleton: true,
+                },
+                '@emotion/react': {
+                    requiredVersion: dependencies['@emotion/react'] || devDependencies['@emotion/react'] || peerDependencies['@emotion/react'],
+                    strictVersion: false,
+                    singleton: true,
+                },
+                '@emotion/styled': {
+                    requiredVersion: dependencies['@emotion/styled'] || devDependencies['@emotion/styled'] || peerDependencies['@emotion/styled'],
+                    strictVersion: false,
+                    singleton: true,
+                },
+                '@mui/x-date-pickers': {
+                    requiredVersion: dependencies['@mui/x-date-pickers'] || devDependencies['@mui/x-date-pickers'] || peerDependencies['@mui/x-date-pickers'],
+                    singleton: true,
                 },
             },
 
