@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useState, useEffect } from "lib_ui/react";
-import { NavLink, useLocation } from "lib_ui/react-router-dom";
+import { NavLink, useLocation, matchPath } from "lib_ui/react-router-dom";
 
 import { makeStyles, createStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
@@ -82,6 +82,15 @@ const RecursiveMenuItem = (props) => {
     const ref = useRef();
     const theme = useTheme();
 
+    const match = matchPath(activeLink, {
+        path: link,
+        strict: true,
+    });
+
+    console.log("activeLink >", activeLink);
+    console.log("link >", link);
+    console.log("match >", match);
+
     useEffect(() => {
         if (popitems && popitems.length) {
             const links = popitems.map((popitem) => popitem.link);
@@ -93,12 +102,9 @@ const RecursiveMenuItem = (props) => {
     }, []);
 
     const custonNavLinkStyle = () => {
-        if (activeLink === link && !popitem) {
+        if ((activeLink === link || (match && match?.path !== "/")) && !popitem) {
             return {
-                backgroundColor: activeLink === link && theme.palette.primary.main,
-                // "&:hover": {
-                //     backgroundColor: activeLink === link && theme.palette.primary.background,
-                // }
+                backgroundColor: (activeLink === link || (match && match?.path !== "/")) && theme.palette.primary.main,
             };
         }
 
@@ -166,7 +172,13 @@ const RecursiveMenuItem = (props) => {
                 >
                     {!!Icon && (
                         <ListItemIcon>
-                            <Icon color={activeLink === link ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />
+                            <Icon
+                                color={
+                                    activeLink === link || (match && match?.path !== "/")
+                                        ? theme.palette.grey.grey0
+                                        : theme.palette.grey.grey7
+                                }
+                            />
                         </ListItemIcon>
                     )}
                     {!collapsed && (
@@ -176,7 +188,7 @@ const RecursiveMenuItem = (props) => {
                                     variant={activeLink === link ? (popitem ? "bodyb" : "bodym") : "bodym"}
                                     sx={{
                                         color:
-                                            activeLink === link
+                                            activeLink === link || (match && match?.path !== "/")
                                                 ? popitem
                                                     ? theme.palette.primary.main
                                                     : theme.palette.grey.grey0
@@ -245,10 +257,10 @@ const RecursiveMenuItem = (props) => {
                         },
                     }}
                 >
-                    {popitems.map((item, index) => (
+                    {popitems.map((item) => (
                         <RecursiveMenuItem
                             autoFocus={false}
-                            key={`it_${index}`}
+                            key={`it_${item?.name}`}
                             popitem
                             activeLink={activeLink}
                             setActiveLink={setActiveLink}
@@ -263,10 +275,10 @@ const RecursiveMenuItem = (props) => {
             {!collapsed && popitems && (
                 <Collapse in={openSubMenu} timeout="auto" unmountOnExit>
                     <MenuList>
-                        {popitems.map((item, index) => (
+                        {popitems.map((item) => (
                             <RecursiveMenuItem
                                 autoFocus={false}
-                                key={`it_${index}`}
+                                key={`it_${item?.name}`}
                                 popitem
                                 activeLink={activeLink}
                                 setActiveLink={setActiveLink}
@@ -291,6 +303,10 @@ const Menu = (props) => {
 
     const [activeLink, setActiveLink] = useState(location?.pathname);
     const [openedSubMenu, setOpenedSubMenu] = useState(null);
+
+    useEffect(() => {
+        setActiveLink(location?.pathname);
+    }, [location?.pathname]);
 
     return (
         <Box component="nav" className={classes.hostMenu + " " + collapsedClass}>
@@ -318,11 +334,11 @@ const Menu = (props) => {
                     },
                 }}
             >
-                {hostMenuItems.map((item, index) => (
+                {hostMenuItems.map((item) => (
                     <RecursiveMenuItem
                         autoFocus={false}
                         collapsed={!!props.collapsed}
-                        key={`it_${index}`}
+                        key={`it_${item?.name}`}
                         activeLink={activeLink}
                         setActiveLink={setActiveLink}
                         openedSubMenu={openedSubMenu}
