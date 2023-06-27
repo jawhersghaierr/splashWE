@@ -53,44 +53,44 @@ module.exports = {
                 },
                 
                 "react-router-dom": {
-                    requiredVersion: deps['react-dom-dom'],
+                    requiredVersion: dependencies['react-dom-dom'],
                     singleton: true,
                 },
                 "redux": {
-                    requiredVersion: deps['redux'],
+                    requiredVersion: dependencies['redux'],
                     singleton: true,
                 },
                 "react-redux": {
-                    requiredVersion: deps['react-redux'],
+                    requiredVersion: dependencies['react-redux'],
                     singleton: true,
                 },
                 "react-final-form": {
-                    requiredVersion: deps['react-final-form'],
+                    requiredVersion: dependencies['react-final-form'],
                     singleton: true,
                 },
                 
                 // '@mui/styles': {
-                //   requiredVersion: deps['@mui/styles'],
+                //   requiredVersion: dependencies['@mui/styles'],
                 //   singleton: true,
                 // },
                 '@mui/material': {
-                    requiredVersion: deps['@mui/material'],
+                    requiredVersion: dependencies['@mui/material'],
                     singleton: true,
                 },
                 "@mui/system": {
                     singleton: true,
-                    requiredVersion: deps['@mui/system'],
+                    requiredVersion: dependencies['@mui/system'],
                 },
                 '@mui/icons-material': {
-                    requiredVersion: deps['@mui/icons-material'],
+                    requiredVersion: dependencies['@mui/icons-material'],
                     singleton: true,
                 },
                 '@emotion/react': {
-                    requiredVersion: deps['@emotion/react'],
+                    requiredVersion: dependencies['@emotion/react'],
                     singleton: true,
                 },
                 '@mui/x-date-pickers': {
-                    requiredVersion: deps['@mui/x-date-pickers'],
+                    requiredVersion: dependencies['@mui/x-date-pickers'],
                     singleton: true,
                 },
                 // '@mui/x-date-pickers/AdapterDateFns': {
