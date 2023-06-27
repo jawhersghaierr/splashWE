@@ -83,14 +83,14 @@
     "webpack-dev-server": "v4.8.0",
     "webpack-livereload-plugin": "3.0.2",
     "webpack-merge": "^5.2.0",
-    "webpack-shell-plugin-next": "^2.2.2",
-
+    "webpack-shell-plugin-next": "^2.2.2"
 
 
   },
 
   "peerDependencies": {
   },
+
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
     "lint": "eslint src --ext .jsx --ext .js",
