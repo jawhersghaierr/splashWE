@@ -23,5 +23,6 @@ module.exports = {
 		"virements": "http://10.241.25.10:8003/api/v1",
 		"refs": "http://10.241.25.10:8015/api/v1",
 		"referentiels": "http://10.241.25.20:8004/api/v1"
+
 	}
 };
