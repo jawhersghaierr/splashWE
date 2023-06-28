@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'lib_ui/react'
 import Box from "@mui/material/Box";
-import {RowInfo} from "../../beneficiaire/components/RowInfo";
-import {convertDate} from "../../../utils/convertor-utils";
+import {RowInfo} from "./RowInfo";
+import {
+    convertDate,
+} from "shared_lib_ui/Lib";
 
 export const DetailsRocConfAMC = ({data}) => {
 
@@ -11,8 +13,8 @@ export const DetailsRocConfAMC = ({data}) => {
             minWidth: '300px', marginRight: '15px', padding: '10px 25px 25px 25px'
         }}>
             <b>Ouverture ROC</b>
-            <RowInfo label={'Date début'} value={convertDate(data?.startDateAmc)} justify={true} id={data?.id} field="startDateAmc" />
-            <RowInfo label={'Date fin'} value={convertDate(data?.endDateAmc)} justify={true} id={data?.id} field="endDateAmc" />
+            <RowInfo label={'Date début'} value={convertDate(data?.dateDebutAmc)} justify={true} id={data?.id} field="startDateAmc" />
+            <RowInfo label={'Date fin'} value={convertDate(data?.dateFinAmc)} justify={true} id={data?.id} field="endDateAmc" />
         </Box>
         <Box style={{
             backgroundColor: '#F6F8FC', flex: 1,

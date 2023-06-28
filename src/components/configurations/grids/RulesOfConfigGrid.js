@@ -1,10 +1,9 @@
-import React from "react";
-import Stack from "@mui/material/Stack";
-// import { DataGrid } from "@mui/x-data-grid";
+import React from "lib_ui/react";
+import { SubGrid } from "shared_lib_ui/Lib";
 
+import Stack from "@mui/material/Stack";
 import { columns } from "./rulesOfConfigGridColumns";
 import "./configutationGrid.scss";
-import { SubGrid } from "../../shared/grids";
 
 export const RulesOfConfigGrid = ({ data, nomRefs }) => {
   return (

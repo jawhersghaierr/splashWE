@@ -5,12 +5,12 @@ variables:
   DOCKER_IMAGE_NAME_FE: common/host-ui
   DOCKER_SERVICE_NAME_FE: host-ui
   DOCKER_DOCKERFILE_FE: Dockerfile
-  VERSION: 0.1.0
-  VERSION_SNAPSHOT: 0.1.0-SNAPSHOT
+  VERSION: 0.2.0
+  VERSION_SNAPSHOT: 0.2.0-SNAPSHOT
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'master'
+    ref: 'develop'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml

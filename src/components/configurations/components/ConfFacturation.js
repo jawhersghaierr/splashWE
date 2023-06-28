@@ -1,18 +1,27 @@
-import React, {useState} from 'react'
-import Chip from '@mui/material/Chip';
-import Box from "@mui/material/Box";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { Typography } from "@mui/material";
-import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
-import { RowInfo } from "../../beneficiaire/components/RowInfo";
-import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
-import { NoGridResultsAlert } from "../../shared";
-import { convertDate } from "../../../utils/convertor-utils";
-import { factureConfigurationStatus } from "../../../utils/status-utils";
-import {Link} from "react-router-dom";
+import React, { useState } from 'lib_ui/react'
+import {Link} from 'lib_ui/react-router-dom';
+
+
+import {
+    Box,
+    Chip,
+    Typography,
+    Tab, Tabs,
+} from "@mui/material";
+
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+
+import { RulesOfConfigGrid } from "../grids/RulesOfConfigGrid";
+import { RowInfo } from "./RowInfo";
+import { DetailsFactureMailConf } from "./DetailsFactureMailConf";
+
+import {
+    NoGridResultsAlert,
+    convertDate,
+    factureConfigurationStatus
+} from "shared_lib_ui/Lib";
+
 
 function TabPanel(props) {
     const { children, value, index, data, ...other } = props;
@@ -52,7 +61,7 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             </Typography>
         </Link>,
         <Typography key="3" variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
-            {data?.label}
+            {data?.libelle}
         </Typography>,
     ];
 
@@ -62,17 +71,13 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             {breadcrumbs}
         </Breadcrumbs>
 
-        {/*<Typography variant="h6" noWrap component="div" sx={{color: '#003154'}}>*/}
-        {/*    {nomRefs && nomRefs.FACTURE_CONFIGURATION_TYPE[data?.type] || data?.type}*/}
-        {/*</Typography>*/}
-
         <Chip label={nomRefs && nomRefs.FACTURE_CONFIGURATION_STATUS[data?.status] || data?.status} sx={{color: 'black', bgcolor: factureConfigurationStatus[data?.status]?.color, margin: '15px 0 0 0'}}/>
 
         <div style={{display: 'flex', flexDirection: 'rows', margin: '25px 0 25px 0'}}>
             <RowInfo label={'Code'} value={data?.id} id={data?.id} field="id" />
 
             <RowInfo label={'Période de validité'}
-                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`} id={data?.id} field="startDate_endDate" />
+                value={`${convertDate(data?.dateDebut)}${(data?.dateFin)? ' - ' :''}${convertDate(data?.dateFin)}`} id={data?.id} field="startDate_endDate" />
 
                 {/*{domainForPanel !== 'delai' && domain !== 'roc' && <RowInfo label={'Détails du paramètre'}*/}
                 {/*     value={data?.motif || <div style={{whiteSpace: 'pre-line'}}>{data?.content?.join('\n')}</div>} />}*/}
@@ -110,7 +115,6 @@ export const ConfFacturation = ({data, nomRefs, domain, code, id, domainForPanel
             </Box>}
             {(domainForPanel == 'email') && <DetailsFactureMailConf data={data} />}
 
-            {/*{JSON.stringify(data)}*/}
         </TabPanel>
 
     </Box>

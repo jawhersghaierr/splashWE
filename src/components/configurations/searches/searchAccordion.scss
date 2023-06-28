@@ -5,8 +5,8 @@
 
 .MuiAccordionSummary-root {
   background: none;
-  //margin: 25px;
 }
+
 .formContent {
   padding: 25px;
 }
@@ -14,15 +14,11 @@
 .MetaErrInfo {
   display: block;
   padding-left: 20px;
-  //font-size: medium;
 }
 
 .RoundHeaderDate {
   & .MuiInputBase-root, .MuiOutlinedInput-root {
     border-radius: 20px;
-  }
-  & .MuiInputBase-input, .MuiOutlinedInput-input {
-    //padding: 10px 14px;
   }
   & .MuiButtonBase-root, .MuiIconButton-root {
     background-color: #003154;

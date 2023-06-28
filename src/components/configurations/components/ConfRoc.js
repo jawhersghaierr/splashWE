@@ -1,19 +1,27 @@
-import React, {useState} from 'react'
-import Chip from '@mui/material/Chip';
-import {Typography} from "@mui/material";
-import Box from "@mui/material/Box";
-import {convertDate} from "../../../utils/convertor-utils";
-import {factureConfigurationStatus} from "../../../utils/status-utils";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import {RowInfo} from "./RowInfo";
-import {DetailsRocConfAMC} from "./DetailsRocConfAMC";
-import {DetailsRocConfTypeConvention} from "./DetailsRocConfTypeConvention";
+import React, {useState, useRef, useEffect} from 'lib_ui/react'
+import {Link} from 'lib_ui/react-router-dom';
+
+import {
+    Box,
+    Chip,
+    Typography,
+    Tab, Tabs,
+} from "@mui/material";
+
 import {styled} from "@mui/material/styles";
 import Tooltip, {tooltipClasses} from "@mui/material/Tooltip";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import {Link} from "react-router-dom";
+
+import {DetailsRocConfAMC} from "./DetailsRocConfAMC";
+import {DetailsRocConfTypeConvention} from "./DetailsRocConfTypeConvention";
+import {RowInfo} from "./RowInfo";
+
+import {
+    convertDate,
+    factureConfigurationStatus
+} from "shared_lib_ui/Lib";
+
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -60,10 +68,10 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
 
     let environnements = null
 
-    if (code == 'limit-sim' && data && data?.environments && data?.environments.length > 0 && nomRefs?.RLTN_CLIENT_ENV) {
+    if (code == 'limit-sim' && data && data?.numeroEnvironnements && data?.numeroEnvironnements.length > 0 && nomRefs?.RLTN_CLIENT_ENV) {
 
         let tmpEnv = []
-        data.environments.forEach( env => tmpEnv.push(nomRefs?.RLTN_ENV_CLIENT[env]) )
+        data.numeroEnvironnements.forEach( env => tmpEnv.push(nomRefs?.RLTN_ENV_CLIENT[env]) )
         tmpEnv = [...new Set(tmpEnv)]
 
         if (tmpEnv.length > 0) {
@@ -103,7 +111,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
             </Typography>
         </Link>,
         <Typography key="3" variant="h6" noWrap component="div" sx={{color: '#4C6F87'}}>
-            {data?.label}
+            {data?.libelle}
         </Typography>,
     ];
 
@@ -123,7 +131,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
             {(code == 'delai' || code == 'limit-sim') &&
             <RowInfo
                 label={'Période de validité'}
-                value={`${convertDate(data?.startDate)}${(data?.endDate)? ' - ' :''}${convertDate(data?.endDate)}`}
+                value={`${convertDate(data?.dateDebut)} - ${convertDate(data?.dateFin)}`}
                 styles={{flex: 2}} border={false} id={data?.id} field="endDate" />}
 
             {code == 'limit-sim' &&
@@ -134,7 +142,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
 
             {code == 'type-convention' &&
             <RowInfo label={'Période de validité'}
-                      value={`${convertDate(data?.startDate)}${(data?.endDate) ? ' - ' : ''}${convertDate(data?.endDate)}`}
+                      value={`${convertDate(data?.dateDebut)} - ${convertDate(data?.dateFin)}`}
                       border={false} styles={{flex: 2}} id={data?.id} field="endDate" />}
 
             {nomRefs && code == 'amc' && <RowInfo label={'Groupement clients'} value={nomRefs.RLTN_CLIENT_GROUP[data?.content] || data?.content} border={false}
@@ -159,6 +167,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
         </Tabs>
 
         <TabPanel value={value} index={0}>
+
             {code == 'amc' && <DetailsRocConfAMC data={data}/>}
             {code == 'limit-sim' && nomRefs && <DetailsRocConfTypeConvention data={data} nomRefs={nomRefs}/>}
             {code == 'type-convention' &&
@@ -176,7 +185,7 @@ export const ConfRoc = ({data, nomRefs, domain, code, id, domainForPanel, curren
                     <RowInfo label={'Détail du paramètre'} value={data?.motif || <div style={{whiteSpace: 'pre-line'}}> {data?.content} {data?.contentType} </div>}
                         id={data?.id} field="content_contentType" />
                 </Box>}
-            {/*{JSON.stringify(data)}*/}
+
         </TabPanel>
 
     </Box>

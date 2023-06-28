@@ -2,12 +2,17 @@ module.exports = {
     "remoteApps": {
         "lib_ui": "${REMOTE_LIB_UI}",
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
+        "hospi_ui": "${REMOTE_HOSPI}",
+        "payment_ui": "${REMOTE_PAYEMENTS}",
+        "ps_ui": "${REMOTE_PS}",
+        "benef_ui": "${REMOTE_BENEF}",
+
     },
     "apiUrls": {
         "beneficiaire": "${APIURL_BENEFICIAIRE}",
         "configurations": "${APIURL_CONFIGURATIONS}",
         "downloadFacture": "${APIURL_DOWNLOAD_FACTURE}",
-        "downloadSelAndIDB": "${APIURL_DOWNLOAD_SEL_IDB}",
+        "downloadSelAndIdb": "${APIURL_DOWNLOAD_SEL_IDB}",
         "entities": "${APIURL_ENTITIES}",
         "factures": "${APIURL_FACTURES}",
         "fluxFactures": "${APIURL_FLUX_FACTURES}",

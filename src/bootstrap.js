@@ -1,191 +1,107 @@
-import React, {Suspense, useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, { Suspense, useEffect } from "lib_ui/react";
+import ReactDOM from "lib_ui/react-dom";
+import { Switch, Route, BrowserRouter } from "lib_ui/react-router-dom";
+import { Provider } from "lib_ui/react-redux";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import theme from "shared_lib_ui/MUItheme";
+import { store } from "shared_lib_ui/store";
+import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 
-import {Switch, Route, BrowserRouter, matchPath} from 'react-router-dom'
-
-import { Provider } from 'react-redux';
-
-import {Typography, CssBaseline} from "@mui/material";
-import {
-  StyledEngineProvider,
-  ThemeProvider,
-  createTheme,
-  responsiveFontSizes
-} from "@mui/material/styles";
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-
-import { store } from './store';
-
-import {Comp1} from "./component1/Comp1";
+import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
-import Drawer from "./components/shared/Drawer"
-import {Ps} from './components/ps/PS'
-import {Beneficiaire} from './components/beneficiaire/Beneficiaire'
-import {Test} from './components/beneficiaire/Test'
-
-// import { NameContextProvider } from '@viamedis-boilerPlate/shared-library';
-import './theme.scss'
-import PsDetailsById from "./components/ps/PsDetailsById";
-import BeneficiaireDetailsById from "./components/beneficiaire/BeneficiaireDetailsById";
-import FacturesDetailsById from "./components/factures/FacturesDetailsById";
-import {Factures} from "./components/factures/Factures";
 import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
-import {ListConfiguration} from "./components/configurations/ListConfiguration";
-import {Configurations} from "./components/configurations/Configurations";
-import {Intraitables} from "./components/intraitables/Intraitables";
-import {Paiement} from "./components/paiement/Paiement";
-import PaiementDetailsById from "./components/paiement/PaiementDetailsById";
-import {Virement} from "./components/virement/Virement";
-import VirementDetailsById from "./components/virement/VirementDetailsById";
-import {RocEnLigne} from "./components/rocEnLigne/RocEnLigne";
-import RocEnLigneDetailsById from "./components/rocEnLigne/RocEnLigneDetailsById";
-import {FluxInfo as FacturesFluxInfo} from "./components/factures/components/FluxInfo";
-import {FluxInfo as RocFluxInfo} from "./components/rocEnLigne/components/FluxInfo";
-import LogoIcon from '../assets/icons/LogoIcon';
-import LogoTextIcon from '../assets/icons/LogoTextIcon';
+import { ListConfiguration } from "./components/configurations/ListConfiguration";
+import { Configurations } from "./components/configurations/Configurations";
+import RemotePsApp from "ps_ui/RemotePsApp";
+import RemoteBenefApp from "benef_ui/RemoteBenefApp";
+import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
+import RemotePayementApp from "payment_ui/RemotePayementApp";
 
-let theme = createTheme({
-  typography: {
-    allVariants: {
-      fontFamily: 'Gotha',
-      textTransform: 'none',
-      // fontSize: 16,
-    },
-  },
-  boldTypography: {
-    fontWeight: 'inherit',
-  }
-});
+const PageDashboard = () => (
+    <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
+        Dashboard Page
+    </Typography>
+);
 
-const theme1 = createTheme({
-  palette: {
-    // augmentColor is a step that Material-UI automatically does for the standard palette colors.
-    badg1: {
-      main: '#FF5D5D',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg2: {
-      main: '#C7F99F',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-    badg3: {
-      main: '#FFD4AD',
-      light: '#90a4ae',
-      dark: '#37474f',
-      contrastText: '#ffffff',
-    },
-  }
-});
+const PSremote = () => <RemotePsApp store={store} />;
+const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
+const PayementRemote = () => <RemotePayementApp store={store} />;
+const HospiRemote = () => <RemoteHospiApp store={store} />;
 
-
-const dynamicFederation = async (scope, module) => {
-  const container = window[scope]; // or get the container somewhere else
-
-  await container.init(__webpack_share_scopes__.default);
-  return container.get(module).then(factory => {
-    const Module = factory();
-    return Module;
-  });
-};
-
-
-const RemoteApp = React.lazy(() => dynamicFederation('hospi_ui', './RemoteApp'));
-const RemotePsApp = React.lazy(() => dynamicFederation('ps_ui', './RemotePsApp'));
-
-const PageDashboard = () => <Typography variant="h5" noWrap component="div" sx={{padding: '15px 25px', color: '#003154'}}>
-  <b>Dashboard Page</b>
-</Typography>
-
-const Hospi = () => <Comp1/>
-const PSremote = () => <RemotePsApp  store={store} />
-const RemoteTest = () => <RemoteApp store={store} />
-
+const ConfigurationBase = () => <Configurations store={store} />;
+const ListConfigurationBase = () => <ListConfiguration store={store} />;
+const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={store} />;
 
 const App = () => {
+    useEffect(() => {
+        store.injectReducer("configurations", configurationsReducer);
+    }, []);
 
-  // theme = responsiveFontSizes(theme);
-  const [open, setOpen] = useState(false);
-  const [shown, setShown] = useState(true);
+    return (
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <DrawerProvider>
+                    <BrowserRouter>
+                        <Suspense fallback="Loading...">
+                            <Box sx={{ display: "flex" }}>
+                                <CssBaseline />
+                                <HostMenu />
+                                <Box component="main" sx={{ flexGrow: 1 }}>
+                                    <Switch>
+                                        <Route exact path="/" component={PageDashboard} />
 
-  const handleDrawer = () => {
-    setOpen(!open);
-  };
+                                        <Route
+                                            exact
+                                            index
+                                            name={"Configuration"}
+                                            path="/configuration"
+                                            component={ConfigurationBase}
+                                        />
+                                        <Route
+                                            exact
+                                            name={"ConfigurationLists"}
+                                            path="/configuration/:domain/:code"
+                                            component={ListConfigurationBase}
+                                        />
+                                        <Route
+                                            exact
+                                            name={"ConfigurationDetailsById"}
+                                            path="/configuration/:domain/:code/:id"
+                                            component={ConfigurationDetailsByIdBase}
+                                        />
 
-  return (
-    <Provider store={store}>
-      {/*<StyledEngineProvider injectFirst>*/}
-      <ThemeProvider theme={theme}>
-        <Suspense fallback="Loading...">
-          <BrowserRouter>
-            {/*<div className={clsx('Host', classes.root)}>*/}
-            <Box sx={{ display: 'flex' }}>
-              <CssBaseline />
-              {shown && <Drawer variant="permanent" open={open}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', backgroundColor: "#1A4565 !important" }}>
-                  <LogoIcon onClick={handleDrawer} viewBox="0 0 200 200" sx={{ flex: "1 0 auto", margin: "0.6em auto !important", fontSize: "2em !important"}}/>
-                  {open && <LogoTextIcon viewBox="0 0 294.2 56.3" sx={{ flex: "1 0 auto", width: "5em !important", margin: "1em 1em 1em 0 !important"}}/>}
-                </Box>
-                <Divider />
-                <HostMenu collapsed={!open} />
-              </Drawer>
-              }
-              <Box component="main" sx={{ flexGrow: 1}}>
-                <Switch>
-                  <Route exact path="/" component={PageDashboard} />
-                  <Route path="/Hospi" component={Hospi} />
-                  <Route exact={true} path="/PS" component={Ps} />
-                  <Route path="/PS/:id?" component={PsDetailsById}/>
-                  <Route exact={true} path="/beneficiaire" component={Beneficiaire}/>
-                  <Route exact={true} path="/beneficiaire/:id?" component={BeneficiaireDetailsById}/>
-                  <Route path="/ligne" component={RemoteTest}/>
+                                        <Route path="/PS">
+                                            <PSremote />
+                                        </Route>
 
-                  <Route exact name={'FactureFluxInfo'} path="/factures/FluxInfo/:id?" render={(props) => (
-                      <FacturesFluxInfo factId={props.match.params.id} menu={setShown}/>
-                  )} />
-                  <Route path="/factures/:id" component={FacturesDetailsById}/>
-                  <Route exact={true} path="/factures" component={Factures}/>
+                                        <Route path="/beneficiaire">
+                                            <BenefRemote />
+                                        </Route>
 
-                  <Route exact name={'ConfigurationDetailsById'} path="/configuration/:domain/:code/:id" component={ConfigurationDetailsById}/>
-                  <Route exact name={'ConfigurationLists'} path="/configuration/:domain/:code" component={ListConfiguration}/>
-                  <Route exact index={true} name={'Configuration'} path="/configuration" component={Configurations}/>
+                                        <Route path={["/paiement", "/virements"]}>
+                                            <PayementRemote />
+                                        </Route>
 
-                  <Route exact={true} path="/paiement" component={Paiement}/>
-                  <Route path="/paiement/:id?" component={PaiementDetailsById}/>
-
-                  {/*<Route exact name={'FluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" component={RocFluxInfo}/>*/}
-                  <Route exact name={'RocFluxInfo'} path="/serviceEnLigne/FluxInfo/:id?" render={(props) => (
-                      <RocFluxInfo factId={props.match.params.id} menu={setShown}/>
-                  )} />
-                  <Route exact name={'RocEnLigneDetailsById'} path="/serviceEnLigne/:id" component={RocEnLigneDetailsById}/>
-                  <Route exact index={true} name={'RocEnLigne'} path="/serviceEnLigne" component={RocEnLigne}/>
-
-                  <Route exact={true} path="/virements" component={Virement}/>
-                  <Route path="/virements/:id?" component={VirementDetailsById}/>
-                  <Route path="/intraitables" component={Intraitables}/>
-                  <Route path="/intraitFactures" component={RemoteTest}/>
-                  <Route path="/test" component={Test}/>
-                  <Route path="/PSremote" component={PSremote} />
-                </Switch>
-
-              </Box>
-            </Box>
-
-          </BrowserRouter>
-        </Suspense>
-      </ThemeProvider>
-      {/*</StyledEngineProvider>*/}
-    </Provider>
-  );
+                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
+                                            <HospiRemote />
+                                        </Route>
+                                    </Switch>
+                                </Box>
+                            </Box>
+                        </Suspense>
+                    </BrowserRouter>
+                </DrawerProvider>
+            </ThemeProvider>
+        </Provider>
+    );
 };
 
 ReactDOM.render(
     <StyledEngineProvider injectFirst>
-      <App />,
+        <App />
     </StyledEngineProvider>,
-    document.getElementById('root')
+    document.getElementById("root")
 );

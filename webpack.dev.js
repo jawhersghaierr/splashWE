@@ -1,90 +1,115 @@
-const paths = require("./paths");
-
-const webpack = require("webpack");
+// const paths = require("./paths");
+// const webpack = require("webpack");
+// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+// const deps = require('./package.json').dependencies;
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const deps = require('./package.json').dependencies;
-// const env_IP = require('./env-vars').env_IP;
+const { ModuleFederationPlugin } = require("webpack").container;
+const modules = require(`./public/modules`);
+const dependencies = require('./package.json').dependencies;
+const devDependencies = require('./package.json').devDependencies;
+const peerDependencies = require('./package.json').peerDependencies;
 
 module.exports = {
-    // Set the mode to development or production
+
     mode: "development",
 
     entry: './src/index',
 
-    // Control how source maps are generated
     devtool: 'source-map',
 
     optimization: {
         minimize: false,
     },
 
-    // Spin up a server for quick development
     devServer: {
-        historyApiFallback: true,
-        // static: paths.build,
+        historyApiFallback: {
+            disableDotRule: true
+        },
         open: true,
         compress: true,
         hot: true,
         port: 8031,
-        historyApiFallback: {
-            disableDotRule: true
-        },
     },
 
-    // output: {
-    //     publicPath: 'http://localhost:8031/',
-    // },
     output: {
-        publicPath: 'auto',
+        publicPath: "auto",
     },
+
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
     },
 
     plugins: [
-        // Only update what has changed on hot reload
+
         new ModuleFederationPlugin({
-            name: 'host',
-            // library: { type: 'var', name: 'host' },
-            // filename: 'remoteEntry.js',
-            remotes: {
-                // lib_ui: `lib_ui@http://${env_IP}:8038/remoteEntry.js`,
-                // lib_ui: `lib_ui@${getRemoteEntryUrl(3005)}`,
-                // shared_lib_ui: `shared_lib_ui@${getRemoteEntryUrl(8051)}`,
-            },
-            // remotes: {
-                // hospi_ui: `hospi_ui@http://${env_IP}:8031/remoteEntry.js`,
-                // ps_ui: `ps_ui@http://http://${env_IP}:8034/remotePsEntry.js`,
-            // },
+            name: 'host_ui',
+            filename: 'remoteEntry.js',
+            remotes: getRemotes(),
             shared: {
-                ...deps,
-                'react': {
+                "react": {
+                    //   eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                'react-dom': {
+                "react-dom": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: '17.0.2'
+                    requiredVersion: "17.0.2",
                 },
-                '@mui/material': {
+                
+                "react-router-dom": {
+                    requiredVersion: dependencies['react-dom-dom'],
                     singleton: true,
-                    strictVersion: true,
-                    requiredVersion: '5.5.2'
                 },
-                // '@viamedis-boilerPlate/shared-library': {
-                //     import: '@viamedis-boilerPlate/shared-library',
-                //     requiredVersion: require('../shared-library/package.json').version,
+                "redux": {
+                    requiredVersion: dependencies['redux'],
+                    singleton: true,
+                },
+                "react-redux": {
+                    requiredVersion: dependencies['react-redux'],
+                    singleton: true,
+                },
+                "react-final-form": {
+                    requiredVersion: dependencies['react-final-form'],
+                    singleton: true,
+                },
+                
+                // '@mui/styles': {
+                //   requiredVersion: dependencies['@mui/styles'],
+                //   singleton: true,
                 // },
-            },
+                '@mui/material': {
+                    requiredVersion: dependencies['@mui/material'],
+                    singleton: true,
+                },
+                "@mui/system": {
+                    singleton: true,
+                    requiredVersion: dependencies['@mui/system'],
+                },
+                '@mui/icons-material': {
+                    requiredVersion: dependencies['@mui/icons-material'],
+                    singleton: true,
+                },
+                '@emotion/react': {
+                    requiredVersion: dependencies['@emotion/react'],
+                    singleton: true,
+                },
+                '@mui/x-date-pickers': {
+                    requiredVersion: dependencies['@mui/x-date-pickers'],
+                    singleton: true,
+                },
+                // '@mui/x-date-pickers/AdapterDateFns': {
+                //   singleton: true,
+                // },
+            }
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            publicPath: "/"
+            assets: './public/assets',
+            publicPath: '/'
         }),
     ],
     module: {
@@ -105,7 +130,6 @@ module.exports = {
                 },
             },
 
-            // Styles: Inject CSS into the head with source maps
             {
                 test: /\.(scss|css)$/,
                 use: [
@@ -121,10 +145,6 @@ module.exports = {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
                 type: "asset/resource"
             },
-            // {
-            //     test: /\.svg/,
-            //     type: 'asset/resource'
-            // },
             {
                 test: /\.json/,
                 type: 'asset/resource',
@@ -132,33 +152,42 @@ module.exports = {
                     filename: './conf/[name][ext]',
                 },
             },
-            // {
-            //     test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-            //     type: 'asset/inline',
-            //     // test: /\.svg/,
-            //     // type: 'asset/inline'
-            // },
 
-            // Images: Copy image files to build folder
-            // {
-            //     test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-            //     type: "asset",
-            //     loader: 'url-loader?limit=100000'
-            // },
-            // Fonts and SVGs: Inline files
-            // { test: /\.(woff(2)?|eot|ttf|otf|svg|)$/, type: "asset/inline" },
         ],
     },
 };
 
+function getRemotes () {
+    console.log('modules: ', modules)
+    let _remotes = {}
+    Object.keys(modules.remoteApps).forEach(remote => {
+        console.log('remote : ', remote)
+        _remotes[remote] = `promise new Promise(resolve => {
+        
+            console.log('**********************************************')
+            console.log('window.${remote} >', window.${remote})
+            console.log('**********************************************')
+            if (window.${remote} == undefined) {
+                const script = document.createElement('script')
+                script.src = window._env_.remoteApps.${remote}
+                script.onload = () => {
+                    const proxy = {
+                        get: (request) => window.${remote}.get(request),
+                        init: (arg) => {
+                           try {
+                                return window.${remote}.init(arg)
+                           } catch(e) {
+                                console.log('remote container already initialized')
+                           }
+                        }
+                    }
+                    resolve(proxy)
+                }
+                if (!script.src.includes('undefined')) document.body.appendChild(script);
+            } else resolve('')
+        })`
+    })
+    console.log('_remotes: ', _remotes)
 
-
-function getRemoteEntryUrl(port) {
-    const { HOST } = process.env;
-
-    if (!HOST) {
-        return `//localhost:${port}/remoteEntry.js`;
-    }
-
-    return `//${HOST}/remoteEntry.js`;
+    return (_remotes)
 }
