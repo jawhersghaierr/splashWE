@@ -11,6 +11,10 @@ services:
     environment:
       - REMOTE_LIB_UI=http://10.241.25.20:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=http://10.241.25.20:8039/remoteEntry.js
+      - REMOTE_HOSPI=http://10.241.25.20:8032/remoteEntry.js
+      - REMOTE_PAYEMENTS=http://10.241.25.20:8033/remoteEntry.js
+      - REMOTE_PS=http://10.241.25.20:8034/remoteEntry.js
+      - REMOTE_BENEF=http://10.241.25.20:8035/remoteEntry.js
       - APIURL_BENEFICIAIRE=http://10.241.25.20:8007/api/v1
       - APIURL_CONFIGURATIONS=http://10.241.25.20:8015/api/v1
       - APIURL_DOWNLOAD_FACTURE=http://10.241.25.20:8015/api/v1
@@ -26,4 +30,3 @@ services:
       - APIURL_VIREMENTS=http://10.241.25.20:8003/api/v1
       - APIURL_REFS=http://10.241.25.20:8015/api/v1
       - APIURL_REFERENTIELS=http://10.241.25.20:8004/api/v1
-
