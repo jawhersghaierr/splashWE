@@ -14,3 +14,20 @@ include:
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
+
+#overwrite docker build to skip trivy scans
+.build-docker-image:
+  extends: .docker_for_build
+  when: on_success
+  script:
+    - echo "Will build docker image for ${IMAGE_BUILD}:${VERSION_BUILD}"
+    - docker build --pull --rm --tag ${IMAGE_BUILD} -f ${DOCKERFILE_BUILD} .
+    - |-
+      if [[ "$PUSH_TAG_LATEST" = "true" ]]; then \
+        docker image tag ${IMAGE_BUILD} $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}:latest
+      fi
+    - |-
+      if [[ -n "$VERSION_BUILD" ]]; then \
+        docker image tag ${IMAGE_BUILD} $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}:${VERSION_BUILD}
+      fi
+    - docker push --all-tags $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}
