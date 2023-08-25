@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import theme from "shared_lib_ui/MUItheme";
 import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
+import { NotFound } from "shared_lib_ui/Lib/components";
 
 import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
@@ -88,6 +89,9 @@ const App = () => {
                                         <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
                                             <HospiRemote />
                                         </Route>
+                                        
+                                        <Route exact path="/not-found" component={NotFound} />
+                                        
                                     </Switch>
                                 </Box>
                             </Box>
