@@ -90,7 +90,7 @@ const App = () => {
                                             <HospiRemote />
                                         </Route>
                                         
-                                        <Route exact path="/not-found" component={NotFound} />
+                                        <Route path={["/not-found" ,"*"]} component={NotFound} />
                                         
                                     </Switch>
                                 </Box>
