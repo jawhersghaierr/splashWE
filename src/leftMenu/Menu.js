@@ -34,6 +34,7 @@ const hostMenuItems = [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
             { name: "Intraitables", link: "/intraitables" },
+            { name: "Paramètres", link: "/parametres" },
         ],
     },
     {
