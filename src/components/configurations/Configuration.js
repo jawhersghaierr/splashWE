@@ -41,7 +41,7 @@ export const Configuration = ({config, nomRefs}) => {
 
             <SearchAccordion code={config?.code} nomRefs={nomRefs}/>
 
-            {items && !configItem && <ConfigutationsGrid data={items?.results} nomRefs={nomRefs} configItem={setConfigItem} config={config}/>}}
+            {items && !configItem && <ConfigutationsGrid data={items?.results} nomRefs={nomRefs} configItem={setConfigItem} config={config}/>}
             {configItem && <ConfigurationDetailsById configItem={configItem} config={config} />}
             <div style={{minHeight: '200px', background: 'white', padding: '15px', maxWidth: '600px', margin: '15px'}}>
 

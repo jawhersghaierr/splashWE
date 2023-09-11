@@ -29,7 +29,7 @@ module.exports = {
         open: true,
         compress: true,
         hot: true,
-        port: 8031,
+        port: 8030,
     },
 
     output: {

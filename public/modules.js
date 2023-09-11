@@ -1,4 +1,22 @@
 module.exports = {
+	
+	"msalConfig": {
+		"auth": {
+			clientId: "cb80b654-41fb-43dd-bb34-c802089d0d12",
+			authority: "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
+			knownAuthorities: ["integrationviamedisb2c.b2clogin.com"],
+			redirectUri: "http://localhost:8030/factures",
+			postLogoutRedirectUri: "http://localhost:8030"
+		}
+	},
+	"loginRequest": {
+		"scopes": ["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"]
+	},
+	"apiUrl": "http://localhost:8030",
+	"feUrl": "http://localhost:8030",
+	
+	
+	
 	"remoteAppsLocal": {
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
