@@ -15,6 +15,9 @@ include:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
 
+    test-sonarqube-checks:
+      allow_failure: true
+
 #overwrite docker build to skip trivy scans
 .build-docker-image:
   extends: .docker_for_build

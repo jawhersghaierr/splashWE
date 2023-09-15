@@ -3,7 +3,7 @@ version: '3.6'
 services:
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION}
     container_name: host-ui
     restart: unless-stopped
     ports:
