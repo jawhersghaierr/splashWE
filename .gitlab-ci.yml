@@ -10,7 +10,8 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'develop'
+#    ref: 'develop'
+    ref: '2.13.0'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
