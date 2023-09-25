@@ -83,6 +83,7 @@ const App = () => {
                     <BrowserRouter>
                         <Suspense fallback="Loading...">
                             <MsalProvider instance={msalInstance}>
+                                <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
                                 
                                     <Box sx={{ display: "flex" }}>
                                     
@@ -90,50 +91,51 @@ const App = () => {
                                     <HostMenu />
                                     <Box component="main" sx={{ flexGrow: 1 }}>
                                         <Switch>
-                                            <Route exact path="/" component={PageDashboard} />
-    
-                                            <Route
-                                                exact
-                                                index
-                                                name={"Configuration"}
-                                                path="/configuration"
-                                                component={ConfigurationBase}
-                                            />
-                                            <Route
-                                                exact
-                                                name={"ConfigurationLists"}
-                                                path="/configuration/:domain/:code"
-                                                component={ListConfigurationBase}
-                                            />
-                                            <Route
-                                                exact
-                                                name={"ConfigurationDetailsById"}
-                                                path="/configuration/:domain/:code/:id"
-                                                component={ConfigurationDetailsByIdBase}
-                                            />
-    
-                                            <Route path="/PS">
-                                                <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-                                                <PSremote />
-                                                </MsalAuthenticationTemplate>
-                                            </Route>
-    
-                                            <Route path="/beneficiaire">
-                                                <BenefRemote />
-                                            </Route>
-    
-                                            <Route path={["/paiement", "/virements"]}>
-                                                <PayementRemote />
-                                            </Route>
-                                            
-                                            <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
-                                                <UnauthenticatedTemplate>
-                                                    <HospiRemote />
-                                                </UnauthenticatedTemplate>
-                                            </Route>
+
+                                                <Route exact path="/" component={PageDashboard} />
+        
+                                                <Route
+                                                    exact
+                                                    index
+                                                    name={"Configuration"}
+                                                    path="/configuration"
+                                                    component={ConfigurationBase}
+                                                />
+                                                <Route
+                                                    exact
+                                                    name={"ConfigurationLists"}
+                                                    path="/configuration/:domain/:code"
+                                                    component={ListConfigurationBase}
+                                                />
+                                                <Route
+                                                    exact
+                                                    name={"ConfigurationDetailsById"}
+                                                    path="/configuration/:domain/:code/:id"
+                                                    component={ConfigurationDetailsByIdBase}
+                                                />
+        
+                                                <Route path="/PS">
+                                                    <PSremote />
+                                                </Route>
+        
+                                                <Route path="/beneficiaire">
+                                                    <BenefRemote />
+                                                </Route>
+        
+                                                <Route path={["/paiement", "/virements"]}>
+                                                    <PayementRemote />
+                                                </Route>
+                                                
+                                                <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
+                                                    {/*<UnauthenticatedTemplate>*/}
+                                                        <HospiRemote />
+                                                    {/*</UnauthenticatedTemplate>*/}
+                                                </Route>
+                                        
                                         </Switch>
                                     </Box>
                                 </Box>
+                                </MsalAuthenticationTemplate>
                             </MsalProvider>
                         </Suspense>
                     </BrowserRouter>

@@ -27,20 +27,37 @@ services:
       - REMOTE_PAYEMENTS=https://10.241.25.10:8033/remoteEntry.js
       - REMOTE_PS=https://10.241.25.10:8034/remoteEntry.js
       - REMOTE_BENEF=https://10.241.25.10:8035/remoteEntry.js
-      - APIURL_BENEFICIAIRE=http://10.241.25.10:8007/api/v1
-      - APIURL_CONFIGURATIONS=http://10.241.25.10:8015/api/v1
-      - APIURL_DOWNLOAD_FACTURE=http://10.241.25.10:8015/api/v1
-      - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.10:8015/api/v1
-      - APIURL_ENTITIES=http://10.241.25.10:8031/api/entities
-      - APIURL_FACTURES=http://10.241.25.10:8005/api/v1
-      - APIURL_FLUX_FACTURES=http://10.241.25.10:8014/api/v1
-      - APIURL_INTRAITABLES=http://10.241.25.10:8014/api/v1
-      - APIURL_PAIEMENTS=http://10.241.25.10:8003/api/v1
-      - APIURL_PS=http://10.241.25.10:8002/api/v1
-      - APIURL_SEL_IDB=http://10.241.25.10:8001/api/v1
-      - APIURL_FLUX_SEL_IDB=http://10.241.25.10:8001/api/v1
-      - APIURL_VIREMENTS=http://10.241.25.10:8003/api/v1
-      - APIURL_REFS=http://10.241.25.10:8015/api/v1
-      - APIURL_REFERENTIELS=http://10.241.25.10:8004/api/v1
+#      We will Use just for TEST API from INT Environment
+      - APIURL_BENEFICIAIRE=https://int-api.viamedis.net/droits-beneficiaire-api/v1
+      - APIURL_CONFIGURATIONS=https://int-api.viamedis.net/aggregator-api/v1
+      - APIURL_DOWNLOAD_FACTURE=https://int-api.viamedis.net/aggregator-api/v1
+      - APIURL_DOWNLOAD_SEL_IDB=https://int-api.viamedis.net/aggregator-api/v1
+#      - APIURL_ENTITIES=http://10.241.25.10:8031/api/entities
+      - APIURL_FACTURES=https://int-api.viamedis.net/hospi-facturation-api/v1
+      - APIURL_FLUX_FACTURES=https://int-api.viamedis.net/facturation-integration-api/v1
+      - APIURL_INTRAITABLES=https://int-api.viamedis.net/facturation-integration-api/v1
+      - APIURL_PAIEMENTS=https://int-api.viamedis.net/paiement-api/v1
+      - APIURL_PS=https://int-api.viamedis.net/ps-api/v1
+      - APIURL_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
+      - APIURL_FLUX_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
+      - APIURL_VIREMENTS=https://int-api.viamedis.net/paiement-api/v1
+      - APIURL_REFS=https://int-api.viamedis.net/aggregator-api/v1
+      - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
+
+#      - APIURL_BENEFICIAIRE=http://10.241.25.10:8007/api/v1
+#      - APIURL_CONFIGURATIONS=http://10.241.25.10:8015/api/v1
+#      - APIURL_DOWNLOAD_FACTURE=http://10.241.25.10:8015/api/v1
+#      - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.10:8015/api/v1
+#      - APIURL_ENTITIES=http://10.241.25.10:8031/api/entities
+#      - APIURL_FACTURES=http://10.241.25.10:8005/api/v1
+#      - APIURL_FLUX_FACTURES=http://10.241.25.10:8014/api/v1
+#      - APIURL_INTRAITABLES=http://10.241.25.10:8014/api/v1
+#      - APIURL_PAIEMENTS=http://10.241.25.10:8003/api/v1
+#      - APIURL_PS=http://10.241.25.10:8002/api/v1
+#      - APIURL_SEL_IDB=http://10.241.25.10:8001/api/v1
+#      - APIURL_FLUX_SEL_IDB=http://10.241.25.10:8001/api/v1
+#      - APIURL_VIREMENTS=http://10.241.25.10:8003/api/v1
+#      - APIURL_REFS=http://10.241.25.10:8015/api/v1
+#      - APIURL_REFERENTIELS=http://10.241.25.10:8004/api/v1
 
 
