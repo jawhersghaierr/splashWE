@@ -1,11 +1,11 @@
 module.exports = {
     "msalConfig": {
         "auth": {
-            "clientId": "7f53ad13-dd05-4d1e-9239-15210825db3f",
-            "authority": "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
-            "knownAuthorities": ["integrationviamedisb2c.b2clogin.com"],
-            "redirectUri": "https://10.241.25.10:8030",
-            "postLogoutRedirectUri": "https://10.241.25.10:8030"
+            "clientId": "${CLIENT_ID}",
+            "authority": "${AUTHORITY}",
+            "knownAuthorities": "${KNOWN_AUTHORITY}",
+            "redirectUri": "${REDIRECT_URI}",
+            "postLogoutRedirectUri": "${POST_LOGOUT_REDIRECT_URI}"
         },
         // "auth": {
         // 	clientId: "cb80b654-41fb-43dd-bb34-c802089d0d12",
@@ -16,7 +16,7 @@ module.exports = {
         // },
     },
     "loginRequest": {
-        "scopes": ["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"],
+        "scopes": "${LOGIN_REQUEST_SCOPES}",
         "extraQueryParameters": {"ui_locales" : "fr-FR"}
     },
     

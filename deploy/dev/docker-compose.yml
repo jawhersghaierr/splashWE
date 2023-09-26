@@ -43,21 +43,16 @@ services:
       - APIURL_VIREMENTS=https://int-api.viamedis.net/paiement-api/v1
       - APIURL_REFS=https://int-api.viamedis.net/aggregator-api/v1
       - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
+      - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
+      - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email
+      - KNOWN_AUTHORITY=["integrationviamedisb2c.b2clogin.com"]
+      - REDIRECT_URI=https://10.241.25.10:8030
+      - POST_LOGOUT_REDIRECT_URI=https://10.241.25.10:8030
+      - LOGIN_REQUEST_SCOPES=["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"]
 
-#      - APIURL_BENEFICIAIRE=http://10.241.25.10:8007/api/v1
-#      - APIURL_CONFIGURATIONS=http://10.241.25.10:8015/api/v1
-#      - APIURL_DOWNLOAD_FACTURE=http://10.241.25.10:8015/api/v1
-#      - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.10:8015/api/v1
-#      - APIURL_ENTITIES=http://10.241.25.10:8031/api/entities
-#      - APIURL_FACTURES=http://10.241.25.10:8005/api/v1
-#      - APIURL_FLUX_FACTURES=http://10.241.25.10:8014/api/v1
-#      - APIURL_INTRAITABLES=http://10.241.25.10:8014/api/v1
-#      - APIURL_PAIEMENTS=http://10.241.25.10:8003/api/v1
-#      - APIURL_PS=http://10.241.25.10:8002/api/v1
-#      - APIURL_SEL_IDB=http://10.241.25.10:8001/api/v1
-#      - APIURL_FLUX_SEL_IDB=http://10.241.25.10:8001/api/v1
-#      - APIURL_VIREMENTS=http://10.241.25.10:8003/api/v1
-#      - APIURL_REFS=http://10.241.25.10:8015/api/v1
-#      - APIURL_REFERENTIELS=http://10.241.25.10:8004/api/v1
 
+#        "authority": "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
+#        "knownAuthorities": ["integrationviamedisb2c.b2clogin.com"],
+#        "redirectUri": "https://10.241.25.10:8030",
+#        "postLogoutRedirectUri": "https://10.241.25.10:8030"
 
