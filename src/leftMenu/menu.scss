@@ -8,7 +8,7 @@
   position: relative;
   height: 100px;
   width: 325px;
-  background-color: #F66969;
+  background-color: #ffffff;
   border-radius: 25px 25px 25px 0;
 }
 
@@ -22,4 +22,8 @@
   width: 25px;
   border-top-left-radius: 25px;
   box-shadow: 0 -25px 0 0 #F66969;
+}
+
+.MuiButtonBase-root:hover .MuiTypography-root {
+  color: #ffffff !important;
 }
