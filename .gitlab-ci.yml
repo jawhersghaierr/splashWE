@@ -16,9 +16,6 @@ include:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
 
-test-sonarqube-checks:
-  allow_failure: true
-
 .docker_over_ssh_for_deploy:
   image: $DOCKER_PULL_REGISTRY/$DOCKER_IMAGE
   tags:
