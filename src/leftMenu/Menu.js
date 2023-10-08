@@ -299,7 +299,7 @@ const Menu = (props) => {
     }, [location?.pathname]);
 
     return (
-        <Box component="nav" className={classes.hostMenu + " " + collapsedClass}>
+        <Box id="leftMenu" component="nav" className={classes.hostMenu + " " + collapsedClass}>
             <MenuList
                 disablePadding
                 sx={{
