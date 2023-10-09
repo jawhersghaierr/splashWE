@@ -67,7 +67,7 @@ const hostMenuItems = [
         link: "/beneficiaire",
     },
     {
-        name: "Professionnel de santé",
+        name: "Professionnels de santé",
         icon: PSIcon,
         link: "/PS",
     },
