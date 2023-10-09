@@ -86,7 +86,7 @@ const App = () => {
                                             <PayementRemote />
                                         </Route>
 
-                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
+                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures","/parametres"]}>
                                             <HospiRemote />
                                         </Route>
                                         
