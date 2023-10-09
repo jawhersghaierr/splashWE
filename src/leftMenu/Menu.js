@@ -131,13 +131,8 @@ const RecursiveMenuItem = (props) => {
     };
 
     const handleCollapsedClick = () => {
-        //setOpenedSubMenu(name);
         setOpenSubMenu(collapsed ? true : !openSubMenu );
         openLeftDrawer();
-        //const links = popitems.map((popitem) => popitem.link);
-        //if (!links.includes(activeLink)) {
-           // setActiveLink(null);
-        //}
     };
 
     return (
