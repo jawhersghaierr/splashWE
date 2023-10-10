@@ -34,6 +34,7 @@ const hostMenuItems = [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
             { name: "Intraitables", link: "/intraitables" },
+            { name: "Paramètres", link: "/parametres" },
         ],
     },
     {
@@ -74,10 +75,9 @@ const hostMenuItems = [
 ];
 
 const RecursiveMenuItem = (props) => {
-    const { name, link, icon: Icon, collapsed, popitems, popitem, activeLink, setActiveLink, openedSubMenu, setOpenedSubMenu } = props;
+    const { name, link, icon: Icon, collapsed, popitems, popitem, activeLink, setActiveLink, openedSubMenu, setOpenedSubMenu, openLeftDrawer } = props;
 
     const classes = useStyles();
-    const [openPopper, setOpenPopper] = useState(false);
     const [openSubMenu, setOpenSubMenu] = useState(false);
     const ref = useRef();
     const theme = useTheme();
@@ -87,12 +87,8 @@ const RecursiveMenuItem = (props) => {
         strict: true,
     });
 
-    console.log("activeLink >", activeLink);
-    console.log("link >", link);
-    console.log("match >", match);
-
     useEffect(() => {
-        if (popitems && popitems.length) {
+        if (popitems?.length) {
             const links = popitems.map((popitem) => popitem.link);
             if (links.includes(activeLink)) {
                 setOpenedSubMenu(name);
@@ -131,28 +127,16 @@ const RecursiveMenuItem = (props) => {
         if (openedSubMenu !== currentOpenedSubMenu || !popitem) {
             setOpenedSubMenu(null);
         }
+        openLeftDrawer();
         setActiveLink(link);
     };
 
     const handleCollapsedClick = () => {
-        setOpenedSubMenu(name);
-        setOpenSubMenu(!openSubMenu);
-        const links = popitems.map((popitem) => popitem.link);
-        if (!links.includes(activeLink)) {
-            setActiveLink(null);
-        }
+        setOpenSubMenu(collapsed ? true : !openSubMenu );
+        openLeftDrawer();
     };
 
     return (
-        // <ListItem
-        //     /*{...props}*/
-        //     ref={ref}
-        //     className={openPopper ? classes.active : ""}
-        //     onMouseEnter={() => setOpenPopper(true)}
-        //     onMouseLeave={() => setOpenPopper(false)}
-        //     onClick={() => setOpenPopper(false)}
-        //     sx={{ width: 280}}
-        // >
         <>
             {link && (
                 <ListItemButton
@@ -247,7 +231,7 @@ const RecursiveMenuItem = (props) => {
                 <Popper
                     anchorEl={ref.current}
                     className="popperStyle"
-                    open={openPopper}
+                    open={false}
                     placement={props.placement ?? "right-start"}
                     modifiers={{
                         flip: { enabled: true },
@@ -266,6 +250,7 @@ const RecursiveMenuItem = (props) => {
                             setActiveLink={setActiveLink}
                             openedSubMenu={openedSubMenu}
                             setOpenedSubMenu={setOpenedSubMenu}
+                            openLeftDrawer={openLeftDrawer}
                             {...item}
                         />
                     ))}
@@ -284,6 +269,7 @@ const RecursiveMenuItem = (props) => {
                                 setActiveLink={setActiveLink}
                                 openedSubMenu={openedSubMenu}
                                 setOpenedSubMenu={setOpenedSubMenu}
+                                openLeftDrawer={openLeftDrawer}
                                 {...item}
                             />
                         ))}
@@ -291,14 +277,14 @@ const RecursiveMenuItem = (props) => {
                 </Collapse>
             )}
         </>
-        // </ListItem>
     );
 };
 
 const Menu = (props) => {
     const location = useLocation();
     const classes = useStyles();
-    const collapsedClass = props.collapsed ? "collapsed" : "";
+    const { collapsed, openLeftDrawer} = props
+    const collapsedClass = collapsed ? "collapsed" : "";
     const { height } = useWindowDimensions();
 
     const [activeLink, setActiveLink] = useState(location?.pathname);
@@ -337,12 +323,13 @@ const Menu = (props) => {
                 {hostMenuItems.map((item) => (
                     <RecursiveMenuItem
                         autoFocus={false}
-                        collapsed={!!props.collapsed}
+                        collapsed={!!collapsed}
                         key={`it_${item?.name}`}
                         activeLink={activeLink}
                         setActiveLink={setActiveLink}
                         openedSubMenu={openedSubMenu}
                         setOpenedSubMenu={setOpenedSubMenu}
+                        openLeftDrawer={openLeftDrawer}
                         {...item}
                     />
                 ))}
