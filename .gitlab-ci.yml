@@ -16,6 +16,7 @@ include:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
 
+#overwrite docker build missin TAGs
 .docker_over_ssh_for_deploy:
   image: $DOCKER_PULL_REGISTRY/$DOCKER_IMAGE
   tags:
