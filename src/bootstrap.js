@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import theme from "shared_lib_ui/MUItheme";
 import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
+import { NotFound } from "shared_lib_ui/Lib/components";
 
 import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
@@ -20,26 +21,12 @@ import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 
-// Msal imports
-import { MsalProvider, MsalAuthenticationTemplate, UnauthenticatedTemplate  } from "lib_ui/@azure-msal-react";
-import { InteractionType, EventType } from "lib_ui/@azure-msal-browser";
-import { msalInstance } from "shared_lib_ui/msal";
-
-import {setAccount} from "shared_lib_ui/host";
-import {UserAccess} from "./components/UserAccess";
-
-
-
-
-const PageDashboard = () => (<>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-            <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
-                Dashboard Page
-            </Typography>
-            <div style={{margin: '35px'}}><UserAccess/></div>
-        </div>
-    </>
+const PageDashboard = () => (
+    <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
+        Dashboard Page
+    </Typography>
 );
+
 const PSremote = () => <RemotePsApp store={store} />;
 const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
 const PayementRemote = () => <RemotePayementApp store={store} />;
@@ -52,28 +39,6 @@ const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={stor
 const App = () => {
     useEffect(() => {
         store.injectReducer("configurations", configurationsReducer);
-        
-        const callbackId = msalInstance.addEventCallback((event) => {
-            
-            switch (event.eventType) {
-                case EventType.ACQUIRE_TOKEN_SUCCESS:
-                    store.dispatch(setAccount(event.payload));
-                    break
-                
-                case EventType.LOGIN_SUCCESS:
-                    if (event.payload) {
-                        const account = event.payload;
-                        msalInstance.setActiveAccount(account);
-                        store.dispatch(setAccount(account));
-                    }
-                    break
-            }
-        });
-        
-        return () => {
-            if (callbackId) msalInstance.removeEventCallback(callbackId);
-        }
-        
     }, []);
 
     return (
@@ -82,61 +47,54 @@ const App = () => {
                 <DrawerProvider>
                     <BrowserRouter>
                         <Suspense fallback="Loading...">
-                            <MsalProvider instance={msalInstance}>
-                                <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-                                
-                                    <Box sx={{ display: "flex" }}>
-                                    
-                                    <CssBaseline />
-                                    <HostMenu />
-                                    <Box component="main" sx={{ flexGrow: 1 }}>
-                                        <Switch>
+                            <Box sx={{ display: "flex" }}>
+                                <CssBaseline />
+                                <HostMenu />
+                                <Box component="main" sx={{ flexGrow: 1 }}>
+                                    <Switch>
+                                        <Route exact path="/" component={PageDashboard} />
 
-                                                <Route exact path="/" component={PageDashboard} />
-        
-                                                <Route
-                                                    exact
-                                                    index
-                                                    name={"Configuration"}
-                                                    path="/configuration"
-                                                    component={ConfigurationBase}
-                                                />
-                                                <Route
-                                                    exact
-                                                    name={"ConfigurationLists"}
-                                                    path="/configuration/:domain/:code"
-                                                    component={ListConfigurationBase}
-                                                />
-                                                <Route
-                                                    exact
-                                                    name={"ConfigurationDetailsById"}
-                                                    path="/configuration/:domain/:code/:id"
-                                                    component={ConfigurationDetailsByIdBase}
-                                                />
-        
-                                                <Route path="/PS">
-                                                    <PSremote />
-                                                </Route>
-        
-                                                <Route path="/beneficiaire">
-                                                    <BenefRemote />
-                                                </Route>
-        
-                                                <Route path={["/paiement", "/virements"]}>
-                                                    <PayementRemote />
-                                                </Route>
-                                                
-                                                <Route path={["/intraitables", "/serviceEnLigne", "/factures"]}>
-                                                    {/*<UnauthenticatedTemplate>*/}
-                                                        <HospiRemote />
-                                                    {/*</UnauthenticatedTemplate>*/}
-                                                </Route>
+                                        <Route
+                                            exact
+                                            index
+                                            name={"Configuration"}
+                                            path="/configuration"
+                                            component={ConfigurationBase}
+                                        />
+                                        <Route
+                                            exact
+                                            name={"ConfigurationLists"}
+                                            path="/configuration/:domain/:code"
+                                            component={ListConfigurationBase}
+                                        />
+                                        <Route
+                                            exact
+                                            name={"ConfigurationDetailsById"}
+                                            path="/configuration/:domain/:code/:id"
+                                            component={ConfigurationDetailsByIdBase}
+                                        />
+
+                                        <Route path="/PS">
+                                            <PSremote />
+                                        </Route>
+
+                                        <Route path="/beneficiaire">
+                                            <BenefRemote />
+                                        </Route>
+
+                                        <Route path={["/paiement", "/virements"]}>
+                                            <PayementRemote />
+                                        </Route>
+
+                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures","/parametres"]}>
+                                            <HospiRemote />
+                                        </Route>
                                         
-                                        </Switch>
-                                    </Box>
+                                        <Route path={["/not-found" ,"*"]} component={NotFound} />
+                                        
+                                    </Switch>
                                 </Box>
-                                </MsalAuthenticationTemplate>
-                            </MsalProvider>
+                            </Box>
                         </Suspense>
                     </BrowserRouter>
                 </DrawerProvider>

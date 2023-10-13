@@ -11,7 +11,7 @@ const HostMenu = () => {
         isShownLeftDrawer && (
             <Drawer variant="permanent" open={isOpenLeftDrawer}>
                 <MenuHeader open={isOpenLeftDrawer} openLeftDrawer={openLeftDrawer} closeLeftDrawer={closeLeftDrawer} />
-                <Menu collapsed={!isOpenLeftDrawer} />
+                <Menu collapsed={!isOpenLeftDrawer} openLeftDrawer={openLeftDrawer} />
             </Drawer>
         )
     );

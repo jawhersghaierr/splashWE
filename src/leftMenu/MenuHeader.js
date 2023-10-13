@@ -22,6 +22,7 @@ const MenuHeader = (props) => {
                     sx={{
                         margin: "1.4em 0.9em 0.6em 1.1em",
                         fontSize: "2.5em !important",
+                        cursor: "pointer"
                     }}
                 />
             )}
@@ -58,6 +59,7 @@ const MenuHeader = (props) => {
                             flex: "1 0 auto",
                             margin: "1.4em auto auto !important",
                             fontSize: "2.5em !important",
+                            cursor: "pointer"
                         }}
                     />
                 </Box>
