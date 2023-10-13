@@ -71,7 +71,7 @@ module.exports = {
 		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
 		"intraitables_ui": "http://10.241.25.20:8037/remoteEntry.js",
 		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
-		"ps_ui": "http://10.241.25.20:8034/remoteEntry.js",
+		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
 	},
 	// **************************************************************
