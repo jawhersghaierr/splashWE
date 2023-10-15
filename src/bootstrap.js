@@ -21,6 +21,7 @@ import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
+import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
@@ -32,6 +33,7 @@ const PSremote = () => <RemotePsApp store={store} />;
 const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
 const PayementRemote = () => <RemotePayementApp store={store} />;
 const HospiRemote = () => <RemoteHospiApp store={store} />;
+const TPSRemote = () => <RemoteTPSApp store={store} />;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store} />;
 
 // const ConfigurationBase = () => <Configurations store={store} />;
@@ -90,6 +92,10 @@ const App = () => {
 
                                         <Route path={["/serviceEnLigne", "/factures","/parametres"]}>
                                             <HospiRemote />
+                                        </Route>
+
+                                        <Route path={["/tpAmcServiceEnLigne", "/tpsFactures","/tpsFactures/create"]}>
+                                            <TPSRemote />
                                         </Route>
 
                                         <Route path="/intraitables" >

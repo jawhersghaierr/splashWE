@@ -24,6 +24,7 @@ module.exports = {
     "remoteApps": {
         "lib_ui": "${REMOTE_LIB_UI}",
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
+        "tiers_payant_simple_ui": "${REMOTE_TPS}",
         "hospi_ui": "${REMOTE_HOSPI}",
         "payment_ui": "${REMOTE_PAYEMENTS}",
         "ps_ui": "${REMOTE_PS}",
