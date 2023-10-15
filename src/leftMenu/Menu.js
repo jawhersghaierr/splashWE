@@ -33,7 +33,7 @@ const hostMenuItems = [
         popitems: [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
-            { name: "Intraitables", link: "/intraitables" },
+            // { name: "Intraitables", link: "/intraitables" },
             { name: "Paramètres", link: "/parametres" },
         ],
     },
@@ -44,9 +44,15 @@ const hostMenuItems = [
     },
     {
         icon: ConfigurationIcon,
-        name: "OCAM",
-        link: "/configuration",
+        name: "Intraitables",
+        link: "/intraitables"
     },
+    
+    // {
+    //     icon: ConfigurationIcon,
+    //     name: "OCAM",
+    //     link: "/configuration",
+    // },
     {
         name: "Paiements",
         icon: PaymentIcon,
@@ -57,11 +63,11 @@ const hostMenuItems = [
         icon: VirementIcon,
         link: "/virements",
     },
-    {
-        name: "Espace gestion",
-        icon: GestionIcon,
-        popitems: [],
-    },
+    // {
+    //     name: "Espace gestion",
+    //     icon: GestionIcon,
+    //     popitems: [],
+    // },
     {
         name: "Bénéficiaires",
         icon: BeneficiaireIcon,
