@@ -24,10 +24,9 @@ import RemotePayementApp from "payment_ui/RemotePayementApp";
 // Msal imports
 import {MsalProvider, MsalAuthenticationTemplate, UnauthenticatedTemplate} from "lib_ui/@azure-msal-react";
 import {InteractionType, EventType} from "lib_ui/@azure-msal-browser";
-import {msalInstance} from "shared_lib_ui/msal";
+import { msalInstance, UserAccess } from "shared_lib_ui/auth";
 
 import {setAccount} from "shared_lib_ui/host";
-import {UserAccess} from "./components/UserAccess";
 
 
 const PageDashboard = () => (
@@ -129,6 +128,7 @@ const App = () => {
 											</Switch>
 										</Box>
 									</Box>
+									
 								</MsalAuthenticationTemplate>
 							</MsalProvider>
 						
