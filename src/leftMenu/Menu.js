@@ -136,6 +136,12 @@ const RecursiveMenuItem = (props) => {
         openLeftDrawer();
     };
 
+    
+    const checkActiveLink = () => {
+        if(popitems) return popitems?.flatMap?.((el)=> el.link).includes(activeLink)
+        return openedSubMenu === name
+    }
+
     return (
         <>
             {link && (
@@ -195,12 +201,12 @@ const RecursiveMenuItem = (props) => {
                         margin: "8px auto",
                         borderRadius: "12px",
                         padding: "8px 16px !important",
-                        backgroundColor: openedSubMenu === name && theme.palette.primary.main,
+                        backgroundColor: checkActiveLink() && theme.palette.primary.main,
                     }}
                     onClick={handleCollapsedClick}
                 >
                     <ListItemIcon className={classes.menuItemIcon}>
-                        {!!Icon && <Icon color={openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />}
+                        {!!Icon && <Icon color={checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />}
                     </ListItemIcon>
                     {!collapsed && (
                         <ListItemText
@@ -208,7 +214,7 @@ const RecursiveMenuItem = (props) => {
                                 <Typography
                                     variant="bodym"
                                     sx={{
-                                        color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7,
+                                        color: checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7,
                                     }}
                                 >
                                     {name}
@@ -218,10 +224,10 @@ const RecursiveMenuItem = (props) => {
                     )}
                     {!collapsed &&
                         (openSubMenu ? (
-                            <ArrowDropUpIcon sx={{ color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }} />
+                            <ArrowDropUpIcon sx={{ color: checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }} />
                         ) : (
                             <ArrowDropDownIcon
-                                sx={{ color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }}
+                                sx={{ color: checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }}
                             />
                         ))}
                 </ListItemButton>
