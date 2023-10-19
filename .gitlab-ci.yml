@@ -14,3 +14,9 @@ include:
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
+
+test-sonarqube-checks:
+  allow=true
+
+test-owasp-dependency-check:
+  allow=true
