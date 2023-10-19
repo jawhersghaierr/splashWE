@@ -22,6 +22,7 @@ import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
+import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 
 // Msal imports
 import {MsalProvider, MsalAuthenticationTemplate, UnauthenticatedTemplate} from "lib_ui/@azure-msal-react";
@@ -43,6 +44,7 @@ const PayementRemote = () => <RemotePayementApp store={store}/>;
 const HospiRemote = () => <RemoteHospiApp store={store}/>;
 const TPSRemote = () => <RemoteTPSApp store={store}/>;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store}/>;
+const AuthRemote = () => <RemoteAuthApp store={store}/>;
 
 // const ConfigurationBase = () => <Configurations store={store} />;
 // const ListConfigurationBase = () => <ListConfiguration store={store} />;
@@ -133,6 +135,10 @@ const App = () => {
 												
 												<Route path="/intraitables">
 													<IntraitablesRemote/>
+												</Route>
+												
+												<Route path="/auth">
+													<AuthRemote/>
 												</Route>
 												
 												<Route path={["/not-found", "*"]} component={NotFound}/>

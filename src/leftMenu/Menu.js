@@ -81,6 +81,11 @@ const hostMenuItems = [
         icon: PSIcon,
         link: "/PS",
     },
+    {
+        name: "Auth",
+        icon: HomeIcon,
+        link: "/auth",
+    },
 ];
 
 const RecursiveMenuItem = (props) => {

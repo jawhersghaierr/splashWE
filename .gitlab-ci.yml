@@ -10,7 +10,8 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'develop'
+#    ref: 'develop'
+    ref: 'release-0.3.0-add-SSO'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml

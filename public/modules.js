@@ -33,7 +33,8 @@ module.exports = {
 		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
 		"hospi_ui": "http://localhost:8032/remoteEntry.js",
 		"factures_intraitables_ui": "http://localhost:8037/remoteEntry.js",
-		"payment_ui": "http://localhost:8033/remoteEntry.js"
+		"payment_ui": "http://localhost:8033/remoteEntry.js",
+		"auth_ui": "http://localhost:8040/remoteEntry.js",
 	},
 	"remoteAppsDev": {
 		"lib_ui": "https://10.241.25.10:8038/remoteEntry.js",
@@ -43,7 +44,8 @@ module.exports = {
 		"factures_intraitables_ui": "https://10.241.25.10:8037/remoteEntry.js",
 		"payment_ui": "https://10.241.25.10:8033/remoteEntry.js",
 		"ps_ui": "https://10.241.25.10:8034/remoteEntry.js",
-		"benef_ui": "https://10.241.25.10:8035/remoteEntry.js"
+		"benef_ui": "https://10.241.25.10:8035/remoteEntry.js",
+		"auth_ui": "https://10.241.25.10:8040/remoteEntry.js"
 	},
 	"remoteAppsInt": {
 		"lib_ui": "http://10.241.25.20:8038/remoteEntry.js",
@@ -53,7 +55,8 @@ module.exports = {
 		"factures_intraitables_ui": "http://10.241.25.20:8037/remoteEntry.js",
 		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
 		"ps_ui": "http://10.241.25.20:8034/remoteEntry.js",
-		"benef_ui": "http://10.241.25.20:8035/remoteEntry.js"
+		"benef_ui": "http://10.241.25.20:8035/remoteEntry.js",
+		"auth_ui": "https://10.241.25.20:8040/remoteEntry.js"
 	},
 	"remoteAppsRec": {
 		"lib_ui": "http://10.241.25.21:8038/remoteEntry.js",
@@ -63,7 +66,8 @@ module.exports = {
 		"factures_intraitables_ui": "http://10.241.25.21:8037/remoteEntry.js",
 		"payment_ui": "http://10.241.25.21:8033/remoteEntry.js",
 		"ps_ui": "http://10.241.25.21:8034/remoteEntry.js",
-		"benef_ui": "http://10.241.25.21:8035/remoteEntry.js"
+		"benef_ui": "http://10.241.25.21:8035/remoteEntry.js",
+		"auth_ui": "https://10.241.25.21:8040/remoteEntry.js"
 	},
 	
 	// **************************************************************
@@ -78,6 +82,7 @@ module.exports = {
 		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
 		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
+		"auth_ui": "http://localhost:8040/remoteEntry.js",
 	},
 	// **************************************************************
 	
@@ -96,8 +101,10 @@ module.exports = {
 		"fluxSelAndIdb": "http://localhost:8001/api/v1",
 		"virements": "http://localhost:8003/api/v1",
 		"refs": "http://localhost:8015/api/v1",
-		"referentiels": "http://localhost:8004/api/v1.1"
+		"referentiels": "http://localhost:8004/api/v1.1",
+		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
 	},
+	
 	"apiUrlsDev": {
 		"selAndIdb": "http://10.241.25.10:8001/api/v1",
 		"fluxSelAndIdb": "http://10.241.25.10:8001/api/v1",
@@ -113,8 +120,10 @@ module.exports = {
 		"configurations": "http://10.241.25.10:8015/api/v1",
 		"refs": "http://10.241.25.10:8015/api/v1",
 		"downloadFacture": "http://10.241.25.10:8015/api/v1",
-		"downloadSelAndIdb": "http://10.241.25.10:8015/api/v1"
+		"downloadSelAndIdb": "http://10.241.25.10:8015/api/v1",
+		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
 	},
+	
 	"apiUrlsInt": {
 		"beneficiaire": "http://10.241.25.20:8007/api/v1",
 		"configurations": "http://10.241.25.20:8015/api/v1",
@@ -130,8 +139,10 @@ module.exports = {
 		"fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
 		"virements": "http://10.241.25.20:8003/api/v1",
 		"refs": "http://10.241.25.20:8015/api/v1",
-		"referentiels": "http://10.241.25.20:8004/api/v1"
+		"referentiels": "http://10.241.25.20:8004/api/v1",
+		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
 	},
+	
 	"apiUrlsRec": {
 		"beneficiaire": "http://10.241.25.21:8007/api/v1",
 		"configurations": "http://10.241.25.21:8015/api/v1",
@@ -165,7 +176,8 @@ module.exports = {
 		"configurations": "https://int-api.viamedis.net/aggregator-api/v1",
 		"refs": "https://int-api.viamedis.net/aggregator-api/v1",
 		"downloadFacture": "https://int-api.viamedis.net/aggregator-api/v1",
-		"downloadSelAndIdb": "https://int-api.viamedis.net/aggregator-api/v1"
+		"downloadSelAndIdb": "https://int-api.viamedis.net/aggregator-api/v1",
+		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
 	},
 	
 	// **************************************************************
