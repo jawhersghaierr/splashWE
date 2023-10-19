@@ -46,6 +46,8 @@ module.exports = {
         "selAndIdb": "${APIURL_SEL_IDB}",
         "fluxSelAndIdb": "${APIURL_FLUX_SEL_IDB}",
         "virements": "${APIURL_VIREMENTS}",
+        "tpsFactures": "${APIURL_TPS_FACTURES}",
+        "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
         "refs": "${APIURL_REFS}",
         "referentiels": "${APIURL_REFERENTIELS}",
         "userMngmnt": "${APIURL_USER_MANAGEMENT}",
