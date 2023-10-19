@@ -16,7 +16,7 @@ include:
       - components/env-definitions-azure-docker.yml
 
 test-sonarqube-checks:
-  allow=true
+  allow_failure: true
 
 test-owasp-dependency-check:
-  allow=true
+  allow_failure: true
