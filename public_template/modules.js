@@ -47,6 +47,8 @@ module.exports = {
         "fluxSelAndIdb": "${APIURL_FLUX_SEL_IDB}",
         "virements": "${APIURL_VIREMENTS}",
         "refs": "${APIURL_REFS}",
-        "referentiels": "${APIURL_REFERENTIELS}"
+        "referentiels": "${APIURL_REFERENTIELS}",
+        "userMngmnt": "${APIURL_USER_MANAGEMENT}",
+        
     }
 };

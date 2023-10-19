@@ -10,43 +10,7 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-#    ref: 'develop'
-    ref: 'feature/fix-missing-runner-tag'
+    ref: 'develop'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
-
-
-#overwrite docker build missin TAGs
-#.docker_over_ssh_for_deploy:
-#  image: $DOCKER_PULL_REGISTRY/$DOCKER_IMAGE
-#  tags:
-#    - docker
-#  before_script:
-#    - eval $(ssh-agent -s)
-#    - chmod 400 $ID_RSA
-#    - ssh-add $ID_RSA
-#    - ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP
-#    - echo "$SERVER_USER@$SERVER_IP $DOCKER_REGISTRY_LOGIN $DOCKER_REGISTRY_PASSWORD"
-#    - DOCKER_HOST="ssh://$SERVER_USER@$SERVER_IP"
-#    #use --password-stdin because of https://docs.docker.com/engine/reference/commandline/login/#password-stdin
-#    - echo ${DOCKER_REGISTRY_PASSWORD} | docker login $DOCKER_PULL_REGISTRY --username ${DOCKER_REGISTRY_LOGIN} --password-stdin
-#  after_script:
-#    - docker logout $DOCKER_PULL_REGISTRY
-#
-##overwrite docker build to skip trivy scans
-#.build-docker-image:
-#  extends: .docker_for_build
-#  when: on_success
-#  script:
-#    - echo "Will build docker image for ${IMAGE_BUILD}:${VERSION_BUILD}"
-#    - docker build --pull --rm --tag ${IMAGE_BUILD} -f ${DOCKERFILE_BUILD} .
-#    - |-
-#      if [[ "$PUSH_TAG_LATEST" = "true" ]]; then \
-#        docker image tag ${IMAGE_BUILD} $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}:latest
-#      fi
-#    - |-
-#      if [[ -n "$VERSION_BUILD" ]]; then \
-#        docker image tag ${IMAGE_BUILD} $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}:${VERSION_BUILD}
-#      fi
-#    - docker push --all-tags $DOCKER_PUSH_REGISTRY/${IMAGE_BUILD}
