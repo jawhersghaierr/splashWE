@@ -16,12 +16,6 @@ include:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
 
-test-sonarqube-checks:
-  allow_failure: true
-
-test-owasp-dependency-check:
-  allow_failure: true
-
 
 #overwrite docker build missin TAGs
 .docker_over_ssh_for_deploy:
@@ -39,3 +33,11 @@ test-owasp-dependency-check:
     - echo ${DOCKER_REGISTRY_PASSWORD} | docker login $DOCKER_PULL_REGISTRY --username ${DOCKER_REGISTRY_LOGIN} --password-stdin
   after_script:
     - docker logout $DOCKER_PULL_REGISTRY
+
+
+test-sonarqube-checks:
+  allow_failure: true
+
+test-owasp-dependency-check:
+  allow_failure: true
+
