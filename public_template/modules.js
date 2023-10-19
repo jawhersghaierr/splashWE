@@ -3,7 +3,7 @@ module.exports = {
         "auth": {
             "clientId": "${CLIENT_ID}",
             "authority": "${AUTHORITY}",
-            "knownAuthorities": ["${KNOWN_AUTHORITY}"],
+            "knownAuthorities": [${KNOWN_AUTHORITY}],
             "redirectUri": "${REDIRECT_URI}",
             "postLogoutRedirectUri": "${POST_LOGOUT_REDIRECT_URI}"
         },
