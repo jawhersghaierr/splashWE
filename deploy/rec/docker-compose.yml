@@ -11,6 +11,7 @@ services:
     environment:
       - REMOTE_LIB_UI=http://10.241.25.21:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=http://10.241.25.21:8039/remoteEntry.js
+      - REMOTE_TPS=http://10.241.25.21:8031/remoteEntry.js
       - REMOTE_HOSPI=http://10.241.25.21:8032/remoteEntry.js
       - REMOTE_INTRAITABLES=http://10.241.25.21:8037/remoteEntry.js
       - REMOTE_PAYEMENTS=http://10.241.25.21:8033/remoteEntry.js
