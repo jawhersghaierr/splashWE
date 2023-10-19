@@ -72,11 +72,11 @@ module.exports = {
 	"remoteApps": {
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
-		"tiers_payant_simple_ui": "http://10.241.25.20:8031/remoteEntry.js",
-		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
+		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
+		"hospi_ui": "http://localhost:8032/remoteEntry.js",
 		"factures_intraitables_ui": "http://localhost:8037/remoteEntry.js",
-		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
-		"ps_ui": "http://10.241.25.20:8034/remoteEntry.js",
+		"payment_ui": "http://localhost:8033/remoteEntry.js",
+		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
 	},
 	// **************************************************************
@@ -177,7 +177,7 @@ module.exports = {
 		"downloadFacture": "http://10.241.25.20:8015/api/v1",
 		"downloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
 		"entities": "http://10.241.25.20:8031/api/entities",
-		"factures": "http://10.241.25.20:8005/api/v1/",
+		"factures": "http://10.241.25.20:8005/api/v1",
 		"fluxFactures": "http://10.241.25.20:8014/api/v1",
 		"intraitables": "http://10.241.25.20:8014/api/v1",
 		"paiements": "http://10.241.25.20:8003/api/v1",
@@ -185,6 +185,8 @@ module.exports = {
 		"selAndIdb": "http://10.241.25.20:8001/api/v1",
 		"fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
 		"virements": "http://10.241.25.20:8003/api/v1",
+		"tpsFactures": "http://10.241.25.20:8017/api/v1",
+		"tpAmcSelAndIdb": "http://10.241.25.20:8020/api/v1",
 		"refs": "http://10.241.25.20:8015/api/v1",
 		"referentiels": "http://10.241.25.20:8004/api/v1",
 		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
