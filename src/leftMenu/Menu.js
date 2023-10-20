@@ -138,7 +138,7 @@ const RecursiveMenuItem = (props) => {
     const checkActiveLink = () => {
         return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(activeLink) || (match && match?.path !== "/")
     }
-
+ 
     return (
         <>
             {link && (
@@ -172,7 +172,7 @@ const RecursiveMenuItem = (props) => {
                         <ListItemText
                             primary={
                                 <Typography
-                                    variant={ checkActiveLink() ? (popitem ? "bodyb" : "bodym") : "bodym"}
+                                    variant={ (checkActiveLink() && popitem )? "bodyb" : "bodym"}
                                     sx={{
                                         color:
                                         checkActiveLink()
