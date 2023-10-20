@@ -61,18 +61,14 @@ const hostMenuItems = [
 
         ],
     },
-    // {
-    //     name: "Espace gestion",
-    //     icon: GestionIcon,
-    //     popitems: [],
-    // },
-        name: "Bénéficiaire",
+    {
+        name: "BÃ©nÃ©ficiaire",
         icon: User,
         link: "/beneficiaire",
         
     },
     {
-        name: "Professionnels de santé",
+        name: "Professionnel de santÃ©",
         icon: PSIcon,
         link: "/PS",
         popitems: [
