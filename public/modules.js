@@ -73,11 +73,14 @@ module.exports = {
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
 		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
-		"hospi_ui": "http://localhost:8032/remoteEntry.js",
-		"factures_intraitables_ui": "http://localhost:8037/remoteEntry.js",
-		"payment_ui": "http://localhost:8033/remoteEntry.js",
-		"ps_ui": "http://localhost:8034/remoteEntry.js",
+		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
+		"intraitables_ui": "http://10.241.25.20:8037/remoteEntry.js",
+		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
+		"ps_ui": "http://10.241.25.20:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
+		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
+		"paiement_indu_ui": "http://localhost:8036/remoteEntry.js",
+		"factures_intraitables_ui": "http://localhost:8037/remoteEntry.js",
 	},
 	// **************************************************************
 	

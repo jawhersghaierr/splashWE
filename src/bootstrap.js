@@ -20,8 +20,6 @@ import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
-import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
-import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
@@ -34,6 +32,7 @@ const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
 const PayementRemote = () => <RemotePayementApp store={store} />;
 const HospiRemote = () => <RemoteHospiApp store={store} />;
 const TPSRemote = () => <RemoteTPSApp store={store} />;
+const InduRemote = () => <RemoteInduApp store={store} />;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store} />;
 
 // const ConfigurationBase = () => <Configurations store={store} />;
@@ -78,7 +77,6 @@ const App = () => {
                                         {/*    component={ConfigurationDetailsByIdBase}*/}
                                         {/*/>*/}
 
-                                        <Route path="/PS">
                                             <PSremote />
                                         </Route>
 
@@ -86,19 +84,24 @@ const App = () => {
                                             <BenefRemote />
                                         </Route>
 
-                                        <Route path={["/paiement", "/virements"]}>
+                                        <Route path={["/paiementdashboard","/paiement", "/virements"]}>
                                             <PayementRemote />
                                         </Route>
 
+                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures","/parametres"]}>
                                         <Route path={["/serviceEnLigne", "/factures","/parametres"]}>
+                                        <Route path={["/hospitalisation","/intraitables", "/serviceEnLigne", "/factures","/parametres"]}>
                                             <HospiRemote />
                                         </Route>
-
-                                        <Route path={["/tpAmcServiceEnLigne", "/tpsFactures","/tpsFactures/create"]}>
+                                        <Route path={["/tps","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
                                             <TPSRemote />
                                         </Route>
 
-                                        <Route path="/intraitables" >
+                                        <Route path={["/indu"]}>
+                                            <InduRemote />
+                                        </Route>
+
+                                        <Route path={["/facturesintraitables","/intraitables"]}>
                                             <IntraitablesRemote />
                                         </Route>
                                         
