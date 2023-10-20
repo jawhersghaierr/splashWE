@@ -23,6 +23,7 @@ services:
     environment:
       - REMOTE_LIB_UI=https://10.241.25.10:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=https://10.241.25.10:8039/remoteEntry.js
+      - REMOTE_TPS=http://10.241.25.10:8031/remoteEntry.js
       - REMOTE_HOSPI=https://10.241.25.10:8032/remoteEntry.js
       - REMOTE_INTRAITABLES=https://10.241.25.10:8037/remoteEntry.js
       - REMOTE_PAYEMENTS=https://10.241.25.10:8033/remoteEntry.js
@@ -50,6 +51,7 @@ services:
       - REDIRECT_URI=https://10.241.25.10:8030
       - POST_LOGOUT_REDIRECT_URI=https://10.241.25.10:8030
       - LOGIN_REQUEST_SCOPES=["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"]
+      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
 
 
 #        "authority": "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",

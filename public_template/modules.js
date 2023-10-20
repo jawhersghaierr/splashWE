@@ -24,11 +24,12 @@ module.exports = {
     "remoteApps": {
         "lib_ui": "${REMOTE_LIB_UI}",
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
+        "tiers_payant_simple_ui": "${REMOTE_TPS}",
         "hospi_ui": "${REMOTE_HOSPI}",
         "payment_ui": "${REMOTE_PAYEMENTS}",
         "ps_ui": "${REMOTE_PS}",
         "benef_ui": "${REMOTE_BENEF}",
-        "intraitables_ui": "${REMOTE_INTRAITABLES}",
+        "factures_intraitables_ui": "${REMOTE_INTRAITABLES}",
 
     },
     "apiUrls": {
@@ -45,7 +46,11 @@ module.exports = {
         "selAndIdb": "${APIURL_SEL_IDB}",
         "fluxSelAndIdb": "${APIURL_FLUX_SEL_IDB}",
         "virements": "${APIURL_VIREMENTS}",
+        "tpsFactures": "${APIURL_TPS_FACTURES}",
+        "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
         "refs": "${APIURL_REFS}",
-        "referentiels": "${APIURL_REFERENTIELS}"
+        "referentiels": "${APIURL_REFERENTIELS}",
+        "userMngmnt": "${APIURL_USER_MANAGEMENT}",
+        
     }
 };

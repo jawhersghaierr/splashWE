@@ -11,6 +11,7 @@ services:
     environment:
       - REMOTE_LIB_UI=http://10.241.25.21:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=http://10.241.25.21:8039/remoteEntry.js
+      - REMOTE_TPS=http://10.241.25.21:8031/remoteEntry.js
       - REMOTE_HOSPI=http://10.241.25.21:8032/remoteEntry.js
       - REMOTE_INTRAITABLES=http://10.241.25.21:8037/remoteEntry.js
       - REMOTE_PAYEMENTS=http://10.241.25.21:8033/remoteEntry.js
@@ -29,5 +30,7 @@ services:
       - APIURL_SEL_IDB=http://10.241.25.21:8001/api/v1
       - APIURL_FLUX_SEL_IDB=http://10.241.25.21:8001/api/v1
       - APIURL_VIREMENTS=http://10.241.25.21:8003/api/v1
+      - APIURL_TPS_FACTURES=http://10.241.25.21:8017/api/v1
+      - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
       - APIURL_REFS=http://10.241.25.21:8015/api/v1
       - APIURL_REFERENTIELS=http://10.241.25.21:8004/api/v1

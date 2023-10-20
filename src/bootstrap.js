@@ -11,15 +11,17 @@ import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 import { NotFound } from "shared_lib_ui/Lib/components";
 
-import configurationsReducer from "./components/configurations/configurationsSlice";
+// import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
-import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
-import { ListConfiguration } from "./components/configurations/ListConfiguration";
-import { Configurations } from "./components/configurations/Configurations";
+// import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
+// import { ListConfiguration } from "./components/configurations/ListConfiguration";
+// import { Configurations } from "./components/configurations/Configurations";
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
+import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
+import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
@@ -31,14 +33,16 @@ const PSremote = () => <RemotePsApp store={store} />;
 const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
 const PayementRemote = () => <RemotePayementApp store={store} />;
 const HospiRemote = () => <RemoteHospiApp store={store} />;
+const TPSRemote = () => <RemoteTPSApp store={store} />;
+const IntraitablesRemote = () => <RemoteIntraitablesApp store={store} />;
 
-const ConfigurationBase = () => <Configurations store={store} />;
-const ListConfigurationBase = () => <ListConfiguration store={store} />;
-const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={store} />;
+// const ConfigurationBase = () => <Configurations store={store} />;
+// const ListConfigurationBase = () => <ListConfiguration store={store} />;
+// const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={store} />;
 
 const App = () => {
     useEffect(() => {
-        store.injectReducer("configurations", configurationsReducer);
+        // store.injectReducer("configurations", configurationsReducer);
     }, []);
 
     return (
@@ -54,25 +58,25 @@ const App = () => {
                                     <Switch>
                                         <Route exact path="/" component={PageDashboard} />
 
-                                        <Route
-                                            exact
-                                            index
-                                            name={"Configuration"}
-                                            path="/configuration"
-                                            component={ConfigurationBase}
-                                        />
-                                        <Route
-                                            exact
-                                            name={"ConfigurationLists"}
-                                            path="/configuration/:domain/:code"
-                                            component={ListConfigurationBase}
-                                        />
-                                        <Route
-                                            exact
-                                            name={"ConfigurationDetailsById"}
-                                            path="/configuration/:domain/:code/:id"
-                                            component={ConfigurationDetailsByIdBase}
-                                        />
+                                        {/*<Route*/}
+                                        {/*    exact*/}
+                                        {/*    index*/}
+                                        {/*    name={"Configuration"}*/}
+                                        {/*    path="/configuration"*/}
+                                        {/*    component={ConfigurationBase}*/}
+                                        {/*/>*/}
+                                        {/*<Route*/}
+                                        {/*    exact*/}
+                                        {/*    name={"ConfigurationLists"}*/}
+                                        {/*    path="/configuration/:domain/:code"*/}
+                                        {/*    component={ListConfigurationBase}*/}
+                                        {/*/>*/}
+                                        {/*<Route*/}
+                                        {/*    exact*/}
+                                        {/*    name={"ConfigurationDetailsById"}*/}
+                                        {/*    path="/configuration/:domain/:code/:id"*/}
+                                        {/*    component={ConfigurationDetailsByIdBase}*/}
+                                        {/*/>*/}
 
                                         <Route path="/PS">
                                             <PSremote />
@@ -86,8 +90,16 @@ const App = () => {
                                             <PayementRemote />
                                         </Route>
 
-                                        <Route path={["/intraitables", "/serviceEnLigne", "/factures","/parametres"]}>
+                                        <Route path={["/serviceEnLigne", "/factures","/parametres"]}>
                                             <HospiRemote />
+                                        </Route>
+
+                                        <Route path={["/tpAmcServiceEnLigne", "/tpsFactures","/tpsFactures/create"]}>
+                                            <TPSRemote />
+                                        </Route>
+
+                                        <Route path="/intraitables" >
+                                            <IntraitablesRemote />
                                         </Route>
                                         
                                         <Route path={["/not-found" ,"*"]} component={NotFound} />
