@@ -79,9 +79,9 @@ module.exports = {
 		"tiers_payant_simple_ui": "http://10.241.25.20:8031/remoteEntry.js",
 		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
 		"factures_intraitables_ui": "http://localhost:8037/remoteEntry.js",
-		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
-		"ps_ui": "http://localhost:8034/remoteEntry.js",
+		"payment_ui": "http://localhost:8033/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
+		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"auth_ui": "http://localhost:8040/remoteEntry.js",
 	},
 	// **************************************************************
