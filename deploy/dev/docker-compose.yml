@@ -21,6 +21,7 @@ services:
 #    ports:
 #      - "8030:8080"
     environment:
+#      ****************** REMOTE LIBs & APPs **************************************************
       - REMOTE_LIB_UI=https://10.241.25.10:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=https://10.241.25.10:8039/remoteEntry.js
       - REMOTE_TPS=https://10.241.25.10:8031/remoteEntry.js
@@ -30,6 +31,7 @@ services:
       - REMOTE_PS=https://10.241.25.10:8034/remoteEntry.js
       - REMOTE_BENEF=https://10.241.25.10:8035/remoteEntry.js
 #      We will Use just for TEST API from INT Environment
+#      ************************ API ***********************************************************
       - APIURL_BENEFICIAIRE=https://int-api.viamedis.net/droits-beneficiaire-api/v1
       - APIURL_CONFIGURATIONS=https://int-api.viamedis.net/aggregator-api/v1
       - APIURL_DOWNLOAD_FACTURE=https://int-api.viamedis.net/aggregator-api/v1
@@ -45,6 +47,7 @@ services:
       - APIURL_VIREMENTS=https://int-api.viamedis.net/paiement-api/v1
       - APIURL_REFS=https://int-api.viamedis.net/aggregator-api/v1
       - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
+#      ***************************** AUTH *****************************************************
       - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
       - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email
       - KNOWN_AUTHORITY=integrationviamedisb2c.b2clogin.com
