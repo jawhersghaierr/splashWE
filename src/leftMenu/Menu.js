@@ -42,7 +42,7 @@ const hostMenuItems = [
         popitems: [
             { name: "Factures Create", link: "/tpsFactures/create" },
             { name: "Factures", link: "/tpsFactures" },
-            { name: "Services en ligne ROC", link: "/tpAmcServiceEnLigne" },
+            { name: "Services TP-AMC", link: "/tpAmcServiceEnLigne" },
         ],
     },
     {

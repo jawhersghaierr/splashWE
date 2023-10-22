@@ -21,7 +21,7 @@ import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
-import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
+import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
