@@ -47,15 +47,9 @@ services:
       - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
       - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
       - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email
-      - KNOWN_AUTHORITY=["integrationviamedisb2c.b2clogin.com"]
+      - KNOWN_AUTHORITY=integrationviamedisb2c.b2clogin.com
       - REDIRECT_URI=https://10.241.25.10:8030
       - POST_LOGOUT_REDIRECT_URI=https://10.241.25.10:8030
-      - LOGIN_REQUEST_SCOPES=["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"]
+      - LOGIN_REQUEST_SCOPES=https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access
       - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
-
-
-#        "authority": "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
-#        "knownAuthorities": ["integrationviamedisb2c.b2clogin.com"],
-#        "redirectUri": "https://10.241.25.10:8030",
-#        "postLogoutRedirectUri": "https://10.241.25.10:8030"
 
