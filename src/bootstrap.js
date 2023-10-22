@@ -1,15 +1,15 @@
-import React, {Suspense, useEffect} from "lib_ui/react";
+import React, { Suspense, useEffect } from "lib_ui/react";
 import ReactDOM from "lib_ui/react-dom";
-import {Switch, Route, BrowserRouter} from "lib_ui/react-router-dom";
-import {Provider} from "lib_ui/react-redux";
-import {StyledEngineProvider, ThemeProvider} from "@mui/material/styles";
+import { Switch, Route, BrowserRouter } from "lib_ui/react-router-dom";
+import { Provider } from "lib_ui/react-redux";
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import theme from "shared_lib_ui/MUItheme";
-import {store} from "shared_lib_ui/store";
-import {DrawerProvider} from "shared_lib_ui/Lib/layout/drawers";
-import {NotFound} from "shared_lib_ui/Lib/components";
+import { store } from "shared_lib_ui/store";
+import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
+import { NotFound } from "shared_lib_ui/Lib/components";
 
 // import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
@@ -21,7 +21,7 @@ import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
-import RemoteTPSApp from "tiers_payant_simple_ui/RemoteTPSApp";
+import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 
 // Msal imports
@@ -33,9 +33,9 @@ import {setAccount} from "shared_lib_ui/host";
 
 
 const PageDashboard = () => (
-	<Typography variant="h3" noWrap component="div" sx={{padding: "15px 25px", color: "#003154"}}>
-		Dashboard Page
-	</Typography>
+    <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
+        Dashboard Page
+    </Typography>
 );
 
 const PSremote = () => <RemotePsApp store={store}/>;
@@ -159,8 +159,8 @@ const App = () => {
 };
 
 ReactDOM.render(
-	<StyledEngineProvider injectFirst>
-		<App/>
-	</StyledEngineProvider>,
-	document.getElementById("root")
+    <StyledEngineProvider injectFirst>
+        <App />
+    </StyledEngineProvider>,
+    document.getElementById("root")
 );

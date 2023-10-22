@@ -3,7 +3,7 @@ module.exports = {
         "auth": {
             "clientId": "${CLIENT_ID}",
             "authority": "${AUTHORITY}",
-            "knownAuthorities": ["${KNOWN_AUTHORITY}"],
+            "knownAuthorities": [${KNOWN_AUTHORITY}],
             "redirectUri": "${REDIRECT_URI}",
             "postLogoutRedirectUri": "${POST_LOGOUT_REDIRECT_URI}"
         },
@@ -16,7 +16,7 @@ module.exports = {
         // },
     },
     "loginRequest": {
-        "scopes": ["${LOGIN_REQUEST_SCOPES}"],
+        "scopes": [${LOGIN_REQUEST_SCOPES}],
         "extraQueryParameters": {"ui_locales" : "fr-FR"}
     },
     
@@ -24,7 +24,7 @@ module.exports = {
     "remoteApps": {
         "lib_ui": "${REMOTE_LIB_UI}",
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
-        "tiers_payant_simple_ui": "${REMOTE_TPS}",
+        "tps_ui": "${REMOTE_TPS}",
         "hospi_ui": "${REMOTE_HOSPI}",
         "payment_ui": "${REMOTE_PAYEMENTS}",
         "ps_ui": "${REMOTE_PS}",
