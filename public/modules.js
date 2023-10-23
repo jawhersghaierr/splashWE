@@ -28,6 +28,7 @@ module.exports = {
 	"remoteAppsLocal": {
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
+		"tps_ui": "http://localhost:8031/remoteEntry.js",
 		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
 		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
@@ -39,7 +40,7 @@ module.exports = {
 	"remoteAppsDev": {
 		"lib_ui": "https://10.241.25.10:8038/remoteEntry.js",
 		"shared_lib_ui": "https://10.241.25.10:8039/remoteEntry.js",
-		"tiers_payant_simple_ui": "http://10.241.25.10:8031/remoteEntry.js",
+		"tps_ui": "http://10.241.25.10:8031/remoteEntry.js",
 		"hospi_ui": "https://10.241.25.10:8032/remoteEntry.js",
 		"factures_intraitables_ui": "https://10.241.25.10:8037/remoteEntry.js",
 		"payment_ui": "https://10.241.25.10:8033/remoteEntry.js",
@@ -50,7 +51,7 @@ module.exports = {
 	"remoteAppsInt": {
 		"lib_ui": "http://10.241.25.20:8038/remoteEntry.js",
 		"shared_lib_ui": "http://10.241.25.20:8039/remoteEntry.js",
-		"tiers_payant_simple_ui": "http://10.241.25.20:8031/remoteEntry.js",
+		"tps_ui": "http://10.241.25.20:8031/remoteEntry.js",
 		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
 		"factures_intraitables_ui": "http://10.241.25.20:8037/remoteEntry.js",
 		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
@@ -61,7 +62,7 @@ module.exports = {
 	"remoteAppsRec": {
 		"lib_ui": "http://10.241.25.21:8038/remoteEntry.js",
 		"shared_lib_ui": "http://10.241.25.21:8039/remoteEntry.js",
-		"tiers_payant_simple_ui": "http://10.241.25.21:8031/remoteEntry.js",
+		"tps_ui": "http://10.241.25.21:8031/remoteEntry.js",
 		"hospi_ui": "http://10.241.25.21:8032/remoteEntry.js",
 		"factures_intraitables_ui": "http://10.241.25.21:8037/remoteEntry.js",
 		"payment_ui": "http://10.241.25.21:8033/remoteEntry.js",
@@ -76,7 +77,7 @@ module.exports = {
 	"remoteApps": {
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
-		"tiers_payant_simple_ui": "http://localhost:8031/remoteEntry.js",
+		"tps_ui": "http://localhost:8031/remoteEntry.js",
 		"hospi_ui": "http://localhost:8032/remoteEntry.js",
 		"payment_ui": "http://localhost:8033/remoteEntry.js",
 		"ps_ui": "http://localhost:8034/remoteEntry.js",
