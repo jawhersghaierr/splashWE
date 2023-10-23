@@ -23,7 +23,6 @@ services:
       - APIURL_CONFIGURATIONS=http://10.241.25.21:8015/api/v1
       - APIURL_DOWNLOAD_FACTURE=http://10.241.25.21:8015/api/v1
       - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.21:8015/api/v1
-      - APIURL_ENTITIES=http://10.241.25.21:8031/api/entities
       - APIURL_FACTURES=http://10.241.25.21:8005/api/v1
       - APIURL_FLUX_FACTURES=http://10.241.25.21:8014/api/v1
       - APIURL_INTRAITABLES=http://10.241.25.21:8014/api/v1

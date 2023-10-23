@@ -37,7 +37,6 @@ module.exports = {
         "configurations": "${APIURL_CONFIGURATIONS}",
         "downloadFacture": "${APIURL_DOWNLOAD_FACTURE}",
         "downloadSelAndIdb": "${APIURL_DOWNLOAD_SEL_IDB}",
-        "entities": "${APIURL_ENTITIES}",
         "factures": "${APIURL_FACTURES}",
         "fluxFactures": "${APIURL_FLUX_FACTURES}",
         "intraitables": "${APIURL_INTRAITABLES}",
