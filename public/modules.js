@@ -8,68 +8,14 @@ module.exports = {
 			"redirectUri": "http://localhost:8030",
 			"postLogoutRedirectUri": "http://localhost:8030"
 		},
-		// "auth": {
-		// 	clientId: "cb80b654-41fb-43dd-bb34-c802089d0d12",
-		// 	authority: "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
-		// 	knownAuthorities: ["integrationviamedisb2c.b2clogin.com"],
-		// 	redirectUri: "http://localhost:8030/factures",
-		// 	postLogoutRedirectUri: "http://localhost:8030"
-		// },
 	},
 	"loginRequest": {
 		"scopes": ["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"],
 		"extraQueryParameters": {"ui_locales" : "fr-FR"}
 	},
-	"apiUrl": "http://localhost:8030",
-	"feUrl": "http://localhost:8030",
-	
-	
-	
-	"remoteAppsLocal": {
-		"lib_ui": "http://localhost:8038/remoteEntry.js",
-		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
-		"ps_ui": "http://localhost:8034/remoteEntry.js",
-		"benef_ui": "http://localhost:8035/remoteEntry.js",
-		"tps_ui": "http://localhost:8031/remoteEntry.js",
-		"hospi_ui": "http://localhost:8032/remoteEntry.js",
-		"intraitables_ui": "http://localhost:8037/remoteEntry.js",
-		"payment_ui": "http://localhost:8033/remoteEntry.js",
-		"auth_ui": "http://localhost:8040/remoteEntry.js",
-	},
-	"remoteAppsDev": {
-		"lib_ui": "https://10.241.25.10:8038/remoteEntry.js",
-		"shared_lib_ui": "https://10.241.25.10:8039/remoteEntry.js",
-		"tps_ui": "http://10.241.25.10:8031/remoteEntry.js",
-		"hospi_ui": "https://10.241.25.10:8032/remoteEntry.js",
-		"intraitables_ui": "https://10.241.25.10:8037/remoteEntry.js",
-		"payment_ui": "https://10.241.25.10:8033/remoteEntry.js",
-		"ps_ui": "https://10.241.25.10:8034/remoteEntry.js",
-		"benef_ui": "https://10.241.25.10:8035/remoteEntry.js",
-		"auth_ui": "https://10.241.25.10:8040/remoteEntry.js"
-	},
-	"remoteAppsInt": {
-		"lib_ui": "http://10.241.25.20:8038/remoteEntry.js",
-		"shared_lib_ui": "http://10.241.25.20:8039/remoteEntry.js",
-		"tps_ui": "http://10.241.25.20:8031/remoteEntry.js",
-		"hospi_ui": "http://10.241.25.20:8032/remoteEntry.js",
-		"intraitables_ui": "http://10.241.25.20:8037/remoteEntry.js",
-		"payment_ui": "http://10.241.25.20:8033/remoteEntry.js",
-		"ps_ui": "http://10.241.25.20:8034/remoteEntry.js",
-		"benef_ui": "http://10.241.25.20:8035/remoteEntry.js",
-		"auth_ui": "https://10.241.25.20:8040/remoteEntry.js"
-	},
-	"remoteAppsRec": {
-		"lib_ui": "http://10.241.25.21:8038/remoteEntry.js",
-		"shared_lib_ui": "http://10.241.25.21:8039/remoteEntry.js",
-		"tps_ui": "http://10.241.25.21:8031/remoteEntry.js",
-		"hospi_ui": "http://10.241.25.21:8032/remoteEntry.js",
-		"intraitables_ui": "http://10.241.25.21:8037/remoteEntry.js",
-		"payment_ui": "http://10.241.25.21:8033/remoteEntry.js",
-		"ps_ui": "http://10.241.25.21:8034/remoteEntry.js",
-		"benef_ui": "http://10.241.25.21:8035/remoteEntry.js",
-		"auth_ui": "https://10.241.25.21:8040/remoteEntry.js"
-	},
-	
+// **************************************************************
+
+
 // **************************************************************
 // *********************   remoteApps     ***********************
 // **************************************************************
@@ -87,17 +33,6 @@ module.exports = {
 	},
 	// **************************************************************
 	
-	"apiUrlsDev": {
-
-	},
-	
-	"apiUrlsInt": {
-
-	},
-	
-	"apiUrlsRec": {
-
-	},
 
 	"apiUrlsIntAzure": {
 		"selAndIdb": "https://int-api.viamedis.net/roc-api/v1",
@@ -116,56 +51,24 @@ module.exports = {
 		"downloadSelAndIdb": "https://int-api.viamedis.net/aggregator-api/v1",
 		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
 	},
+	// **************************************************************
+	
 	
 	// **************************************************************
 	// *********************      apiUrls     ***********************
 	// **************************************************************
+	
 	"apiUrls": {
-		// ROC
-		// "selAndIdb": "http://10.241.25.20:8001/api/v1",
 		"rocSelAndIdb": "http://10.241.25.20:8001/api/v1",
-		// "selAndIdb": "http://10.241.25.20:8001/api/v1",
-		// "fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
-		
-		// PS
 		"ps": "http://10.241.25.20:8002/api/v1",
-		
-		// paiementsAndVirements eventual reimbursman
 		"paiementsAndVirements": "http://10.241.25.20:8003/api/v1",
-		// "paiements": "http://10.241.25.20:8003/api/v1",
-		// "virements": "http://10.241.25.20:8003/api/v1",
-
 		"referentiels": "http://10.241.25.20:8004/api/v1",
-
-		// HOSPI facutures
 		"hospiFactures": "http://10.241.25.20:8005/api/v1",
-		// "factures": "http://10.241.25.20:8005/api/v1",
-
 		"beneficiaire": "http://10.241.25.20:8007/api/v1",
-		
-		// Facture integation - Intraitables - factureAndIntraitablesIntegration
 		"factureAndIntraitablesIntegration": "http://10.241.25.20:8014/api/v1",
-		// "fluxFactures": "http://10.241.25.20:8014/api/v1",
-		// "intraitables": "http://10.241.25.20:8014/api/v1",
-		
-		// "configurations": "http://10.241.25.20:8015/api/v1", **************
-		
-		// Agregator
 		"agregator": "http://10.241.25.20:8015/api/v1",
-		// "refs": "http://10.241.25.20:8015/api/v1",
-		// "tpDownloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
-		// "downloadTpsFacture": "http://10.241.25.20:8015/api/v1",
-		// "downloadFacture": "http://10.241.25.20:8015/api/v1",
-		// "downloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
-		
-		// TPS - Misho
 		"tpsFactures": "http://10.241.25.20:8017/api/v1",
-		
-		// TpAmc
-		// "tpSelAndIdb": "http://10.241.25.20:8020/api/v1",
-		"selAndIdbTPC": "http://10.241.25.20:8020/api/v1",
 		"tpAmcSelAndIdb": "http://10.241.25.20:8020/api/v1",
-		
 		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1",
 		
 		// **********************************************************
