@@ -18,7 +18,7 @@ import { drawerWidth, useWindowDimensions } from "shared_lib_ui/Lib";
 import { icons } from "shared_lib_ui/assets";
 import "./menu.scss";
 
-const { HomeIcon, ROCIcon, PaymentIcon, VirementIcon, PSIcon, BeneficiaireIcon, ThirdPartyPaymentIcon, ConfigurationIcon, GestionIcon } =
+const { HomeIcon, ROCIcon, PaymentIcon, VirementIcon, PSIcon, BeneficiaireIcon, Archive, ThirdPartyPaymentIcon, User } =
     icons;
 
 const hostMenuItems = [
@@ -30,15 +30,16 @@ const hostMenuItems = [
     {
         name: "Hospitalisation",
         icon: ROCIcon,
+        link: "/hospitalisation",
         popitems: [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
-            { name: "Paramètres", link: "/parametres" },
         ],
     },
     {
         name: "Tiers payant",
         icon: ThirdPartyPaymentIcon,
+        link: "/tps",
         popitems: [
             { name: "Factures Create", link: "/tpsFactures/create" },
             { name: "Factures", link: "/tpsFactures" },
@@ -46,31 +47,22 @@ const hostMenuItems = [
         ],
     },
     {
-        icon: ConfigurationIcon,
-        name: "Intraitables",
-        link: "/intraitables"
-    },
-    
-    // {
-    //     icon: ConfigurationIcon,
-    //     name: "OCAM",
-    //     link: "/configuration",
-    // },
-    {
-        name: "Paiements",
+        name: "Paiement",
         icon: PaymentIcon,
-        link: "/paiement",
+        link: "/paiementdashboard",
+        popitems: [
+            { name: "paiement", link: "/paiement" },
+            { name: "virements", link: "/virements" },
+        ],
     },
     {
-        name: "Virements",
+        name: "Indus",
         icon: VirementIcon,
-        link: "/virements",
+        link: "/indu",
+        popitems: [
+
+        ],
     },
-    // {
-    //     name: "Espace gestion",
-    //     icon: GestionIcon,
-    //     popitems: [],
-    // },
     {
         name: "Bénéficiaires",
         icon: BeneficiaireIcon,
@@ -112,13 +104,7 @@ const RecursiveMenuItem = (props) => {
     }, []);
 
     const custonNavLinkStyle = () => {
-        if ((activeLink === link || (match && match?.path !== "/")) && !popitem) {
-            return {
-                backgroundColor: (activeLink === link || (match && match?.path !== "/")) && theme.palette.primary.main,
-            };
-        }
-
-        return {};
+        return { backgroundColor:  checkActiveLink() && theme.palette.primary.main, };
     };
 
     const handleLinkClick = (currentOpenedSubMenu) => {
@@ -144,12 +130,11 @@ const RecursiveMenuItem = (props) => {
         openLeftDrawer();
         setActiveLink(link);
     };
-
-    const handleCollapsedClick = () => {
-        setOpenSubMenu(collapsed ? true : !openSubMenu );
-        openLeftDrawer();
-    };
-
+ 
+    const checkActiveLink = () => {
+        return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(activeLink) || (match && match?.path !== "/")
+    }
+ 
     return (
         <>
             {link && (
@@ -172,7 +157,7 @@ const RecursiveMenuItem = (props) => {
                         <ListItemIcon>
                             <Icon
                                 color={
-                                    activeLink === link || (match && match?.path !== "/")
+                                    checkActiveLink()
                                         ? theme.palette.grey.grey0
                                         : theme.palette.grey.grey7
                                 }
@@ -183,10 +168,10 @@ const RecursiveMenuItem = (props) => {
                         <ListItemText
                             primary={
                                 <Typography
-                                    variant={activeLink === link ? (popitem ? "bodyb" : "bodym") : "bodym"}
+                                    variant={ (checkActiveLink() && popitem )? "bodyb" : "bodym"}
                                     sx={{
                                         color:
-                                            activeLink === link || (match && match?.path !== "/")
+                                        checkActiveLink()
                                                 ? popitem
                                                     ? theme.palette.primary.main
                                                     : theme.palette.grey.grey0
@@ -200,47 +185,7 @@ const RecursiveMenuItem = (props) => {
                     )}
                 </ListItemButton>
             )}
-            {!link && (
-                <ListItemButton
-                    id={name}
-                    key={`listItem${link}`}
-                    sx={{
-                        width: !collapsed ? 280 : 56,
-                        margin: "8px auto",
-                        borderRadius: "12px",
-                        padding: "8px 16px !important",
-                        backgroundColor: openedSubMenu === name && theme.palette.primary.main,
-                    }}
-                    onClick={handleCollapsedClick}
-                >
-                    <ListItemIcon className={classes.menuItemIcon}>
-                        {!!Icon && <Icon color={openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />}
-                    </ListItemIcon>
-                    {!collapsed && (
-                        <ListItemText
-                            primary={
-                                <Typography
-                                    variant="bodym"
-                                    sx={{
-                                        color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7,
-                                    }}
-                                >
-                                    {name}
-                                </Typography>
-                            }
-                        />
-                    )}
-                    {!collapsed &&
-                        (openSubMenu ? (
-                            <ArrowDropUpIcon sx={{ color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }} />
-                        ) : (
-                            <ArrowDropDownIcon
-                                sx={{ color: openedSubMenu === name ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }}
-                            />
-                        ))}
-                </ListItemButton>
-            )}
-
+ 
             {collapsed && popitems && (
                 <Popper
                     anchorEl={ref.current}
@@ -269,26 +214,6 @@ const RecursiveMenuItem = (props) => {
                         />
                     ))}
                 </Popper>
-            )}
-
-            {!collapsed && popitems && (
-                <Collapse in={openSubMenu} timeout="auto" unmountOnExit>
-                    <MenuList>
-                        {popitems.map((item) => (
-                            <RecursiveMenuItem
-                                autoFocus={false}
-                                key={`it_${item?.name}`}
-                                popitem
-                                activeLink={activeLink}
-                                setActiveLink={setActiveLink}
-                                openedSubMenu={openedSubMenu}
-                                setOpenedSubMenu={setOpenedSubMenu}
-                                openLeftDrawer={openLeftDrawer}
-                                {...item}
-                            />
-                        ))}
-                    </MenuList>
-                </Collapse>
             )}
         </>
     );

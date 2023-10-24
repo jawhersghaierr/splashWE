@@ -11,11 +11,7 @@ import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 import { NotFound } from "shared_lib_ui/Lib/components";
 
-// import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
-// import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
-// import { ListConfiguration } from "./components/configurations/ListConfiguration";
-// import { Configurations } from "./components/configurations/Configurations";
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
@@ -23,11 +19,12 @@ import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
+import RemoteInduApp from "indu_ui/RemoteInduApp";
 
 // Msal imports
-import {MsalProvider, MsalAuthenticationTemplate, UnauthenticatedTemplate} from "lib_ui/@azure-msal-react";
-import {InteractionType, EventType} from "lib_ui/@azure-msal-browser";
-import {msalInstance, UserAccess} from "shared_lib_ui/auth";
+import { MsalProvider, MsalAuthenticationTemplate } from "lib_ui/@azure-msal-react";
+import { InteractionType, EventType } from "lib_ui/@azure-msal-browser";
+import { msalInstance } from "shared_lib_ui/auth";
 
 import {setAccount} from "shared_lib_ui/host";
 
@@ -45,14 +42,10 @@ const HospiRemote = () => <RemoteHospiApp store={store}/>;
 const TPSRemote = () => <RemoteTPSApp store={store}/>;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store}/>;
 const AuthRemote = () => <RemoteAuthApp store={store}/>;
-
-// const ConfigurationBase = () => <Configurations store={store} />;
-// const ListConfigurationBase = () => <ListConfiguration store={store} />;
-// const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={store} />;
+const InduRemote = () => <RemoteInduApp store={store} />;
 
 const App = () => {
 	useEffect(() => {
-		// store.injectReducer("configurations", configurationsReducer);
 		const callbackId = msalInstance.addEventCallback((event) => {
 			
 			switch (event.eventType) {
@@ -93,26 +86,6 @@ const App = () => {
 											<Switch>
 												<Route exact path="/" component={PageDashboard}/>
 												
-												{/*<Route*/}
-												{/*    exact*/}
-												{/*    index*/}
-												{/*    name={"Configuration"}*/}
-												{/*    path="/configuration"*/}
-												{/*    component={ConfigurationBase}*/}
-												{/*/>*/}
-												{/*<Route*/}
-												{/*    exact*/}
-												{/*    name={"ConfigurationLists"}*/}
-												{/*    path="/configuration/:domain/:code"*/}
-												{/*    component={ListConfigurationBase}*/}
-												{/*/>*/}
-												{/*<Route*/}
-												{/*    exact*/}
-												{/*    name={"ConfigurationDetailsById"}*/}
-												{/*    path="/configuration/:domain/:code/:id"*/}
-												{/*    component={ConfigurationDetailsByIdBase}*/}
-												{/*/>*/}
-												
 												<Route path="/PS">
 													<PSremote/>
 												</Route>
@@ -121,20 +94,24 @@ const App = () => {
 													<BenefRemote/>
 												</Route>
 												
-												<Route path={["/paiement", "/virements"]}>
+												<Route path={["/paiementdashboard","/paiement", "/virements"]}>
 													<PayementRemote/>
 												</Route>
 												
-												<Route path={["/serviceEnLigne", "/factures", "/parametres"]}>
-													<HospiRemote/>
+												<Route path={["/hospitalisation", "/serviceEnLigne", "/factures","/parametres"]}>
+													<HospiRemote />
 												</Route>
 												
-												<Route path={["/tpAmcServiceEnLigne", "/tpsFactures", "/tpsFactures/create"]}>
+												<Route path={["/tps","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
 													<TPSRemote/>
 												</Route>
 												
-												<Route path="/intraitables">
+												<Route path={["/facturesintraitables","/intraitables"]}>
 													<IntraitablesRemote/>
+												</Route>
+												
+												<Route path={["/indu"]}>
+													<InduRemote />
 												</Route>
 												
 												<Route path="/auth">
