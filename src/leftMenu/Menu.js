@@ -30,16 +30,17 @@ const hostMenuItems = [
     {
         name: "Hospitalisation",
         icon: ROCIcon,
-        link: "/hospitalisation",
+        link: "/hospidashboard",
         popitems: [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
+            { name: "Intraitables", link: "/intraitables" },
         ],
     },
     {
         name: "Tiers payant",
         icon: ThirdPartyPaymentIcon,
-        link: "/tps",
+        link: "/tpsdashboard",
         popitems: [
             { name: "Factures Create", link: "/tpsFactures/create" },
             { name: "Factures", link: "/tpsFactures" },
@@ -50,10 +51,10 @@ const hostMenuItems = [
         name: "Paiement",
         icon: PaymentIcon,
         link: "/paiementdashboard",
-        popitems: [
-            { name: "paiement", link: "/paiement" },
-            { name: "virements", link: "/virements" },
-        ],
+        // popitems: [
+        //     { name: "paiement", link: "/paiement" },
+        //     { name: "virements", link: "/virements" },
+        // ],
     },
     {
         name: "Indus",
@@ -71,13 +72,17 @@ const hostMenuItems = [
     {
         name: "Professionnels de santé",
         icon: PSIcon,
-        link: "/PS",
+        link: "/psdashboard",
+        popitems: [
+            { name: "Professionnels de santé", link: "/ps" },
+            { name: "Système de gestion des utilisateurs", link: "/auth" },
+        ],
     },
-    {
-        name: "Auth",
-        icon: HomeIcon,
-        link: "/auth",
-    },
+    // {
+    //     name: "Auth",
+    //     icon: HomeIcon,
+    //     link: "/auth",
+    // },
 ];
 
 const RecursiveMenuItem = (props) => {

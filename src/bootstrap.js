@@ -16,7 +16,7 @@ import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
-import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
+import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 import RemoteInduApp from "indu_ui/RemoteInduApp";
@@ -84,9 +84,10 @@ const App = () => {
 										<HostMenu/>
 										<Box component="main" sx={{flexGrow: 1}}>
 											<Switch>
+												
 												<Route exact path="/" component={PageDashboard}/>
 												
-												<Route path="/PS">
+												<Route path={["/psdashboard", "/ps", "/auth"]}>
 													<PSremote/>
 												</Route>
 												
@@ -98,11 +99,11 @@ const App = () => {
 													<PayementRemote/>
 												</Route>
 												
-												<Route path={["/hospitalisation", "/serviceEnLigne", "/factures","/parametres"]}>
+												<Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
 													<HospiRemote />
 												</Route>
 												
-												<Route path={["/tps","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
+												<Route path={["/tpsdashboard","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
 													<TPSRemote/>
 												</Route>
 												
@@ -112,10 +113,6 @@ const App = () => {
 												
 												<Route path={["/indu"]}>
 													<InduRemote />
-												</Route>
-												
-												<Route path="/auth">
-													<AuthRemote/>
 												</Route>
 												
 												<Route path={["/not-found", "*"]} component={NotFound}/>
