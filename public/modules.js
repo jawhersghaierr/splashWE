@@ -70,9 +70,9 @@ module.exports = {
 		"auth_ui": "https://10.241.25.21:8040/remoteEntry.js"
 	},
 	
-	// **************************************************************
-	// *********************   remoteApps     ***********************
-	// **************************************************************
+// **************************************************************
+// *********************   remoteApps     ***********************
+// **************************************************************
 	"remoteApps": {
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
@@ -86,86 +86,22 @@ module.exports = {
 	},
 	// **************************************************************
 	
-	"apiUrlsLocal": {
-		"beneficiaire": "http://localhost:8007/api/v1",
-		"configurations": "http://localhost:8015/api/v1",
-		"downloadFacture": "http://localhost:8015/api/v1",
-		"downloadSelAndIdb": "http://localhost:8015/api/v1",
-		"entities": "http://localhost:8031/api/entities",
-		"factures": "http://localhost:8005/api/v1/",
-		"fluxFactures": "http://localhost:8014/api/v1",
-		"intraitables": "http://localhost:8014/api/v1",
-		"paiements": "http://localhost:8003/api/v1",
-		"ps": "http://localhost:8002/api/v1",
-		"selAndIdb": "http://localhost:8001/api/v1",
-		"fluxSelAndIdb": "http://localhost:8001/api/v1",
-		"virements": "http://localhost:8003/api/v1",
-		"refs": "http://localhost:8015/api/v1",
-		"referentiels": "http://localhost:8004/api/v1.1",
-		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
-	},
-	
 	"apiUrlsDev": {
-		"selAndIdb": "http://10.241.25.10:8001/api/v1",
-		"fluxSelAndIdb": "http://10.241.25.10:8001/api/v1",
-		"ps": "http://10.241.25.10:8002/api/v1",
-		// "entities": "http://10.241.25.10:8031/api/entities",
-		"virements": "http://10.241.25.10:8003/api/v1",
-		"paiements": "http://10.241.25.10:8003/api/v1",
-		"referentiels": "http://10.241.25.10:8004/api/v1",
-		"factures": "http://10.241.25.10:8005/api/v1/",
-		"beneficiaire": "http://10.241.25.10:8007/api/v1",
-		"fluxFactures": "http://10.241.25.10:8014/api/v1",
-		"intraitables": "http://10.241.25.10:8014/api/v1",
-		"configurations": "http://10.241.25.10:8015/api/v1",
-		"refs": "http://10.241.25.10:8015/api/v1",
-		"downloadFacture": "http://10.241.25.10:8015/api/v1",
-		"downloadSelAndIdb": "http://10.241.25.10:8015/api/v1",
-		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
+
 	},
 	
 	"apiUrlsInt": {
-		"beneficiaire": "http://10.241.25.20:8007/api/v1",
-		"configurations": "http://10.241.25.20:8015/api/v1",
-		"downloadFacture": "http://10.241.25.20:8015/api/v1",
-		"downloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
-		"entities": "http://10.241.25.20:8031/api/entities",
-		"factures": "http://10.241.25.20:8005/api/v1/",
-		"fluxFactures": "http://10.241.25.20:8014/api/v1",
-		"intraitables": "http://10.241.25.20:8014/api/v1",
-		"paiements": "http://10.241.25.20:8003/api/v1",
-		"ps": "http://10.241.25.20:8002/api/v1",
-		"selAndIdb": "http://10.241.25.20:8001/api/v1",
-		"fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
-		"virements": "http://10.241.25.20:8003/api/v1",
-		"refs": "http://10.241.25.20:8015/api/v1",
-		"referentiels": "http://10.241.25.20:8004/api/v1",
-		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
+
 	},
 	
 	"apiUrlsRec": {
-		"beneficiaire": "http://10.241.25.21:8007/api/v1",
-		"configurations": "http://10.241.25.21:8015/api/v1",
-		"downloadFacture": "http://10.241.25.21:8015/api/v1",
-		"downloadSelAndIdb": "http://10.241.25.21:8015/api/v1",
-		"entities": "http://10.241.25.21:8031/api/entities",
-		"factures": "http://10.241.25.21:8005/api/v1/",
-		"fluxFactures": "http://10.241.25.21:8014/api/v1",
-		"intraitables": "http://10.241.25.21:8014/api/v1",
-		"paiements": "http://10.241.25.21:8003/api/v1",
-		"ps": "http://10.241.25.21:8002/api/v1",
-		"selAndIdb": "http://10.241.25.21:8001/api/v1",
-		"fluxSelAndIdb": "http://10.241.25.21:8001/api/v1",
-		"virements": "http://10.241.25.21:8003/api/v1",
-		"refs": "http://10.241.25.21:8015/api/v1",
-		"referentiels": "http://10.241.25.21:8004/api/v1"
+
 	},
 
 	"apiUrlsIntAzure": {
 		"selAndIdb": "https://int-api.viamedis.net/roc-api/v1",
 		"fluxSelAndIdb": "https://int-api.viamedis.net/roc-api/v1",
 		"ps": "https://int-api.viamedis.net/ps-api/v1",
-		// "entities": "http://10.241.25.10:8031/api/entities",
 		"virements": "https://int-api.viamedis.net/paiement-api/v1",
 		"paiements": "https://int-api.viamedis.net/paiement-api/v1",
 		"referentiels": "https://int-api.viamedis.net/referentiel-api/v1",
@@ -184,24 +120,56 @@ module.exports = {
 	// *********************      apiUrls     ***********************
 	// **************************************************************
 	"apiUrls": {
-		"beneficiaire": "http://10.241.25.20:8007/api/v1",
-		"configurations": "http://10.241.25.20:8015/api/v1",
-		"downloadFacture": "http://10.241.25.20:8015/api/v1",
-		"downloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
-		"entities": "http://10.241.25.20:8031/api/entities",
-		"factures": "http://10.241.25.20:8005/api/v1",
-		"fluxFactures": "http://10.241.25.20:8014/api/v1",
-		"intraitables": "http://10.241.25.20:8014/api/v1",
-		"paiements": "http://10.241.25.20:8003/api/v1",
+		// ROC
+		// "selAndIdb": "http://10.241.25.20:8001/api/v1",
+		"rocSelAndIdb": "http://10.241.25.20:8001/api/v1",
+		// "selAndIdb": "http://10.241.25.20:8001/api/v1",
+		// "fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
+		
+		// PS
 		"ps": "http://10.241.25.20:8002/api/v1",
-		"selAndIdb": "http://10.241.25.20:8001/api/v1",
-		"selAndIdbTPC": "http://10.241.25.20:8020/api/v1",
-		"fluxSelAndIdb": "http://10.241.25.20:8001/api/v1",
-		"virements": "http://10.241.25.20:8003/api/v1",
-		"tpsFactures": "http://10.241.25.20:8017/api/v1",
-		"tpAmcSelAndIdb": "http://10.241.25.20:8020/api/v1",
-		"refs": "http://10.241.25.20:8015/api/v1",
+		
+		// paiementsAndVirements eventual reimbursman
+		"paiementsAndVirements": "http://10.241.25.20:8003/api/v1",
+		// "paiements": "http://10.241.25.20:8003/api/v1",
+		// "virements": "http://10.241.25.20:8003/api/v1",
+
 		"referentiels": "http://10.241.25.20:8004/api/v1",
-		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1"
+
+		// HOSPI facutures
+		"hospiFactures": "http://10.241.25.20:8005/api/v1",
+		// "factures": "http://10.241.25.20:8005/api/v1",
+
+		"beneficiaire": "http://10.241.25.20:8007/api/v1",
+		
+		// Facture integation - Intraitables - factureAndIntraitablesIntegration
+		"factureAndIntraitablesIntegration": "http://10.241.25.20:8014/api/v1",
+		// "fluxFactures": "http://10.241.25.20:8014/api/v1",
+		// "intraitables": "http://10.241.25.20:8014/api/v1",
+		
+		// "configurations": "http://10.241.25.20:8015/api/v1", **************
+		
+		// Agregator
+		"agregator": "http://10.241.25.20:8015/api/v1",
+		// "refs": "http://10.241.25.20:8015/api/v1",
+		// "tpDownloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
+		// "downloadTpsFacture": "http://10.241.25.20:8015/api/v1",
+		// "downloadFacture": "http://10.241.25.20:8015/api/v1",
+		// "downloadSelAndIdb": "http://10.241.25.20:8015/api/v1",
+		
+		// TPS - Misho
+		"tpsFactures": "http://10.241.25.20:8017/api/v1",
+		
+		// TpAmc
+		// "tpSelAndIdb": "http://10.241.25.20:8020/api/v1",
+		"selAndIdbTPC": "http://10.241.25.20:8020/api/v1",
+		"tpAmcSelAndIdb": "http://10.241.25.20:8020/api/v1",
+		
+		"userMngmnt": "https://10.241.25.10:8044/api/auth/v1",
+		
+		// **********************************************************
+		
 	},
 };
+
+apiUrls

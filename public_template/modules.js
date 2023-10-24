@@ -33,23 +33,31 @@ module.exports = {
 
     },
     "apiUrls": {
-        "beneficiaire": "${APIURL_BENEFICIAIRE}",
-        "configurations": "${APIURL_CONFIGURATIONS}",
-        "downloadFacture": "${APIURL_DOWNLOAD_FACTURE}",
-        "downloadSelAndIdb": "${APIURL_DOWNLOAD_SEL_IDB}",
-        "factures": "${APIURL_FACTURES}",
-        "fluxFactures": "${APIURL_FLUX_FACTURES}",
-        "intraitables": "${APIURL_INTRAITABLES}",
-        "paiements": "${APIURL_PAIEMENTS}",
+        // "configurations": "${APIURL_CONFIGURATIONS}",
+        // "downloadFacture": "${APIURL_DOWNLOAD_FACTURE}",
+        // "downloadSelAndIdb": "${APIURL_DOWNLOAD_SEL_IDB}",
+        // "factures": "${APIURL_FACTURES}",
+        // "fluxFactures": "${APIURL_FLUX_FACTURES}",
+        // "intraitables": "${APIURL_INTRAITABLES}",
+        // "paiements": "${APIURL_PAIEMENTS}",
+        // "selAndIdb": "${APIURL_SEL_IDB}",
+        // "fluxSelAndIdb": "${APIURL_FLUX_SEL_IDB}",
+        // "virements": "${APIURL_VIREMENTS}",
+        // "refs": "${APIURL_REFS}",
+        
+        
+        "rocSelAndIdb": "${APIURL_ROC_SEL_IDB}",
         "ps": "${APIURL_PS}",
-        "selAndIdb": "${APIURL_SEL_IDB}",
-        "fluxSelAndIdb": "${APIURL_FLUX_SEL_IDB}",
-        "virements": "${APIURL_VIREMENTS}",
+        "paiementsAndVirements": "${APIURL_PAIEMENT_VIREMENT}",
+        "referentiels": "${APIURL_REFERENTIELS}",
+        "hospiFactures": "${APIURL_HOSPI_FACTURES}",
+        "beneficiaire": "${APIURL_BENEFICIAIRE}",
+        "factureAndIntraitablesIntegration":  "${APIURL_INTEGRATION_FACTURE_INTRITABLES}",
+        "agregator": "${APIURL_AGREGATOR}",
         "tpsFactures": "${APIURL_TPS_FACTURES}",
         "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
-        "refs": "${APIURL_REFS}",
-        "referentiels": "${APIURL_REFERENTIELS}",
         "userMngmnt": "${APIURL_USER_MANAGEMENT}",
+        // **********************************************************
         
     }
 };
