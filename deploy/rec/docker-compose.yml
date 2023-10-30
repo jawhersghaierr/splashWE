@@ -14,7 +14,7 @@ services:
       - REMOTE_SHARED_LIB_UI=http://10.241.25.21:8039/remoteEntry.js
       - REMOTE_TPS=http://10.241.25.21:8031/remoteEntry.js
       - REMOTE_HOSPI=http://10.241.25.21:8032/remoteEntry.js
-      - REMOTE_INTRAITABLES=http://10.241.25.21:8037/remoteEntry.js
+      - REMOTE_INTRAITABLES_UI=http://10.241.25.21:8037/remoteEntry.js
       - REMOTE_PAYEMENTS=http://10.241.25.21:8033/remoteEntry.js
       - REMOTE_PS=http://10.241.25.21:8034/remoteEntry.js
       - REMOTE_BENEF=http://10.241.25.21:8035/remoteEntry.js
