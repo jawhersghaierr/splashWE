@@ -29,7 +29,7 @@ module.exports = {
 		"payment_ui": "http://localhost:8033/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
 		"auth_ui": "http://localhost:8040/remoteEntry.js",
-		"indu_ui": "http://localhost:8036/remoteEntry.js",
+		// "indu_ui": "http://localhost:8036/remoteEntry.js",
 	},
 	// **************************************************************
 	

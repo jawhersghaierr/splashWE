@@ -29,7 +29,7 @@ module.exports = {
         "payment_ui": "${REMOTE_PAYEMENTS_UI}",
         "benef_ui": "${REMOTE_BENEF_UI}",
         "auth_ui": "${REMOTE_AUTH_UI}",
-        "indu_ui": "${REMOTE_INDU_UI}",
+        // "indu_ui": "${REMOTE_INDU_UI}",
     },
     // **************************************************************
     

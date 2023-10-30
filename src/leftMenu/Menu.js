@@ -59,7 +59,7 @@ const hostMenuItems = [
     {
         name: "Indus",
         icon: VirementIcon,
-        link: "/indu",
+        // link: "/indu",
         popitems: [
 
         ],

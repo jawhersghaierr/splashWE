@@ -19,7 +19,7 @@ import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
-import RemoteInduApp from "indu_ui/RemoteInduApp";
+// import RemoteInduApp from "indu_ui/RemoteInduApp";
 
 // Msal imports
 import { MsalProvider, MsalAuthenticationTemplate } from "lib_ui/@azure-msal-react";
@@ -42,7 +42,7 @@ const HospiRemote = () => <RemoteHospiApp store={store}/>;
 const TPSRemote = () => <RemoteTPSApp store={store}/>;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store}/>;
 const AuthRemote = () => <RemoteAuthApp store={store}/>;
-const InduRemote = () => <RemoteInduApp store={store} />;
+// const InduRemote = () => <RemoteInduApp store={store} />;
 
 const App = () => {
 	useEffect(() => {
@@ -111,9 +111,9 @@ const App = () => {
 													<IntraitablesRemote/>
 												</Route>
 												
-												<Route path={["/indu"]}>
-													<InduRemote />
-												</Route>
+												{/*<Route path={["/indu"]}>*/}
+												{/*	<InduRemote />*/}
+												{/*</Route>*/}
 												
 												<Route path={["/not-found", "*"]} component={NotFound}/>
 											
