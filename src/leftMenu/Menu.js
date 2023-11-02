@@ -30,20 +30,21 @@ const hostMenuItems = [
     {
         name: "Hospitalisation",
         icon: ROCIcon,
-        link: "/hospitalisation",
+        link: "/hospidashboard",
         popitems: [
             { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
+            { name: "Intraitables", link: "/intraitables" },
         ],
     },
     {
         name: "Tiers payant",
         icon: ThirdPartyPaymentIcon,
-        link: "/tps",
+        link: "/tpsdashboard",
         popitems: [
+            { name: "Factures Create", link: "/tpsFactures/create" },
             { name: "Factures", link: "/tpsFactures" },
             { name: "Services TP-AMC", link: "/tpAmcServiceEnLigne" },
-            { name: "Factures Create", link: "/tpsFactures/create" },
         ],
     },
     {
@@ -71,14 +72,10 @@ const hostMenuItems = [
     {
         name: "Professionnels de santé",
         icon: PSIcon,
-        link: "/PS",
-    },
-    {
-        name: "Factures intraitables",
-        icon: Archive,
-        link: "/facturesintraitables",
+        link: "/psdashboard",
         popitems: [
-            { name: "intraitables", link: "/intraitables" },
+            { name: "Professionnels de santé", link: "/ps" },
+            { name: "Système de gestion des utilisateurs", link: "/auth" },
         ],
     },
 ];

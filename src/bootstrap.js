@@ -11,11 +11,7 @@ import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 import { NotFound } from "shared_lib_ui/Lib/components";
 
-// import configurationsReducer from "./components/configurations/configurationsSlice";
 import HostMenu from "./leftMenu/HostMenu";
-// import ConfigurationDetailsById from "./components/configurations/ConfigurationDetailsById";
-// import { ListConfiguration } from "./components/configurations/ListConfiguration";
-// import { Configurations } from "./components/configurations/Configurations";
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
@@ -59,28 +55,8 @@ const App = () => {
                                 <Box component="main" sx={{ flexGrow: 1 }}>
                                     <Switch>
                                         <Route exact path="/" component={PageDashboard} />
-
-                                        {/*<Route*/}
-                                        {/*    exact*/}
-                                        {/*    index*/}
-                                        {/*    name={"Configuration"}*/}
-                                        {/*    path="/configuration"*/}
-                                        {/*    component={ConfigurationBase}*/}
-                                        {/*/>*/}
-                                        {/*<Route*/}
-                                        {/*    exact*/}
-                                        {/*    name={"ConfigurationLists"}*/}
-                                        {/*    path="/configuration/:domain/:code"*/}
-                                        {/*    component={ListConfigurationBase}*/}
-                                        {/*/>*/}
-                                        {/*<Route*/}
-                                        {/*    exact*/}
-                                        {/*    name={"ConfigurationDetailsById"}*/}
-                                        {/*    path="/configuration/:domain/:code/:id"*/}
-                                        {/*    component={ConfigurationDetailsByIdBase}*/}
-                                        {/*/>*/}
-
-                                        <Route path="/PS">
+                                        
+                                        <Route path={["/psdashboard", "/ps"]}>
                                             <PSremote />
                                         </Route>
 
@@ -92,11 +68,11 @@ const App = () => {
                                             <PayementRemote />
                                         </Route>
 
-                                        <Route path={["/hospitalisation", "/serviceEnLigne", "/factures","/parametres"]}>
+                                        <Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
                                             <HospiRemote />
                                         </Route>
 
-                                        <Route path={["/tps","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
+                                        <Route path={["/tpsdashboard","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
                                             <TPSRemote />
                                         </Route>
 
