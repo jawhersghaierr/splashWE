@@ -29,7 +29,7 @@ module.exports = {
         "payment_ui": "${REMOTE_PAYEMENTS}",
         "ps_ui": "${REMOTE_PS}",
         "benef_ui": "${REMOTE_BENEF}",
-        "factures_intraitables_ui": "${REMOTE_INTRAITABLES}",
+        "intraitables_ui": "${REMOTE_INTRAITABLES}",
 
     },
     "apiUrls": {

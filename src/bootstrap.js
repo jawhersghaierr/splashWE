@@ -20,9 +20,9 @@ import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";
 import RemoteHospiApp from "hospi_ui/RemoteHospiApp";
 import RemotePayementApp from "payment_ui/RemotePayementApp";
-import RemoteIntraitablesApp from "factures_intraitables_ui/RemoteIntraitablesApp";
+import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
-import RemoteInduApp from "paiement_indu_ui/RemoteInduApp";
+import RemoteInduApp from "indu_ui/RemoteInduApp";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
