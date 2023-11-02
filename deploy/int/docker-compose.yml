@@ -18,7 +18,7 @@ services:
       - REMOTE_PAYEMENTS_UI=http://10.241.25.20:8033/remoteEntry.js
       - REMOTE_PS_UI=http://10.241.25.20:8034/remoteEntry.js
       - REMOTE_BENEF_UI=http://10.241.25.20:8035/remoteEntry.js
-      - REMOTE_INDU_UI=https://10.241.25.20:8036/remoteEntry.js
+      - REMOTE_INDU_UI=http://10.241.25.20:8036/remoteEntry.js
 #      ************ API ***************************************************************
       - APIURL_ROC_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
       - APIURL_PS=https://int-api.viamedis.net/ps-api/v1
