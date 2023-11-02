@@ -34,3 +34,4 @@ services:
       - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
       - APIURL_REFS=http://10.241.25.21:8015/api/v1
       - APIURL_REFERENTIELS=http://10.241.25.21:8004/api/v1
+      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
