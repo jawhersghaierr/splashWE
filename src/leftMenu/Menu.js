@@ -18,7 +18,7 @@ import { drawerWidth, useWindowDimensions } from "shared_lib_ui/Lib";
 import { icons } from "shared_lib_ui/assets";
 import "./menu.scss";
 
-const { HomeIcon, ROCIcon, PaymentIcon, VirementIcon, PSIcon, BeneficiaireIcon, Archive, ThirdPartyPaymentIcon, User } =
+const { HomeIcon, ROCIcon, PaymentIcon, PSIcon, ThirdPartyPaymentIcon, User, MoneyArchive, MoneyCardEdit } =
     icons;
 
 const hostMenuItems = [
@@ -32,19 +32,17 @@ const hostMenuItems = [
         icon: ROCIcon,
         link: "/hospidashboard",
         popitems: [
-            { name: "Services en ligne ROC", link: "/serviceEnLigne" },
+            { name: "Services ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
-            { name: "Intraitables", link: "/intraitables" },
         ],
     },
     {
-        name: "Tiers payant",
+        name: "Tiers payant simple",
         icon: ThirdPartyPaymentIcon,
         link: "/tpsdashboard",
         popitems: [
-            { name: "Factures Create", link: "/tpsFactures/create" },
-            { name: "Factures", link: "/tpsFactures" },
             { name: "Services TP-AMC", link: "/tpAmcServiceEnLigne" },
+            { name: "Factures TPS", link: "/tpsFactures" },
         ],
     },
     {
@@ -52,30 +50,38 @@ const hostMenuItems = [
         icon: PaymentIcon,
         link: "/paiementdashboard",
         popitems: [
-            { name: "paiement", link: "/paiement" },
-            { name: "virements", link: "/virements" },
+            { name: "Paiement", link: "/paiement" },
+            { name: "Virement", link: "/virements" },
         ],
     },
     {
         name: "Indus",
-        icon: VirementIcon,
+        icon: MoneyCardEdit,
         link: "/indu",
         popitems: [
 
         ],
     },
     {
-        name: "Bénéficiaires",
-        icon: BeneficiaireIcon,
+        name: "Bénéficiaire",
+        icon: User,
         link: "/beneficiaire",
     },
     {
-        name: "Professionnels de santé",
+        name: "Professionnel de santé",
         icon: PSIcon,
         link: "/psdashboard",
         popitems: [
-            { name: "Professionnels de santé", link: "/ps" },
+            { name: "Professionnel de santé", link: "/ps" },
             { name: "Système de gestion des utilisateurs", link: "/auth" },
+        ],
+    },
+    {
+        name: "Factures intraitables",
+        icon: MoneyArchive,
+        link: "/factures",
+        popitems: [
+            { name: "Factures intraitable", link: "/factures" },
         ],
     },
 ];
