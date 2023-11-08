@@ -32,8 +32,9 @@ const hostMenuItems = [
         icon: ROCIcon,
         link: "/hospidashboard",
         popitems: [
-            { name: "Services ROC", link: "/serviceEnLigne" },
+            { name: "Services en ligne ROC", link: "/serviceEnLigne" },
             { name: "Factures", link: "/factures" },
+            { name: "Intraitables", link: "/intraitables" },
         ],
     },
     {
@@ -41,8 +42,8 @@ const hostMenuItems = [
         icon: ThirdPartyPaymentIcon,
         link: "/tpsdashboard",
         popitems: [
-            { name: "Services TP-AMC", link: "/tpAmcServiceEnLigne" },
-            { name: "Factures TPS", link: "/tpsFactures" },
+            { name: "Factures Create", link: "/tpsFactures/create" },
+            { name: "Factures", link: "/tpsFactures" },
         ],
     },
     {
@@ -55,7 +56,7 @@ const hostMenuItems = [
         ],
     },
     {
-        name: "Indus",
+        name: "Indu",
         icon: MoneyCardEdit,
         link: "/indu",
         popitems: [
@@ -79,9 +80,9 @@ const hostMenuItems = [
     {
         name: "Factures intraitables",
         icon: MoneyArchive,
-        link: "/factures",
+        link: "/intraitablesdashboard",
         popitems: [
-            { name: "Factures intraitable", link: "/factures" },
+            { name: "Factures intraitable", link: "/intraitables" },
         ],
     },
 ];
