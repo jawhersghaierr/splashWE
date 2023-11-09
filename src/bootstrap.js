@@ -80,7 +80,7 @@ const App = () => {
                                             <InduRemote />
                                         </Route>
 
-                                        <Route path={["/facturesintraitables","/intraitables"]}>
+                                        <Route path={["/intraitablesdashboard","/facturesintraitables","/intraitables"]}>
                                             <IntraitablesRemote />
                                         </Route>
                                         
