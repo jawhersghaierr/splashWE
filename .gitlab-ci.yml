@@ -5,8 +5,9 @@ variables:
   DOCKER_IMAGE_NAME_FE: common/host-ui
   DOCKER_SERVICE_NAME_FE: host-ui
   DOCKER_DOCKERFILE_FE: Dockerfile
-  VERSION: 0.3.6-SSO-1
-  VERSION_SNAPSHOT: 0.3.6-SNAPSHOT
+  VERSION: 0.3.0
+  VERSION_SNAPSHOT: 0.3.0-SNAPSHOT
+  NODE_IMAGE: node:16
 
 include:
   - project: devops/infrastructure/ci-library
@@ -14,6 +15,7 @@ include:
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
+
 
 test-sonarqube-checks:
   allow_failure: true
