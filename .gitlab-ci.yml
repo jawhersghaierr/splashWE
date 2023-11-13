@@ -7,13 +7,12 @@ variables:
   DOCKER_DOCKERFILE_FE: Dockerfile
   VERSION: 0.3.6-SSO-1
   VERSION_SNAPSHOT: 0.3.6-SNAPSHOT
-  NODE_IMAGE: node:16
+  NODE_IMAGE: node:16.9.0
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: '2.13.0'
+    ref: 'develop'
+#    ref: '2.13.0'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
-
-
