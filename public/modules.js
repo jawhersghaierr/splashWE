@@ -51,15 +51,15 @@ module.exports = {
 	// *********************   remoteApps     ***********************
 	// **************************************************************
 	"remoteApps": {
-		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
-		"lib_ui": "http://localhost:8038/remoteEntry.js",
-		"tps_ui": "http://localhost:8031/remoteEntry.js",
-		"hospi_ui": "http://localhost:8032/remoteEntry.js",
-		"payment_ui": "http://localhost:8033/remoteEntry.js",
-		"ps_ui": "http://localhost:8034/remoteEntry.js",
-		"benef_ui": "http://localhost:8035/remoteEntry.js",
-		"indu_ui": "http://localhost:8036/remoteEntry.js",
-		"intraitables_ui": "http://localhost:8037/remoteEntry.js",
+		"shared_lib_ui": "http://10.241.25.21:8039/remoteEntry.js",
+		"lib_ui": "http://10.241.25.21:8038/remoteEntry.js",
+		"tps_ui": "http://10.241.25.21:8031/remoteEntry.js",
+		"hospi_ui": "http://10.241.25.21:8032/remoteEntry.js",
+		"payment_ui": "http://10.241.25.21:8033/remoteEntry.js",
+		"ps_ui": "http://10.241.25.21:8034/remoteEntry.js",
+		"benef_ui": "http://10.241.25.21:8035/remoteEntry.js",
+		"indu_ui": "http://10.241.25.21:8036/remoteEntry.js",
+		"intraitables_ui": "http://10.241.25.21:8037/remoteEntry.js",
 	},
 	// **************************************************************
 	
@@ -135,7 +135,7 @@ module.exports = {
 	"apiUrlsIntAzure": {
 		"selAndIdb": "https://dev-api.viamedis.net/roc-api/v1",
 		"fluxSelAndIdb": "https://dev-api.viamedis.net/roc-api/v1",
-		"ps": "https://dev-api.viamedis.net/ps-api/v1",
+		"ps": "https://apim-dev-socle.azure-api.net/ps-api/v1",
 		"virements": "https://dev-api.viamedis.net/paiement-api/v1",
 		"paiements": "https://dev-api.viamedis.net/paiement-api/v1",
 		"referentiels": "https://dev-api.viamedis.net/referentiel-api/v1",
@@ -157,16 +157,16 @@ module.exports = {
 	// **************************************************************
 	
 	"apiUrls": {
-		"rocSelAndIdb": "http://10.241.25.20:8001/api/v1",
-		"ps": "http://10.241.25.20:8002/api/v1",
-		"paiementsAndVirements": "http://10.241.25.20:8003/api/v1",
-		"referentiels": "http://10.241.25.20:8004/api/v1",
-		"hospiFactures": "http://10.241.25.20:8005/api/v1",
-		"beneficiaire": "http://10.241.25.20:8007/api/v1",
-		"factureAndIntraitablesIntegration": "http://10.241.25.20:8014/api/v1",
-		"agregator": "http://10.241.25.20:8015/api/v1",
-		"tpsFactures": "http://10.241.25.20:8017/api/v1",
-		"tpAmcSelAndIdb": "http://10.241.25.20:8020/api/v1",
+		"rocSelAndIdb": "http://10.241.25.21:8001/api/v1",
+		"ps": "http://10.241.25.21:8002/api/v1",
+		"paiementsAndVirements": "http://10.241.25.21:8003/api/v1",
+		"referentiels": "http://10.241.25.21:8004/api/v1",
+		"hospiFactures": "http://10.241.25.21:8005/api/v1",
+		"beneficiaire": "http://10.241.25.21:8007/api/v1",
+		"factureAndIntraitablesIntegration": "http://10.241.25.21:8014/api/v1",
+		"agregator": "http://10.241.25.21:8015/api/v1",
+		"tpsFactures": "http://10.241.25.21:8017/api/v1",
+		"tpAmcSelAndIdb": "http://10.241.25.21:8020/api/v1",
 		
 		// **********************************************************
 		

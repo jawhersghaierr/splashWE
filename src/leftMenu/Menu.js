@@ -58,9 +58,9 @@ const hostMenuItems = [
     {
         name: "Indu",
         icon: MoneyCardEdit,
-        link: "/indu",
+        link: "/indusdashboard",
         popitems: [
-
+            { name: "Indus", link: "/indus" },
         ],
     },
     {
