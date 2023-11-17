@@ -11,8 +11,7 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-#    ref: 'develop'
-    ref: 'feature/make-frontend-pipelines-test-manuals'
+    ref: 'master'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml

@@ -76,7 +76,7 @@ const App = () => {
                                             <TPSRemote />
                                         </Route>
 
-                                        <Route path={["/indusdashboard", "/indus"]}>
+                                        <Route path={["/indusdashboard", "/indus", "/remboursements"]}>
                                             <InduRemote />
                                         </Route>
 
