@@ -10,6 +10,7 @@ import theme from "shared_lib_ui/MUItheme";
 import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 import { NotFound } from "shared_lib_ui/Lib/components";
+import { TermsService } from "shared_lib_ui/Lib/layout";
 
 import HostMenu from "./leftMenu/HostMenu";
 import RemotePsApp from "ps_ui/RemotePsApp";
@@ -58,6 +59,10 @@ const App = () => {
                                         
                                         <Route path={["/psdashboard", "/ps"]}>
                                             <PSremote />
+                                        </Route>
+
+                                        <Route path={["/terms","/terms/terms-of-service","/terms/legal-notice","/terms/personal-data-protection-policy"]}>
+                                            <TermsService />
                                         </Route>
 
                                         <Route path="/beneficiaire">
