@@ -3,7 +3,7 @@ import { NavLink, useLocation, matchPath } from "lib_ui/react-router-dom";
 
 import { makeStyles, createStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
-import { Popper } from "@material-ui/core";
+import { Popper } from '@mui/material';
 import MenuList from "@mui/material/MenuList";
 import Box from "@mui/material/Box";
 import { Typography, ListItemButton } from "@mui/material";
