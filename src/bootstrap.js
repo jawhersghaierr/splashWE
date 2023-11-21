@@ -20,6 +20,7 @@ import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteInduApp from "indu_ui/RemoteInduApp";
+import {Link} from "react-router-dom";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
@@ -53,7 +54,7 @@ const App = () => {
                             <Box sx={{ display: "flex" }}>
                                 <CssBaseline />
                                 <HostMenu />
-                                <Box component="main" sx={{ flexGrow: 1 }}>
+                                <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                     <Switch>
                                         <Route exact path="/" component={PageDashboard} />
                                         
@@ -92,6 +93,20 @@ const App = () => {
                                         <Route path={["/not-found" ,"*"]} component={NotFound} />
                                         
                                     </Switch>
+	                                
+	                                <div id="footer" style={{ alignSelf: 'center',  textAlign: 'center', minHeight: '20px', padding: '5px', maxWidth: '90%' }}>
+		                                <Link color="inherit" to="/terms"
+		                                      style={{textDecoration: 'none'}}>Conditions générales</Link>
+		                                &nbsp;&nbsp;&nbsp;
+		                                <Link color="inherit" to="/terms/legal-notice" style={{textDecoration: 'none'}}>Mentions légales</Link>
+		                                &nbsp;&nbsp;&nbsp;
+		                                <Link color="inherit" to="/terms/terms-of-service"
+		                                      style={{textDecoration: 'none'}}>terms-of-service</Link>
+		                                &nbsp;&nbsp;&nbsp;
+		                                <Link color="inherit" to="/terms/personal-data-protection-policy"
+		                                      style={{textDecoration: 'none'}}>Politique de protection des données</Link>
+	                                </div>
+                                
                                 </Box>
                             </Box>
                         </Suspense>

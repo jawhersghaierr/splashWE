@@ -85,6 +85,16 @@ const hostMenuItems = [
             { name: "Factures intraitable", link: "/intraitables" },
         ],
     },
+    {
+        name: "Conditions générales",
+        icon: MoneyArchive,
+        link: "/terms",
+        popitems: [
+            { name: "terms-of-service", link: "/terms/terms-of-service" },
+            { name: "legal-notice", link: "/terms/legal-notice" },
+            { name: "personal-data-protection-policy", link: "/terms/personal-data-protection-policy" },
+        ],
+    },
 ];
 
 const RecursiveMenuItem = (props) => {
