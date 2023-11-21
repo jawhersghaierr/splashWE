@@ -18,8 +18,17 @@ import { drawerWidth, useWindowDimensions } from "shared_lib_ui/Lib";
 import { icons } from "shared_lib_ui/assets";
 import "./menu.scss";
 
-const { HomeIcon, ROCIcon, PaymentIcon, PSIcon, ThirdPartyPaymentIcon, User, MoneyArchive, MoneyCardEdit } =
-    icons;
+const {
+    HomeIcon,
+    ROCIcon,
+    PaymentIcon,
+    PSIcon,
+    ThirdPartyPaymentIcon,
+    User,
+    MoneyArchive,
+    MoneyCardEdit,
+    UserThermsAndCondition
+} = icons;
 
 const hostMenuItems = [
     {
@@ -87,7 +96,7 @@ const hostMenuItems = [
     },
     {
         name: "Conditions générales",
-        icon: MoneyArchive,
+        icon: UserThermsAndCondition,
         link: "/terms",
         popitems: [
             { name: "terms-of-service", link: "/terms/terms-of-service" },
@@ -121,7 +130,8 @@ const RecursiveMenuItem = (props) => {
     }, []);
 
     const custonNavLinkStyle = () => {
-        return { background:  checkActiveLink() &&  "linear-gradient(180deg, #1BD1E2 0%, #1AC6D6 100%)" };
+        // return { backgroundColor:  checkActiveLink() && theme.palette.primary.main, }; //background: linear-gradient(90deg, #1BD1E2, #1AC6D6)
+        return { background:  checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)` : '' };
     };
 
     const handleLinkClick = (currentOpenedSubMenu) => {
