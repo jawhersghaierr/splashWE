@@ -111,7 +111,7 @@ const RecursiveMenuItem = (props) => {
     }, []);
 
     const custonNavLinkStyle = () => {
-        return { backgroundColor:  checkActiveLink() && theme.palette.primary.main, };
+        return { background:  checkActiveLink() &&  "linear-gradient(180deg, #1BD1E2 0%, #1AC6D6 100%)" };
     };
 
     const handleLinkClick = (currentOpenedSubMenu) => {
@@ -139,7 +139,8 @@ const RecursiveMenuItem = (props) => {
     };
  
     const checkActiveLink = () => {
-        return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(activeLink) || (match && match?.path !== "/")
+        const  currentLink =  activeLink?.split?.("/")?.length > 1 ? "/"+ activeLink?.split?.("/")?.at?.(1) : activeLink
+        return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(currentLink) || (match && match?.path !== "/")
     }
  
     return (
