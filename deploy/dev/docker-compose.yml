@@ -24,7 +24,7 @@ services:
       #      ************ REMOTE APPs **********************************************************
       - REMOTE_SHARED_LIB_UI=https://10.241.25.10:8039/remoteEntry.js
       - REMOTE_LIB_UI=https://10.241.25.10:8038/remoteEntry.js
-      - REMOTE_TPS_UI=https://10.241.25.10:8031/remoteEntry.js
+      - REMOTE_TPS_UI=https://10.241.25.10:8008/remoteEntry.js
       - REMOTE_HOSPI_UI=https://10.241.25.10:8032/remoteEntry.js
       - REMOTE_INTRAITABLES_UI=https://10.241.25.10:8037/remoteEntry.js
       - REMOTE_PS_UI=https://10.241.25.10:8034/remoteEntry.js
