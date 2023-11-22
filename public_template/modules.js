@@ -28,8 +28,8 @@ module.exports = {
         "ps_ui": "${REMOTE_PS_UI}",
         "payment_ui": "${REMOTE_PAYEMENTS_UI}",
         "benef_ui": "${REMOTE_BENEF_UI}",
+        "indu_ui": "${REMOTE_INDU_UI}",
         "auth_ui": "${REMOTE_AUTH_UI}",
-        // "indu_ui": "${REMOTE_INDU_UI}",
     },
     // **************************************************************
     
@@ -49,7 +49,7 @@ module.exports = {
         "agregator": "${APIURL_AGREGATOR}",
         "tpsFactures": "${APIURL_TPS_FACTURES}",
         "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
-        "userMngmnt": "${APIURL_USER_MANAGEMENT}",
+        "userMngmnt": "${APIURL_USER_MANAGEMENT}"
         
         // **********************************************************
         

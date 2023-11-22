@@ -3,10 +3,10 @@ import { NavLink, useLocation, matchPath } from "lib_ui/react-router-dom";
 
 import { makeStyles, createStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
-import { Popper } from "@material-ui/core";
+import { Popper } from '@mui/material';
 import MenuList from "@mui/material/MenuList";
 import Box from "@mui/material/Box";
-import { Typography, Collapse, ListItemButton } from "@mui/material";
+import { Typography, ListItemButton } from "@mui/material";
 
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,8 +18,17 @@ import { drawerWidth, useWindowDimensions } from "shared_lib_ui/Lib";
 import { icons } from "shared_lib_ui/assets";
 import "./menu.scss";
 
-const { HomeIcon, ROCIcon, PaymentIcon, VirementIcon, PSIcon, BeneficiaireIcon, Archive, ThirdPartyPaymentIcon, User } =
-    icons;
+const {
+    HomeIcon,
+    ROCIcon,
+    PaymentIcon,
+    PSIcon,
+    ThirdPartyPaymentIcon,
+    User,
+    MoneyArchive,
+    MoneyCardEdit,
+    UserThermsAndCondition
+} = icons;
 
 const hostMenuItems = [
     {
@@ -38,66 +47,78 @@ const hostMenuItems = [
         ],
     },
     {
-        name: "Tiers payant",
+        name: "Tiers payant simple",
         icon: ThirdPartyPaymentIcon,
         link: "/tpsdashboard",
         popitems: [
             { name: "Factures Create", link: "/tpsFactures/create" },
             { name: "Factures", link: "/tpsFactures" },
-            { name: "Services TP-AMC", link: "/tpAmcServiceEnLigne" },
         ],
     },
     {
         name: "Paiement",
         icon: PaymentIcon,
         link: "/paiementdashboard",
-        // popitems: [
-        //     { name: "paiement", link: "/paiement" },
-        //     { name: "virements", link: "/virements" },
-        // ],
-    },
-    {
-        name: "Indus",
-        icon: VirementIcon,
-        // link: "/indu",
         popitems: [
-
+            { name: "Paiement", link: "/paiement" },
+            { name: "Virement", link: "/virements" },
         ],
     },
     {
-        name: "Bénéficiaires",
-        icon: BeneficiaireIcon,
+        name: "Indu",
+        icon: MoneyCardEdit,
+        link: "/indusdashboard",
+        popitems: [
+            { name: "Indus", link: "/indus" },
+        ],
+    },
+    {
+        name: "Bénéficiaire",
+        icon: User,
         link: "/beneficiaire",
     },
     {
-        name: "Professionnels de santé",
+        name: "Professionnel de santé",
         icon: PSIcon,
         link: "/psdashboard",
         popitems: [
-            { name: "Professionnels de santé", link: "/ps" },
+            { name: "Professionnel de santé", link: "/ps" },
             { name: "Système de gestion des utilisateurs", link: "/auth" },
         ],
     },
-    // {
-    //     name: "Auth",
-    //     icon: HomeIcon,
-    //     link: "/auth",
-    // },
+    {
+        name: "Factures intraitables",
+        icon: MoneyArchive,
+        link: "/intraitablesdashboard",
+        popitems: [
+            { name: "Factures intraitable", link: "/intraitables" },
+        ],
+    },
+    {
+        name: "Conditions générales",
+        icon: UserThermsAndCondition,
+        link: "/terms",
+        popitems: [
+            { name: "terms-of-service", link: "/terms/terms-of-service" },
+            { name: "legal-notice", link: "/terms/legal-notice" },
+            { name: "personal-data-protection-policy", link: "/terms/personal-data-protection-policy" },
+        ],
+    },
 ];
 
 const RecursiveMenuItem = (props) => {
     const { name, link, icon: Icon, collapsed, popitems, popitem, activeLink, setActiveLink, openedSubMenu, setOpenedSubMenu, openLeftDrawer } = props;
-
+    
     const classes = useStyles();
     const [openSubMenu, setOpenSubMenu] = useState(false);
     const ref = useRef();
     const theme = useTheme();
-
+    
     const match = matchPath(activeLink, {
         path: link,
         strict: true,
     });
-
+    
     useEffect(() => {
         if (popitems?.length) {
             const links = popitems.map((popitem) => popitem.link);
@@ -107,39 +128,41 @@ const RecursiveMenuItem = (props) => {
             }
         }
     }, []);
-
+    
     const custonNavLinkStyle = () => {
-        return { backgroundColor:  checkActiveLink() && theme.palette.primary.main, };
+        // return { backgroundColor:  checkActiveLink() && theme.palette.primary.main, }; //background: linear-gradient(90deg, #1BD1E2, #1AC6D6)
+        return { background:  checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)` : '' };
     };
-
+    
     const handleLinkClick = (currentOpenedSubMenu) => {
         if (popitem) {
             const menuItem = hostMenuItems.find((item) => {
                 const _popitems = item.popitems || [];
                 const _popitem = _popitems.find((item) => item.name === name);
-
+                
                 if (_popitem) {
                     return item;
                 }
                 return null;
             });
-
+            
             if (menuItem) {
                 setOpenedSubMenu(menuItem.name);
             }
         }
-
+        
         if (openedSubMenu !== currentOpenedSubMenu || !popitem) {
             setOpenedSubMenu(null);
         }
         openLeftDrawer();
         setActiveLink(link);
     };
- 
+    
     const checkActiveLink = () => {
-        return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(activeLink) || (match && match?.path !== "/")
+        const  currentLink =  activeLink?.split?.("/")?.length > 1 ? "/"+ activeLink?.split?.("/")?.at?.(1) : activeLink
+        return activeLink === link ||  popitems?.flatMap?.((el)=> el.link).includes(currentLink) || (match && match?.path !== "/")
     }
- 
+    
     return (
         <>
             {link && (
@@ -176,7 +199,7 @@ const RecursiveMenuItem = (props) => {
                                     variant={ (checkActiveLink() && popitem )? "bodyb" : "bodym"}
                                     sx={{
                                         color:
-                                        checkActiveLink()
+                                            checkActiveLink()
                                                 ? popitem
                                                     ? theme.palette.primary.main
                                                     : theme.palette.grey.grey0
@@ -190,7 +213,7 @@ const RecursiveMenuItem = (props) => {
                     )}
                 </ListItemButton>
             )}
- 
+            
             {collapsed && popitems && (
                 <Popper
                     anchorEl={ref.current}
@@ -230,14 +253,14 @@ const Menu = (props) => {
     const { collapsed, openLeftDrawer} = props
     const collapsedClass = collapsed ? "collapsed" : "";
     const { height } = useWindowDimensions();
-
+    
     const [activeLink, setActiveLink] = useState(location?.pathname);
     const [openedSubMenu, setOpenedSubMenu] = useState(null);
-
+    
     useEffect(() => {
         setActiveLink(location?.pathname);
     }, [location?.pathname]);
-
+    
     return (
         <Box id="leftMenu" component="nav" className={classes.hostMenu + " " + collapsedClass}>
             <MenuList

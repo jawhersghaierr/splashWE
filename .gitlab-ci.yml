@@ -7,20 +7,11 @@ variables:
   DOCKER_DOCKERFILE_FE: Dockerfile
   VERSION: 0.3.6-SSO-1
   VERSION_SNAPSHOT: 0.3.6-SNAPSHOT
+  NODE_IMAGE: node:16.9.0
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'develop'
-#    ref: '2.13.0'
+    ref: 'master'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
-
-
-
-test-sonarqube-checks:
-  allow_failure: true
-
-test-owasp-dependency-check:
-  allow_failure: true
-
