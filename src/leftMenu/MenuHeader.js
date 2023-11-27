@@ -1,6 +1,6 @@
 import React from "lib_ui/react";
 import Box from "@mui/material/Box";
-import { icons } from "shared_lib_ui/assets";
+import { LogoSvg, LogoPng, icons } from "shared_lib_ui/assets";
 import Logo from '../../assets/images/Logo.png'
 
 const { LogoIcon, LogoTextIcon, ArrowSquareLeft, ArrowSquareRight } = icons;
@@ -36,9 +36,8 @@ const MenuHeader = (props) => {
                         alignItems: "self-end",
                     }}
                 >
-                    <img src={Logo} width={'65%'} style={{ alignSelf: 'self-end!important', margin: '0 0 0 30px' }}
-                    
-                    />
+                    {/*<img src={Logo} width={'65%'} style={{ alignSelf: 'self-end!important', margin: '0 0 0 30px' }} />*/}
+                    <LogoSvg width={'87%'} style={{ alignSelf: 'self-end!important'}} />
                     {/*<LogoIcon*/}
                     {/*    viewBox="0 0 35 35"*/}
                     {/*    sx={{*/}
@@ -61,7 +60,7 @@ const MenuHeader = (props) => {
                         onClick={closeLeftDrawer}
                         sx={{
                             flex: "1 0 auto",
-                            margin: "1.4em auto 0.1em !important",
+                            margin: "1.4em 25px 0.6em 0!important",
                             fontSize: "2.5em !important",
                             cursor: "pointer"
                         }}
