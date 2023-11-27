@@ -4,7 +4,6 @@ module.exports = {
 	"remoteAppsLocal": {
 		"lib_ui": "http://localhost:8038/remoteEntry.js",
 		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
-		"tps_ui": "http://localhost:8031/remoteEntry.js",
 		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://localhost:8035/remoteEntry.js",
 		"tps_ui": "http://localhost:8031/remoteEntry.js",
@@ -51,12 +50,12 @@ module.exports = {
 	// *********************   remoteApps     ***********************
 	// **************************************************************
 	"remoteApps": {
-		"shared_lib_ui": "http://10.241.25.21:8039/remoteEntry.js",
-		"lib_ui": "http://10.241.25.21:8038/remoteEntry.js",
+		"lib_ui": "http://localhost:8038/remoteEntry.js",
+		"shared_lib_ui": "http://localhost:8039/remoteEntry.js",
 		"tps_ui": "http://10.241.25.21:8031/remoteEntry.js",
 		"hospi_ui": "http://10.241.25.21:8032/remoteEntry.js",
 		"payment_ui": "http://10.241.25.21:8033/remoteEntry.js",
-		"ps_ui": "http://10.241.25.21:8034/remoteEntry.js",
+		"ps_ui": "http://localhost:8034/remoteEntry.js",
 		"benef_ui": "http://10.241.25.21:8035/remoteEntry.js",
 		"indu_ui": "http://10.241.25.21:8036/remoteEntry.js",
 		"intraitables_ui": "http://10.241.25.21:8037/remoteEntry.js",
