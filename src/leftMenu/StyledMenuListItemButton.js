@@ -28,7 +28,7 @@ export const StyledMenu = styled(ListItemButton)(({ theme }) => {
         margin: "0px auto",
         borderRadius: "12px",
         padding: "8px 16px !important",
-        //'&:hover': { backgroundColor: theme.palette.primary.main },
+        //'&:hover': { background: `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)` },
     };
 });
 

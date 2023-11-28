@@ -13,25 +13,37 @@ const HostRouters = [
         name: "Hospitalisation",
         icon: ROCIcon,
         path: "/hospidashboard",
-        children: [],
+        children: [
+            { name: "Services en ligne ROC", path: "/serviceEnLigne" },
+            { name: "Factures", path: "/factures" },
+            { name: "Intraitables", path: "/intraitables" },
+        ],
     },
     {
         name: "Tiers payant simple",
         icon: ThirdPartyPaymentIcon,
         path: "/tpsdashboard",
-        children: [],
+        children: [
+            { name: "Factures Create", path: "/tpsFactures/create" },
+            { name: "Factures", path: "/tpsFactures" },
+        ],
     },
     {
         name: "Paiement",
         icon: PaymentIcon,
         path: "/paiementdashboard",
-        children: [],
+        children: [     
+            { name: "Paiement", path: "/paiement" },
+            { name: "Virement", path: "/virements" },
+        ],
     },
     {
         name: "Indu",
         icon: MoneyCardEdit,
         path: "/indusdashboard",
-        children: [],
+        children: [
+            { name: "Indus", path: "/indus" },
+        ],
     },
     {
         name: "Bénéficiaire",
@@ -43,13 +55,18 @@ const HostRouters = [
         name: "Professionnel de santé",
         icon: PSIcon,
         path: "/psdashboard",
-        children: [],
+        children: [
+            { name: "Professionnel de santé", path: "/ps" },
+            { name: "Système de gestion des utilisateurs", path: "/auth" },
+        ],
     },
     {
         name: "Factures intraitables",
         icon: MoneyArchive,
         path: "/intraitablesdashboard",
-        children: [],
+        children: [
+            { name: "Factures intraitable", path: "/intraitables" },
+        ],
     },
     {
         icon: UserThermsAndCondition,
