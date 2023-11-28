@@ -16,7 +16,6 @@ const HostRouters = [
         children: [
             { name: "Services en ligne ROC", path: "/serviceEnLigne" },
             { name: "Factures", path: "/factures" },
-            { name: "Intraitables", path: "/intraitables" },
         ],
     },
     {
