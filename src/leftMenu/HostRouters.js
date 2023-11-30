@@ -1,6 +1,16 @@
 
 import { icons } from "shared_lib_ui/assets";
-const { HomeIcon, ROCIcon, PaymentIcon, PSIcon, ThirdPartyPaymentIcon, User, MoneyArchive, MoneyCardEdit, UserThermsAndCondition } = icons;
+const {
+    HomeIcon,
+    ROCIcon,
+    PaymentIcon,
+    PSIcon,
+    ThirdPartyPaymentIcon,
+    User,
+    MoneyArchive,
+    MoneyCardEdit,
+    UserThermsAndCondition
+} = icons;
 
 const HostRouters = [
     {
@@ -23,7 +33,7 @@ const HostRouters = [
         icon: ThirdPartyPaymentIcon,
         path: "/tpsdashboard",
         children: [
-            { name: "Factures Create", path: "/tpsFactures/create" },
+            { name: "TpAmcEnLigne", path: "/tpAmcServiceEnLigne" },
             { name: "Factures", path: "/tpsFactures" },
         ],
     },
@@ -42,6 +52,7 @@ const HostRouters = [
         path: "/indusdashboard",
         children: [
             { name: "Indus", path: "/indus" },
+            { name: "Remboursements", path: "/remboursements" },
         ],
     },
     {
@@ -57,14 +68,8 @@ const HostRouters = [
         children: [
             { name: "Professionnel de santé", path: "/ps" },
             { name: "Système de gestion des utilisateurs", path: "/auth" },
-        ],
-    },
-    {
-        name: "Factures intraitables",
-        icon: MoneyArchive,
-        path: "/intraitablesdashboard",
-        children: [
-            { name: "Factures intraitable", path: "/intraitables" },
+            { name: "Système de gestion des utilisateurs", path: "/profile" },
+            { name: "Système de gestion des utilisateurs", path: "/user" },
         ],
     },
     {
@@ -82,6 +87,15 @@ const HostRouters = [
             }
         ] ,
     },
+    {
+        name: "Factures intraitables",
+        icon: MoneyArchive,
+        path: "/intraitablesdashboard",
+        children: [
+            { name: "Factures intraitable", path: "/intraitables" },
+        ],
+    },
+
 ];
 
  
