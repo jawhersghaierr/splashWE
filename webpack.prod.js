@@ -69,10 +69,6 @@ module.exports = {
                     singleton: true,
                 },
                 
-                // '@mui/styles': {
-                //   requiredVersion: dependencies['@mui/styles'],
-                //   singleton: true,
-                // },
                 '@mui/material': {
                     requiredVersion: dependencies['@mui/material'],
                     singleton: true,
