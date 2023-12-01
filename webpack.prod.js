@@ -24,9 +24,6 @@ module.exports = {
     output: {
         publicPath: "auto",
     },
-    // output: {
-    //     path: paths.build,
-    // },
 
     resolve: {
         extensions: ['.jsx', '.js', '.json'],
@@ -89,11 +86,7 @@ module.exports = {
                     requiredVersion: dependencies['@mui/x-date-pickers'],
                     singleton: true,
                 },
-                // '@mui/x-date-pickers/AdapterDateFns': {
-                //   singleton: true,
-                // },
             }
-            
             
         }),
 
