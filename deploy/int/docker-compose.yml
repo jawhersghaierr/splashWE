@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
 
@@ -43,7 +43,7 @@ services:
       - APIURL_TPS_FACTURES=http://10.241.25.20:8017/api/v1
       - APIURL_TP_AMC_SEL_IDB=http://10.241.25.20:8020/api/v1
       - APIURL_INDUS=http://10.241.25.20:8023/api/v1
-      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
+#      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
 
 #      - APIURL_BENEFICIAIRE=http://10.241.25.20:8007/api/v1
 #      - APIURL_CONFIGURATIONS=http://10.241.25.20:8015/api/v1
