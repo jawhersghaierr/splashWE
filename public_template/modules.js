@@ -49,6 +49,7 @@ module.exports = {
         "agregator": "${APIURL_AGREGATOR}",
         "tpsFactures": "${APIURL_TPS_FACTURES}",
         "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
+        "indus": "${APIURL_INDUS}",
         "userMngmnt": "${APIURL_USER_MANAGEMENT}"
         
         // **********************************************************

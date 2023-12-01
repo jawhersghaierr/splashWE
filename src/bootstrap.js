@@ -103,18 +103,16 @@ const App = () => {
 												<Route path={["/paiementdashboard", "/paiement", "/virements"]}>
 													<PayementRemote/>
 												</Route>
-												
-												<Route
-													path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
+                                                
+                                                <Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
 													<HospiRemote/>
 												</Route>
-												
-												<Route
-													path={["/tpsdashboard", "/tpsFactures/create", "/tpsFactures", "/TpAmcFluxInfo", "/tpAmcServiceEnLigne"]}>
+                                                
+                                                <Route path={["/tpsdashboard","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
 													<TPSRemote/>
 												</Route>
-												
-												<Route path={["/indusdashboard", "/indus", "/remboursements"]}>
+                                                
+                                                <Route path={["/indusdashboard", "/indus", "/indus/create", "/remboursements"]}>
 													<InduRemote/>
 												</Route>
 												
