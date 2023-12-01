@@ -27,7 +27,7 @@ module.exports = {
 		ps_ui: "http://localhost:8034/remoteEntry.js",
 		benef_ui: "http://localhost:8035/remoteEntry.js",
 		auth_ui: "https://10.241.25.10:8040/remoteEntry.js",
-		"indu_ui": "http://10.241.25.21:8036/remoteEntry.js",
+		indu_ui: "http://10.241.25.21:8036/remoteEntry.js",
 		intraitables_ui: "http://localhost:8037/remoteEntry.js",
 	},
 	// **************************************************************
