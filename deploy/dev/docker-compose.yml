@@ -30,39 +30,24 @@ services:
       - REMOTE_PS_UI=https://10.241.25.10:8034/remoteEntry.js
       - REMOTE_PAYEMENTS_UI=https://10.241.25.10:8033/remoteEntry.js
       - REMOTE_BENEF_UI=https://10.241.25.10:8035/remoteEntry.js
-      - REMOTE_AUTH_UI=https://10.241.25.10:8040/remoteEntry.js
       - REMOTE_INDU_UI=https://10.241.25.10:8036/remoteEntry.js
+      - REMOTE_AUTH_UI=https://10.241.25.10:8040/remoteEntry.js
+
       #      We will Use just for TEST API from INT Environment
       #      ************************ API ***********************************************************
-      - APIURL_ROC_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
-      - APIURL_PS=https://int-api.viamedis.net/ps-api/v1
-      - APIURL_PAIEMENT_VIREMENT=https://int-api.viamedis.net/paiement-api/v1
-      - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
-      - APIURL_HOSPI_FACTURES=https://int-api.viamedis.net/hospi-facturation-api/v1
-      - APIURL_BENEFICIAIRE=https://int-api.viamedis.net/droits-beneficiaire-api/v1
-      - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://int-api.viamedis.net/facturation-integration-api/v1
-      - APIURL_AGREGATOR=https://int-api.viamedis.net/aggregator-api/v1
-      - APIURL_TPS_FACTURES=https://int-api.viamedis.net/tps-facturation-internal-api/v1
-      - APIURL_TP_AMC_SEL_IDB=https://int-api.viamedis.net/tp-amc-internal-api/v1
-      - APIURL_INDUS=http://10.241.25.10:8023/api/v1
-      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
+      - APIURL_ROC_SEL_IDB=https://apim-dev-socle.azure-api.net/roc-api/v1
+      - APIURL_PS=https://apim-dev-socle.azure-api.net/ps-api/v1
+      - APIURL_PAIEMENT_VIREMENT=https://apim-dev-socle.azure-api.net/paiement-api/v1
+      - APIURL_REFERENTIELS=https://apim-dev-socle.azure-api.net/referentiel-api/v1
+      - APIURL_HOSPI_FACTURES=https://apim-dev-socle.azure-api.net/hospi-facturation-api/v1
+      - APIURL_BENEFICIAIRE=https://apim-dev-socle.azure-api.net/droits-beneficiaire-api/v1
+      - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://apim-dev-socle.azure-api.net/facturation-integration-api/v1
+      - APIURL_AGREGATOR=https://apim-dev-socle.azure-api.net/aggregator-api/v1
+      - APIURL_TPS_FACTURES=https://apim-dev-socle.azure-api.net/tps-facturation-api/v1
+      - APIURL_TP_AMC_SEL_IDB=https://apim-dev-socle.azure-api.net/tp-amc-api/v1
+      - APIURL_INDUS=https://apim-dev-socle.azure-api.net/indu-api/v1
+      - APIURL_USER_MANAGEMENT=https://apim-dev-socle.azure-api.net/users-profiles-api/v1
 
-      #      - APIURL_BENEFICIAIRE=https://int-api.viamedis.net/droits-beneficiaire-api/v1
-      #      - APIURL_CONFIGURATIONS=https://int-api.viamedis.net/aggregator-api/v1
-      #      - APIURL_DOWNLOAD_FACTURE=https://int-api.viamedis.net/aggregator-api/v1
-      #      - APIURL_DOWNLOAD_SEL_IDB=https://int-api.viamedis.net/aggregator-api/v1
-      #      - APIURL_FACTURES=https://int-api.viamedis.net/hospi-facturation-api/v1
-      #      - APIURL_FLUX_FACTURES=https://int-api.viamedis.net/facturation-integration-api/v1
-      #      - APIURL_INTRAITABLES=https://int-api.viamedis.net/facturation-integration-api/v1
-      #      - APIURL_PAIEMENTS=https://int-api.viamedis.net/paiement-api/v1
-      #      - APIURL_PS=https://int-api.viamedis.net/ps-api/v1
-      #      - APIURL_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
-      #      - APIURL_FLUX_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
-      #      - APIURL_VIREMENTS=https://int-api.viamedis.net/paiement-api/v1
-      #      - APIURL_REFS=https://int-api.viamedis.net/aggregator-api/v1
-      #      - APIURL_REFERENTIELS=https://int-api.viamedis.net/referentiel-api/v1
-      #      - APIURL_TPS_FACTURES=https://int-api.viamedis.net/tps-facturation-internal-api/v1
-      #      - APIURL_TP_AMC_SEL_IDB=https://int-api.viamedis.net/tp-amc-internal-api/v1
       #      ***************************** AUTH *****************************************************
       - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
       - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_susi_email

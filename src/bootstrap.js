@@ -28,13 +28,9 @@ import {InteractionType, EventType} from "lib_ui/@azure-msal-browser";
 import {msalInstance} from "shared_lib_ui/auth";
 
 import {setAccount} from "shared_lib_ui/host";
+import RemoteAuthApp from "auth_ui/RemoteAuthApp";
+import Home from "./components/Home";
 
-
-const PageDashboard = () => (
-	<Typography variant="h3" noWrap component="div" sx={{padding: "15px 25px", color: "#003154"}}>
-		Dashboard Page
-	</Typography>
-);
 
 const PSremote = () => <RemotePsApp store={store}/>;
 const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
@@ -85,9 +81,9 @@ const App = () => {
 										<HostMenu/>
 										<Box component="main" sx={{flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
 											<Switch>
-												<Route exact path="/" component={PageDashboard}/>
+												<Route exact path="/" component={Home}/>
 												
-												<Route path={["/psdashboard", "/ps", "/auth"]}>
+												<Route path={["/psdashboard", "/ps"]}>
 													<PSremote/>
 												</Route>
 												
@@ -96,7 +92,7 @@ const App = () => {
 													<TermsService/>
 												</Route>
 												
-												<Route path="/beneficiaire">
+												<Route path={["/benefdashboard", "/beneficiaire"]}>
 													<BenefRemote/>
 												</Route>
 												
@@ -108,7 +104,7 @@ const App = () => {
 													<HospiRemote/>
 												</Route>
                                                 
-                                                <Route path={["/tpsdashboard","/tpsFactures/create", "/tpsFactures","/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
+                                                <Route path={["/tpsdashboard","/tpsFactures/create", "/tpsFactures", "/TpAmcFluxInfo","/tpAmcServiceEnLigne"]}>
 													<TPSRemote/>
 												</Route>
                                                 
@@ -119,6 +115,7 @@ const App = () => {
 												<Route path={["/intraitablesdashboard", "/facturesintraitables", "/intraitables"]}>
 													<IntraitablesRemote/>
 												</Route>
+												<Route path="/auth"> <AuthRemote/> </Route>
 												
 												<Route path={["/not-found", "*"]} component={NotFound}/>
 											

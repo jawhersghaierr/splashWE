@@ -12,7 +12,62 @@ const {
     UserThermsAndCondition
 } = icons;
 
-const HostRouters = [
+const psRouters = [
+    {
+        name: "Accueil",
+        icon: HomeIcon,
+        path: "/",
+        children: [] ,
+    },
+    {
+        name: "Factures",
+        icon: ROCIcon,
+        path: "/factures",
+        children: [],
+    },    {
+        name: "Services en ligne ROC",
+        icon: ROCIcon,
+        path: "/serviceEnLigne",
+        children: [],
+    },
+    {
+        name: "Tiers payant simple",
+        icon: ThirdPartyPaymentIcon,
+        path: "/tpsdashboard",
+        children: [
+            { name: "TpAmcEnLigne", path: "/tpAmcServiceEnLigne" },
+            { name: "Factures", path: "/tpsFactures" },
+        ],
+    },
+    {
+        name: "Paiement",
+        icon: PaymentIcon,
+        path: "/paiementdashboard",
+        children: [
+            { name: "Paiement", path: "/paiement" },
+            { name: "Virement", path: "/virements" },
+        ],
+    },
+
+    {
+        name: "Bénéficiaire",
+        icon: User,
+        path: "/beneficiaire",
+        children: [],
+    },
+
+    {
+        icon: UserThermsAndCondition,
+        path: "/terms",
+        children: [
+            { path: "/terms/terms-of-service", },
+            { path: "/terms/legal-notice", },
+            { path: "/terms/personal-data-protection-policy", }
+        ] ,
+    },
+
+];
+const gestionnerRouters = [
     {
         name: "Accueil",
         icon: HomeIcon,
@@ -41,7 +96,7 @@ const HostRouters = [
         name: "Paiement",
         icon: PaymentIcon,
         path: "/paiementdashboard",
-        children: [     
+        children: [
             { name: "Paiement", path: "/paiement" },
             { name: "Virement", path: "/virements" },
         ],
@@ -58,7 +113,7 @@ const HostRouters = [
     {
         name: "Bénéficiaire",
         icon: User,
-        path: "/beneficiaire",
+        path: "/benefdashboard",
         children: [],
     },
     {
@@ -67,7 +122,7 @@ const HostRouters = [
         path: "/psdashboard",
         children: [
             { name: "Professionnel de santé", path: "/ps" },
-            { name: "Système de gestion des utilisateurs", path: "/auth" },
+            { name: "Système de gestion des utilisateurs", path: "/ps/auth" },
             { name: "Système de gestion des utilisateurs", path: "/profile" },
             { name: "Système de gestion des utilisateurs", path: "/user" },
         ],
@@ -76,15 +131,9 @@ const HostRouters = [
         icon: UserThermsAndCondition,
         path: "/terms",
         children: [
-            {
-                path: "/terms/terms-of-service",
-            },
-            {
-                path: "/terms/legal-notice",
-            },
-            {
-                path: "/terms/personal-data-protection-policy",
-            }
+            { path: "/terms/terms-of-service", },
+            { path: "/terms/legal-notice", },
+            { path: "/terms/personal-data-protection-policy", }
         ] ,
     },
     {
@@ -98,6 +147,6 @@ const HostRouters = [
 
 ];
 
- 
 
-export default HostRouters;
+
+export {psRouters, gestionnerRouters};

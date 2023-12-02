@@ -33,18 +33,7 @@ services:
       - APIURL_AGREGATOR=https://int-api.viamedis.net/aggregator-api/v1
       - APIURL_TPS_FACTURES=https://int-api.viamedis.net/tps-facturation-internal-api/v1
       - APIURL_TP_AMC_SEL_IDB=https://int-api.viamedis.net/tp-amc-internal-api/v1
+      - APIURL_INDUS=https://int-api.viamedis.net/indu-api/v1
       - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
 
-#      - APIURL_ROC_SEL_IDB=http://10.241.25.20:8001/api/v1
-#      - APIURL_PS=http://10.241.25.20:8002/api/v1
-#      - APIURL_PAIEMENT_VIREMENT=http://10.241.25.20:8003/api/v1
-#      - APIURL_REFERENTIELS=http://10.241.25.20:8004/api/v1
-#      - APIURL_HOSPI_FACTURES=http://10.241.25.20:8005/api/v1
-#      - APIURL_BENEFICIAIRE=http://10.241.25.20:8007/api/v1
-#      - APIURL_INTEGRATION_FACTURE_INTRITABLES=http://10.241.25.20:8014/api/v1
-#      - APIURL_AGREGATOR=http://10.241.25.20:8015/api/v1
-#      - APIURL_TPS_FACTURES=http://10.241.25.20:8017/api/v1
-#      - APIURL_TP_AMC_SEL_IDB=http://10.241.25.20:8020/api/v1
-#      - APIURL_INDUS=http://10.241.25.20:8023/api/v1
-#      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
 
