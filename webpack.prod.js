@@ -86,7 +86,15 @@ module.exports = {
                     requiredVersion: dependencies['@mui/x-date-pickers'],
                     singleton: true,
                 },
+                'react-cookie': {
+                    requiredVersion: dependencies['react-cookie'],
+                    singleton: true,
+                },
+                // '@mui/x-date-pickers/AdapterDateFns': {
+                //   singleton: true,
+                // },
             }
+            
             
         }),
 
