@@ -33,7 +33,6 @@ services:
       - REMOTE_INDU_UI=https://10.241.25.10:8036/remoteEntry.js
       - REMOTE_AUTH_UI=https://10.241.25.10:8040/remoteEntry.js
 
-      #      We will Use just for TEST API from INT Environment
       #      ************************ API ***********************************************************
       - APIURL_ROC_SEL_IDB=https://apim-dev-socle.azure-api.net/roc-api/v1
       - APIURL_PS=https://apim-dev-socle.azure-api.net/ps-api/v1
