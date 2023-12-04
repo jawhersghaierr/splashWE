@@ -31,6 +31,7 @@
     "module-federation-import-remote": "^1.0.18",
     "npm": "^9.6.7",
     "react": "17.0.2",
+    "react-cookie": "^6.1.1",
     "react-dev-utils": "^12.0.0",
     "react-dom": "17.0.2",
     "react-final-form": "6.5.9",

@@ -1,6 +1,6 @@
-import React, { Suspense, useEffect } from "lib_ui/react";
+import React, { Suspense, useState, useEffect } from "lib_ui/react";
 import ReactDOM from "lib_ui/react-dom";
-import { Switch, Route, BrowserRouter } from "lib_ui/react-router-dom";
+import { Link, Switch, Route, BrowserRouter } from "lib_ui/react-router-dom";
 import { Provider } from "lib_ui/react-redux";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -10,7 +10,7 @@ import theme from "shared_lib_ui/MUItheme";
 import { store } from "shared_lib_ui/store";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
 import { NotFound } from "shared_lib_ui/Lib/components";
-import { TermsService } from "shared_lib_ui/Lib/layout";
+import { TermsService, AccepterCookie } from "shared_lib_ui/Lib/layout";
 
 import HostMenu from "./leftMenu/HostMenu";
 import RemotePsApp from "ps_ui/RemotePsApp";
@@ -20,7 +20,7 @@ import RemotePayementApp from "payment_ui/RemotePayementApp";
 import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteInduApp from "indu_ui/RemoteInduApp";
-import {Link} from "react-router-dom";
+import { useCookies , CookiesProvider } from "react-cookie";
 
 const PageDashboard = () => (
     <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
@@ -45,15 +45,26 @@ const App = () => {
         // store.injectReducer("configurations", configurationsReducer);
     }, []);
 
+    const [cookies ] = useCookies([]);
+	const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+	useEffect(() => {
+			if(Object.keys(cookies)?.length == 0){
+					setOpenConfirmDialog(true)
+			}
+	}, [cookies]);
+
+
     return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>
+            <CookiesProvider>
                 <DrawerProvider>
                     <BrowserRouter>
                         <Suspense fallback="Loading...">
                             <Box sx={{ display: "flex" }}>
                                 <CssBaseline />
                                 <HostMenu />
+                                <AccepterCookie opened={openConfirmDialog} onClose={()=>setOpenConfirmDialog(false)} /> 
                                 <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                     <Switch>
                                         <Route exact path="/" component={PageDashboard} />
@@ -118,6 +129,7 @@ const App = () => {
                         </Suspense>
                     </BrowserRouter>
                 </DrawerProvider>
+                </CookiesProvider>
             </ThemeProvider>
         </Provider>
     );
