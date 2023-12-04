@@ -13,7 +13,7 @@ const Menu = (props) => {
     return (
         <Box id="leftMenu" component="nav" >
             <StyledMenu  >
-                { HostRouters.filter((item)=> item.name).map((item) =>  <NavigationItem {...item} collapsed={collapsed} />) }
+                { HostRouters.filter((item)=> item.name).map((item) =>  <NavigationItem key={item.name} {...item} collapsed={collapsed} />) }
             </StyledMenu>
         </Box>
     );

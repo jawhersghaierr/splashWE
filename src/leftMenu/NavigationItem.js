@@ -36,12 +36,12 @@ const NavigationItem = (props) => {
     }
 
     return (
-        <StyledMenuListItemButton selected={checkActiveLink()} id={name}  to={path} key={`listItem${path}`} sx={{ width: !collapsed ? 280 : 56  }}
+        <StyledMenuListItemButton selected={checkActiveLink()} id={name} to={path} key={`listItem${path}`} sx={{ width: !collapsed ? 280 : 56  }}
             component={forwardRef((props, ref) => ( <NavLink exact {...props} innerRef={ref} key={`navlink${path}`} style={custonNavLinkStyle} /> ))} >
             <ListItemIcon> { Icon && <Icon color={ checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 } /> } </ListItemIcon>
             { !collapsed && <ListItemText primary={
                 <Typography  variant={"bodym"} sx={{ color: checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }} >
-                     {name} 
+                     {name}
                 </Typography>
             } /> }
         </StyledMenuListItemButton>
