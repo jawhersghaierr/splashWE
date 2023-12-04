@@ -21,12 +21,7 @@ import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteInduApp from "indu_ui/RemoteInduApp";
 import { useCookies , CookiesProvider } from "react-cookie";
-
-const PageDashboard = () => (
-    <Typography variant="h3" noWrap component="div" sx={{ padding: "15px 25px", color: "#003154" }}>
-        Dashboard Page
-    </Typography>
-);
+import Home from "./components/Home";
 
 const PSremote = () => <RemotePsApp store={store} />;
 const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
@@ -36,14 +31,8 @@ const TPSRemote = () => <RemoteTPSApp store={store} />;
 const InduRemote = () => <RemoteInduApp store={store} />;
 const IntraitablesRemote = () => <RemoteIntraitablesApp store={store} />;
 
-// const ConfigurationBase = () => <Configurations store={store} />;
-// const ListConfigurationBase = () => <ListConfiguration store={store} />;
-// const ConfigurationDetailsByIdBase = () => <ConfigurationDetailsById store={store} />;
 
 const App = () => {
-    useEffect(() => {
-        // store.injectReducer("configurations", configurationsReducer);
-    }, []);
 
     const [cookies ] = useCookies([]);
 	const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -64,11 +53,10 @@ const App = () => {
                             <Box sx={{ display: "flex" }}>
                                 <CssBaseline />
                                 <HostMenu />
-                                <AccepterCookie opened={openConfirmDialog} onClose={()=>setOpenConfirmDialog(false)} /> 
+                                <AccepterCookie opened={openConfirmDialog} onClose={()=>setOpenConfirmDialog(false)} />
                                 <Box component="main" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                     <Switch>
-                                        <Route exact path="/" component={PageDashboard} />
-                                        
+	                                    <Route exact path="/" component={Home}/>
                                         <Route path={["/psdashboard", "/ps"]}>
                                             <PSremote />
                                         </Route>
