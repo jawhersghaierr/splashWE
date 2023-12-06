@@ -3,13 +3,13 @@ version: '3.8'
 services:
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_BUILD}
     container_name: host-ui
     restart: unless-stopped
     ports:
       - "8030:8080"
     environment:
-#      ************ REMOTE APPs **********************************************************
+      #      ************ REMOTE APPs **********************************************************
       - REMOTE_LIB_UI=http://10.241.25.21:8038/remoteEntry.js
       - REMOTE_SHARED_LIB_UI=http://10.241.25.21:8039/remoteEntry.js
       - REMOTE_TPS_UI=http://10.241.25.21:8031/remoteEntry.js
@@ -19,7 +19,8 @@ services:
       - REMOTE_PS_UI=http://10.241.25.21:8034/remoteEntry.js
       - REMOTE_BENEF_UI=http://10.241.25.21:8035/remoteEntry.js
       - REMOTE_INDU_UI=http://10.241.25.21:8036/remoteEntry.js
-#      ************ API ***************************************************************
+
+      #      ************ API ***************************************************************
       - APIURL_ROC_SEL_IDB=http://10.241.25.21:8001/api/v1
       - APIURL_PS=http://10.241.25.21:8002/api/v1
       - APIURL_PAIEMENT_VIREMENT=http://10.241.25.21:8003/api/v1
@@ -31,21 +32,5 @@ services:
       - APIURL_TPS_FACTURES=http://10.241.25.21:8017/api/v1
       - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
       - APIURL_INDUS=http://10.241.25.21:8023/api/v1
-      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
+      - APIURL_USER_MANAGEMENT=https://apim-dev-socle.azure-api.net/users-profiles-api/v1
 
-#      - APIURL_BENEFICIAIRE=http://10.241.25.21:8007/api/v1
-#      - APIURL_CONFIGURATIONS=http://10.241.25.21:8015/api/v1
-#      - APIURL_DOWNLOAD_FACTURE=http://10.241.25.21:8015/api/v1
-#      - APIURL_DOWNLOAD_SEL_IDB=http://10.241.25.21:8015/api/v1
-#      - APIURL_FACTURES=http://10.241.25.21:8005/api/v1
-#      - APIURL_FLUX_FACTURES=http://10.241.25.21:8014/api/v1
-#      - APIURL_INTRAITABLES=http://10.241.25.21:8014/api/v1
-#      - APIURL_PAIEMENTS=http://10.241.25.21:8003/api/v1
-#      - APIURL_PS=http://10.241.25.21:8002/api/v1
-#      - APIURL_SEL_IDB=http://10.241.25.21:8001/api/v1
-#      - APIURL_FLUX_SEL_IDB=http://10.241.25.21:8001/api/v1
-#      - APIURL_VIREMENTS=http://10.241.25.21:8003/api/v1
-#      - APIURL_TPS_FACTURES=http://10.241.25.21:8017/api/v1
-#      - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
-#      - APIURL_REFS=http://10.241.25.21:8015/api/v1
-#      - APIURL_REFERENTIELS=http://10.241.25.21:8004/api/v1
