@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_BUILD}
     container_name: host-ui
     restart: unless-stopped
     ports:
@@ -32,4 +32,4 @@ services:
       - APIURL_TPS_FACTURES=http://10.241.25.21:8017/api/v1
       - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
       - APIURL_INDUS=http://10.241.25.21:8023/api/v1
-      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
+      - APIURL_USER_MANAGEMENT=https://apim-dev-socle.azure-api.net/users-profiles-api/v1

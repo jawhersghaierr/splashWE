@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_BUILD}
     container_name: host-ui
     restart: unless-stopped
     ports:
@@ -31,9 +31,9 @@ services:
       - APIURL_BENEFICIAIRE=https://int-api.viamedis.net/droits-beneficiaire-api/v1
       - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://int-api.viamedis.net/facturation-integration-api/v1
       - APIURL_AGREGATOR=https://int-api.viamedis.net/aggregator-api/v1
-      - APIURL_TPS_FACTURES=https://int-api.viamedis.net/tps-facturation-internal-api/v1
-      - APIURL_TP_AMC_SEL_IDB=https://int-api.viamedis.net/tp-amc-internal-api/v1
+      - APIURL_TPS_FACTURES=https://int-api.viamedis.net/tps-facturation-api/v1
+      - APIURL_TP_AMC_SEL_IDB=https://int-api.viamedis.net/tp-amc-api/v1
       - APIURL_INDUS=https://int-api.viamedis.net/indu-api/v1
-      - APIURL_USER_MANAGEMENT=https://10.241.25.10:8044/api/auth/v1
+      - APIURL_USER_MANAGEMENT=https://apim-dev-socle.azure-api.net/users-profiles-api/v1
 
 

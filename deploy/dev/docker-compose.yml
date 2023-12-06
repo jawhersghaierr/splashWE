@@ -14,7 +14,7 @@ services:
       - PROXY_TARGET=host-ui:8080
 
   host-ui:
-    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_SNAPSHOT}
+    image: registry-pull.viamedis.fr/common/host-ui:${VERSION_BUILD}
     container_name: host-ui
     hostname: host-ui
     restart: unless-stopped
