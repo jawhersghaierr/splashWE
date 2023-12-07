@@ -6,6 +6,7 @@ variables:
   DOCKER_SERVICE_NAME_FE: host-ui
   DOCKER_DOCKERFILE_FE: Dockerfile
   NODE_IMAGE: node:16.9.0
+  APPLICATION_VALUES_PATH: "frontend/host-ui.yaml"
 
 include:
   - project: devops/infrastructure/ci-library
