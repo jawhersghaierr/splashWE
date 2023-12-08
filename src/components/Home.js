@@ -1,5 +1,9 @@
 import React from "lib_ui/react";
+import {useSelector} from "lib_ui/react-redux";
 import {Dashboard} from "shared_lib_ui/Lib/layout";
+import {LoadingDots} from "shared_lib_ui/Lib/components";
+import {getUser} from "shared_lib_ui/host";
+import {userProfleSM} from "../utils/userProfleSM";
 import {icons} from "shared_lib_ui/assets";
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 
@@ -21,6 +25,11 @@ export default function Home() {
 	const title = "Bienvenue dans votre espace";
 	const subTitlePS = "Professionnel de santé";
 	const subTitleUser = "cher utilisateur";
+	
+	const user = useSelector(getUser);
+	
+	let role = null
+	if (user?.idTokenClaims) role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE"
 	
 	const gestionnerCards = [
 		{
@@ -70,8 +79,7 @@ export default function Home() {
 			modules: [
 				{
 					text: "tableau de bord",
-					Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard",
-					disable: true
+					Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"
 				},
 				{text: "Rechercher", Icon: SearchNormal, href: "/beneficiaire"},
 			],
@@ -142,10 +150,13 @@ export default function Home() {
 	];
 	
 	return (<>
+		{!role && <div style={{height: "200px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+			<LoadingDots/>
+		</div>}
 		<Dashboard
 			title={title}
-			subTitle={subTitleUser}
-			cards={gestionnerCards}
+			subTitle={userProfleSM({entity: 'subTitle', role, props: {subTitlePS, subTitleUser}})}
+			cards={userProfleSM({entity: 'Dashboard', role, props: {psCards, gestionnerCards}})}
 		/></>);
 	
 }
