@@ -18,8 +18,8 @@ services:
     container_name: host-ui
     hostname: host-ui
     restart: unless-stopped
-#    ports:
-#      - "8030:8080"
+    #    ports:
+    #      - "8030:8080"
     environment:
       #      ************ REMOTE APPs **********************************************************
       - REMOTE_SHARED_LIB_UI=https://10.241.25.10:8039/remoteEntry.js
