@@ -1,5 +1,24 @@
 module.exports = {
 
+    "msalConfig": {
+        "auth": {
+            "clientId": "${CLIENT_ID}",
+            "authority": "${AUTHORITY}",
+            "knownAuthorities": ["${KNOWN_AUTHORITY}"],
+            "redirectUri": "${REDIRECT_URI}",
+            "postLogoutRedirectUri": "${POST_LOGOUT_REDIRECT_URI}"
+        },
+    },
+    "loginRequest": {
+        "scopes": ["${LOGIN_REQUEST_SCOPES}"],
+        "extraQueryParameters": {"ui_locales" : "fr-FR"}
+    },
+// **************************************************************
+
+
+// **************************************************************
+// *********************   remoteApps     ***********************
+// **************************************************************
     "remoteApps": {
         "shared_lib_ui": "${REMOTE_SHARED_LIB_UI}",
         "lib_ui": "${REMOTE_LIB_UI}",
@@ -10,6 +29,7 @@ module.exports = {
         "payment_ui": "${REMOTE_PAYEMENTS_UI}",
         "benef_ui": "${REMOTE_BENEF_UI}",
         "indu_ui": "${REMOTE_INDU_UI}",
+        "auth_ui": "${REMOTE_AUTH_UI}",
     },
     // **************************************************************
     
