@@ -20,6 +20,7 @@ services:
       - REMOTE_PS_UI=http://10.241.25.20:8034/remoteEntry.js
       - REMOTE_BENEF_UI=http://10.241.25.20:8035/remoteEntry.js
       - REMOTE_INDU_UI=http://10.241.25.20:8036/remoteEntry.js
+      - REMOTE_AUTH_UI=https://10.241.25.10:8040/remoteEntry.js
 
       #      ************ API ***************************************************************
       - APIURL_ROC_SEL_IDB=https://int-api.viamedis.net/roc-api/v1
@@ -36,11 +37,5 @@ services:
       - APIURL_USER_MANAGEMENT=https://apim-dev-socle.azure-api.net/users-profiles-api/v1
 
       #      ***************************** AUTH *****************************************************
-      - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
-      - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_susi_email
-      - KNOWN_AUTHORITY=integrationviamedisb2c.b2clogin.com
-      - REDIRECT_URI=https://10.241.25.10:8030
-      - POST_LOGOUT_REDIRECT_URI=https://10.241.25.10:8030
-      - LOGIN_REQUEST_SCOPES=https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access
-#
+      # ...
 
