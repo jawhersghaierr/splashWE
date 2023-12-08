@@ -2,12 +2,25 @@ version: '3.8'
 
 services:
 
+  # manual start of proxy SERVICE_DEPLOY = host-ui-https-proxy
+  host-ui-https-proxy:
+    image: registry-pull.viamedis.fr/viamedis/nginx-https-proxy
+    container_name: host-ui-https-proxy
+    hostname: host-ui-https-proxy
+    restart: unless-stopped
+    ports:
+      - "8030:443"
+    environment:
+      - PROXY_TARGET=host-ui:8080
+
   host-ui:
     image: registry-pull.viamedis.fr/common/host-ui:${VERSION_BUILD}
     container_name: host-ui
+    hostname: host-ui
     restart: unless-stopped
-    ports:
-      - "8030:8080"
+    #    ports:
+    #      - "8030:8080"
+
     environment:
       #      ************ REMOTE APPs **********************************************************
       - REMOTE_LIB_UI=http://10.241.25.21:8038/remoteEntry.js
