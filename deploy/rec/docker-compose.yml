@@ -23,29 +23,29 @@ services:
 
     environment:
       #      ************ REMOTE APPs **********************************************************
-      - REMOTE_LIB_UI=http://10.241.25.21:8038/remoteEntry.js
-      - REMOTE_SHARED_LIB_UI=http://10.241.25.21:8039/remoteEntry.js
-      - REMOTE_TPS_UI=http://10.241.25.21:8031/remoteEntry.js
-      - REMOTE_HOSPI_UI=http://10.241.25.21:8032/remoteEntry.js
-      - REMOTE_INTRAITABLES_UI=http://10.241.25.21:8037/remoteEntry.js
-      - REMOTE_PAYEMENTS_UI=http://10.241.25.21:8033/remoteEntry.js
-      - REMOTE_PS_UI=http://10.241.25.21:8034/remoteEntry.js
-      - REMOTE_BENEF_UI=http://10.241.25.21:8035/remoteEntry.js
-      - REMOTE_INDU_UI=http://10.241.25.21:8036/remoteEntry.js
+      - REMOTE_LIB_UI=https://10.241.25.21:8038/remoteEntry.js
+      - REMOTE_SHARED_LIB_UI=https://10.241.25.21:8039/remoteEntry.js
+      - REMOTE_TPS_UI=https://10.241.25.21:8031/remoteEntry.js
+      - REMOTE_HOSPI_UI=https://10.241.25.21:8032/remoteEntry.js
+      - REMOTE_INTRAITABLES_UI=https://10.241.25.21:8037/remoteEntry.js
+      - REMOTE_PAYEMENTS_UI=https://10.241.25.21:8033/remoteEntry.js
+      - REMOTE_PS_UI=https://10.241.25.21:8034/remoteEntry.js
+      - REMOTE_BENEF_UI=https://10.241.25.21:8035/remoteEntry.js
+      - REMOTE_INDU_UI=https://10.241.25.21:8036/remoteEntry.js
       - REMOTE_AUTH_UI=https://10.241.25.21:8040/remoteEntry.js
 
       #      ************ API ***************************************************************
-      - APIURL_ROC_SEL_IDB=http://10.241.25.21:8001/api/v1
-      - APIURL_PS=http://10.241.25.21:8002/api/v1
-      - APIURL_PAIEMENT_VIREMENT=http://10.241.25.21:8003/api/v1
-      - APIURL_REFERENTIELS=http://10.241.25.21:8004/api/v1
-      - APIURL_HOSPI_FACTURES=http://10.241.25.21:8005/api/v1
-      - APIURL_BENEFICIAIRE=http://10.241.25.21:8007/api/v1
-      - APIURL_INTEGRATION_FACTURE_INTRITABLES=http://10.241.25.21:8014/api/v1
-      - APIURL_AGREGATOR=http://10.241.25.21:8015/api/v1
-      - APIURL_TPS_FACTURES=http://10.241.25.21:8017/api/v1
-      - APIURL_TP_AMC_SEL_IDB=http://10.241.25.21:8020/api/v1
-      - APIURL_INDUS=http://10.241.25.21:8023/api/v1
+      - APIURL_ROC_SEL_IDB=https://10.241.25.21:8001/api/v1
+      - APIURL_PS=https://10.241.25.21:8002/api/v1
+      - APIURL_PAIEMENT_VIREMENT=https://10.241.25.21:8003/api/v1
+      - APIURL_REFERENTIELS=https://10.241.25.21:8004/api/v1
+      - APIURL_HOSPI_FACTURES=https://10.241.25.21:8005/api/v1
+      - APIURL_BENEFICIAIRE=https://10.241.25.21:8007/api/v1
+      - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://10.241.25.21:8014/api/v1
+      - APIURL_AGREGATOR=https://10.241.25.21:8015/api/v1
+      - APIURL_TPS_FACTURES=https://10.241.25.21:8017/api/v1
+      - APIURL_TP_AMC_SEL_IDB=https://10.241.25.21:8020/api/v1
+      - APIURL_INDUS=https://10.241.25.21:8023/api/v1
       - APIURL_USER_MANAGEMENT=https://rec-api.viamedis.net/users-profiles-api/v1
 
       #      ***************************** AUTH *****************************************************
