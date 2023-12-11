@@ -35,17 +35,17 @@ services:
       - REMOTE_AUTH_UI=https://10.241.25.21:8040/remoteEntry.js
 
       #      ************ API ***************************************************************
-      - APIURL_ROC_SEL_IDB=https://10.241.25.21:8001/api/v1
-      - APIURL_PS=https://10.241.25.21:8002/api/v1
-      - APIURL_PAIEMENT_VIREMENT=https://10.241.25.21:8003/api/v1
-      - APIURL_REFERENTIELS=https://10.241.25.21:8004/api/v1
-      - APIURL_HOSPI_FACTURES=https://10.241.25.21:8005/api/v1
-      - APIURL_BENEFICIAIRE=https://10.241.25.21:8007/api/v1
-      - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://10.241.25.21:8014/api/v1
-      - APIURL_AGREGATOR=https://10.241.25.21:8015/api/v1
-      - APIURL_TPS_FACTURES=https://10.241.25.21:8017/api/v1
-      - APIURL_TP_AMC_SEL_IDB=https://10.241.25.21:8020/api/v1
-      - APIURL_INDUS=https://10.241.25.21:8023/api/v1
+      - APIURL_ROC_SEL_IDB=https://rec-api.viamedis.net/roc-api/v1
+      - APIURL_PS=https://rec-api.viamedis.net/ps-api/v1
+      - APIURL_PAIEMENT_VIREMENT=https://rec-api.viamedis.net/paiement-api/v1
+      - APIURL_REFERENTIELS=https://rec-api.viamedis.net/referentiel-api/v1
+      - APIURL_HOSPI_FACTURES=https://rec-api.viamedis.net/hospi-facturation-api/v1
+      - APIURL_BENEFICIAIRE=https://rec-api.viamedis.net/droits-beneficiaire-api/v1
+      - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://rec-api.viamedis.net/facturation-integration-api/v1
+      - APIURL_AGREGATOR=https://rec-api.viamedis.net/service-aggregator-api/v1
+      - APIURL_TPS_FACTURES=https://rec-api.viamedis.net/tps-facturation-api/v1
+      - APIURL_TP_AMC_SEL_IDB=https://rec-api.viamedis.net/tp-amc-api/v1
+      - APIURL_INDUS=https://rec-api.viamedis.net/indu-api/v1
       - APIURL_USER_MANAGEMENT=https://rec-api.viamedis.net/users-profiles-api/v1
 
       #      ***************************** AUTH *****************************************************
