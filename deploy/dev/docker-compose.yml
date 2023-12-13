@@ -41,7 +41,7 @@ services:
       - APIURL_HOSPI_FACTURES=https://apim-dev-socle.azure-api.net/hospi-facturation-api/v1
       - APIURL_BENEFICIAIRE=https://apim-dev-socle.azure-api.net/droits-beneficiaire-api/v1
       - APIURL_INTEGRATION_FACTURE_INTRITABLES=https://apim-dev-socle.azure-api.net/facturation-integration-api/v1
-      - APIURL_AGREGATOR=https://apim-dev-socle.azure-api.net/aggregator-api/v1
+      - APIURL_AGREGATOR=https://rec-api.viamedis.net/service-aggregator-api/v1
       - APIURL_TPS_FACTURES=https://apim-dev-socle.azure-api.net/tps-facturation-api/v1
       - APIURL_TP_AMC_SEL_IDB=https://apim-dev-socle.azure-api.net/tp-amc-api/v1
       - APIURL_INDUS=https://apim-dev-socle.azure-api.net/indu-api/v1

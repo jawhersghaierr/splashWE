@@ -36,18 +36,18 @@ module.exports = {
 	// *********************      apiUrls     ***********************
 	// **************************************************************
 	"apiUrls": {
-		"rocSelAndIdb": "https://apim-dev-socle.azure-api.net/roc-api/v1",
-		"ps": "https://apim-dev-socle.azure-api.net/ps-api/v1",
-		"paiementsAndVirements": "https://apim-dev-socle.azure-api.net/paiement-api/v1",
-		"referentiels": "https://apim-dev-socle.azure-api.net/referentiel-api/v1",
-		"hospiFactures": "https://apim-dev-socle.azure-api.net/hospi-facturation-api/v1",
-		"beneficiaire": "https://apim-dev-socle.azure-api.net/droits-beneficiaire-api/v1",
-		"factureAndIntraitablesIntegration": "https://apim-dev-socle.azure-api.net/facturation-integration-api/v1",
-		"agregator": "https://apim-dev-socle.azure-api.net/aggregator-api/v1",
-		"tpsFactures": "https://apim-dev-socle.azure-api.net/tps-facturation-api/v1",
-		"tpAmcSelAndIdb": "https://apim-dev-socle.azure-api.net/tp-amc-api/v1",
-		"indus": "https://apim-dev-socle.azure-api.net/indu-api/v1",
-		"userMngmnt": "https://apim-dev-socle.azure-api.net/users-profiles-api/v1"
+		"rocSelAndIdb": "https://rec-api.viamedis.net/roc-api/v1",
+		"ps": "https://rec-api.viamedis.net/ps-api/v1",
+		"paiementsAndVirements": "https://rec-api.viamedis.net/paiement-api/v1",
+		"referentiels": "https://rec-api.viamedis.net/referentiel-api/v1",
+		"hospiFactures": "https://rec-api.viamedis.net/hospi-facturation-api/v1",
+		"beneficiaire": "https://rec-api.viamedis.net/droits-beneficiaire-api/v1",
+		"factureAndIntraitablesIntegration": "https://rec-api.viamedis.net/facturation-integration-api/v1",
+		"agregator": "https://rec-api.viamedis.net/service-aggregator-api/v1",
+		"tpsFactures": "https://rec-api.viamedis.net/tps-facturation-api/v1",
+		"tpAmcSelAndIdb": "https://rec-api.viamedis.net/tp-amc-api/v1",
+		"indu_ui": "https://rec-api.viamedis.net/indu-api/v1",
+		"userMngmnt": "https://rec-api.viamedis.net/users-profiles-api/v1"
 		// **********************************************************
 		
 	},
