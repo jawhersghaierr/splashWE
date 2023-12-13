@@ -1,6 +1,11 @@
 export const flag = (moduleCode) => `extension_${moduleCode}_flag`
 export const profile = (moduleCode) => `extension_${moduleCode}_profile`
-
+/**
+ * walks through card definition and their modules and return filtered arrays based on claims
+ * @param cards
+ * @param claims
+ * @returns {*[]}
+ */
 const cardWalker = ({cards, claims}) => {
 	let result = []
 	cards.map(card => {
@@ -14,6 +19,10 @@ const cardWalker = ({cards, claims}) => {
 	return result
 }
 
+/**
+ *
+ * State Machine declaration of rules
+ */
 const profileRoleState = {
 	PS: {
 		Dashboard: ({psCards, claims}) => cardWalker({cards: psCards, claims}),
@@ -32,6 +41,7 @@ const profileRoleState = {
 	GESTIONAIRE: {
 		Dashboard: ({gestionnerCards, claims}) => cardWalker({cards: gestionnerCards, claims}),
 		subTitle: ({subTitleUser}) => subTitleUser,
+		
 		/**
 		 *
 		 * @param gestionnerRouters check existing in declaration of userInfo.claims
