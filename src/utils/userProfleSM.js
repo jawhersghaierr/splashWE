@@ -1,32 +1,34 @@
-import {gestionnerRouters, psRouters} from "../leftMenu/HostRouters";
+export const flag = (moduleCode) => `extension_${moduleCode}_flag`
+
+export const profile = (moduleCode) => `extension_${moduleCode}_profile`
+
+
+export const checkRightsForModule = (moduleCode) => {
+	let result = false
+	if (profile(moduleCode) && flag(moduleCode) ) result = true
+	
+	return result
+}
+
 
 const profileRoleState = {
-    PS: {
-        Dashboard: ({psCards}) => psCards,
-        subTitle: ({subTitlePS}) => subTitlePS,
-        LeftMenu: ({psRouters}) => psRouters
-    },
-    GESTIONAIRE: {
-        Dashboard: ({ gestionnerCards }) => gestionnerCards,
-        subTitle: ({subTitleUser}) => subTitleUser,
-        LeftMenu: ({gestionnerRouters}) => gestionnerRouters
-    },
-    CLAIMS:[
-        'CAN_UPDATE_USER',
-        'CAN_UPDATE_USER_PROFILE',
-        'CAN_VIEW_USER_PROFILES',
-        'CAN_VIEW_USERS',
-        'CAN_REMOVE_USER',
-        'CAN_CREATE_USER',
-        'CAN_CREATE_USER_PROFILE',
-        'CAN_REMOVE_USER_PROFILE'
-    ]
+	PS: {
+		Dashboard: ({psCards}) => psCards,
+		subTitle: ({subTitlePS}) => subTitlePS,
+		LeftMenu: ({psRouters}) => psRouters?.filter((item) => item.name && (item.code === 'ALL' || checkRightsForModule(item.code)))
+	},
+	GESTIONAIRE: {
+		Dashboard: ({gestionnerCards}) => gestionnerCards,
+		subTitle: ({subTitleUser}) => subTitleUser,
+		LeftMenu: ({gestionnerRouters}) => gestionnerRouters?.filter((item) => item.name && (item.code === 'ALL' || checkRightsForModule(item.code)))
+	},
 };
 
-export const userProfleSM = ({ entity, role, props }) => {
-    let result = null
-    if (role && entity && profileRoleState[role] && profileRoleState[role][entity]) {
-        result = profileRoleState[role][entity](props);
-    }
-    return result;
+export const userProfleSM = ({entity, role, props}) => {
+	let result = null
+	if (role && entity && profileRoleState[role] && profileRoleState[role][entity]) {
+		result = profileRoleState[role][entity](props);
+	}
+	return result;
 };
+

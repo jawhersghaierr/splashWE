@@ -35,8 +35,9 @@ export default function Home() {
 		{
 			Header: ROCIcon,
 			modules: [
-				{text: "Services en ligne ROC", Icon: SearchNormal, href: "/serviceEnLigne"},
-				{text: "Factures", Icon: SearchNormal, href: "/factures"}
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/hospidashboard"},
+				{text: "Rechercher des services ROC", Icon: SearchNormal, href: "/serviceEnLigne"},
+				{text: "Rechercher des factures", Icon: SearchNormal, href: "/factures"}
 			],
 			title: 'Hospitalisation',
 			service: '', subTitle: '',
@@ -45,10 +46,10 @@ export default function Home() {
 		{
 			Header: ThirdPartyPaymentIcon,
 			modules: [
-				{text: "tableau de TP bord", Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
-				{text: "Tiers payant simple", Icon: SearchNormal, href: "/tpAmcServiceEnLigne"},
-				{text: "Créer une facture TPS", Icon: AddIcon, href: "/tpsFactures/create"},
-				{text: "Services en ligne ROC", Icon: SearchNormal, href: "/tpAmcServiceEnLigne"}
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
+				{text: "Rechercher des services TP-AMC", Icon: SearchNormal, href: "/tpAmcServiceEnLigne"},
+				{text: "Rechercher des factures", Icon: SearchNormal, href: "/tpsFactures"},
+				{text: "Créer une facture TPS", Icon: AddIcon, href: "/tpsFactures/create"}
 			],
 			title: 'Tiers payant',
 			service: '', subTitle: ''
@@ -57,7 +58,9 @@ export default function Home() {
 		{
 			Header: PaymentIcon,
 			modules: [
-				{text: "Paiement", Icon: DashboardCustomizeOutlinedIcon, href: "/paiementdashboard"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/paiementdashboard"},
+				{text: "Rechercher des paiements", Icon: SearchNormal, href: "/paiement"},
+				{text: "Rechercher des virements", Icon: SearchNormal, href: "/virements"},
 			],
 			title: 'Paiement & Virement',
 			service: '', subTitle: '',
@@ -66,22 +69,21 @@ export default function Home() {
 		{
 			Header: MoneyCardEdit,
 			modules: [
-				{text: "Indus and Remboursements", Icon: DashboardCustomizeOutlinedIcon, href: "/indusdashboard"},
-				{text: "Indus", Icon: SearchNormal, href: "/indus"},
-				{text: "Créer une Indu", Icon: AddIcon, href: "/indus/create"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/indusdashboard"},
+				{text: "Rechercher des indus", Icon: SearchNormal, href: "/indus"},
+				{text: "Créer un indu", Icon: AddIcon, href: "/indus/create"},
+				{text: "Rechercher des remboursements", Icon: SearchNormal, href: "/remboursements"},
+				{text: "Créer un remboursement", Icon: AddIcon, href: "/remboursements/create", disabled: true},
 			],
 			title: 'Indu',
 			service: '', subTitle: '',
 		},
 		
 		{
-			Header: ContentDocument,
+			Header: User,
 			modules: [
-				{
-					text: "tableau de bord",
-					Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"
-				},
-				{text: "Rechercher", Icon: SearchNormal, href: "/beneficiaire"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
+				{text: "Rechercher des droits bénéficiaire", Icon: SearchNormal, href: "/beneficiaire"},
 			],
 			title: "Droits bénéficiaires",
 			service: "",
@@ -91,7 +93,8 @@ export default function Home() {
 		{
 			Header: PSIcon,
 			modules: [
-				{text: "Professionnel de santé", Icon: DashboardCustomizeOutlinedIcon, href: "/psdashboard"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/psdashboard"},
+				{text: "Rechercer un professionnel de santé", Icon: SearchNormal, href: "/ps"},
 			],
 			title: 'Professionnel de santé',
 			service: '', subTitle: '',
@@ -100,7 +103,8 @@ export default function Home() {
 		{
 			Header: MoneyArchive,
 			modules: [
-				{text: "Factures intraitable", Icon: DashboardCustomizeOutlinedIcon, href: "/intraitablesdashboard"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/intraitablesdashboard"},
+				{text: "Rechercher des factures intraitables", Icon: SearchNormal, href: "/intraitables"},
 			],
 			title: 'Factures intraitables',
 			service: '', subTitle: '',
@@ -111,31 +115,43 @@ export default function Home() {
 	
 	const psCards = [
 		{
-			Header: ContentDocument,
+			Header: ROCIcon,
 			modules: [
-				{text: "tableau de TP bord", Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
-				{text: "Rechercher factures TPS", Icon: SearchNormal, href: "/tpsFactures"},
-				{text: "Créer une facture TPS", Icon: AddIcon, href: "/tpsFactures/create"},
-				{text: "tableau de ROC bord", Icon: DashboardCustomizeOutlinedIcon, href: "/hospidashboard"},
-				{text: "Rechercher factures Hospi", Icon: SearchNormal, href: "/factures"},
+				{text: "Acceuil", Icon: SearchNormal, href: "/hospidashboard"},
+				{text: "Rechercher des services ROC", Icon: SearchNormal, href: "/serviceEnLigne"},
+				{text: "Rechercher des factures", Icon: SearchNormal, href: "/factures"}
 			],
-			title: "Mes factures",
-			service: "",
-			subTitle: "Accéder aux factures et suivre leur déroulement.",
+			title: 'Hospitalisation',
+			service: '', subTitle: '',
 		},
+		
+		{
+			Header: ThirdPartyPaymentIcon,
+			modules: [
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
+				{text: "Rechercher des services TP-AMC", Icon: SearchNormal, href: "/tpAmcServiceEnLigne"},
+				{text: "Rechercher des factures", Icon: SearchNormal, href: "/tpsFactures"},
+				{text: "Créer une facture TPS", Icon: AddIcon, href: "/tpsFactures/create"}
+			],
+			title: 'Tiers payant',
+			service: '', subTitle: ''
+		},
+		
 		{
 			Header: ContentDocument,
 			modules: [
-				{text: "Rechercher", Icon: SearchNormal, href: "/beneficiaire"},
+				{text: "Acceuil", Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
+				{text: "Rechercher des droits bénéficiaire", Icon: SearchNormal, href: "/beneficiaire"},
 			],
 			title: "Droits bénéficiaires",
 			service: "",
 			subTitle: "Consulter les droits sur mes disciplines.",
 		},
+
 		{
 			Header: ContentDocument,
 			modules: [
-				{text: "Rechercher", Icon: SearchNormal, href: "/profile"},
+				{text: "Rechercher", Icon: SearchNormal, href: "/profile", disabled: true},
 			],
 			title: "Mon profil",
 			service: "",
@@ -144,6 +160,9 @@ export default function Home() {
 		{
 			Header: ContentDocument,
 			title: "Espace Demandes",
+			modules: [
+				{text: "Rechercher", Icon: SearchNormal, href: "https://dev-espace-ps.viamedis.fr/#/demandes", internal: false},
+			],
 			service: "",
 			subTitle: "Créer et suivre mes demandes.",
 		},

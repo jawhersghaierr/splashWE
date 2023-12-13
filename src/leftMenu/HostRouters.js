@@ -15,24 +15,29 @@ const {
 const psRouters = [
     {
         name: "Accueil",
+	    code: "ALL",
         icon: HomeIcon,
         path: "/",
         children: [] ,
     },
     {
         name: "Factures",
+	    code: "HFAC",
         icon: ROCIcon,
         path: "/factures",
         children: [],
-    },    {
+    },
+    {
         name: "Services en ligne ROC",
+	    code: "ROC",
         icon: ROCIcon,
         path: "/serviceEnLigne",
         children: [],
     },
     {
         name: "Tiers payant simple",
-        icon: ThirdPartyPaymentIcon,
+	    code: "TPS",
+	    icon: ThirdPartyPaymentIcon,
         path: "/tpsdashboard",
         children: [
             { name: "TpAmcEnLigne", path: "/tpAmcServiceEnLigne" },
@@ -41,6 +46,7 @@ const psRouters = [
     },
     {
         name: "Paiement",
+	    code: "PAI",
         icon: PaymentIcon,
         path: "/paiementdashboard",
         children: [
@@ -51,6 +57,7 @@ const psRouters = [
 
     {
         name: "Bénéficiaire",
+	    code: "DRB",
         icon: User,
         path: "/beneficiaire",
         children: [],
@@ -58,6 +65,7 @@ const psRouters = [
 
     {
         icon: UserThermsAndCondition,
+	    code: "ALL",
         path: "/terms",
         children: [
             { path: "/terms/terms-of-service", },
@@ -70,12 +78,14 @@ const psRouters = [
 const gestionnerRouters = [
     {
         name: "Accueil",
+	    code: "ALL",
         icon: HomeIcon,
         path: "/",
         children: [] ,
     },
     {
         name: "Hospitalisation",
+	    code: "HFAC",
         icon: ROCIcon,
         path: "/hospidashboard",
         children: [
@@ -85,6 +95,7 @@ const gestionnerRouters = [
     },
     {
         name: "Tiers payant simple",
+	    code: "TPS",
         icon: ThirdPartyPaymentIcon,
         path: "/tpsdashboard",
         children: [
@@ -94,6 +105,7 @@ const gestionnerRouters = [
     },
     {
         name: "Paiement",
+	    code: "PAI",
         icon: PaymentIcon,
         path: "/paiementdashboard",
         children: [
@@ -103,6 +115,7 @@ const gestionnerRouters = [
     },
     {
         name: "Indu",
+	    code: "INDU",
         icon: MoneyCardEdit,
         path: "/indusdashboard",
         children: [
@@ -112,12 +125,14 @@ const gestionnerRouters = [
     },
     {
         name: "Bénéficiaire",
+	    code: "DRB",
         icon: User,
         path: "/benefdashboard",
         children: [],
     },
     {
         name: "Professionnel de santé",
+	    code: "PS",
         icon: PSIcon,
         path: "/psdashboard",
         children: [
@@ -129,6 +144,7 @@ const gestionnerRouters = [
     },
     {
         icon: UserThermsAndCondition,
+	    code: "ALL",
         path: "/terms",
         children: [
             { path: "/terms/terms-of-service", },
@@ -138,6 +154,7 @@ const gestionnerRouters = [
     },
     {
         name: "Factures intraitables",
+	    code: "FIN",
         icon: MoneyArchive,
         path: "/intraitablesdashboard",
         children: [
