@@ -25,7 +25,8 @@ const Menu = (props) => {
 		role,
 		props: {
 			psRouters,
-			gestionnerRouters
+			gestionnerRouters,
+			claims: user.idTokenClaims || {}
 		}
 	})
 	
