@@ -1,5 +1,14 @@
 export const flag = (moduleCode) => `extension_${moduleCode}_flag`
 export const profile = (moduleCode) => `extension_${moduleCode}_profile`
+
+/**
+ *
+ * @param claims
+ * @param code
+ * @returns {Boolean}
+ */
+export const isExistAndCheck = ({claims, code}) => (claims[profile(code)] && claims[flag(code)])
+
 /**
  * walks through card definition and their modules and return filtered arrays based on claims
  * @param cards
@@ -11,7 +20,7 @@ const cardWalker = ({cards, claims}) => {
 	cards.map(card => {
 		let modules = []
 		card?.modules.map(_modul => {
-			if ( _modul?.code === 'ALL' || (claims[profile(_modul?.code)] && claims[flag(_modul?.code)]) ) modules.push(_modul)
+			if ( _modul?.code === 'ALL' || isExistAndCheck({claims, code: _modul?.code}) ) modules.push(_modul)
 		})
 		if (modules.length > 0) result.push({...card, modules})
 	})
@@ -35,7 +44,7 @@ const profileRoleState = {
 		 * @returns {boolean}
 		 */
 		LeftMenu: ({psRouters, claims}) => psRouters?.filter(({name, code}) =>
-			name && (code === 'ALL' || (claims[profile(code)] && claims[flag(code)]))
+			name && (code === 'ALL' || isExistAndCheck({claims, code}))
 		)
 	},
 	GESTIONAIRE: {
@@ -49,8 +58,8 @@ const profileRoleState = {
 		 * @returns {boolean}
 		 */
 		LeftMenu: ({gestionnerRouters, claims}) => gestionnerRouters?.filter(({name, code}) =>
-			name && (code === 'ALL' || (claims[profile(code)] && claims[flag(code)])
-			))
+			name && (code === 'ALL' || isExistAndCheck({claims, code}))
+		)
 	},
 };
 /**
