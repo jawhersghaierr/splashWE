@@ -35,7 +35,7 @@ export default function Home() {
 		{
 			Header: ROCIcon,
 			modules: [
-				{text: "Acceuil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/hospidashboard"},
+				{text: "Accueil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/hospidashboard"},
 				{text: "Rechercher des services ROC", code: 'ROC', Icon: SearchNormal, href: "/serviceEnLigne"},
 				{text: "Rechercher des factures", code: 'HFAC', Icon: SearchNormal, href: "/factures"}
 			],
@@ -46,7 +46,7 @@ export default function Home() {
 		{
 			Header: ThirdPartyPaymentIcon,
 			modules: [
-				{text: "Acceuil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
+				{text: "Accueil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
 				{text: "Rechercher des services TP-AMC", code: 'TPAMC', Icon: SearchNormal, href: "/tpAmcServiceEnLigne"},
 				{text: "Rechercher des factures", code: 'TPS', Icon: SearchNormal, href: "/tpsFactures"},
 				{text: "Créer une facture", code: 'TPS', Icon: AddIcon, href: "/tpsFactures/create"}
@@ -58,7 +58,7 @@ export default function Home() {
 		{
 			Header: PaymentIcon,
 			modules: [
-				{text: "Acceuil", code: 'PAI', Icon: DashboardCustomizeOutlinedIcon, href: "/paiementdashboard"},
+				{text: "Accueil", code: 'PAI', Icon: DashboardCustomizeOutlinedIcon, href: "/paiementdashboard"},
 				{text: "Rechercher des paiements", code: 'PAI', Icon: SearchNormal, href: "/paiement"},
 				{text: "Rechercher des virements", code: 'PAI', Icon: SearchNormal, href: "/virements"},
 			],
@@ -69,7 +69,7 @@ export default function Home() {
 		{
 			Header: MoneyCardEdit,
 			modules: [
-				{text: "Acceuil", code: 'INDU', Icon: DashboardCustomizeOutlinedIcon, href: "/indusdashboard"},
+				{text: "Accueil", code: 'INDU', Icon: DashboardCustomizeOutlinedIcon, href: "/indusdashboard"},
 				{text: "Rechercher des indus", code: 'INDU', Icon: SearchNormal, href: "/indus"},
 				{text: "Créer un indu", code: 'INDU', Icon: AddIcon, href: "/indus/create"},
 				{text: "Rechercher des remboursements", code: 'INDU', Icon: SearchNormal, href: "/remboursements"},
@@ -82,7 +82,7 @@ export default function Home() {
 		{
 			Header: User,
 			modules: [
-				{text: "Acceuil", code: 'DRB', Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
+				{text: "Accueil", code: 'DRB', Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
 				{text: "Rechercher des droits bénéficiaire", code: 'DRB', Icon: SearchNormal, href: "/beneficiaire"},
 			],
 			title: "Droits bénéficiaires",
@@ -93,7 +93,7 @@ export default function Home() {
 		{
 			Header: PSIcon,
 			modules: [
-				{text: "Acceuil", code: 'PS', Icon: DashboardCustomizeOutlinedIcon, href: "/psdashboard"},
+				{text: "Accueil", code: 'PS', Icon: DashboardCustomizeOutlinedIcon, href: "/psdashboard"},
 				{text: "Rechercer un professionnel de santé", code: 'PS', Icon: SearchNormal, href: "/ps"},
 			],
 			title: 'Professionnel de santé',
@@ -103,7 +103,7 @@ export default function Home() {
 		{
 			Header: MoneyArchive,
 			modules: [
-				{text: "Acceuil", code: 'FIN', Icon: DashboardCustomizeOutlinedIcon, href: "/intraitablesdashboard"},
+				{text: "Accueil", code: 'FIN', Icon: DashboardCustomizeOutlinedIcon, href: "/intraitablesdashboard"},
 				{text: "Rechercher des factures intraitables", code: 'FIN', Icon: SearchNormal, href: "/intraitables"},
 			],
 			title: 'Factures intraitables',
@@ -117,7 +117,7 @@ export default function Home() {
 		{
 			Header: ROCIcon,
 			modules: [
-				{text: "Acceuil", code: 'ALL', Icon: SearchNormal, href: "/hospidashboard"},
+				{text: "Accueil", code: 'ALL', Icon: SearchNormal, href: "/hospidashboard"},
 				{text: "Rechercher des services ROC", code: 'ROC', Icon: SearchNormal, href: "/serviceEnLigne"},
 				{text: "Rechercher des factures", code: 'HFAC', Icon: SearchNormal, href: "/factures"}
 			],
@@ -128,7 +128,7 @@ export default function Home() {
 		{
 			Header: ThirdPartyPaymentIcon,
 			modules: [
-				{text: "Acceuil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
+				{text: "Accueil", code: 'ALL', Icon: DashboardCustomizeOutlinedIcon, href: "/tpsdashboard"},
 				{text: "Rechercher des services TP-AMC", code: 'TPAMC', Icon: SearchNormal, href: "/tpAmcServiceEnLigne"},
 				{text: "Rechercher des factures", code: 'TPS', Icon: SearchNormal, href: "/tpsFactures"},
 				{text: "Créer une facture", code: 'TPS', Icon: AddIcon, href: "/tpsFactures/create"}
@@ -140,7 +140,7 @@ export default function Home() {
 		{
 			Header: ContentDocument,
 			modules: [
-				{text: "Acceuil", code: 'DRB', Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
+				{text: "Accueil", code: 'DRB', Icon: DashboardCustomizeOutlinedIcon, href: "/benefdashboard"},
 				{text: "Rechercher des droits bénéficiaire", code: 'DRB', Icon: SearchNormal, href: "/beneficiaire"},
 			],
 			title: "Droits bénéficiaires",

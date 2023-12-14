@@ -4,7 +4,7 @@ export const profile = (moduleCode) => `extension_${moduleCode}_profile`
 /**
  *
  * @param claims
- * @param code
+ * @param code based on module Identification code
  * @returns {Boolean}
  */
 export const isExistAndCheck = ({claims, code}) => (claims[profile(code)] && claims[flag(code)])

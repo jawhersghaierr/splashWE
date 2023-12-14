@@ -30,9 +30,6 @@ const Menu = (props) => {
 		}
 	})
 	
-	console.log('HostRouters ', HostRouters)
-	console.log('user idTokenClaims', user.idTokenClaims)
-	
 	const {collapsed} = props
 	
 	return (
