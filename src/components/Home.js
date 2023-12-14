@@ -94,7 +94,7 @@ export default function Home() {
 			Header: PSIcon,
 			modules: [
 				{text: "Accueil", code: 'PS', Icon: DashboardCustomizeOutlinedIcon, href: "/psdashboard"},
-				{text: "Rechercer un professionnel de santé", code: 'PS', Icon: SearchNormal, href: "/ps"},
+				{text: "Rechercher un professionnel de santé", code: 'PS', Icon: SearchNormal, href: "/ps"},
 			],
 			title: 'Professionnel de santé',
 			service: '', subTitle: '',
