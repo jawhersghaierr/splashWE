@@ -10,7 +10,7 @@ variables:
 
 include:
   - project: devops/infrastructure/ci-library
-    ref: 'master'
+    ref: 'feature/fix-cache-problem'
     file:
       - pipelines/frontend.yml
       - components/env-definitions-azure-docker.yml
