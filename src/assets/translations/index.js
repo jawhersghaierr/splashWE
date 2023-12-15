@@ -1,7 +1,7 @@
 import fr from "./fr";
 
 const translations = {
-    "fr-FR": fr
+    "fr-FR": fr,
 };
 
-export default translations
+export default translations;

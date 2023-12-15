@@ -9,8 +9,7 @@ import { Typography } from "@mui/material";
 import StyledMenuListItemButton from "./StyledMenuListItemButton";
 
 const NavigationItem = (props) => {
-
-    const { name, path, icon : Icon, collapsed, children } = props;
+    const { name, path, icon: Icon, collapsed, children } = props;
 
     const theme = useTheme();
     const location = useLocation();
@@ -25,25 +24,72 @@ const NavigationItem = (props) => {
     useEffect(() => {
         setActiveLink(location?.pathname);
     }, [location?.pathname]);
-    
+
     const custonNavLinkStyle = () => {
-        return { background:  checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)` : '' };
+        return {
+            background: checkActiveLink()
+                ? `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)`
+                : "",
+        };
     };
- 
+
     const checkActiveLink = () => {
-        const  currentLink =  activeLink?.split?.("/")?.length > 1 ? "/"+ activeLink?.split?.("/")?.at?.(1) : activeLink
-        return activeLink === path ||  children?.flatMap?.((el)=> el.path).includes(currentLink) || (match && match?.path !== "/")
-    }
+        const currentLink =
+            activeLink?.split?.("/")?.length > 1
+                ? "/" + activeLink?.split?.("/")?.at?.(1)
+                : activeLink;
+        return (
+            activeLink === path ||
+            children?.flatMap?.((el) => el.path).includes(currentLink) ||
+            (match && match?.path !== "/")
+        );
+    };
 
     return (
-        <StyledMenuListItemButton selected={checkActiveLink()} id={name} to={path} key={`listItem${path}`} sx={{ width: !collapsed ? 280 : 56  }}
-            component={forwardRef((props, ref) => ( <NavLink exact {...props} innerRef={ref} key={`navlink${path}`} style={custonNavLinkStyle} /> ))} >
-            <ListItemIcon> { Icon && <Icon color={ checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 } /> } </ListItemIcon>
-            { !collapsed && <ListItemText primary={
-                <Typography  variant={"bodym"} sx={{ color: checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7 }} >
-                     {name}
-                </Typography>
-            } /> }
+        <StyledMenuListItemButton
+            selected={checkActiveLink()}
+            id={name}
+            to={path}
+            key={`listItem${path}`}
+            sx={{ width: !collapsed ? 280 : 56 }}
+            component={forwardRef((props, ref) => (
+                <NavLink
+                    exact
+                    {...props}
+                    innerRef={ref}
+                    key={`navlink${path}`}
+                    style={custonNavLinkStyle}
+                />
+            ))}
+        >
+            <ListItemIcon>
+                {" "}
+                {Icon && (
+                    <Icon
+                        color={
+                            checkActiveLink()
+                                ? theme.palette.grey.grey0
+                                : theme.palette.grey.grey7
+                        }
+                    />
+                )}{" "}
+            </ListItemIcon>
+            {!collapsed && (
+                <ListItemText
+                    primary={
+                        <Typography
+                            variant={"bodym"}
+                            sx={{
+                                color: checkActiveLink()
+                                    ? theme.palette.grey.grey0
+                                    : theme.palette.grey.grey7,
+                            }}
+                        >
+                            {name}
+                        </Typography>
+                    }
+                />
+            )}
         </StyledMenuListItemButton>
     );
 };

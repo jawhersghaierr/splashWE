@@ -1,4 +1,3 @@
-
 import { icons } from "shared_lib_ui/assets";
 const {
     HomeIcon,
@@ -9,93 +8,34 @@ const {
     User,
     MoneyArchive,
     MoneyCardEdit,
-    UserThermsAndCondition
+    UserThermsAndCondition,
 } = icons;
 
 const psRouters = [
     {
         name: "Accueil",
-	    code: "ALL",
+        code: "ALL",
         icon: HomeIcon,
         path: "/",
-        children: [] ,
+        children: [],
     },
     {
         name: "Factures",
-	    code: "HFAC",
+        code: "HFAC",
         icon: ROCIcon,
         path: "/factures",
         children: [],
     },
     {
         name: "Services en ligne ROC",
-	    code: "ROC",
+        code: "ROC",
         icon: ROCIcon,
         path: "/serviceEnLigne",
         children: [],
     },
     {
         name: "Tiers payant simple",
-	    code: "TPS",
-	    icon: ThirdPartyPaymentIcon,
-        path: "/tpsdashboard",
-        children: [
-            { name: "TpAmcEnLigne", path: "/tpAmcServiceEnLigne" },
-            { name: "Factures", path: "/tpsFactures" },
-        ],
-    },
-    {
-        name: "Paiement",
-	    code: "PAI",
-        icon: PaymentIcon,
-        path: "/paiementdashboard",
-        children: [
-            { name: "Paiement", path: "/paiement" },
-            { name: "Virement", path: "/virements" },
-        ],
-    },
-
-    {
-        name: "Bénéficiaire",
-	    code: "DRB",
-        icon: User,
-        path: "/beneficiaire",
-        children: [],
-    },
-
-    {
-        icon: UserThermsAndCondition,
-	    code: "ALL",
-        path: "/terms",
-        children: [
-            { path: "/terms/terms-of-service", },
-            { path: "/terms/legal-notice", },
-            { path: "/terms/personal-data-protection-policy", }
-        ] ,
-    },
-
-];
-const gestionnerRouters = [
-    {
-        name: "Accueil",
-	    code: "ALL",
-        icon: HomeIcon,
-        path: "/",
-        children: [] ,
-    },
-    {
-        name: "Hospitalisation",
-	    code: "HFAC",
-        icon: ROCIcon,
-        path: "/hospidashboard",
-        children: [
-            { name: "Services en ligne ROC", path: "/serviceEnLigne" },
-            { name: "Factures", path: "/factures" },
-        ],
-    },
-    {
-        name: "Tiers payant simple",
-	    code: "TPS",
+        code: "TPS",
         icon: ThirdPartyPaymentIcon,
         path: "/tpsdashboard",
         children: [
@@ -105,7 +45,65 @@ const gestionnerRouters = [
     },
     {
         name: "Paiement",
-	    code: "PAI",
+        code: "PAI",
+        icon: PaymentIcon,
+        path: "/paiementdashboard",
+        children: [
+            { name: "Paiement", path: "/paiement" },
+            { name: "Virement", path: "/virements" },
+        ],
+    },
+
+    {
+        name: "Bénéficiaire",
+        code: "DRB",
+        icon: User,
+        path: "/beneficiaire",
+        children: [],
+    },
+
+    {
+        icon: UserThermsAndCondition,
+        code: "ALL",
+        path: "/terms",
+        children: [
+            { path: "/terms/terms-of-service" },
+            { path: "/terms/legal-notice" },
+            { path: "/terms/personal-data-protection-policy" },
+        ],
+    },
+];
+const gestionnerRouters = [
+    {
+        name: "Accueil",
+        code: "ALL",
+        icon: HomeIcon,
+        path: "/",
+        children: [],
+    },
+    {
+        name: "Hospitalisation",
+        code: "HFAC",
+        icon: ROCIcon,
+        path: "/hospidashboard",
+        children: [
+            { name: "Services en ligne ROC", path: "/serviceEnLigne" },
+            { name: "Factures", path: "/factures" },
+        ],
+    },
+    {
+        name: "Tiers payant simple",
+        code: "TPS",
+        icon: ThirdPartyPaymentIcon,
+        path: "/tpsdashboard",
+        children: [
+            { name: "TpAmcEnLigne", path: "/tpAmcServiceEnLigne" },
+            { name: "Factures", path: "/tpsFactures" },
+        ],
+    },
+    {
+        name: "Paiement",
+        code: "PAI",
         icon: PaymentIcon,
         path: "/paiementdashboard",
         children: [
@@ -115,7 +113,7 @@ const gestionnerRouters = [
     },
     {
         name: "Indu",
-	    code: "INDU",
+        code: "INDU",
         icon: MoneyCardEdit,
         path: "/indusdashboard",
         children: [
@@ -125,14 +123,14 @@ const gestionnerRouters = [
     },
     {
         name: "Bénéficiaire",
-	    code: "DRB",
+        code: "DRB",
         icon: User,
         path: "/benefdashboard",
         children: [],
     },
     {
         name: "Professionnel de santé",
-	    code: "PS",
+        code: "PS",
         icon: PSIcon,
         path: "/psdashboard",
         children: [
@@ -144,26 +142,21 @@ const gestionnerRouters = [
     },
     {
         icon: UserThermsAndCondition,
-	    code: "ALL",
+        code: "ALL",
         path: "/terms",
         children: [
-            { path: "/terms/terms-of-service", },
-            { path: "/terms/legal-notice", },
-            { path: "/terms/personal-data-protection-policy", }
-        ] ,
+            { path: "/terms/terms-of-service" },
+            { path: "/terms/legal-notice" },
+            { path: "/terms/personal-data-protection-policy" },
+        ],
     },
     {
         name: "Factures intraitables",
-	    code: "FIN",
+        code: "FIN",
         icon: MoneyArchive,
         path: "/intraitablesdashboard",
-        children: [
-            { name: "Factures intraitable", path: "/intraitables" },
-        ],
+        children: [{ name: "Factures intraitable", path: "/intraitables" }],
     },
-
 ];
 
-
-
-export {psRouters, gestionnerRouters};
+export { psRouters, gestionnerRouters };
