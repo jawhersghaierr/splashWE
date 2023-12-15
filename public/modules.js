@@ -13,7 +13,6 @@ module.exports = {
 		"scopes": ["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"],
 		"extraQueryParameters": {"ui_locales": "fr-FR"}
 	},
-// **************************************************************
 	
 	// **************************************************************
 	// *********************   remoteApps     ***********************
