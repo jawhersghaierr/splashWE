@@ -138,7 +138,6 @@ export default function Home() {
                     code: "INDU",
                     Icon: AddIcon,
                     href: "/remboursements/create",
-                    disabled: true,
                 },
             ],
             title: "Indu",
