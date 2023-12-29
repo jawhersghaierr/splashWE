@@ -23,10 +23,7 @@ import RemoteInduApp from "indu_ui/RemoteInduApp";
 import { useCookies, CookiesProvider } from "react-cookie";
 
 // Msal imports
-import {
-    MsalProvider,
-    MsalAuthenticationTemplate,
-} from "lib_ui/@azure-msal-react";
+import { MsalProvider, MsalAuthenticationTemplate } from "lib_ui/@azure-msal-react";
 import { InteractionType, EventType } from "lib_ui/@azure-msal-browser";
 import { msalInstance } from "shared_lib_ui/auth";
 
@@ -35,7 +32,7 @@ import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 import Home from "./components/Home";
 
 const PSremote = () => <RemotePsApp store={store} />;
-const BenefRemote = (props) => <RemoteBenefApp store={store} {...props} />;
+const BenefRemote = props => <RemoteBenefApp store={store} {...props} />;
 const PayementRemote = () => <RemotePayementApp store={store} />;
 const HospiRemote = () => <RemoteHospiApp store={store} />;
 const TPSRemote = () => <RemoteTPSApp store={store} />;
@@ -53,7 +50,7 @@ const App = () => {
     }, [cookies]);
 
     useEffect(() => {
-        const callbackId = msalInstance.addEventCallback((event) => {
+        const callbackId = msalInstance.addEventCallback(event => {
             switch (event.eventType) {
                 case EventType.ACQUIRE_TOKEN_SUCCESS:
                     store.dispatch(setAccount(event.payload));
@@ -82,40 +79,21 @@ const App = () => {
                         <BrowserRouter>
                             <Suspense fallback="Loading...">
                                 <MsalProvider instance={msalInstance}>
-                                    <MsalAuthenticationTemplate
-                                        interactionType={
-                                            InteractionType.Redirect
-                                        }
-                                    >
+                                    <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
                                         <Box sx={{ display: "flex" }}>
                                             <CssBaseline />
                                             <HostMenu />
-                                            <AccepterCookie
-                                                opened={openConfirmDialog}
-                                                onClose={() =>
-                                                    setOpenConfirmDialog(false)
-                                                }
-                                            />
+                                            <AccepterCookie opened={openConfirmDialog} onClose={() => setOpenConfirmDialog(false)} />
                                             <Box
                                                 component="main"
                                                 sx={{
                                                     flexGrow: 1,
                                                     display: "flex",
                                                     flexDirection: "column",
-                                                }}
-                                            >
+                                                }}>
                                                 <Switch>
-                                                    <Route
-                                                        exact
-                                                        path="/"
-                                                        component={Home}
-                                                    />
-                                                    <Route
-                                                        path={[
-                                                            "/psdashboard",
-                                                            "/ps",
-                                                        ]}
-                                                    >
+                                                    <Route exact path="/" component={Home} />
+                                                    <Route path={["/psdashboard", "/ps", "/ps/profile"]}>
                                                         <PSremote />
                                                     </Route>
 
@@ -125,39 +103,19 @@ const App = () => {
                                                             "/terms/terms-of-service",
                                                             "/terms/legal-notice",
                                                             "/terms/personal-data-protection-policy",
-                                                        ]}
-                                                    >
+                                                        ]}>
                                                         <TermsService />
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/benefdashboard",
-                                                            "/beneficiaire",
-                                                        ]}
-                                                    >
+                                                    <Route path={["/benefdashboard", "/beneficiaire"]}>
                                                         <BenefRemote />
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/paiementdashboard",
-                                                            "/paiement",
-                                                            "/virements",
-                                                        ]}
-                                                    >
+                                                    <Route path={["/paiementdashboard", "/paiement", "/virements"]}>
                                                         <PayementRemote />
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/hospidashboard",
-                                                            "/serviceEnLigne",
-                                                            "/factures",
-                                                            "/intraitables",
-                                                            "/parametres",
-                                                        ]}
-                                                    >
+                                                    <Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
                                                         <HospiRemote />
                                                     </Route>
 
@@ -168,29 +126,15 @@ const App = () => {
                                                             "/tpsFactures",
                                                             "/TpAmcFluxInfo",
                                                             "/tpAmcServiceEnLigne",
-                                                        ]}
-                                                    >
+                                                        ]}>
                                                         <TPSRemote />
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/indusdashboard",
-                                                            "/indus",
-                                                            "/indus/create",
-                                                            "/remboursements",
-                                                        ]}
-                                                    >
+                                                    <Route path={["/indusdashboard", "/indus", "/indus/create", "/remboursements"]}>
                                                         <InduRemote />
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/intraitablesdashboard",
-                                                            "/facturesintraitables",
-                                                            "/intraitables",
-                                                        ]}
-                                                    >
+                                                    <Route path={["/intraitablesdashboard", "/facturesintraitables", "/intraitables"]}>
                                                         <IntraitablesRemote />
                                                     </Route>
 
@@ -199,13 +143,7 @@ const App = () => {
                                                         <AuthRemote />{" "}
                                                     </Route>
 
-                                                    <Route
-                                                        path={[
-                                                            "/not-found",
-                                                            "*",
-                                                        ]}
-                                                        component={NotFound}
-                                                    />
+                                                    <Route path={["/not-found", "*"]} component={NotFound} />
                                                 </Switch>
 
                                                 <div
@@ -216,30 +154,20 @@ const App = () => {
                                                         minHeight: "20px",
                                                         padding: "5px",
                                                         maxWidth: "90%",
-                                                    }}
-                                                >
+                                                    }}>
                                                     <Link
                                                         color="inherit"
                                                         to="/terms/terms-of-service"
                                                         style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                    >
+                                                            textDecoration: "none",
+                                                        }}>
                                                         <Typography
                                                             variant="h6"
                                                             noWrap
                                                             component="span"
                                                             sx={{
-                                                                color: (
-                                                                    theme,
-                                                                ) =>
-                                                                    theme
-                                                                        .palette
-                                                                        .grey
-                                                                        .grey5,
-                                                            }}
-                                                        >
+                                                                color: theme => theme.palette.grey.grey5,
+                                                            }}>
                                                             Conditions générales
                                                         </Typography>
                                                     </Link>
@@ -248,24 +176,15 @@ const App = () => {
                                                         color="inherit"
                                                         to="/terms/legal-notice"
                                                         style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                    >
+                                                            textDecoration: "none",
+                                                        }}>
                                                         <Typography
                                                             variant="h6"
                                                             noWrap
                                                             component="span"
                                                             sx={{
-                                                                color: (
-                                                                    theme,
-                                                                ) =>
-                                                                    theme
-                                                                        .palette
-                                                                        .grey
-                                                                        .grey5,
-                                                            }}
-                                                        >
+                                                                color: theme => theme.palette.grey.grey5,
+                                                            }}>
                                                             Mentions légales
                                                         </Typography>
                                                     </Link>
@@ -274,24 +193,15 @@ const App = () => {
                                                         color="inherit"
                                                         to="/terms"
                                                         style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                    >
+                                                            textDecoration: "none",
+                                                        }}>
                                                         <Typography
                                                             variant="h6"
                                                             noWrap
                                                             component="span"
                                                             sx={{
-                                                                color: (
-                                                                    theme,
-                                                                ) =>
-                                                                    theme
-                                                                        .palette
-                                                                        .grey
-                                                                        .grey5,
-                                                            }}
-                                                        >
+                                                                color: theme => theme.palette.grey.grey5,
+                                                            }}>
                                                             Gestion des cookies
                                                         </Typography>
                                                     </Link>
@@ -300,27 +210,16 @@ const App = () => {
                                                         color="inherit"
                                                         to="/terms/personal-data-protection-policy"
                                                         style={{
-                                                            textDecoration:
-                                                                "none",
-                                                        }}
-                                                    >
+                                                            textDecoration: "none",
+                                                        }}>
                                                         <Typography
                                                             variant="h6"
                                                             noWrap
                                                             component="span"
                                                             sx={{
-                                                                color: (
-                                                                    theme,
-                                                                ) =>
-                                                                    theme
-                                                                        .palette
-                                                                        .grey
-                                                                        .grey5,
-                                                            }}
-                                                        >
-                                                            Politique de
-                                                            protection des
-                                                            données
+                                                                color: theme => theme.palette.grey.grey5,
+                                                            }}>
+                                                            Politique de protection des données
                                                         </Typography>
                                                     </Link>
                                                 </div>

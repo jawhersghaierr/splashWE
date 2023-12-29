@@ -8,19 +8,7 @@ import { icons } from "shared_lib_ui/assets";
 import DashboardCustomizeOutlinedIcon from "@mui/icons-material/DashboardCustomizeOutlined";
 
 export default function Home() {
-    const {
-        ContentDocument,
-        SearchNormal,
-        AddIcon,
-        HomeIcon,
-        ROCIcon,
-        PaymentIcon,
-        PSIcon,
-        ThirdPartyPaymentIcon,
-        User,
-        MoneyArchive,
-        MoneyCardEdit,
-    } = icons;
+    const { ContentDocument, SearchNormal, AddIcon, HomeIcon, ROCIcon, PaymentIcon, PSIcon, ThirdPartyPaymentIcon, User, MoneyArchive, MoneyCardEdit } = icons;
     const title = "Bienvenue dans votre espace";
     const subTitlePS = "Professionnel de santé";
     const subTitleUser = "tiers payant";
@@ -28,8 +16,7 @@ export default function Home() {
     const user = useSelector(getUser);
 
     let role = null;
-    if (user?.idTokenClaims)
-        role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE";
+    if (user?.idTokenClaims) role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE";
 
     const gestionnerCards = [
         {
@@ -309,11 +296,11 @@ export default function Home() {
             Header: ContentDocument,
             modules: [
                 {
-                    text: "Rechercher",
+                    text: "Profile",
                     code: "ALL",
-                    Icon: SearchNormal,
-                    href: "/profile",
-                    disabled: true,
+                    Icon: DashboardCustomizeOutlinedIcon,
+                    href: "/ps/profile",
+                    disabled: false,
                 },
             ],
             title: "Mon profil",
@@ -346,8 +333,7 @@ export default function Home() {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                    }}
-                >
+                    }}>
                     <LoadingDots />
                 </div>
             )}
