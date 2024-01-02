@@ -70,3 +70,4 @@ local.properties
 ## Other
 #public/index.html
 /package-lock.json
+/....npmrc
