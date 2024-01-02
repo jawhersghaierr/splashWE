@@ -23,7 +23,7 @@ export const StyledMenu = styled(MenuList)(({ theme }) => {
             backgroundColor: "#F5F5F5 !important",
         },
         "& .MuiListItemButton-root:hover": {
-            backgroundColor: (theme) => theme.palette.primary.hover,
+            backgroundColor: theme => theme.palette.primary.hover,
         },
     };
 });

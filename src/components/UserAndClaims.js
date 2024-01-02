@@ -57,17 +57,7 @@ const CLAIMS = [
     "CAN_CREATE_USER",
 ];
 
-const targetModule = [
-    "HFAC",
-    "TPS",
-    "TPAMC",
-    "FIN",
-    "DRB",
-    "PAI",
-    "INDU",
-    "ROC",
-    "PS",
-];
+const targetModule = ["HFAC", "TPS", "TPAMC", "FIN", "DRB", "PAI", "INDU", "ROC", "PS"];
 export default function UserAndClaims() {
     const store = useStore();
     useEffect(() => {
@@ -82,19 +72,9 @@ export default function UserAndClaims() {
     // const dispatch = useDispatch();
     console.log("baseApi ", baseApi);
 
-    const setter = (param) => {
+    const setter = param => {
         console.log("setter param : ", param);
     };
 
-    return (
-        <span>
-            {useGetUserInfoQuery && user?.idToken && (
-                <RemoteApi
-                    criterias={user?.uniqueId}
-                    rtkCall={useGetUserInfoQuery}
-                    setter={setter}
-                />
-            )}
-        </span>
-    );
+    return <span>{useGetUserInfoQuery && user?.idToken && <RemoteApi criterias={user?.uniqueId} rtkCall={useGetUserInfoQuery} setter={setter} />}</span>;
 }

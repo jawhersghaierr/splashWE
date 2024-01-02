@@ -1,15 +1,5 @@
 import { icons } from "shared_lib_ui/assets";
-const {
-    HomeIcon,
-    ROCIcon,
-    PaymentIcon,
-    PSIcon,
-    ThirdPartyPaymentIcon,
-    User,
-    MoneyArchive,
-    MoneyCardEdit,
-    UserThermsAndCondition,
-} = icons;
+const { HomeIcon, ROCIcon, PaymentIcon, PSIcon, ThirdPartyPaymentIcon, User, MoneyArchive, MoneyCardEdit, UserThermsAndCondition } = icons;
 
 const psRouters = [
     {
@@ -66,11 +56,7 @@ const psRouters = [
         icon: UserThermsAndCondition,
         code: "ALL",
         path: "/terms",
-        children: [
-            { path: "/terms/terms-of-service" },
-            { path: "/terms/legal-notice" },
-            { path: "/terms/personal-data-protection-policy" },
-        ],
+        children: [{ path: "/terms/terms-of-service" }, { path: "/terms/legal-notice" }, { path: "/terms/personal-data-protection-policy" }],
     },
 ];
 const gestionnerRouters = [
@@ -144,11 +130,7 @@ const gestionnerRouters = [
         icon: UserThermsAndCondition,
         code: "ALL",
         path: "/terms",
-        children: [
-            { path: "/terms/terms-of-service" },
-            { path: "/terms/legal-notice" },
-            { path: "/terms/personal-data-protection-policy" },
-        ],
+        children: [{ path: "/terms/terms-of-service" }, { path: "/terms/legal-notice" }, { path: "/terms/personal-data-protection-policy" }],
     },
     {
         name: "Factures intraitables",

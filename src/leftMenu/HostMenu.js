@@ -6,25 +6,13 @@ import MenuHeader from "./MenuHeader";
 import { UserAccess } from "shared_lib_ui/auth";
 
 const HostMenu = () => {
-    const {
-        isOpenLeftDrawer,
-        isShownLeftDrawer,
-        openLeftDrawer,
-        closeLeftDrawer,
-    } = useDrawer();
+    const { isOpenLeftDrawer, isShownLeftDrawer, openLeftDrawer, closeLeftDrawer } = useDrawer();
 
     return (
         isShownLeftDrawer && (
             <Drawer variant="permanent" open={isOpenLeftDrawer}>
-                <MenuHeader
-                    open={isOpenLeftDrawer}
-                    openLeftDrawer={openLeftDrawer}
-                    closeLeftDrawer={closeLeftDrawer}
-                />
-                <Menu
-                    collapsed={!isOpenLeftDrawer}
-                    openLeftDrawer={openLeftDrawer}
-                />
+                <MenuHeader open={isOpenLeftDrawer} openLeftDrawer={openLeftDrawer} closeLeftDrawer={closeLeftDrawer} />
+                <Menu collapsed={!isOpenLeftDrawer} openLeftDrawer={openLeftDrawer} />
                 <UserAccess />
             </Drawer>
         )

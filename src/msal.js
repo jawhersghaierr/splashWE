@@ -20,7 +20,7 @@ if (msalInstance.getAllAccounts().length > 0) {
     msalInstance.setActiveAccount(msalInstance.getAllAccounts()[0]);
 }
 
-msalInstance.addEventCallback((event) => {
+msalInstance.addEventCallback(event => {
     if (event.eventType === EventType.LOGIN_SUCCESS && event.payload.account) {
         const account = event.payload.account;
         msalInstance.setActiveAccount(account);
@@ -36,11 +36,9 @@ export const acquireAccessToken = async () => {
         scopes: window._env_.loginRequest.scopes,
         account: account,
     };
-    const authResult = await msalInstance
-        .acquireTokenSilent(request)
-        .catch((error) => {
-            msalInstance.logoutRedirect();
-        });
+    const authResult = await msalInstance.acquireTokenSilent(request).catch(error => {
+        msalInstance.logoutRedirect();
+    });
     // TODO check result!
     return authResult.accessToken;
 };
@@ -60,8 +58,6 @@ export const getAccountInfo = () => {
         userName: account.idTokenClaims.name,
         givenName: account.idTokenClaims.given_name,
         familyName: account.idTokenClaims.family_name,
-        email: account.idTokenClaims.email
-            ? account.idTokenClaims.email
-            : account.idTokenClaims.emails[0],
+        email: account.idTokenClaims.email ? account.idTokenClaims.email : account.idTokenClaims.emails[0],
     };
 };

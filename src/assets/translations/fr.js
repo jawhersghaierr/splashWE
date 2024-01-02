@@ -17,8 +17,7 @@ const fr = {
     login: "Se connecter",
     logout: "Déconnexion",
     upload: "Envoyer",
-    documentUploadHint:
-        "Vous avez déjà envoyé un document - l'envoi d'une nouvelle PJ écrasera la précédente",
+    documentUploadHint: "Vous avez déjà envoyé un document - l'envoi d'une nouvelle PJ écrasera la précédente",
     username: "Utilisateur",
     password: "Mot de passe",
     resetPasswordEmail: "Saisissez votre adresse e-mail",
@@ -26,11 +25,9 @@ const fr = {
 
     validate: "Valider",
     wrongLoginTitle: "Utilisateur ou mot de passe erroné",
-    wrongLoginText:
-        "Le nom utilisateur, le mot de passe ou les deux sont erronés. Essayez de nouveau ou bien contactez votre administrateur.",
+    wrongLoginText: "Le nom utilisateur, le mot de passe ou les deux sont erronés. Essayez de nouveau ou bien contactez votre administrateur.",
 
-    historyNotAvailableTitle:
-        "L’historique pour cette configuration n’est pas disponible.",
+    historyNotAvailableTitle: "L’historique pour cette configuration n’est pas disponible.",
     historyNotAvailableText:
         "L’historique de la configuration sélectionnée n’est plus disponible pour consultation. Contactez votre service technique pour plus d’information.",
 
@@ -74,12 +71,9 @@ const fr = {
         configuration: "Configuration du Produit de détection de fraude ",
         home: "Dashboard",
         dataikuFlow: "Suivi des FLUX",
-        configJustificationContexts:
-            "Configuration du Processus de justification",
-        configControlContextsHistory:
-            "Historique : Configuration du Processus de contrôle ",
-        configJustificationContextsHistory:
-            "Historique : Configuration du Processus de justification ",
+        configJustificationContexts: "Configuration du Processus de justification",
+        configControlContextsHistory: "Historique : Configuration du Processus de contrôle ",
+        configJustificationContextsHistory: "Historique : Configuration du Processus de justification ",
         configOMIndicators: "Configuration du Pilotage Opérationnel",
         configCMIndicators: "Configuration des Indicateurs Clients",
         document: "Catalogue des pièces justificatives",
@@ -103,13 +97,11 @@ const fr = {
             onHold: "PEC mises en attente",
             deleted: "PEC supprimées",
         },
-        stoppedVsCancelledGain:
-            "Dossiers mis en attente contre annulés par client, en €",
+        stoppedVsCancelledGain: "Dossiers mis en attente contre annulés par client, en €",
         stoppedVsCancelledInNumber: "Mis en attente contre annulés",
         notControlledByTeam: "Dossiers non contrôlés en nombre et en montant",
         controlledByPeriod: "Dossiers contrôlés par client",
-        averageTimeToProcessDossier:
-            "Temps moyen de traitement d'un dossier en nombre de jours",
+        averageTimeToProcessDossier: "Temps moyen de traitement d'un dossier en nombre de jours",
         cancelledPerUserPerMonth: "Dossiers annulés par gestionnaire, en €",
         chooseMcTask: "Contrôle manuel",
         downloadFile: "Download",
@@ -123,8 +115,7 @@ const fr = {
     noRecordsFount: "Aucun résultat trouvé",
 
     defineJustifications: "Define Justifications",
-    deactivationMessage:
-        "Confirmez-vous votre choix de vouloir désactiver cette configuration ?",
+    deactivationMessage: "Confirmez-vous votre choix de vouloir désactiver cette configuration ?",
 
     CONTROL_100_PERCENT: "100% records",
     CONTROL_RANDOM: "Random Control",
@@ -154,8 +145,7 @@ const fr = {
         inUseMessage:
             "Suppression impossible. La pièce justificative que vous voulez supprimer est utilisée dans une configuration de processus de justification existante.",
         deleteMessage: "Etes-vous sûr de vouloir supprimer cet élément ?",
-        motiveImpossibleDeleteMessage:
-            "Suppression impossible. Au moins un motif doit être enregistré",
+        motiveImpossibleDeleteMessage: "Suppression impossible. Au moins un motif doit être enregistré",
         confirm: "Confirmer",
         cancel: "Annuler",
     },
@@ -245,8 +235,7 @@ const fr = {
         pjStep: {
             title: "Sélectionner pièce(s) justificative(s)",
             motivesTitle: "Motifs configurés pour cette pièce justificative",
-            requireAllPJAtOnce:
-                "Réclamer toutes les pièce(s) justificative(s) à la fois",
+            requireAllPJAtOnce: "Réclamer toutes les pièce(s) justificative(s) à la fois",
             requiredPJ: "PJ requise",
             multiUpload: "Multi-upload",
         },
@@ -265,8 +254,7 @@ const fr = {
             tooltips: {
                 label: "Permet de saisir un libellé pour l’étape.",
                 period: "Permet de saisir le nombre de jours de la période en comptant du jour initial de mise en attente du dossier (J).",
-                actions:
-                    "Permet de sélectionner un action pour l’étape en cours de définition.",
+                actions: "Permet de sélectionner un action pour l’étape en cours de définition.",
             },
         },
         actionLabels: {
@@ -308,13 +296,11 @@ const fr = {
     },
     documentUpload: {
         title: "Téléchargement de vos pièces justificatives",
-        expiredTitle:
-            "La date limite de dépôt de vos pièces justificatives est expirée.",
+        expiredTitle: "La date limite de dépôt de vos pièces justificatives est expirée.",
         label: () =>
             "Afin que le dossier soit pris en charge, merci de procéder à un téléchargement de chaque document séparément sous format PDF ou image. Vos documents ne doivent pas dépasser 3MB.",
         dialogText: "",
-        dialogTitle:
-            "Etes-vous sûr de vouloir télécharger les pièces justificatives?",
+        dialogTitle: "Etes-vous sûr de vouloir télécharger les pièces justificatives?",
         dialogConfirm: "Confirmer",
         dialogCancel: "Annuler",
         wrongFileType: "Votre fichier doit être au format PDF ou image.",
@@ -329,8 +315,7 @@ const fr = {
             },
             documents: {
                 title: "Vos fichiers ont été téléchargés avec succès",
-                text: (endDate) =>
-                    `Merci de nous envoyer l’intégralité de vos pièces justificatives avant le ${endDate}`,
+                text: endDate => `Merci de nous envoyer l’intégralité de vos pièces justificatives avant le ${endDate}`,
             },
         },
         comments: "Commentaires sur le dossier",
@@ -347,14 +332,10 @@ const fr = {
             empty: "Aucune raison de rejet",
         },
         deadlineMessage: {
-            deadlineTitle: (endDate) =>
-                `Merci de contrôler ce dossier avant le ${endDate}`,
-            deadlineTitleBefore45days: (endDate) =>
-                `Merci d'analyser le dossier avant la date du ${endDate}`,
-            deadlineTitleAfter45days: (endDate) =>
-                `Merci d'analyser ce dossier avant la date du  ${endDate}`,
-            deadlineMessageAfter45days: (endDate) =>
-                `Merci d'analyser ce dossier avant la date du ${endDate}, auquel cas le dossier sera apuré automatiquement.`,
+            deadlineTitle: endDate => `Merci de contrôler ce dossier avant le ${endDate}`,
+            deadlineTitleBefore45days: endDate => `Merci d'analyser le dossier avant la date du ${endDate}`,
+            deadlineTitleAfter45days: endDate => `Merci d'analyser ce dossier avant la date du  ${endDate}`,
+            deadlineMessageAfter45days: endDate => `Merci d'analyser ce dossier avant la date du ${endDate}, auquel cas le dossier sera apuré automatiquement.`,
             // initialRequest: endDate =>
             //     `Merci d’analyser ce dossier avant le ${endDate}. Après cette date, sans contrôle de votre part, le dossier sera automatiquement apuré.`,
             // reminderSent: (dateOfLastStep, endDate, reminder) =>
@@ -364,10 +345,8 @@ const fr = {
         },
         contextualMessages: {
             controlCancelledDossier: {
-                title: (months) =>
-                    `Un ou plusieurs dossiers annulés ont été détectés sur les ${months} derniers mois`,
-                message: (months) =>
-                    `Les dossiers suivants pour le même bénéficiaire ont été annulés au cours des ${months} derniers mois:\n`,
+                title: months => `Un ou plusieurs dossiers annulés ont été détectés sur les ${months} derniers mois`,
+                message: months => `Les dossiers suivants pour le même bénéficiaire ont été annulés au cours des ${months} derniers mois:\n`,
                 dossier: "Dossier",
             },
             controlChangeDioptre: {
@@ -379,16 +358,12 @@ const fr = {
         dialogConfirm: "Confirmer",
         dialogCancel: "Annuler",
         dossierEvaluation: {
-            lastYearDossierTitle:
-                "Un ou plusieurs dossiers annulés ont été détectés sur les 12 derniers mois",
-            lastYearDossierText:
-                "Les dossiers suivants pour le même bénéficiaire ont été annulés au cours des 12\n" +
-                "derniers mois:\n",
+            lastYearDossierTitle: "Un ou plusieurs dossiers annulés ont été détectés sur les 12 derniers mois",
+            lastYearDossierText: "Les dossiers suivants pour le même bénéficiaire ont été annulés au cours des 12\n" + "derniers mois:\n",
             lastYearDossierItem: "Dossier #",
             title: "Analyse du dossier",
             evaluateDossier: "Analyser le dossier",
-            requestBeneficiaryLetterLabel:
-                "Mettre en attente de document du bénéficiaire :",
+            requestBeneficiaryLetterLabel: "Mettre en attente de document du bénéficiaire :",
             requestBeneficiaryLetter: "Mettre en attente",
             validateLabel: "Accorder le dossier :",
             validate: "Accorder",
@@ -403,46 +378,32 @@ const fr = {
             cancelTime: "Choisir l'heure d'annulation",
             relaunchLabel: "Relancer manuellement le PS",
             relaunch: "Relancer",
-            activatePSUploadLabel:
-                "Activer le lien de téléchargement pour le PS",
+            activatePSUploadLabel: "Activer le lien de téléchargement pour le PS",
             activatePSUpload: "Activer le lien",
             documentUploadLabel: "Télécharger des pièces justificatives",
             documentUpload: "Téléchargement",
             commentsLabel: "Commentaires :",
             psComments: "Commentaires PS :",
-            commentsPlaceholder:
-                "Insérer votre commentaire concernant l'évaluation du dossier.",
-            activatePSuploadDialogTitle:
-                "Etes-vous sûr de vouloir activer le lien de téléchargement pour le PS ?",
+            commentsPlaceholder: "Insérer votre commentaire concernant l'évaluation du dossier.",
+            activatePSuploadDialogTitle: "Etes-vous sûr de vouloir activer le lien de téléchargement pour le PS ?",
             uploadDialogTitle: "Attention !",
-            requestBeneficiaryLetterDialogTitle:
-                "Etes-vous sûr de vouloir mettre en attente d'attestation du bénéficiaire ?",
-            validateDialogTitle:
-                "Etes-vous sûr de vouloir accorder le dossier ?",
+            requestBeneficiaryLetterDialogTitle: "Etes-vous sûr de vouloir mettre en attente d'attestation du bénéficiaire ?",
+            validateDialogTitle: "Etes-vous sûr de vouloir accorder le dossier ?",
             impossibleValidateDialogTitle: "Action impossible",
-            impossibleValidateDialogText:
-                "Il n'est pas possible d'accorder ce dossier. En effet, une ou plusieurs PJ sont manquantes ou non conformes",
-            rejectDialogTitle:
-                "Etes-vous sûr de vouloir supprimer le dossier ?",
-            cancelDialogTitle:
-                "Etes-vous sûr de vouloir annuler le dossier sur demande PS ?",
-            relaunchDialogTitle:
-                "Etes-vous sûr de vouloir envoyer une relance manuelle ?",
+            impossibleValidateDialogText: "Il n'est pas possible d'accorder ce dossier. En effet, une ou plusieurs PJ sont manquantes ou non conformes",
+            rejectDialogTitle: "Etes-vous sûr de vouloir supprimer le dossier ?",
+            cancelDialogTitle: "Etes-vous sûr de vouloir annuler le dossier sur demande PS ?",
+            relaunchDialogTitle: "Etes-vous sûr de vouloir envoyer une relance manuelle ?",
             uploadDialogText:
                 "Les pièces téléchargées vont être remplacer par celles qui existent sur le dossier. \n Etes-vous sûr de vouloir télécharger de nouvelles pièces au dossier? \n",
             dialogText: "Etes-vous sûr de vouloir continuer ?",
-            confirmActivatePSuploadText:
-                "Le lien de téléchargement a été activé pour le PS en vue de téléchargement des pièces manquantes ou non valides.",
+            confirmActivatePSuploadText: "Le lien de téléchargement a été activé pour le PS en vue de téléchargement des pièces manquantes ou non valides.",
             actionNotAllowedDialogTitle: "Action impossible",
-            motiveMissing:
-                "Veuillez sélectionner au moins un motif de non conformité",
-            actionNotAllowedDialogText:
-                "La dernière relance a déjà été envoyée.",
-            actionDossierCompletedText: (number) =>
-                `Le dossier numéro ${number} a bien été supprimé.`,
+            motiveMissing: "Veuillez sélectionner au moins un motif de non conformité",
+            actionNotAllowedDialogText: "La dernière relance a déjà été envoyée.",
+            actionDossierCompletedText: number => `Le dossier numéro ${number} a bien été supprimé.`,
             confirmCancelledByPSTitle: "Le dossier a été annulé avec succès! ",
-            confirmCancelledByPS:
-                "Ce dossier a été annulé suite à la demande du professionel de santé. ",
+            confirmCancelledByPS: "Ce dossier a été annulé suite à la demande du professionel de santé. ",
             showDossierDetails: "Détail de dossier",
             hideDossierDetails: "Fermer",
             historique: "Historique",
@@ -463,8 +424,7 @@ const fr = {
                     name: "Prénom",
                     birthDate: "Date de naissance",
                     deaf: "Le patient est-il atteint de cécité ?",
-                    lessThen21:
-                        "Le bénéficiaire est-il âgé de moins de 21 ans ?",
+                    lessThen21: "Le bénéficiaire est-il âgé de moins de 21 ans ?",
                     membershipNumber: "N° Adhérent",
                     mutual: "Mutuelle",
                     regime: "Régime",
@@ -527,8 +487,7 @@ const fr = {
                     title: "Prescription",
                     primoDelivrance: "Primo délivrance",
                     equipmentRenewal: "Renouvellement de l'équipement",
-                    modificationRenewal:
-                        "Renouvellement avec modification de la correction",
+                    modificationRenewal: "Renouvellement avec modification de la correction",
                 },
                 motivation: {
                     title: "Motif de l'équipement et commentaires",
@@ -557,27 +516,21 @@ const fr = {
                     title: "Détail de l'équipement",
                     verres: "Verres",
                     lentiles: "Lentilles",
-                    offresMalinTitle: "Les Offres \"Malin\"",
-                    offresMalinPrim: "Verres \"Offre Malin Prim\" ?",
-                    offresMalinPlus: "Verres \"Offre Malin Plus\" ?",
+                    offresMalinTitle: 'Les Offres "Malin"',
+                    offresMalinPrim: 'Verres "Offre Malin Prim" ?',
+                    offresMalinPlus: 'Verres "Offre Malin Plus" ?',
                     lunetteClasse: "Classe pour les verres",
                     reimbursableLabel: {
                         lunette: "Lunettes",
-                        lentiles:
-                            "Lentilles remboursées par l'assurance Maladie",
-                        lentilesNon:
-                            "Lentilles non remboursées par l'assurance Maladie",
-                        default:
-                            "Lunettes/ Lentilles remboursées par l'assurance Maladie",
+                        lentiles: "Lentilles remboursées par l'assurance Maladie",
+                        lentilesNon: "Lentilles non remboursées par l'assurance Maladie",
+                        default: "Lunettes/ Lentilles remboursées par l'assurance Maladie",
                     },
                     leftEye: "Oeil Droit",
                     rightEye: "Oeil Gauche",
-                    leftSupplements:
-                        "Supplément remboursé par l'assurance maladie OD",
-                    rightSupplements:
-                        "Supplément remboursé par l'assurance maladie OG",
-                    refundGrassesTotal:
-                        "Remboursement verres et suppléments ou Lentilles",
+                    leftSupplements: "Supplément remboursé par l'assurance maladie OD",
+                    rightSupplements: "Supplément remboursé par l'assurance maladie OG",
+                    refundGrassesTotal: "Remboursement verres et suppléments ou Lentilles",
                     totalRefund: "Remboursement total pour la prestation",
                     sphere: "Sphère",
                     axe: "Axe",
@@ -600,17 +553,14 @@ const fr = {
                     providerLeft: "Fournisseur Verre OG",
                     glassesDifference: "Différences verres",
                     glassName: "Nom du verre",
-                    glassPrice:
-                        "Prix du verre (suppléments hors prisme inclus)",
+                    glassPrice: "Prix du verre (suppléments hors prisme inclus)",
                     verreGDIdentiqueTitle: "Verres OD/OG",
                     verreGDIdentique: "Mêmes verres OD/OG",
                     verreGDNotIdentique: "Verres différents OD/OG",
                     galbeFace: "Galbe de la face",
-                    inclinaisonMonture:
-                        "Inclinaison de la monture (Angle pantoscopique)",
+                    inclinaisonMonture: "Inclinaison de la monture (Angle pantoscopique)",
                     distanceVerreOeil: "Distance verre-l'oeil",
-                    individualGlassesLabel:
-                        "Mesure digitale pour verre individualisé",
+                    individualGlassesLabel: "Mesure digitale pour verre individualisé",
                     ecartVLVP: "Différence des écarts pupillaires VL/VP",
                     priceGlassesSupplements: "Prix des suppléments verres",
                     precalibrage: "Précalibrage",
@@ -627,18 +577,12 @@ const fr = {
                     lentilsModelsTitle: "Modèles de lentilles",
                     lentilsRightEye: "Nom de la lentille oeil droit",
                     lentilsLeftEye: "Nom de la lentille oeil gauche",
-                    lentilsRightEyeBoxNumber:
-                        "Nombre de boîtes lentille oeil droit",
-                    lentilsLeftEyeBoxNumber:
-                        "Nombre de boîtes lentille oeil gauche",
-                    lentilsUnitPriceRightEye:
-                        "Prix unitaire oeil droit (par boîte)",
-                    lentilsUnitPriceLeftEye:
-                        "Prix unitaire oeil gauche (par boîte)",
-                    lentilsTotalPriceRightEye:
-                        "Prix total lentilles oeil droit",
-                    lentilsTotalPriceLeftEye:
-                        "Prix total lentilles oeil gauche",
+                    lentilsRightEyeBoxNumber: "Nombre de boîtes lentille oeil droit",
+                    lentilsLeftEyeBoxNumber: "Nombre de boîtes lentille oeil gauche",
+                    lentilsUnitPriceRightEye: "Prix unitaire oeil droit (par boîte)",
+                    lentilsUnitPriceLeftEye: "Prix unitaire oeil gauche (par boîte)",
+                    lentilsTotalPriceRightEye: "Prix total lentilles oeil droit",
+                    lentilsTotalPriceLeftEye: "Prix total lentilles oeil gauche",
                 },
             },
             pec: {
@@ -668,14 +612,10 @@ const fr = {
                     title: "Détail de la Prise en Charge",
                     rightEarDevice: "Appareil Oreille Droite",
                     leftEarDevice: "Appareil Oreille Gauche",
-                    rightEarRepairMaintenance:
-                        "Entretien Réparation Oreille Droite",
-                    leftEarRepairMaintenance:
-                        "Entretien Réparation Oreille Gauche",
-                    rightEarAccessoriesAndServices:
-                        "Accessoires et prestations Oreille Droite",
-                    leftEarAccessoriesAndServices:
-                        "Accessoires et prestations Oreille Gauche",
+                    rightEarRepairMaintenance: "Entretien Réparation Oreille Droite",
+                    leftEarRepairMaintenance: "Entretien Réparation Oreille Gauche",
+                    rightEarAccessoriesAndServices: "Accessoires et prestations Oreille Droite",
+                    leftEarAccessoriesAndServices: "Accessoires et prestations Oreille Gauche",
                     total: "Total",
                     type: "Type",
                     class: "100% santé",
@@ -704,13 +644,11 @@ const fr = {
                     dossierDelay: "Délai minimum entre deux équipements",
                     dossierDate: "Date du dossier",
                     dossierNumber: "Numéro de dossier",
-                    benefAge:
-                        "Âge du bénéficiaire lors de la création de la PEC",
+                    benefAge: "Âge du bénéficiaire lors de la création de la PEC",
                     psFiness: "FINESS",
                     orderDate: "Date de l'ordonnance",
                     orderUsage: "Utilisation de l'ordonnance",
-                    question:
-                        "La case «renouvellement avec modification de la correction» a-t-elle été cochée?",
+                    question: "La case «renouvellement avec modification de la correction» a-t-elle été cochée?",
                     criteria: "Renouvellement avec modification de la vue",
                 },
                 detailsEquipment: {
@@ -738,20 +676,15 @@ const fr = {
         documentValidation: {
             documentValidationLabel: "Analyse de la pièce justificative",
             documentValidationLabelWithoutPJ: "Analyse globale",
-            documentReceivedLabel:
-                "Cette pièce justificative a-t-elle été réceptionnée ?",
-            documentReceivedTooltip:
-                "Permet d'indiquer si le bon document correspondant au type attendu est reçu.",
-            documentValidLabel:
-                "Le contenu de la pièce justificative est-il valide ?",
+            documentReceivedLabel: "Cette pièce justificative a-t-elle été réceptionnée ?",
+            documentReceivedTooltip: "Permet d'indiquer si le bon document correspondant au type attendu est reçu.",
+            documentValidLabel: "Le contenu de la pièce justificative est-il valide ?",
             documentValidLabelWithoutPJ: "Le dossier est-il valide ?",
-            documentValidTooltip:
-                "Permet d'indiquer si le contenu du document est correct et si le document est valide ou non.",
+            documentValidTooltip: "Permet d'indiquer si le contenu du document est correct et si le document est valide ou non.",
 
             notValidated: "Ce document n'est pas encore validé",
             notValidatedWithoutPJ: "Ce dossier n'est pas encore validé",
-            rejected:
-                "Ce document a été rejeté avec le motif indiqué ci-dessous.",
+            rejected: "Ce document a été rejeté avec le motif indiqué ci-dessous.",
             accepted: "Ce document a été validé.",
         },
         relaunch: {
@@ -810,21 +743,19 @@ const fr = {
         searchCriteriaLabel: "Critères de recherche",
         noResults: "Aucun résultat trouvé",
         viewSearchLabel: "Recherche dossier(s) à contrôler",
-        descriptionJPlus:
-            "La colonne J+ indique en nombre de jours le délai entre la demande et la réception des PJ",
+        descriptionJPlus: "La colonne J+ indique en nombre de jours le délai entre la demande et la réception des PJ",
         descriptionEMinus:
             "Liste des dossiers à contrôler pour lesquels la date d'échéance convenue avec le client approche. Classification par colonne Montant RC en ordre décroissant.",
         descriptionC:
             "Liste des dossiers à contrôler pour lesquels la date d'échéance suivant la convention Viamedis approche. Classification par colonne C, nombre de jours restant à partir de la réception des PJ et la date d'échéance conventionnelle, ordre décroissant. ",
         modal: {
             title: "Etes-vous sûr de vouloir reprendre ce dossier verrouillé ?",
-            text: (name) =>
-                `Le dossier est déjà ouvert pour traitement par l’utilisateur ${name}. Voulez-vous continuer?`,
+            text: name => `Le dossier est déjà ouvert pour traitement par l’utilisateur ${name}. Voulez-vous continuer?`,
             confirm: "Confirmer",
             close: "Annuler",
         },
         tooltip: {
-            locked: (user) => `Verrouillé par : ${user}`,
+            locked: user => `Verrouillé par : ${user}`,
             yours: "Continuer le travail sur son dossier",
             free: "Prendre le dossier pour contrôle",
         },
@@ -861,13 +792,10 @@ const fr = {
         teamPerformance: "Rapports performance des équipes",
         productValue: "Rapports valeur de produit",
         notControlled: "Dossiers non contrôlés en nombre et en montant",
-        averageProcessingTime:
-            "Temps moyen de traitement d'un dossier en nombre de jours",
+        averageProcessingTime: "Temps moyen de traitement d'un dossier en nombre de jours",
         stoppedForControl: "Dossiers annulés par gestionnaire, en €",
-        stoppedVsCanceledNumber:
-            "Dossiers mis en attente contre annulés par client, en nombre",
-        stoppedVsCanceledAmount:
-            "Dossiers mis en attente contre annulés par client, en euros",
+        stoppedVsCanceledNumber: "Dossiers mis en attente contre annulés par client, en nombre",
+        stoppedVsCanceledAmount: "Dossiers mis en attente contre annulés par client, en euros",
         selectClient: "Client",
         selectTeam: "Equipe",
         selectMonth: "Mois",
@@ -878,16 +806,11 @@ const fr = {
         generate: "Générer",
         controlledByPeriod: "Dossiers contrôlés par client",
         criteriaTitle: "Sélectionner les critères statistique",
-        fromGtTo:
-            "Veillez sélectionner un mois de début de la période antérieur au mois de fin de la période",
-        fromGtCM:
-            "La fin de la période sélectionnée doit être antérieure ou égale au mois en cours.",
-        fromGtToDate:
-            "La date de début de la période doit être antérieure ou égale à la date de fin de la période.",
-        fromDateShouldBeBeforeTommorow:
-            "La date de début de la période doit être antérieure ou égale à la date de jour.",
-        toDateShouldBeBeforeTommorow:
-            "La date de fin de la période doit être antérieure ou égale à la date de jour.",
+        fromGtTo: "Veillez sélectionner un mois de début de la période antérieur au mois de fin de la période",
+        fromGtCM: "La fin de la période sélectionnée doit être antérieure ou égale au mois en cours.",
+        fromGtToDate: "La date de début de la période doit être antérieure ou égale à la date de fin de la période.",
+        fromDateShouldBeBeforeTommorow: "La date de début de la période doit être antérieure ou égale à la date de jour.",
+        toDateShouldBeBeforeTommorow: "La date de fin de la période doit être antérieure ou égale à la date de jour.",
         status: "Statut",
         periodicity: "Périodicité",
     },
@@ -905,8 +828,7 @@ const fr = {
         fields: {
             fraudControlType: "Contrôle",
             dossierNumberCancelled: "Nb de dossiers annulés par le contrôle",
-            dossierNumberStopped:
-                "Nb de dossiers mis en attente par le contrôle",
+            dossierNumberStopped: "Nb de dossiers mis en attente par le contrôle",
             numberPercentageCancelled: "% des dossiers annulés",
         },
     },
@@ -1168,8 +1090,7 @@ const fr = {
         newPassword: "Nouveau mot de passe",
         newPasswordR: "Saisir de nouveau le mot de passe",
         title: "Votre mot de passe doit contenir au moins 12 caractères, avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial.",
-        matchError:
-            "Le mot de passe de validation ne correspond pas au mot de passe saisi précédemment.",
+        matchError: "Le mot de passe de validation ne correspond pas au mot de passe saisi précédemment.",
         ruleError: "Le mot de passe ne respecte pas le format préconisé. ",
         updatePasswordResult: {
             text: "Le mot de passe est créé avec succès.",
@@ -1181,7 +1102,7 @@ const fr = {
         searchCriteria: {
             dossier: "Numéro de dossier",
         },
-        noResults: (dossier) => `Aucun résultat trouvé par : ${dossier}`,
+        noResults: dossier => `Aucun résultat trouvé par : ${dossier}`,
         flowIn: "Flux Aller",
         flowOut: "Flux Retour",
         discipline: "Discipline",
@@ -1272,12 +1193,9 @@ const fr = {
     groupRange: {
         name: "groupe nom",
         cancel: "Annuler",
-        groupNameImpossibleChangeMessage:
-            "Impossible de modifier le nom du groupe par défaut",
-        groupImpossibleDeleteMessage:
-            "Impossible de supprimer le groupe par défaut",
-        groupNameImpossibleRenameMessage:
-            "Impossible de définir deux groupes avec le même nom",
+        groupNameImpossibleChangeMessage: "Impossible de modifier le nom du groupe par défaut",
+        groupImpossibleDeleteMessage: "Impossible de supprimer le groupe par défaut",
+        groupNameImpossibleRenameMessage: "Impossible de définir deux groupes avec le même nom",
     },
     defaultGroup: {
         unselectedText: "Choisir un groupe",

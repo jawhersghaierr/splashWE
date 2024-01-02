@@ -1,5 +1,5 @@
-export const flag = (moduleCode) => `extension_${moduleCode}_flag`;
-export const profile = (moduleCode) => `extension_${moduleCode}_profile`;
+export const flag = moduleCode => `extension_${moduleCode}_flag`;
+export const profile = moduleCode => `extension_${moduleCode}_profile`;
 
 /**
  *
@@ -7,8 +7,7 @@ export const profile = (moduleCode) => `extension_${moduleCode}_profile`;
  * @param code based on module Identification code
  * @returns {Boolean}
  */
-export const isExistAndCheck = ({ claims, code }) =>
-    claims[profile(code)] && claims[flag(code)];
+export const isExistAndCheck = ({ claims, code }) => claims[profile(code)] && claims[flag(code)];
 
 /**
  * walks through card definition and their modules and return filtered arrays based on claims
@@ -18,14 +17,10 @@ export const isExistAndCheck = ({ claims, code }) =>
  */
 const cardWalker = ({ cards, claims }) => {
     let result = [];
-    cards.map((card) => {
+    cards.map(card => {
         let modules = [];
-        card?.modules.map((_modul) => {
-            if (
-                _modul?.code === "ALL" ||
-                isExistAndCheck({ claims, code: _modul?.code })
-            )
-                modules.push(_modul);
+        card?.modules.map(_modul => {
+            if (_modul?.code === "ALL" || isExistAndCheck({ claims, code: _modul?.code })) modules.push(_modul);
         });
         if (modules.length > 0) result.push({ ...card, modules });
     });
@@ -39,8 +34,7 @@ const cardWalker = ({ cards, claims }) => {
  */
 const profileRoleState = {
     PS: {
-        Dashboard: ({ psCards, claims }) =>
-            cardWalker({ cards: psCards, claims }),
+        Dashboard: ({ psCards, claims }) => cardWalker({ cards: psCards, claims }),
         subTitle: ({ subTitlePS }) => subTitlePS,
 
         /**
@@ -49,16 +43,10 @@ const profileRoleState = {
          * @param claims
          * @returns {boolean}
          */
-        LeftMenu: ({ psRouters, claims }) =>
-            psRouters?.filter(
-                ({ name, code }) =>
-                    name &&
-                    (code === "ALL" || isExistAndCheck({ claims, code })),
-            ),
+        LeftMenu: ({ psRouters, claims }) => psRouters?.filter(({ name, code }) => name && (code === "ALL" || isExistAndCheck({ claims, code }))),
     },
     GESTIONAIRE: {
-        Dashboard: ({ gestionnerCards, claims }) =>
-            cardWalker({ cards: gestionnerCards, claims }),
+        Dashboard: ({ gestionnerCards, claims }) => cardWalker({ cards: gestionnerCards, claims }),
         subTitle: ({ subTitleUser }) => subTitleUser,
 
         /**
@@ -68,11 +56,7 @@ const profileRoleState = {
          * @returns {boolean}
          */
         LeftMenu: ({ gestionnerRouters, claims }) =>
-            gestionnerRouters?.filter(
-                ({ name, code }) =>
-                    name &&
-                    (code === "ALL" || isExistAndCheck({ claims, code })),
-            ),
+            gestionnerRouters?.filter(({ name, code }) => name && (code === "ALL" || isExistAndCheck({ claims, code }))),
     },
 };
 /**
@@ -84,12 +68,7 @@ const profileRoleState = {
  */
 export const userProfleSM = ({ entity, role, props }) => {
     let result = null;
-    if (
-        role &&
-        entity &&
-        profileRoleState[role] &&
-        profileRoleState[role][entity]
-    ) {
+    if (role && entity && profileRoleState[role] && profileRoleState[role][entity]) {
         result = profileRoleState[role][entity](props);
     }
     return result;
