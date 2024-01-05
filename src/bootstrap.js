@@ -33,8 +33,7 @@ import Home from "./components/Home";
 import { timeout, promptBeforeIdle } from "shared_lib_ui/Lib";
 // IdleTimer
 import { IdleTimerProvider, PresenceType, useIdleTimerContext } from "lib_ui/react-idle-timer";
-import Prompt from "./Prompt";
-import "./modalPrompt.css";
+import RefreshTokenPrompt from "./components/RefreshTokenPrompt";
 
 const PSremote = () => <RemotePsApp store={store} />;
 const BenefRemote = props => <RemoteBenefApp store={store} {...props} />;
@@ -250,7 +249,7 @@ const App = () => {
                                                         </Link>
                                                     </div>
                                                 </Box>
-                                                <Prompt open={promptOpen} />
+                                                <RefreshTokenPrompt open={promptOpen} />
                                             </Box>
                                         </MsalAuthenticationTemplate>
                                     </MsalProvider>
