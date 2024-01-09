@@ -5,7 +5,7 @@ import Logo from "../../assets/images/Logo.png";
 
 const { LogoIcon, LogoTextIcon, ArrowSquareLeft, ArrowSquareRight } = icons;
 
-const MenuHeader = (props) => {
+const MenuHeader = props => {
     const { open, openLeftDrawer, closeLeftDrawer } = props;
 
     return (
@@ -14,8 +14,7 @@ const MenuHeader = (props) => {
                 display: "flex",
                 justifyContent: "center",
                 backgroundColor: "#FFF !important",
-            }}
-        >
+            }}>
             {!open && (
                 <ArrowSquareRight
                     onClick={openLeftDrawer}
@@ -34,13 +33,9 @@ const MenuHeader = (props) => {
                         width: "100%",
                         justifyContent: "space-around",
                         alignItems: "self-end",
-                    }}
-                >
+                    }}>
                     {/*<img src={Logo} width={'65%'} style={{ alignSelf: 'self-end!important', margin: '0 0 0 30px' }} />*/}
-                    <LogoSvg
-                        width={"87%"}
-                        style={{ alignSelf: "self-end!important" }}
-                    />
+                    <LogoSvg width={"87%"} style={{ alignSelf: "self-end!important" }} />
                     {/*<LogoIcon*/}
                     {/*    viewBox="0 0 35 35"*/}
                     {/*    sx={{*/}
