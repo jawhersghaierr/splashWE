@@ -1,4 +1,4 @@
-import React from "lib_ui/react";
+import React, { useEffect } from "lib_ui/react";
 import { useSelector } from "lib_ui/react-redux";
 
 import Box from "@mui/material/Box";
@@ -12,13 +12,19 @@ import { LoadingDots } from "shared_lib_ui/Lib/components";
 import { getUser } from "shared_lib_ui/host";
 
 import { userProfleSM } from "../utils/userProfleSM";
+import { acquireAccessToken } from "shared_lib_ui/auth";
 
-const Menu = (props) => {
+const Menu = props => {
     const user = useSelector(getUser);
 
+    // useEffect(() => {
+    //     console.log(acquireAccessToken());
+    //     // console.log(msalInstance.getAllKeys());
+    //     // acquireAccessToken();
+    // }, [acquireAccessToken]);
+
     let role = null;
-    if (user?.idTokenClaims)
-        role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE";
+    if (user?.idTokenClaims) role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE";
 
     const HostRouters = userProfleSM({
         entity: "LeftMenu",
@@ -41,20 +47,15 @@ const Menu = (props) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                    }}
-                >
+                    }}>
                     <LoadingDots />
                 </div>
             )}
 
             {role && (
                 <StyledMenu>
-                    {HostRouters.map((item) => (
-                        <NavigationItem
-                            key={createUUID()}
-                            {...item}
-                            collapsed={collapsed}
-                        />
+                    {HostRouters.map(item => (
+                        <NavigationItem key={createUUID()} {...item} collapsed={collapsed} />
                     ))}
                 </StyledMenu>
             )}

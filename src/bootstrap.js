@@ -164,8 +164,7 @@ const App = () => {
                                                         </Route>
 
                                                         <Route path="/auth">
-                                                            {" "}
-                                                            <AuthRemote />{" "}
+                                                            <AuthRemote />
                                                         </Route>
 
                                                         <Route path={["/not-found", "*"]} component={NotFound} />
