@@ -295,7 +295,7 @@ export default function Home() {
             Header: ContentDocument,
             modules: [
                 {
-                    text: "Profile",
+                    text: "Gérer mon profil",
                     code: "ALL",
                     Icon: DashboardCustomizeOutlinedIcon,
                     href: "/ps/profile",
@@ -304,7 +304,7 @@ export default function Home() {
             ],
             title: "Mon profil",
             service: "",
-            subTitle: "Consulter les droits sur mes informations.",
+            subTitle: "Consulter et gérer mes informations.",
         },
         {
             Header: ContentDocument,
