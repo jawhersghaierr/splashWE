@@ -3,16 +3,15 @@
 // const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 // const deps = require('./package.json').dependencies;
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
-const dependencies = require('./package.json').dependencies;
-const devDependencies = require('./package.json').devDependencies;
-const peerDependencies = require('./package.json').peerDependencies;
-
+const dependencies = require("./package.json").dependencies;
+const devDependencies = require("./package.json").devDependencies;
+const peerDependencies = require("./package.json").peerDependencies;
 
 module.exports = {
-    entry: './src/index',
+    entry: "./src/index",
     cache: false,
 
     optimization: {
@@ -26,18 +25,17 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.jsx', '.js', '.json'],
+        extensions: [".jsx", ".js", ".json"],
     },
 
     plugins: [
-
         new ModuleFederationPlugin({
-            name: 'host_ui',
-            filename: 'remoteEntry.js',
+            name: "host_ui",
+            filename: "remoteEntry.js",
             remotes: getRemotes(),
-            
+
             shared: {
-                "react": {
+                react: {
                     //   eager: true,
                     singleton: true,
                     strictVersion: true,
@@ -48,78 +46,78 @@ module.exports = {
                     strictVersion: true,
                     requiredVersion: "17.0.2",
                 },
-                
+
                 "react-router-dom": {
-                    requiredVersion: dependencies['react-dom-dom'],
+                    requiredVersion: dependencies["react-dom-dom"],
                     singleton: true,
                 },
-                "redux": {
-                    requiredVersion: dependencies['redux'],
+                redux: {
+                    requiredVersion: dependencies["redux"],
                     singleton: true,
                 },
                 "react-redux": {
-                    requiredVersion: dependencies['react-redux'],
+                    requiredVersion: dependencies["react-redux"],
                     singleton: true,
                 },
                 "react-final-form": {
-                    requiredVersion: dependencies['react-final-form'],
+                    requiredVersion: dependencies["react-final-form"],
                     singleton: true,
                 },
-                
-                '@mui/material': {
-                    requiredVersion: dependencies['@mui/material'],
+
+                "@azure/msal-react": {
+                    requiredVersion: dependencies["@azure/msal-react"],
+                    singleton: true,
+                },
+                "@azure/msal-browser": {
+                    requiredVersion: dependencies["@azure/msal-react"],
+                    singleton: true,
+                },
+
+                "@mui/material": {
+                    requiredVersion: dependencies["@mui/material"],
                     singleton: true,
                 },
                 "@mui/system": {
                     singleton: true,
-                    requiredVersion: dependencies['@mui/system'],
+                    requiredVersion: dependencies["@mui/system"],
                 },
-                '@mui/icons-material': {
-                    requiredVersion: dependencies['@mui/icons-material'],
+                "@mui/icons-material": {
+                    requiredVersion: dependencies["@mui/icons-material"],
                     singleton: true,
                 },
-                '@emotion/react': {
-                    requiredVersion: dependencies['@emotion/react'],
+                "@emotion/react": {
+                    requiredVersion: dependencies["@emotion/react"],
                     singleton: true,
                 },
-                '@mui/x-date-pickers': {
-                    requiredVersion: dependencies['@mui/x-date-pickers'],
+                "@mui/x-date-pickers": {
+                    requiredVersion: dependencies["@mui/x-date-pickers"],
                     singleton: true,
                 },
-                'react-cookie': {
-                    requiredVersion: dependencies['react-cookie'],
+                "react-cookie": {
+                    requiredVersion: dependencies["react-cookie"],
                     singleton: true,
                 },
                 // '@mui/x-date-pickers/AdapterDateFns': {
                 //   singleton: true,
                 // },
-            }
-            
-            
+            },
         }),
 
         new HtmlWebpackPlugin({
-            template: './public/index.html',
-            assets: './public/assets',
-            publicPath: '/'
-        })
-
+            template: "./public/index.html",
+            assets: "./public/assets",
+            publicPath: "/",
+        }),
     ],
     module: {
         rules: [
-
             {
                 test: /\.js|jsx/,
                 exclude: /node_modules/,
-                loader: require.resolve('babel-loader'),
+                loader: require.resolve("babel-loader"),
                 options: {
-                    presets: [
-                        ["@babel/preset-env"],
-                        ['@babel/preset-react']
-                    ],
-                    plugins: [
-                        ["@babel/plugin-transform-runtime"],
-                    ]
+                    presets: [["@babel/preset-env"], ["@babel/preset-react"]],
+                    plugins: [["@babel/plugin-transform-runtime"]],
                 },
             },
 
@@ -136,26 +134,22 @@ module.exports = {
             },
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-                type: "asset/resource"
+                type: "asset/resource",
             },
             {
                 test: /\.json/,
-                type: 'asset/resource',
+                type: "asset/resource",
                 generator: {
-                    filename: './conf/[name][ext]',
+                    filename: "./conf/[name][ext]",
                 },
             },
-
         ],
     },
 };
 
-
-function getRemotes () {
-
-    let _remotes = {}
+function getRemotes() {
+    let _remotes = {};
     Object.keys(modules.remoteApps).forEach(remote => {
-
         _remotes[remote] = `promise new Promise(resolve => {
         
             if (window.${remote} == undefined) {
@@ -176,8 +170,8 @@ function getRemotes () {
                 }
                 if (!script.src.includes('undefined')) document.body.appendChild(script);
             } else resolve('')
-        })`
-    })
+        })`;
+    });
 
-    return (_remotes)
+    return _remotes;
 }
