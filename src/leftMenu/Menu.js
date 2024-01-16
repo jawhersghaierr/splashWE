@@ -4,18 +4,21 @@ import { useSelector } from "lib_ui/react-redux";
 import Box from "@mui/material/Box";
 
 import { psRouters, gestionnerRouters } from "./HostRouters";
-import StyledMenu from "./StyledMenu";
-import NavigationItem from "./NavigationItem";
+import StyledMenu from "./subComponents/StyledMenu";
+import NavigationItem from "./subComponents/NavigationItem";
 import { createUUID } from "shared_lib_ui/Lib";
 
 import { LoadingDots } from "shared_lib_ui/Lib/components";
-import { getUser } from "shared_lib_ui/host";
+import { getUser, isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
 
 import { userProfleSM } from "../utils/userProfleSM";
-import { acquireAccessToken } from "shared_lib_ui/auth";
+// import { acquireAccessToken } from "shared_lib_ui/auth";
 
 const Menu = props => {
     const user = useSelector(getUser);
+    const isPsUser = useSelector(isPS);
+    const isLogged = useSelector(isAuthenticated);
+    const baseClaims = useSelector(getBaseClaims);
 
     // useEffect(() => {
     //     console.log(acquireAccessToken());
@@ -24,7 +27,7 @@ const Menu = props => {
     // }, [acquireAccessToken]);
 
     let role = null;
-    if (user?.idTokenClaims) role = user?.idTokenClaims?.extension_finess ? "PS" : "GESTIONAIRE";
+    if (isLogged) role = isPsUser ? "PS" : "GESTIONAIRE";
 
     const HostRouters = userProfleSM({
         entity: "LeftMenu",
@@ -32,7 +35,7 @@ const Menu = props => {
         props: {
             psRouters,
             gestionnerRouters,
-            claims: user.idTokenClaims || {},
+            claims: baseClaims || {},
         },
     });
 
@@ -41,13 +44,7 @@ const Menu = props => {
     return (
         <Box id="leftMenu" component="nav">
             {!role && (
-                <div
-                    style={{
-                        height: "200px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}>
+                <div style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <LoadingDots />
                 </div>
             )}

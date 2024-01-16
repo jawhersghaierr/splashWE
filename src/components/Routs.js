@@ -13,7 +13,7 @@ import RemoteIntraitablesApp from "intraitables_ui/RemoteIntraitablesApp";
 import RemoteTPSApp from "tps_ui/RemoteTPSApp";
 import RemoteInduApp from "indu_ui/RemoteInduApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
-import Home from "./Home";
+import Home from "./mainDashboard/Home";
 import { getClaims } from "shared_lib_ui/host";
 import { isAuthenticated } from "shared_lib_ui/host";
 import { GetMultiModuleClaims } from "auth_ui/RemoteAuthApp";
