@@ -111,7 +111,7 @@ module.exports = {
                     singleton: true,
                 },
                 "react-idle-timer": {
-                    requiredVersion: deps["react-idle-timer"],
+                    requiredVersion: dependencies["react-idle-timer"],
                     singleton: true,
                 },
             },
