@@ -110,9 +110,10 @@ module.exports = {
                     requiredVersion: dependencies["react-cookie"],
                     singleton: true,
                 },
-                // '@mui/x-date-pickers/AdapterDateFns': {
-                //   singleton: true,
-                // },
+                "react-idle-timer": {
+                    requiredVersion: dependencies["react-idle-timer"],
+                    singleton: true,
+                },
             },
         }),
         // new webpack.HotModuleReplacementPlugin(),

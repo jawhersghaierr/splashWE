@@ -17,7 +17,7 @@ module.exports = {
     // *********************   remoteApps     ***********************
     // **************************************************************
     remoteApps: {
-        shared_lib_ui: "https://10.241.25.21:8039/remoteEntry.js",
+        shared_lib_ui: "http://localhost:8039/remoteEntry.js",
         tps_ui: "http://localhost:8031/remoteEntry.js",
         lib_ui: "http://localhost:8038/remoteEntry.js",
         hospi_ui: "http://localhost:8032/remoteEntry.js",
