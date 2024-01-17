@@ -12,15 +12,14 @@
 <div id="root"></div>
 <script type="text/javascript">
     const account = window?._env_?.lemonLerning || {};
-    console.log(account);
     function LemonLearningReady (player) {
         player
             .set({
-                projectKey : account?.projectId,
+                projectKey : account?.projectId || "",
                 user : {
-                    name : account?.userName,
-                    email : account?.userEmail,
-                    profiles : [account?.profile],
+                    name : account?.userName || "",
+                    email : account?.userEmail || "",
+                    profiles : [account?.profile || ""],
                     tags : [
                   
                     ]
