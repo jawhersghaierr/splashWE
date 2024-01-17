@@ -9,7 +9,6 @@ export const StyledMenu = styled(MenuList)(({ theme }) => {
         padding: "0px",
         overflowY: "auto",
         overflowX: "hidden",
-        marginRight: "10px",
         scrollbarWidth: "thin" /* Firefox 63 compatibility */,
         "&::-webkit-scrollbar": {
             width: "6px !important",
