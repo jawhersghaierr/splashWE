@@ -51,7 +51,12 @@ module.exports = {
         "tpAmcSelAndIdb": "${APIURL_TP_AMC_SEL_IDB}",
         "indus": "${APIURL_INDUS}",
         "userMngmnt": "${APIURL_USER_MANAGEMENT}"
-        // **********************************************************
-        
+    },
+
+    "lemonLerning": {
+        "projectId": "${LEMON_PROJECT_ID}",
+        "userName": "${LEMON_PROJECT_USER_NAME}",
+        "userEmail": "${LEMON_PROJECT_USER_EMAIL}",
+        "profile": "${LEMON_PROFILE}",
     }
 };

@@ -11,14 +11,16 @@
 <body>
 <div id="root"></div>
 <script type="text/javascript">
+    const account = window?._env_?.lemonLerning || {};
+    console.log(account);
     function LemonLearningReady (player) {
         player
             .set({
-                projectKey : '1f059b51dc8a36d740534339be24b91c',
+                projectKey : account?.projectId,
                 user : {
-                    name : 'Lemon Test',
-                    email : 'lemontest@viamedis.fr',
-                    profiles : [4544],
+                    name : account?.userName,
+                    email : account?.userEmail,
+                    profiles : [account?.profile],
                     tags : [
                   
                     ]
