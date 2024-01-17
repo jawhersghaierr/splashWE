@@ -20,12 +20,6 @@ const Menu = props => {
     const isLogged = useSelector(isAuthenticated);
     const baseClaims = useSelector(getBaseClaims);
 
-    // useEffect(() => {
-    //     console.log(acquireAccessToken());
-    //     // console.log(msalInstance.getAllKeys());
-    //     // acquireAccessToken();
-    // }, [acquireAccessToken]);
-
     let role = null;
     if (isLogged) role = isPsUser ? "PS" : "GESTIONAIRE";
 
