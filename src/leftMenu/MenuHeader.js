@@ -20,7 +20,7 @@ const MenuHeader = props => {
                     onClick={openLeftDrawer}
                     viewBox="0 0 50 50"
                     sx={{
-                        margin: "1.4em 0.9em 0.6em 1.1em",
+                        margin: "1.4em 0.9em 0.6em",
                         fontSize: "2.5em !important",
                         cursor: "pointer",
                     }}
