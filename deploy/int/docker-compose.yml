@@ -44,8 +44,3 @@ services:
       - POST_LOGOUT_REDIRECT_URI=https://10.241.25.21:8030
       - LOGIN_REQUEST_SCOPES=https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access
 
-      #      ***************************** LEMON LEARNING  *****************************************************
-      - LEMON_PROJECT_ID=1f059b51dc8a36d740534339be24b91c
-      - LEMON_PROJECT_USER_NAME=Lemon Test
-      - LEMON_PROJECT_USER_EMAIL=lemontest@viamedis.fr
-      - LEMON_PROFILE=4544
