@@ -99,7 +99,7 @@ const Routs = () => {
                                         <PayementRemote />
                                     </Route>
 
-                                    <Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/intraitables", "/parametres"]}>
+                                    <Route path={["/hospidashboard", "/serviceEnLigne", "/factures", "/parametres"]}>
                                         <HospiRemote />
                                     </Route>
 
@@ -111,7 +111,7 @@ const Routs = () => {
                                         <InduRemote />
                                     </Route>
 
-                                    <Route path={["/intraitablesdashboard", "/facturesintraitables", "/intraitables"]}>
+                                    <Route path={["/intraitablesdashboard", "/intraitables"]}>
                                         <IntraitablesRemote />
                                     </Route>
 
