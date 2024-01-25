@@ -67,10 +67,4 @@ module.exports = {
     apiUrlsRec: {
         // http://10.241.25.21
     },
-    lemonLerning: {
-        projectId: "1f059b51dc8a36d740534339be24b91c",
-        userName: "Lemon Test",
-        userEmail: "lemontest@viamedis.fr",
-        profile: "4544",
-    }
 };
