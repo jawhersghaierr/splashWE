@@ -15,7 +15,6 @@ import RemoteInduApp from "indu_ui/RemoteInduApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 import Home from "./mainDashboard/Home";
 import { getClaims } from "shared_lib_ui/host";
-import { isAuthenticated } from "shared_lib_ui/host";
 import { GetMultiModuleClaims } from "auth_ui/RemoteAuthApp";
 import { MODULES } from "../utils/consts";
 import Footer from "./Footer";
@@ -26,7 +25,7 @@ import { RefreshTokenPrompt } from "shared_lib_ui/auth";
 import { useCookies } from "react-cookie";
 // IdleTimer
 import { timeout, promptBeforeIdle } from "shared_lib_ui/Lib";
-import { IdleTimerProvider, PresenceType, useIdleTimerContext } from "lib_ui/react-idle-timer";
+import { IdleTimerProvider } from "lib_ui/react-idle-timer";
 
 const PSremote = () => <RemotePsApp />;
 const BenefRemote = props => <RemoteBenefApp {...props} />;
@@ -36,6 +35,8 @@ const TPSRemote = () => <RemoteTPSApp />;
 const InduRemote = () => <RemoteInduApp />;
 const IntraitablesRemote = () => <RemoteIntraitablesApp />;
 const AuthRemote = () => <RemoteAuthApp />;
+
+const Empty = () => <div></div>;
 
 const Routs = () => {
     const moduleClaims = useSelector(getClaims);
@@ -54,7 +55,7 @@ const Routs = () => {
         setPromptOpen(false);
     };
     useEffect(() => {
-        if (Object.keys(cookies)?.length == 0) {
+        if (Object.keys(cookies)?.length === 0) {
             setOpenConfirmDialog(true);
         }
     }, [cookies]);
@@ -121,7 +122,10 @@ const Routs = () => {
 
                                     <Route path={["/not-found", "*"]} component={NotFound} />
                                 </Switch>
-                                <Footer />
+                                <Switch>
+                                    <Route path={["/tpAmcServiceEnLigne/FluxInfo/:id"]} component={Empty} />
+                                    <Route path={["*"]} component={Footer} />
+                                </Switch>
                             </Box>
                         </Box>
                     </IdleTimerProvider>
