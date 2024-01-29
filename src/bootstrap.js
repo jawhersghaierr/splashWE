@@ -6,7 +6,7 @@ import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import theme from "shared_lib_ui/MUItheme";
 import { store } from "shared_lib_ui/store";
 
-import { useCookies, CookiesProvider } from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 
 // Msal imports
 import { MsalProvider, MsalAuthenticationTemplate } from "lib_ui/@azure-msal-react";
