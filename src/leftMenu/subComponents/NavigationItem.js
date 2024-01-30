@@ -27,7 +27,7 @@ const NavigationItem = props => {
 
     const custonNavLinkStyle = () => {
         return {
-            background: checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.primary.main}, #1AC6D6)` : "",
+            background: checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.btnGradients.btnBegin}, ${theme.palette.btnGradients.btnEnd})` : "",
         };
     };
 

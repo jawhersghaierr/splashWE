@@ -1,68 +1,30 @@
 import React from "lib_ui/react";
 import Box from "@mui/material/Box";
-import { LogoSvg, LogoPng, icons } from "shared_lib_ui/assets";
-import Logo from "../../assets/images/Logo.png";
-
-const { LogoIcon, LogoTextIcon, ArrowSquareLeft, ArrowSquareRight } = icons;
+import { LogoSvg, icons } from "shared_lib_ui/assets";
+import { isOxantis } from "shared_lib_ui/Lib";
+const { ArrowSquareLeft, ArrowSquareRight } = icons;
 
 const MenuHeader = props => {
     const { open, openLeftDrawer, closeLeftDrawer } = props;
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                backgroundColor: "#FFF !important",
-            }}>
+        <Box sx={{ display: "flex", justifyContent: "center", backgroundColor: "#FFF !important" }}>
             {!open && (
                 <ArrowSquareRight
                     onClick={openLeftDrawer}
                     viewBox="0 0 50 50"
-                    sx={{
-                        margin: "1.4em 0.9em 0.6em",
-                        fontSize: "2.5em !important",
-                        cursor: "pointer",
-                    }}
+                    sx={{ margin: "1.4em 0.9em 0.6em", fontSize: "2.5em !important", cursor: "pointer" }}
                 />
             )}
             {open && (
-                <Box
-                    sx={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-around",
-                        alignItems: "self-end",
-                    }}>
-                    {/*<img src={Logo} width={'65%'} style={{ alignSelf: 'self-end!important', margin: '0 0 0 30px' }} />*/}
-                    <LogoSvg width={"87%"} style={{ alignSelf: "self-end!important" }} />
-                    {/*<LogoIcon*/}
-                    {/*    viewBox="0 0 35 35"*/}
-                    {/*    sx={{*/}
-                    {/*        flex: "1 0 auto",*/}
-                    {/*        height: "1.3em !important",*/}
-                    {/*        fontSize: "3em !important",*/}
-                    {/*    }}*/}
-                    {/*/>*/}
-                    {/*<LogoTextIcon*/}
-                    {/*    viewBox="0 0 100 30"*/}
-                    {/*    sx={{*/}
-                    {/*        flex: "2 0 auto",*/}
-                    {/*        margin: "0.5em auto auto !important",*/}
-                    {/*        height: "2em !important",*/}
-                    {/*        fontSize: "3em !important",*/}
-                    {/*    }}*/}
-                    {/*/>*/}
+                <Box sx={{ display: "flex", width: "100%", justifyContent: "space-around", alignItems: "self-end" }}>
+                    {!isOxantis && <LogoSvg width={"87%"} style={{ alignSelf: "self-end!important" }} />}
                     <ArrowSquareLeft
                         viewBox="0 0 50 50"
                         onClick={closeLeftDrawer}
-                        sx={{
-                            flex: "1 0 auto",
-                            margin: "1.4em 25px 0.6em 0!important",
-                            fontSize: "2.5em !important",
-                            cursor: "pointer",
-                        }}
+                        sx={{ flex: "1 0 auto", margin: "1.4em 25px 0.6em 0!important", fontSize: "2.5em !important", cursor: "pointer" }}
                     />
+                    {isOxantis && <div style={{ width: "58%" }}></div>}
                 </Box>
             )}
         </Box>
