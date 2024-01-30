@@ -123,7 +123,7 @@ const Routs = () => {
                                     <Route path={["/not-found", "*"]} component={NotFound} />
                                 </Switch>
                                 <Switch>
-                                    <Route path={["/tpAmcServiceEnLigne/FluxInfo/:id"]} component={Empty} />
+                                    <Route path={["/tpAmcServiceEnLigne/FluxInfo/:id", "/serviceEnLigne/FluxInfo/:id"]} component={Empty} />
                                     <Route path={["*"]} component={Footer} />
                                 </Switch>
                             </Box>
