@@ -1,10 +1,11 @@
 import React, { useEffect } from "lib_ui/react";
 import ReactDOM from "lib_ui/react-dom";
 
-import { Provider, useSelector } from "lib_ui/react-redux";
-import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
-import theme from "shared_lib_ui/MUItheme";
+import { Provider } from "lib_ui/react-redux";
 import { store } from "shared_lib_ui/store";
+import theme from "shared_lib_ui/MUItheme";
+
+import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 
 import { CookiesProvider } from "react-cookie";
 
@@ -16,6 +17,7 @@ import { msalInstance } from "shared_lib_ui/auth";
 import { setAccount } from "shared_lib_ui/host";
 
 import Routs from "./components/Routs";
+import ExtendedProviderWrapper from "./components/ExtendedProviderWrapper";
 
 const App = () => {
     useEffect(() => {
@@ -46,7 +48,7 @@ const App = () => {
                 <CookiesProvider>
                     <MsalProvider instance={msalInstance}>
                         <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
-                            <Routs />
+                            <ExtendedProviderWrapper />
                         </MsalAuthenticationTemplate>
                     </MsalProvider>
                 </CookiesProvider>
