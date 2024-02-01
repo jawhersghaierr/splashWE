@@ -22,7 +22,7 @@ import HostMenu from "../leftMenu/HostMenu";
 import { TermsService } from "shared_lib_ui/Lib/layout";
 
 import TestModals from "./TestModals";
-import { YellowAlert } from "shared_lib_ui/Lib/layout/modals";
+import { AlertMsgs } from "shared_lib_ui/Lib/layout/modals";
 
 import "./snackBar.scss";
 
@@ -41,7 +41,9 @@ const Routs = () => {
     const { isOpenRightDrawer } = useDrawer();
 
     return (
-        <SnackbarProvider Components={{ yellowAlert: YellowAlert }} classes={{ containerRoot: isOpenRightDrawer ? "withDrawer" : "noDrawer" }}>
+        <SnackbarProvider
+            Components={{ yellowAlert: AlertMsgs.AlertMsgYellowAlert, noGridResultsAlertMsg: AlertMsgs.AlertMsgNoGridResults }}
+            classes={{ containerRoot: isOpenRightDrawer ? "withDrawer" : "noDrawer" }}>
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />
 

@@ -5,9 +5,10 @@ import { Button } from "@mui/material";
 const TestModals = () => {
     const { enqueueSnackbar } = useSnackbar();
     return (
-        <Button onClick={() => enqueueSnackbar("You're test is ready", { variant: "yellowAlert" })} id={"tst"} variant={"text"}>
-            Show snackbar
-        </Button>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+            <Button onClick={() => enqueueSnackbar("You're first test is ready", { variant: "yellowAlert" })}>Show yellowAlert snackbar</Button>
+            <Button onClick={() => enqueueSnackbar("You're second test is ready", { variant: "noGridResultsAlertMsg" })}>Show reportComplete snackbar</Button>
+        </div>
     );
 };
 
