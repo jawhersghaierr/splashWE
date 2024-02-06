@@ -1,4 +1,4 @@
-import React, { useEffect } from "lib_ui/react";
+import React from "lib_ui/react";
 import { useSelector } from "lib_ui/react-redux";
 
 import Box from "@mui/material/Box";
@@ -12,7 +12,6 @@ import { LoadingDots } from "shared_lib_ui/Lib/components";
 import { getUser, isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
 
 import { userProfleSM } from "../utils/userProfleSM";
-// import { acquireAccessToken } from "shared_lib_ui/auth";
 
 const Menu = props => {
     const user = useSelector(getUser);

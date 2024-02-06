@@ -14,12 +14,12 @@ const NavigationItem = props => {
     const theme = useTheme();
     const location = useLocation();
 
+    const [activeLink, setActiveLink] = useState(location?.pathname);
+
     const match = matchPath(activeLink, {
         path: path,
         strict: true,
     });
-
-    const [activeLink, setActiveLink] = useState(location?.pathname);
 
     useEffect(() => {
         setActiveLink(location?.pathname);

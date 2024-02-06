@@ -21,7 +21,6 @@ import HostMenu from "../leftMenu/HostMenu";
 
 import { TermsService } from "shared_lib_ui/Lib/layout";
 
-import TestModals from "./TestModals";
 import { AlertMsgs } from "shared_lib_ui/Lib/layout/modals";
 
 import "./snackBar.scss";
@@ -50,8 +49,6 @@ const Routs = () => {
                 <HostMenu />
 
                 <Box component="main" sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-                    {/*<TestModals />*/}
-
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path={["/psdashboard", "/ps", "/ps/profile"]}>
