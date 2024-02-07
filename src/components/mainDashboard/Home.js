@@ -3,7 +3,7 @@ import { useSelector } from "lib_ui/react-redux";
 import { Dashboard } from "shared_lib_ui/Lib/layout";
 import { LoadingDots } from "shared_lib_ui/Lib/components";
 import { userProfleSM } from "../../utils/userProfleSM";
-import { isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
+import { isPS, isAuthenticated, getBaseClaims, getClaims } from "shared_lib_ui/host";
 import { gestionnerCards, psCards } from "./HomeModules";
 
 export default function Home() {
@@ -13,6 +13,7 @@ export default function Home() {
     const isPsUser = useSelector(isPS);
     const isLogged = useSelector(isAuthenticated);
     const baseClaims = useSelector(getBaseClaims);
+    const moduleClaims = useSelector(getClaims);
 
     let role = null;
     if (isLogged) role = isPsUser ? "PS" : "GESTIONAIRE";
@@ -37,11 +38,11 @@ export default function Home() {
                 })}
                 cards={userProfleSM({
                     entity: "Dashboard",
-                    role,
+                    role: "CLAIM_DEPENDENT",
                     props: {
-                        psCards,
-                        gestionnerCards,
-                        claims: baseClaims,
+                        cards: isPsUser ? psCards : gestionnerCards,
+                        baseClaims: baseClaims,
+                        moduleClaims: moduleClaims,
                     },
                 })}
             />

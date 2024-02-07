@@ -1,33 +1,38 @@
 /**
- * walks through card definition and their modules and return filtered arrays based on claims
- * @param cards
- * @param claims
- * @returns {*[]}
- */
-const cardWalker = ({ cards, claims }) => {
-    let result = [];
-    cards.map(card => {
-        let modules = [];
-        card?.modules.map(_modul => {
-            if (claims.some(claim => _modul.code.includes(claim))) modules.push(_modul);
-        });
-        if (modules.length > 0) result.push({ ...card, modules });
-    });
-    return result;
-};
-
-/**
  *
  * State Machine declaration of rules
  */
 const profileRoleState = {
+    CLAIM_DEPENDENT: {
+        Dashboard: ({ cards, baseClaims, moduleClaims }) => {
+            let result = [];
+            cards.map(card => {
+                let modules = [];
+                let numberOfActiveModules = 0;
+                card?.modules.map(_modul => {
+                    if (_modul?.disabled !== undefined) {
+                        let disabled = !moduleClaims[_modul?.code]?.claims?.some(r => _modul?.claim.includes(r));
+                        modules.push({ ..._modul, disabled });
+                        if (!disabled) numberOfActiveModules++;
+                    } else if (!_modul?.disabled && baseClaims.includes(_modul?.code)) {
+                        numberOfActiveModules++;
+                        modules.push(_modul);
+                    }
+                });
+
+                if (modules.length > 0 && numberOfActiveModules > 0) {
+                    result.push({ ...card, modules });
+                }
+            });
+
+            return result;
+        },
+    },
     PS: {
-        Dashboard: ({ psCards, claims }) => cardWalker({ cards: psCards, claims }),
         subTitle: ({ subTitlePS }) => subTitlePS,
         LeftMenu: ({ psRouters, claims }) => psRouters?.filter(({ code, name }) => name && claims.some(claim => code.includes(claim))),
     },
     GESTIONAIRE: {
-        Dashboard: ({ gestionnerCards, claims }) => cardWalker({ cards: gestionnerCards, claims }),
         subTitle: ({ subTitleUser }) => subTitleUser,
         LeftMenu: ({ gestionnerRouters, claims }) => gestionnerRouters?.filter(({ code, name }) => name && claims.some(claim => code.includes(claim))),
     },
