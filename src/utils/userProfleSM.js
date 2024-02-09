@@ -10,7 +10,7 @@ const profileRoleState = {
                 let modules = [];
                 let numberOfActiveModules = 0;
                 card?.modules.map(_modul => {
-                    if (_modul?.disabled !== undefined) {
+                    if (_modul?.disabled !== undefined && _modul?.claim) {
                         let disabled = !moduleClaims[_modul?.code]?.claims?.some(r => _modul?.claim.includes(r));
                         modules.push({ ..._modul, disabled });
                         if (!disabled) numberOfActiveModules++;
