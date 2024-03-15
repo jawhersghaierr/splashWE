@@ -1,7 +1,7 @@
-import React, { useEffect } from "lib_ui/react";
-import ReactDOM from "lib_ui/react-dom";
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom";
 
-import { Provider } from "lib_ui/react-redux";
+import { Provider } from "react-redux";
 import { store } from "shared_lib_ui/store";
 import theme from "shared_lib_ui/MUItheme";
 
@@ -10,8 +10,8 @@ import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import { CookiesProvider } from "react-cookie";
 
 // Msal imports
-import { MsalProvider, MsalAuthenticationTemplate } from "lib_ui/@azure-msal-react";
-import { InteractionType, EventType } from "lib_ui/@azure-msal-browser";
+import { MsalProvider, MsalAuthenticationTemplate } from "@azure/msal-react";
+import { InteractionType, EventType } from "@azure/msal-browser";
 import { msalInstance } from "shared_lib_ui/auth";
 
 import { setAccount } from "shared_lib_ui/host";

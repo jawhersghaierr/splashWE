@@ -1,5 +1,5 @@
-import React from "lib_ui/react";
-import { useSelector } from "lib_ui/react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Dashboard } from "shared_lib_ui/Lib/layout";
 import { LoadingDots } from "shared_lib_ui/Lib/components";
 import { userProfleSM } from "../../utils/userProfleSM";

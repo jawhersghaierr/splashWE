@@ -1,4 +1,4 @@
-import React from "lib_ui/react";
+import React from "react";
 
 import { Drawer, useDrawer } from "shared_lib_ui/Lib/layout/drawers";
 import Menu from "./Menu";

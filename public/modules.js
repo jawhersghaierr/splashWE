@@ -17,9 +17,9 @@ module.exports = {
     // *********************   remoteApps     ***********************
     // **************************************************************
     remoteApps: {
+        // lib_ui: "http://localhost:8038/remoteEntry.js",
         shared_lib_ui: "http://localhost:8039/remoteEntry.js",
         tps_ui: "http://localhost:8031/remoteEntry.js",
-        lib_ui: "http://localhost:8038/remoteEntry.js",
         hospi_ui: "http://localhost:8032/remoteEntry.js",
         payment_ui: "http://localhost:8033/remoteEntry.js",
         ps_ui: "http://localhost:8034/remoteEntry.js",
@@ -41,7 +41,8 @@ module.exports = {
         hospiFactures: "https://rec-api.viamedis.net/hospi-facturation-api/v1",
         beneficiaire: "https://rec-api.viamedis.net/droits-beneficiaire-api/v1",
         factureAndIntraitablesIntegration: "https://rec-api.viamedis.net/facturation-integration-api/v1",
-        agregator: "https://rec-api.viamedis.net/service-aggregator-api/v1",
+        // agregator: "https://rec-api.viamedis.net/service-aggregator-api/v1",
+        agregator: "http://10.241.25.10:8015/api/v1",
         tpsFactures: "https://rec-api.viamedis.net/tps-facturation-api/v1",
         tpAmcSelAndIdb: "https://rec-api.viamedis.net/tp-amc-api/v1",
         indus: "https://rec-api.viamedis.net/indu-api/v1",

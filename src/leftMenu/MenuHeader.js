@@ -1,4 +1,4 @@
-import React from "lib_ui/react";
+import React from "react";
 import Box from "@mui/material/Box";
 import { LogoSvg, icons } from "shared_lib_ui/assets";
 import { isOxantis } from "shared_lib_ui/Lib";

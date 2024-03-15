@@ -1,8 +1,8 @@
-import React from "lib_ui/react";
-import { Switch, Route } from "lib_ui/react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { NotFound } from "shared_lib_ui/Lib/components";
-import { SnackbarProvider } from "lib_ui/notistack";
+import { SnackbarProvider } from "notistack";
 
 import RemotePsApp from "ps_ui/RemotePsApp";
 import RemoteBenefApp from "benef_ui/RemoteBenefApp";

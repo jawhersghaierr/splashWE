@@ -1,4 +1,4 @@
-import React from "lib_ui/react";
+import React from "react";
 import { SvgIcon } from "@mui/material";
 
 export default function LogoTextIcon(props) {

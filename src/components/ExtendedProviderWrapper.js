@@ -1,7 +1,7 @@
-import React, { Suspense, useState, useEffect } from "lib_ui/react";
-import { BrowserRouter } from "lib_ui/react-router-dom";
+import React, { Suspense, useState, useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { DrawerProvider } from "shared_lib_ui/Lib/layout/drawers";
-import { useSelector } from "lib_ui/react-redux";
+import { useSelector } from "react-redux";
 
 // Cookies
 import { useCookies } from "react-cookie";
@@ -15,7 +15,7 @@ import { MODULES } from "../utils/consts";
 
 // IdleTimer
 import { timeout, promptBeforeIdle } from "shared_lib_ui/Lib";
-import { IdleTimerProvider } from "lib_ui/react-idle-timer";
+import { IdleTimerProvider } from "react-idle-timer";
 
 import Routs from "./Routs";
 

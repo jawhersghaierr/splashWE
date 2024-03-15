@@ -1,5 +1,5 @@
-import React from "lib_ui/react";
-import { Link } from "lib_ui/react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 
 const Footer = () => {

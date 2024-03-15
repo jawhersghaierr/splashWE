@@ -54,7 +54,13 @@
         "semantic-release": "^21.1.2",
         "stream": "0.0.2",
         "styled-components": "^5.3.3",
-        "url-loader": "^4.1.1"
+        "url-loader": "^4.1.1",
+
+        "autosuggest-highlight": "^3.3.4",
+        "lz-string": "^1.5.0",
+        "prop-types": "^15.8.1",
+        "react-idle-timer": "^5.7.2"
+
     },
     "devDependencies": {
         "@babel/core": "7.17.5",
@@ -104,7 +110,14 @@
         "webpack-dev-server": "v4.8.0",
         "webpack-livereload-plugin": "3.0.2",
         "webpack-merge": "^5.2.0",
-        "webpack-shell-plugin-next": "^2.2.2"
+        "webpack-shell-plugin-next": "^2.2.2",
+
+        "@module-federation/native-federation-tests": "^0.3.0",
+        "@module-federation/native-federation-typescript": "^0.3.0",
+        "file-loader": "^6.2.0",
+        "notistack": "^3.0.1",
+        "terser-webpack-plugin": "^4.2.3",
+        "url-loader": "^4.1.1"
     },
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",

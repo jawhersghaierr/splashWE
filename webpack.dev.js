@@ -114,6 +114,20 @@ module.exports = {
                     requiredVersion: dependencies["react-idle-timer"],
                     singleton: true,
                 },
+
+                "@azure/msal-react": {
+                    requiredVersion: dependencies["@azure/msal-react"],
+                    singleton: true,
+                },
+                "@azure/msal-browser": {
+                    requiredVersion: dependencies["@azure/msal-browser"],
+                    singleton: true,
+                },
+
+                "lz-string": {
+                    requiredVersion: dependencies["lz-string"],
+                    singleton: true,
+                },
             },
         }),
         // new webpack.HotModuleReplacementPlugin(),

@@ -1,5 +1,5 @@
-import React from "lib_ui/react";
-import { useSelector } from "lib_ui/react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import Box from "@mui/material/Box";
 
