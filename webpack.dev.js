@@ -52,12 +52,12 @@ module.exports = {
                     //   eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "17.0.2",
+                    requiredVersion: "18.2.0",
                 },
                 "react-dom": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "17.0.2",
+                    requiredVersion: "18.2.0",
                 },
 
                 "react-router-dom": {
