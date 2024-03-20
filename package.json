@@ -3,7 +3,7 @@
     "version": "1.3.4",
     "private": true,
     "dependencies": {
-        "@viamedis/viamedis-config": "^1.0.4"
+        "@viamedis/viamedis-config": "^1.1.0"
     },
     "devDependencies": {
         "@babel/core": "^7.17.5",
