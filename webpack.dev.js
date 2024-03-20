@@ -1,14 +1,9 @@
-// const paths = require("./paths");
-// const webpack = require("webpack");
-// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-// const deps = require('./package.json').dependencies;
+const webpack = require("webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
-const dependencies = require("./package.json").dependencies;
-const devDependencies = require("./package.json").devDependencies;
-const peerDependencies = require("./package.json").peerDependencies;
+const { dependencies } = require("@viamedis/viamedis-config/package.json");
 
 module.exports = {
     mode: "development",
@@ -49,21 +44,21 @@ module.exports = {
             remotes: getRemotes(),
             shared: {
                 react: {
-                    //   eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "18.2.0",
+                    requiredVersion: dependencies["react"],
                 },
                 "react-dom": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "18.2.0",
+                    requiredVersion: dependencies["react-dom"],
                 },
 
                 "react-router-dom": {
-                    requiredVersion: dependencies["react-dom-dom"],
+                    requiredVersion: dependencies["react-router-dom"],
                     singleton: true,
                 },
+
                 redux: {
                     requiredVersion: dependencies["redux"],
                     singleton: true,
@@ -72,6 +67,7 @@ module.exports = {
                     requiredVersion: dependencies["react-redux"],
                     singleton: true,
                 },
+
                 "react-final-form": {
                     requiredVersion: dependencies["react-final-form"],
                     singleton: true,
@@ -83,6 +79,11 @@ module.exports = {
                 },
                 "@azure/msal-browser": {
                     requiredVersion: dependencies["@azure/msal-react"],
+                    singleton: true,
+                },
+
+                "@emotion/react": {
+                    requiredVersion: dependencies["@emotion/react"],
                     singleton: true,
                 },
 
@@ -98,10 +99,6 @@ module.exports = {
                     requiredVersion: dependencies["@mui/icons-material"],
                     singleton: true,
                 },
-                "@emotion/react": {
-                    requiredVersion: dependencies["@emotion/react"],
-                    singleton: true,
-                },
                 "@mui/x-date-pickers": {
                     requiredVersion: dependencies["@mui/x-date-pickers"],
                     singleton: true,
@@ -115,22 +112,13 @@ module.exports = {
                     singleton: true,
                 },
 
-                "@azure/msal-react": {
-                    requiredVersion: dependencies["@azure/msal-react"],
-                    singleton: true,
-                },
-                "@azure/msal-browser": {
-                    requiredVersion: dependencies["@azure/msal-browser"],
-                    singleton: true,
-                },
-
                 "lz-string": {
                     requiredVersion: dependencies["lz-string"],
                     singleton: true,
                 },
             },
         }),
-        // new webpack.HotModuleReplacementPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: "./public/index.html",
             assets: "./public/assets",

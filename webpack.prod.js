@@ -1,14 +1,7 @@
-// const paths = require("./paths");
-// const webpack = require("webpack");
-// const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-// const deps = require('./package.json').dependencies;
-
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 const modules = require(`./public/modules`);
-const dependencies = require("./package.json").dependencies;
-const devDependencies = require("./package.json").devDependencies;
-const peerDependencies = require("./package.json").peerDependencies;
+const { dependencies } = require("@viamedis/viamedis-config/package.json");
 
 module.exports = {
     entry: "./src/index",
@@ -36,15 +29,14 @@ module.exports = {
 
             shared: {
                 react: {
-                    //   eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "18.2.0",
+                    requiredVersion: dependencies["react"],
                 },
                 "react-dom": {
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "18.2.0",
+                    requiredVersion: dependencies["react-dom"],
                 },
 
                 "react-router-dom": {
@@ -61,15 +53,6 @@ module.exports = {
                 },
                 "react-final-form": {
                     requiredVersion: dependencies["react-final-form"],
-                    singleton: true,
-                },
-
-                "@azure/msal-react": {
-                    requiredVersion: dependencies["@azure/msal-react"],
-                    singleton: true,
-                },
-                "@azure/msal-browser": {
-                    requiredVersion: dependencies["@azure/msal-react"],
                     singleton: true,
                 },
 
