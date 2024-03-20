@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
-
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "shared_lib_ui/store";
 import theme from "shared_lib_ui/MUItheme";
@@ -16,7 +15,6 @@ import { msalInstance } from "shared_lib_ui/auth";
 
 import { setAccount } from "shared_lib_ui/host";
 
-import Routs from "./components/Routs";
 import ExtendedProviderWrapper from "./components/ExtendedProviderWrapper";
 
 const App = () => {
@@ -57,9 +55,10 @@ const App = () => {
     );
 };
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
     <StyledEngineProvider injectFirst>
         <App />
-    </StyledEngineProvider>,
-    document.getElementById("root"),
+    </StyledEngineProvider>
 );

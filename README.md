@@ -149,13 +149,13 @@ In file **[webpack.dev.js](webpack.dev.js)** respectively **[webpack.prod.js](we
                     eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "17.0.2",
+                    requiredVersion: "18.2.0",
                 },
                 "react-dom": {
                     eager: true,
                     singleton: true,
                     strictVersion: true,
-                    requiredVersion: "17.0.2",
+                    requiredVersion: "18.2.0",
                 },
                 "react-router-dom": {
                     eager: true,
@@ -195,7 +195,7 @@ In file **[webpack.dev.js](webpack.dev.js)** respectively **[webpack.prod.js](we
   * /react, /react-dom, /react-router-dom, /prop-types
   * /redux, /react-redux, /redux-thunk
   * /@reduxjs-toolkit - *(@reduxjs/toolkit/query/react)*, /reduxjs-toolkit - *(@reduxjs/toolkit/)* 
-  * /react-final-form, /final-form-arrays, /react-final-form-listeners
+  * /react-final-form, /final-form-arrays
 * /react-imask, /react-number-format
 
 and **Shared Lib UI** expose

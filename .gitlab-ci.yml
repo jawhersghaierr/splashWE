@@ -5,7 +5,7 @@ variables:
   DOCKER_IMAGE_NAME_FE: common/host-ui
   DOCKER_SERVICE_NAME_FE: host-ui
   DOCKER_DOCKERFILE_FE: Dockerfile
-  NODE_IMAGE: node:16.9.0
+  NODE_IMAGE: node:20.10.0
   APPLICATION_VALUES_PATH: "frontend/host-ui.yaml"
 
 include:
