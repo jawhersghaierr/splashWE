@@ -27,6 +27,7 @@ module.exports = {
     plugins: ["react", "eslint-plugin-jest", "sonarjs"],
     rules: {
         "react/prop-types": "off",
+        "react/display-name": "off",
         "linebreak-style": ["error", "unix"],
         quotes: ["error", "double"],
         semi: ["error", "always"],

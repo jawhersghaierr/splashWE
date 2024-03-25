@@ -65,7 +65,7 @@ local.properties
 .env.development.local
 .env.test.local
 .env.production.local
-..npmrc
+.npmrc
 
 ## Other
 #public/index.html
