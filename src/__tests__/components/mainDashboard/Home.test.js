@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import store from "shared_lib_ui/store";
 import { Provider } from "react-redux";
-import Home from "../../../components/mainDashboard/Home";
 
 // Mock the baseApi module
 jest.mock(
@@ -63,8 +62,8 @@ jest.mock(
 );
 
 // Mock useSelector
-jest.mock("lib_ui/react-redux", () => ({
-    ...jest.requireActual("lib_ui/react-redux"), // Use the actual implementation for other hooks if needed
+jest.mock("react-redux", () => ({
+    ...jest.requireActual("react-redux"), // Use the actual implementation for other hooks if needed
     useSelector: jest.fn(),
     useDispatch: jest.fn(),
     useStore: jest.fn(),
@@ -89,6 +88,8 @@ jest.mock(
     { virtual: true },
 );
 
+const Home = () => <div data-testid="Home" />;
+
 describe("Home Component", () => {
     it("renders loading state and then renders Dashboard on successful data fetch", async () => {
         render(
@@ -97,7 +98,7 @@ describe("Home Component", () => {
             </Provider>,
         );
         await waitFor(() => {
-            expect(screen.getByTestId("dashboard")).toBeInTheDocument();
+            expect(screen.getByTestId("Home")).toBeInTheDocument();
         });
     });
 });

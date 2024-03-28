@@ -4,10 +4,9 @@ import { render, screen, waitFor } from "@testing-library/react";
 import NavigationItem from "../../../leftMenu/subComponents/NavigationItem";
 
 // Mock the useHistory hook
-jest.mock("lib_ui/react-router-dom", () => ({
-    ...jest.requireActual("lib_ui/react-router-dom"),
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
     useHistory: jest.fn(),
-    matchPath: jest.fn(),
     useDispatch: jest.fn(),
     useSelector: jest.fn(),
     useLocation: jest.fn(),

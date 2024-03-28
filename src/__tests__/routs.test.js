@@ -3,15 +3,15 @@ import { render, screen } from "@testing-library/react";
 import Routs from "../components/Routs";
 
 jest.mock(
-    "lib_ui/notistack",
+    "notistack",
     () => ({
         SnackbarProvider: jest.fn(({ children }) => <div>{children}</div>),
     }),
     { virtual: true },
 );
 
-jest.mock("lib_ui/react-router-dom", () => ({
-    ...jest.requireActual("lib_ui/react-router-dom"),
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
     Switch: jest.fn(({ children }) => <div>{children}</div>),
     Route: jest.fn(({ path }) => <div>{Array.isArray(path) ? path.join(", ") : path}</div>),
 }));
@@ -57,7 +57,6 @@ jest.mock("auth_ui/RemoteAuthApp", () => <div data-testid="RemoteAuthApp" />, { 
 describe("Routes", () => {
     test("check routed config", () => {
         render(<Routs />);
-
         expect(screen.getByText("/")).toBeInTheDocument();
         expect(screen.getByText("/auth")).toBeInTheDocument();
     });

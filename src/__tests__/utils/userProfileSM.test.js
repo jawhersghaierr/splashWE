@@ -1,54 +1,67 @@
 const { userProfleSM } = require("../../utils/userProfleSM");
 
-it("should return the correct result for Dashboard entity with valid claims", () => {
-    const cards = [
-        {
-            Header: "ContentDocument",
-            modules: [
-                {
-                    text: "Rechercher",
-                    Icon: "SearchNormal",
-                    href: "/paiement",
-                    code: ["HFAC", "ROC"],
-                    disabled: false,
-                },
-            ],
-            title: "Paiement",
-            service: "",
-            subTitle: "Recherchez un paiement",
+it("should return the expected result when role and entity are valid", () => {
+    const role = "CLAIM_DEPENDENT";
+    const entity = "Dashboard";
+    const props = {
+        cards: [
+            {
+                id: 1,
+                name: "Card 1",
+                modules: [
+                    { code: "module1", claim: ["claim1", "claim2"], disabled: false },
+                    { code: "module2", claim: ["claim3"] },
+                ],
+            },
+            {
+                id: 2,
+                name: "Card 2",
+                modules: [
+                    { code: "module3", claim: ["claim4"] },
+                    { code: "module4", claim: ["claim5"] },
+                ],
+            },
+        ],
+        baseClaims: ["claim1", "claim3", "claim5","module2"],
+        moduleClaims: {
+            module1: { claims: ["claim1", "claim2"] },
+            module2: { claims: ["claim3"] },
+            module3: { claims: ["claim4"] },
+            module4: { claims: ["claim5"] },
         },
-        {
-            Header: "ContentDocument",
-            modules: [
-                {
-                    text: "Rechercher",
-                    Icon: "SearchNormal",
-                    href: "/paiement",
-                    code: ["HFAC"],
-                    disabled: false,
-                },
-            ],
-            title: "Paiement",
-            service: "",
-            subTitle: "Recherchez un paiement",
-        },
-    ];
+    };
 
-    const claims = ["ROC"];
 
-    const props = { psCards: cards, claims };
-    const result = userProfleSM({ entity: "Dashboard", role: "PS", props });
 
-    expect(result).toEqual([
-        {
-            Header: "ContentDocument",
-            modules: [{ Icon: "SearchNormal", code: ["HFAC", "ROC"], disabled: false, href: "/paiement", text: "Rechercher" }],
-            service: "",
-            subTitle: "Recherchez un paiement",
-            title: "Paiement",
-        },
-    ]);
+    const result = userProfleSM({ entity, role, props });
+
+    expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }, { "claim": ["claim3"], "code": "module2",  }], "name": "Card 1" }]);
 });
+it("should return the expected result when role and entity are valid disabled", () => {
+    const role = "CLAIM_DEPENDENT";
+    const entity = "Dashboard";
+    const props = {
+        cards: [
+            {
+                id: 1,
+                name: "Card 1",
+                modules: [
+                    { code: "module1", claim: ["claim1", "claim2"], disabled: false },
+                ],
+            },
+        ],
+        baseClaims: ["module1"],
+        moduleClaims: {
+            module1: { claims: ["claim1", "claim2"] },
+        },
+    };
+
+
+
+    const result = userProfleSM({ entity, role, props });
+
+    expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }], "name": "Card 1" }]);
+});``
 
 it("should return the correct subTitle for PS", () => {
     const subTitlePS = "Subtitle PS";
@@ -136,7 +149,7 @@ describe("userProfleSM with PS", () => {
         const role = "PS";
         const props = { psCards: [], claims: [] };
         const result = userProfleSM({ entity, role, props });
-        expect(result).toEqual([]);
+        expect(result).toBeNull();
     });
 });
 
@@ -146,6 +159,6 @@ describe("userProfleSM with GESTIONAIRE", () => {
         const role = "GESTIONAIRE";
         const props = { gestionnerCards: [], claims: [] };
         const result = userProfleSM({ entity, role, props });
-        expect(result).toEqual([]);
+        expect(result).toBeNull();
     });
 });

@@ -1,9 +1,9 @@
-import React from "lib_ui/react";
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import Footer from "../../components/Footer";
 
-jest.mock("lib_ui/react-router-dom", () => ({
-    ...jest.requireActual("lib_ui/react-router-dom"),
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
     Link: jest.fn(({ to, children }) => <div data-testid={to}>{children}</div>),
 }));
 
