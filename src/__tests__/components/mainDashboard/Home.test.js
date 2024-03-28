@@ -88,17 +88,23 @@ jest.mock(
     { virtual: true },
 );
 
-const Home = () => <div data-testid="Home" />;
+const Home = () => <div data-testid="Home">Bonjour, je m’appelle Martin.</div>;
 
 describe("Home Component", () => {
-    it("renders loading state and then renders Dashboard on successful data fetch", async () => {
-        render(
-            <Provider store={store}>
-                <Home />
-            </Provider>,
-        );
+    render(
+        <Provider store={store}>
+            <Home />
+        </Provider>,
+    );
+    test("check Home Component presence", async () => {
         await waitFor(() => {
             expect(screen.getByTestId("Home")).toBeInTheDocument();
         });
+    });
+    test("check rendered text", async () => {
+        expect(screen.getByText(/Martin/i)).toBeInTheDocument();
+    });
+    test("check another text", async () => {
+        expect(screen.getByText(/Bonjour/i)).toBeInTheDocument();
     });
 });

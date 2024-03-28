@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Routs from "../components/Routs";
+import Routs from "../../components/Routs";
 
 jest.mock(
     "notistack",
@@ -41,9 +41,9 @@ jest.mock(
 jest.mock("shared_lib_ui/Lib/components", () => ({ NotFound: <div data-testid="NotFound" /> }), { virtual: true });
 jest.mock("shared_lib_ui/Lib/layout", () => ({ TermsService: <div data-testid="TermsService" /> }), { virtual: true });
 
-jest.mock("../components/mainDashboard/Home", () => <div data-testid="Home" />, { virtual: true });
-jest.mock("../leftMenu/HostMenu", () => "HostMenu", { virtual: true });
-jest.mock("../components/Footer", () => <div data-testid="Footer" />, { virtual: true });
+jest.mock("../../components/mainDashboard/Home", () => <div data-testid="Home" />, { virtual: true });
+jest.mock("../../leftMenu/HostMenu", () => "HostMenu", { virtual: true });
+jest.mock("../../components/Footer", () => <div data-testid="Footer" />, { virtual: true });
 
 jest.mock("ps_ui/RemotePsApp", () => jest.fn(() => <div data-testid="RemotePsApp" />), { virtual: true });
 jest.mock("benef_ui/RemoteBenefApp", () => <div data-testid="RemoteBenefApp" />, { virtual: true });
@@ -55,9 +55,11 @@ jest.mock("indu_ui/RemoteInduApp", () => <div data-testid="RemoteInduApp" />, { 
 jest.mock("auth_ui/RemoteAuthApp", () => <div data-testid="RemoteAuthApp" />, { virtual: true });
 
 describe("Routes", () => {
-    test("check routed config", () => {
+    test("check home path", () => {
         render(<Routs />);
         expect(screen.getByText("/")).toBeInTheDocument();
+    });
+    test("check auth path", () => {
         expect(screen.getByText("/auth")).toBeInTheDocument();
     });
 });

@@ -1,9 +1,8 @@
 import React from "react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ExtendedProviderWrapper from "../../components/ExtendedProviderWrapper";
-import { useSelector } from 'react-redux'; // Ensure correct import
-jest.mock('react-redux'); // Mock react-redux
+import { useSelector } from "react-redux"; // Ensure correct import
+jest.mock("react-redux"); // Mock react-redux
 
 jest.mock(
     "shared_lib_ui/Lib/layout/drawers",
@@ -78,13 +77,13 @@ jest.mock(
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
     useSelector: jest.fn(),
-    BrowserRouter: ({ children }) => <div data-testid="BrowserRouter"></div>,
+    BrowserRouter: ({ _ }) => <div data-testid="BrowserRouter"></div>,
 }));
 
 jest.mock("../../components/Routs", () => <div data-testid="Routs"></div>, { virtual: true });
 
 describe("Routs Component", () => {
-    it("renders Routs", () => {
+    test("renders Routs", () => {
         const mockSelector = jest.fn();
         useSelector.mockReturnValue(mockSelector); // Correct way to mock useSelector
 

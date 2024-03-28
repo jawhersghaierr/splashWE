@@ -95,7 +95,7 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("Menu", () => {
-    it("renders loading state and then renders Menu on successful data fetch", async () => {
+    test("renders loading state and then renders Menu on successful data fetch", async () => {
         render(
             <Provider store={store}>
                 <Menu />

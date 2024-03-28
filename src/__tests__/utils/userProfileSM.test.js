@@ -1,6 +1,6 @@
 const { userProfleSM } = require("../../utils/userProfleSM");
 
-it("should return the expected result when role and entity are valid", () => {
+test("should return the expected result when role and entity are valid", () => {
     const role = "CLAIM_DEPENDENT";
     const entity = "Dashboard";
     const props = {
@@ -37,7 +37,7 @@ it("should return the expected result when role and entity are valid", () => {
 
     expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }, { "claim": ["claim3"], "code": "module2",  }], "name": "Card 1" }]);
 });
-it("should return the expected result when role and entity are valid disabled", () => {
+test("should return the expected result when role and entity are valid disabled", () => {
     const role = "CLAIM_DEPENDENT";
     const entity = "Dashboard";
     const props = {
@@ -63,7 +63,7 @@ it("should return the expected result when role and entity are valid disabled", 
     expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }], "name": "Card 1" }]);
 });``
 
-it("should return the correct subTitle for PS", () => {
+test("should return the correct subTitle for PS", () => {
     const subTitlePS = "Subtitle PS";
     const props = { subTitlePS };
     const result = userProfleSM({ entity: "subTitle", role: "PS", props });
@@ -71,7 +71,7 @@ it("should return the correct subTitle for PS", () => {
     expect(result).toEqual("Subtitle PS");
 });
 
-it("should return the correct subTitle for GESTIONAIRE", () => {
+test("should return the correct subTitle for GESTIONAIRE", () => {
     const subTitleUser = "Subtitle GESTIONAIRE";
     const props = { subTitleUser };
     const result = userProfleSM({ entity: "subTitle", role: "GESTIONAIRE", props });
@@ -79,7 +79,7 @@ it("should return the correct subTitle for GESTIONAIRE", () => {
     expect(result).toEqual("Subtitle GESTIONAIRE");
 });
 
-it("should return the correct LeftMenu for PS", () => {
+test("should return the correct LeftMenu for PS", () => {
     const psRouters = [
         {
             code: ["HFAC", "ROC"],
@@ -111,7 +111,7 @@ it("should return the correct LeftMenu for PS", () => {
     ]);
 });
 
-it("should return the correct LeftMenu for GESTIONAIRE", () => {
+test("should return the correct LeftMenu for GESTIONAIRE", () => {
     const gestionnerRouters = [
         {
             code: ["HFAC", "ROC"],
@@ -144,7 +144,7 @@ it("should return the correct LeftMenu for GESTIONAIRE", () => {
 });
 
 describe("userProfleSM with PS", () => {
-    it("should return the correct result based on the entity and role", () => {
+    test("should return the correct result based on the entity and role", () => {
         const entity = "Dashboard";
         const role = "PS";
         const props = { psCards: [], claims: [] };
@@ -154,7 +154,7 @@ describe("userProfleSM with PS", () => {
 });
 
 describe("userProfleSM with GESTIONAIRE", () => {
-    it("should return the correct result based on the entity and role", () => {
+    test("should return the correct result based on the entity and role", () => {
         const entity = "Dashboard";
         const role = "GESTIONAIRE";
         const props = { gestionnerCards: [], claims: [] };

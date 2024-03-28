@@ -15,7 +15,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("NavigationItem Component", () => {
-    it("renders NavigationItem component", async () => {
+    test("renders NavigationItem component", async () => {
         const props = {
             code: ["HFAC", "ROC", "TPS", "TPAMC", "FIN", "DRB", "PAI", "INDU", "PS"],
             name: "Accueil",

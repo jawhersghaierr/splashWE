@@ -8,12 +8,17 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("Footer Component", () => {
-    it("renders Footer", () => {
-        render(<Footer />);
-
+    render(<Footer />);
+    test("renders terms of service", () => {
         expect(screen.getByTestId("/terms/terms-of-service")).toBeInTheDocument();
+    });
+    test("renders legal notice", () => {
         expect(screen.getByTestId("/terms/legal-notice")).toBeInTheDocument();
+    });
+    test("renders terms", () => {
         expect(screen.getByTestId("/terms")).toBeInTheDocument();
+    });
+    test("renders data protection policy", () => {
         expect(screen.getByTestId("/terms/personal-data-protection-policy")).toBeInTheDocument();
     });
 });
