@@ -9,12 +9,11 @@ import NavigationItem from "./subComponents/NavigationItem";
 import { createUUID } from "shared_lib_ui/Lib";
 
 import { LoadingDots } from "shared_lib_ui/Lib/components";
-import { getUser, isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
+import { isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
 
 import { userProfleSM } from "../utils/userProfleSM";
 
 const Menu = props => {
-    const user = useSelector(getUser);
     const isPsUser = useSelector(isPS);
     const isLogged = useSelector(isAuthenticated);
     const baseClaims = useSelector(getBaseClaims);
