@@ -15,12 +15,12 @@ export default function Home() {
     const baseClaims = useSelector(getBaseClaims);
     const moduleClaims = useSelector(getClaims);
 
-    let role = null;
-    if (isLogged) role = isPsUser ? "PS" : "GESTIONAIRE";
+    let context = null;
+    if (isLogged) context = isPsUser ? "PS" : "GESTIONAIRE";
 
     return (
         <>
-            {!role && (
+            {!context && (
                 <div style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <LoadingDots />
                 </div>
@@ -29,7 +29,7 @@ export default function Home() {
                 title={title}
                 subTitle={userProfleSM({
                     entity: "subTitle",
-                    role,
+                    context,
                     props: {
                         subTitlePS,
                         subTitleUser,
@@ -38,7 +38,7 @@ export default function Home() {
                 })}
                 cards={userProfleSM({
                     entity: "Dashboard",
-                    role: "CLAIM_DEPENDENT",
+                    context: "CLAIM_DEPENDENT",
                     props: {
                         cards: isPsUser ? psCards : gestionnerCards,
                         baseClaims: baseClaims,

@@ -18,12 +18,12 @@ const Menu = props => {
     const isLogged = useSelector(isAuthenticated);
     const baseClaims = useSelector(getBaseClaims);
 
-    let role = null;
-    if (isLogged) role = isPsUser ? "PS" : "GESTIONAIRE";
+    let context = null;
+    if (isLogged) context = isPsUser ? "PS" : "GESTIONAIRE";
 
     const HostRouters = userProfleSM({
         entity: "LeftMenu",
-        role,
+        context,
         props: {
             psRouters,
             gestionnerRouters,
@@ -35,13 +35,13 @@ const Menu = props => {
 
     return (
         <Box id="leftMenu" component="nav">
-            {!role && (
+            {!context && (
                 <div style={{ height: "200px", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <LoadingDots />
                 </div>
             )}
 
-            {role && (
+            {context && (
                 <StyledMenu>
                     {HostRouters.map(item => (
                         <NavigationItem key={createUUID()} {...item} collapsed={collapsed} />
