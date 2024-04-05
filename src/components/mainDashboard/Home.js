@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Dashboard } from "shared_lib_ui/Lib/layout";
 import { LoadingDots } from "shared_lib_ui/Lib/components";
-import { userProfleSM } from "../../utils/userProfleSM";
+import { userProfileSM } from "../../utils/userProfileSM";
 import { isPS, isAuthenticated, getBaseClaims, getClaims } from "shared_lib_ui/host";
 import { gestionnerCards, psCards } from "./HomeModules";
 
@@ -27,7 +27,7 @@ export default function Home() {
             )}
             <Dashboard
                 title={title}
-                subTitle={userProfleSM({
+                subTitle={userProfileSM({
                     entity: "subTitle",
                     context,
                     props: {
@@ -36,7 +36,7 @@ export default function Home() {
                         claims: baseClaims,
                     },
                 })}
-                cards={userProfleSM({
+                cards={userProfileSM({
                     entity: "Dashboard",
                     context: "CLAIM_DEPENDENT",
                     props: {
