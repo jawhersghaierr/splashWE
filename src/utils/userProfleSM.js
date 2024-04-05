@@ -1,6 +1,6 @@
-import {userProfleSMandCommonClaims} from "shared_lib_ui/auth";
+import {userProfileSmAndCommonClaims} from "shared_lib_ui/auth";
 
-const {commonUserProfileSM, CLAIM_DEPENDENT } = userProfleSMandCommonClaims;
+const {commonUserProfileSM, CLAIM_DEPENDENT } = userProfileSmAndCommonClaims;
 
 /**
  *
