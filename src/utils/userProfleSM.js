@@ -1,6 +1,6 @@
 import {userProfleSMandCommonClaims} from "shared_lib_ui/auth";
 
-const {commonUserProfleSM, CLAIM_DEPENDENT } = userProfleSMandCommonClaims;
+const {commonUserProfileSM, CLAIM_DEPENDENT } = userProfleSMandCommonClaims;
 
 /**
  *
@@ -26,5 +26,5 @@ const profileRoleState = {
  */
 export const userProfileSM = ({ entity, context, props }) => {
 
-    return commonUserProfleSM(profileRoleState)({ entity, context, props });
+    return commonUserProfileSM(profileRoleState)({ entity, context, props });
 };
