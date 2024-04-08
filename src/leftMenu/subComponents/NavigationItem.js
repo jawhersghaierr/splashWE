@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { forwardRef, useRef, useState, useEffect } from "react";
 import { NavLink, useLocation, matchPath } from "react-router-dom";
 
 import { useTheme } from "@mui/material/styles";
@@ -8,9 +8,13 @@ import { Typography } from "@mui/material";
 
 import StyledMenuListItemButton from "./StyledMenuListItemButton";
 
+const component = ({ props, ref, path, customNavLinkStyle }) =>
+    forwardRef((props, ref) => <NavLink exact {...props} innerRef={ref} key={`navlink${path}`} style={customNavLinkStyle} />);
+
 const NavigationItem = props => {
     const { name, path, icon: Icon, collapsed, children } = props;
 
+    const ref = useRef();
     const theme = useTheme();
     const location = useLocation();
 
@@ -25,7 +29,7 @@ const NavigationItem = props => {
         setActiveLink(location?.pathname);
     }, [location?.pathname]);
 
-    const custonNavLinkStyle = () => {
+    const customNavLinkStyle = () => {
         return {
             background: checkActiveLink() ? `linear-gradient(to bottom, ${theme.palette.btnGradients.btnBegin}, ${theme.palette.btnGradients.btnEnd})` : "",
         };
@@ -43,9 +47,7 @@ const NavigationItem = props => {
             to={path}
             key={`listItem${path}`}
             sx={{ width: !collapsed ? 280 : 56 }}
-            component={forwardRef((props, ref) => (
-                <NavLink exact {...props} innerRef={ref} key={`navlink${path}`} style={custonNavLinkStyle} />
-            ))}>
+            component={component({ props, ref, path, customNavLinkStyle })}>
             <ListItemIcon> {Icon && <Icon color={checkActiveLink() ? theme.palette.grey.grey0 : theme.palette.grey.grey7} />} </ListItemIcon>
             {!collapsed && (
                 <ListItemText

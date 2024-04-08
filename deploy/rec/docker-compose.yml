@@ -4,7 +4,7 @@ services:
 
   # manual start of proxy SERVICE_DEPLOY = host-ui-https-proxy
   host-ui-https-proxy:
-    image: registry-pull.viamedis.fr/viamedis/nginx-https-proxy
+    image: registry-pull.viamedis.fr/viamedis/nginx-https-proxy:stable
     container_name: host-ui-https-proxy
     hostname: host-ui-https-proxy
     restart: unless-stopped

@@ -22,7 +22,7 @@ jest.mock("../../leftMenu/MenuHeader", () => <div data-testid="MenuHeader" />, {
 jest.mock("shared_lib_ui/auth", () => ({ userAccess: jest.fn(() => <div data-testid="userAccess" />) }), { virtual: true });
 
 describe("HostMenu Component", () => {
-    it("opened HostMenu component", async () => {
+    test("opened HostMenu component", async () => {
         render(<HostMenu />);
 
         await waitFor(() => {

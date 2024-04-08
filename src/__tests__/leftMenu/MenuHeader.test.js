@@ -24,7 +24,7 @@ jest.mock(
 );
 
 describe("MenuHeader Component", () => {
-    it("closed MenuHeader component", async () => {
+    test("closed MenuHeader component", async () => {
         render(<MenuHeader open={false} />);
 
         await waitFor(() => {
@@ -32,7 +32,7 @@ describe("MenuHeader Component", () => {
         });
     });
 
-    it("opened MenuHeader component", async () => {
+    test("opened MenuHeader component", async () => {
         render(<MenuHeader open={true} />);
 
         await waitFor(() => {

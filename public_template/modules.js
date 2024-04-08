@@ -19,7 +19,6 @@ module.exports = {
     // **************************************************************
     remoteApps: {
         shared_lib_ui: "${REMOTE_SHARED_LIB_UI}",
-        lib_ui: "${REMOTE_LIB_UI}",
         tps_ui: "${REMOTE_TPS_UI}",
         hospi_ui: "${REMOTE_HOSPI_UI}",
         intraitables_ui: "${REMOTE_INTRAITABLES_UI}",

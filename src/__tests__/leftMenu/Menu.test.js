@@ -87,15 +87,15 @@ jest.mock(
 );
 
 // Mock useSelector
-jest.mock("lib_ui/react-redux", () => ({
-    ...jest.requireActual("lib_ui/react-redux"), // Use the actual implementation for other hooks if needed
+jest.mock("react-redux", () => ({
+    ...jest.requireActual("react-redux"), // Use the actual implementation for other hooks if needed
     useSelector: jest.fn(),
     useDispatch: jest.fn(),
     useStore: jest.fn(),
 }));
 
 describe("Menu", () => {
-    it("renders loading state and then renders Menu on successful data fetch", async () => {
+    test("renders loading state and then renders Menu on successful data fetch", async () => {
         render(
             <Provider store={store}>
                 <Menu />

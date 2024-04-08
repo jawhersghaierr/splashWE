@@ -15,7 +15,7 @@ jest.mock(
 );
 
 describe("StyledMenu Component", () => {
-    it("renders StyledMenu component", async () => {
+    test("renders StyledMenu component", async () => {
         render(<StyledMenu />);
 
         await waitFor(() => {
