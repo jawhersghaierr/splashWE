@@ -1,4 +1,4 @@
-const { userProfleSM } = require("../../utils/userProfleSM");
+const { userProfileSM } = require("../../utils/userProfileSM");
 
 test("should return the expected result when context and entity are valid", () => {
     const context = "CLAIM_DEPENDENT";
@@ -33,7 +33,7 @@ test("should return the expected result when context and entity are valid", () =
 
 
 
-    const result = userProfleSM({ entity, context, props });
+    const result = userProfileSM({ entity, context, props });
 
     expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }, { "claim": ["claim3"], "code": "module2",  }], "name": "Card 1" }]);
 });
@@ -58,7 +58,7 @@ test("should return the expected result when context and entity are valid disabl
 
 
 
-    const result = userProfleSM({ entity, context, props });
+    const result = userProfileSM({ entity, context, props });
 
     expect(result).toEqual([{ "id": 1, "modules": [{ "claim": ["claim1", "claim2"], "code": "module1", "disabled": false }], "name": "Card 1" }]);
 });``
@@ -66,7 +66,7 @@ test("should return the expected result when context and entity are valid disabl
 test("should return the correct subTitle for PS", () => {
     const subTitlePS = "Subtitle PS";
     const props = { subTitlePS };
-    const result = userProfleSM({ entity: "subTitle", context: "PS", props });
+    const result = userProfileSM({ entity: "subTitle", context: "PS", props });
 
     expect(result).toEqual("Subtitle PS");
 });
@@ -74,7 +74,7 @@ test("should return the correct subTitle for PS", () => {
 test("should return the correct subTitle for GESTIONAIRE", () => {
     const subTitleUser = "Subtitle GESTIONAIRE";
     const props = { subTitleUser };
-    const result = userProfleSM({ entity: "subTitle", context: "GESTIONAIRE", props });
+    const result = userProfileSM({ entity: "subTitle", context: "GESTIONAIRE", props });
 
     expect(result).toEqual("Subtitle GESTIONAIRE");
 });
@@ -98,7 +98,7 @@ test("should return the correct LeftMenu for PS", () => {
     ];
     const claims = ["HFAC"];
     const props = { psRouters, claims };
-    const result = userProfleSM({ entity: "LeftMenu", context: "PS", props });
+    const result = userProfileSM({ entity: "LeftMenu", context: "PS", props });
 
     expect(result).toEqual([
         {
@@ -130,7 +130,7 @@ test("should return the correct LeftMenu for GESTIONAIRE", () => {
     ];
     const claims = ["HFAC"];
     const props = { gestionnerRouters, claims };
-    const result = userProfleSM({ entity: "LeftMenu", context: "GESTIONAIRE", props });
+    const result = userProfileSM({ entity: "LeftMenu", context: "GESTIONAIRE", props });
 
     expect(result).toEqual([
         {
@@ -143,22 +143,22 @@ test("should return the correct LeftMenu for GESTIONAIRE", () => {
     ]);
 });
 
-describe("userProfleSM with PS", () => {
+describe("userProfileSM with PS", () => {
     test("should return the correct result based on the entity and context", () => {
         const entity = "Dashboard";
         const context = "PS";
         const props = { psCards: [], claims: [] };
-        const result = userProfleSM({ entity, context, props });
+        const result = userProfileSM({ entity, context, props });
         expect(result).toBeNull();
     });
 });
 
-describe("userProfleSM with GESTIONAIRE", () => {
+describe("userProfileSM with GESTIONAIRE", () => {
     test("should return the correct result based on the entity and context", () => {
         const entity = "Dashboard";
         const context = "GESTIONAIRE";
         const props = { gestionnerCards: [], claims: [] };
-        const result = userProfleSM({ entity, context, props });
+        const result = userProfileSM({ entity, context, props });
         expect(result).toBeNull();
     });
 });

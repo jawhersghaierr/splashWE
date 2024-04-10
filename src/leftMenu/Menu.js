@@ -11,7 +11,7 @@ import { createUUID } from "shared_lib_ui/Lib";
 import { LoadingDots } from "shared_lib_ui/Lib/components";
 import { isPS, isAuthenticated, getBaseClaims } from "shared_lib_ui/host";
 
-import { userProfleSM } from "../utils/userProfleSM";
+import { userProfileSM } from "../utils/userProfileSM";
 
 const Menu = props => {
     const isPsUser = useSelector(isPS);
@@ -21,7 +21,7 @@ const Menu = props => {
     let context = null;
     if (isLogged) context = isPsUser ? "PS" : "GESTIONAIRE";
 
-    const HostRouters = userProfleSM({
+    const HostRouters = userProfileSM({
         entity: "LeftMenu",
         context,
         props: {
