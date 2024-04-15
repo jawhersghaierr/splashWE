@@ -14,14 +14,13 @@ import RemoteInduApp from "indu_ui/RemoteInduApp";
 import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 import Home from "./mainDashboard/Home";
 import { useDrawer } from "shared_lib_ui/Lib/layout/drawers";
+import { AlertMessage } from "shared_lib_ui/Lib/layout";
 
 import Footer from "./Footer";
 import CssBaseline from "@mui/material/CssBaseline";
 import HostMenu from "../leftMenu/HostMenu";
 
 import { TermsService } from "shared_lib_ui/Lib/layout";
-
-import { AlertMsgs } from "shared_lib_ui/Lib/layout/modals";
 
 import "./snackBar.scss";
 
@@ -41,7 +40,7 @@ const Routs = () => {
 
     return (
         <SnackbarProvider
-            Components={{ yellowAlert: AlertMsgs.AlertMsgYellowAlert, noGridResultsAlertMsg: AlertMsgs.AlertMsgNoGridResults }}
+            Components={{ alertMessage: AlertMessage }}
             classes={{ containerRoot: isOpenRightDrawer ? "withDrawer" : "noDrawer" }}>
             <Box sx={{ display: "flex" }}>
                 <CssBaseline />

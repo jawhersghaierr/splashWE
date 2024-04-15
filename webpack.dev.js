@@ -2,7 +2,7 @@ const webpack = require("webpack");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
-const modules = require(`./public/modules`);
+const modules = require("./public/modules");
 const { dependencies } = require("@viamedis/viamedis-config/package.json");
 
 module.exports = {
@@ -114,6 +114,11 @@ module.exports = {
 
                 "lz-string": {
                     requiredVersion: dependencies["lz-string"],
+                    singleton: true,
+                },
+
+                "notistack": {
+                    requiredVersion: dependencies["notistack"],
                     singleton: true,
                 },
             },
