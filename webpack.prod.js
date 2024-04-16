@@ -11,7 +11,6 @@ module.exports = {
         minimize: true,
     },
     mode: "production",
-    // devtool: "source-map",
 
     output: {
         publicPath: "auto",
@@ -99,7 +98,7 @@ module.exports = {
                     singleton: true,
                 },
 
-                "notistack": {
+                notistack: {
                     requiredVersion: dependencies["notistack"],
                     singleton: true,
                 },
