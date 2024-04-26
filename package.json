@@ -5,6 +5,10 @@
     "dependencies": {
         "@viamedis/viamedis-config": "latest"
     },
+    "peerDependencies": {
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
+    },
     "devDependencies": {
         "@babel/core": "^7.17.5",
         "@babel/eslint-parser": "^7.23.3",
@@ -53,7 +57,6 @@
         "webpack-merge": "^5.2.0",
         "webpack-shell-plugin-next": "^2.2.2"
     },
-
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
         "lint:old": "eslint src --ext .jsx --ext .js",
