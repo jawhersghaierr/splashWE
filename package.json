@@ -55,7 +55,14 @@
         "webpack-dev-server": "v4.8.0",
         "webpack-livereload-plugin": "3.0.2",
         "webpack-merge": "^5.2.0",
-        "webpack-shell-plugin-next": "^2.2.2"
+        "webpack-shell-plugin-next": "^2.2.2",
+        "@semantic-release/commit-analyzer": "^11.1.0",
+        "@semantic-release/exec": "^6.0.3",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/gitlab": "^12.1.1",
+        "@semantic-release/npm": "^11.0.3",
+        "@semantic-release/release-notes-generator": "^12.1.0",
+        "semantic-release": "^21.1.2"
     },
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
