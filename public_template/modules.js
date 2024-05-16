@@ -55,4 +55,6 @@ module.exports = {
         userEmail: "${LEMON_PROJECT_USER_EMAIL}",
         profile: "${LEMON_PROFILE}",
     },
+
+    switchStringForOxantis: "${SWITCH_STRING_FOR_OXANTIS_TEMPLATE}",
 };
