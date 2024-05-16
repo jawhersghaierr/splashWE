@@ -56,5 +56,5 @@ module.exports = {
         profile: "${LEMON_PROFILE}",
     },
 
-    switchStringForOxantis: "${SWITCH_STRING_FOR_OXANTIS_TEMPLATE}",
+    switchStringForOxantis: "tprocmutuelles",
 };
