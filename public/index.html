@@ -1,55 +1,53 @@
 <!doctype html>
 <html lang="fr">
-    <head>
-        <title>Viamedis</title>
-        <link href="https://static.lemonlearning.com/player/bundle.css" rel="stylesheet" type="text/css" />
-        <link
-            rel="icon"
-            type="image/x-icon"
-            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAKdSURBVHjapJJfSFNxFMfP7967P/d23dyc17lZ6v6kbhVO6Q8imAqF/XmIoofoIaJ8qR587sEMeouCnhKK8CGIBINIzFAcEmgWPpQ1cKKbm6Zzzra55r3b/Z2eFKUIqe/rOedz4JwPQUT4nxBEBELIrpqLJ2JWwqSOaXndaNS7N4GIuwcYXkZcuRQO62y0WGNVR274HGc7AegWwB6IFilZ+TqD1L9c7x7fPlz/CTXTkfC7XIKRxGq1F/Tq1UKD0x10gUwQEbq6gLlfHe7V7qPnGD2uiYSpD/kqQ5sA03CoLb+Or2hac5qv2ThBAC5IerlmyuNRCCKCewB00fBCUGvLhfRl9LDAq49Dnv0dm9tn03OjNMNkXdbyk/PsXD9Syq3UOVsBAAkiQrMfuPHp6BeNWf3GO3MFRkH12s3mKr8krVsmIk1qRhmkCntKWyZMgJyeIQx0x2qdnVtHBAAiPIm84Ex4QHDRuwZeeW4W1TZ+umZkip8dpDIpKLVkG+N5waeq6ijDccdjhyrGdnxhT0/kMmug3XqL2mCSlCFLQe7tzJLQo+bhDSjkYrzR8bpkcuaRCnCe6AxVK15pfQdA7FuSGEYOsEbstNmzDWYx1xZcFuI5hYlbxcqmvBTX/VhIBiiFgZjP2U4IwR0ARCTG/vkHrKieKbHl70kG+Wk8zSnxBNcSO+oeqw4ELiUV7hlSpnHJ5/wIAPCbSPahaFGWU96zAla4bBl9qVH5yop83cZ3EzeXTX5YzXCJqoOuVj8h+T8CAADM48EyhmWuOUqyBkfxxk2tRr0STgjetTTbkZL5lpCnckuyv6p8C4O6VSXZh4AnYkltPvGTuz1Z7nlICMFdAQAA2nFRSMmLzaksu3CksPbzHULo9vp2D/45vwYAmrhg8OdAOb8AAAAASUVORK5CYII=" />
-        <script>
-            let module = {};
-        </script>
-        <script type="text/javascript" src="/modules.js"></script>
-        <script>
-            window._env_ = Object.assign({}, module.exports, window._env_);
-            window._env_.hostURL = window.location.host.toLowerCase();
-        </script>
-    </head>
 
-    <body>
-        <div id="root"></div>
-        <script type="text/javascript">
-            const account = window?._env_?.lemonLerning;
-            if (account?.projectId && account?.userName && account?.userEmail && account?.profile) {
-                new Promise(resolve => {
-                    window.LemonLearningReady = player => {
-                        LemonLearningReady.player = player;
-                        resolve();
-                    };
-                }).then(() => {
-                    console.log("Lemon learning   loaded.");
-                    LemonLearningReady.player.set({
-                        projectKey: account?.projectId,
-                        user: {
-                            name: account?.userName,
-                            email: account?.userEmail,
-                            profiles: [account?.profile],
-                            tags: [],
-                        },
-                    });
+<head>
+    <title></title>
+    <link href="https://static.lemonlearning.com/player/bundle.css" rel="stylesheet" type="text/css" />
+    <script>
+        let module = {};
+    </script>
+    <script type="text/javascript" src="/modules.js"></script>
+    <script>
+        window._env_ = Object.assign({}, module.exports, window._env_);
+        window._env_.hostURL = window.location.host.toLowerCase();
+    </script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+        const account = window?._env_?.lemonLerning;
+        if (account?.projectId && account?.userName && account?.userEmail && account?.profile) {
+            new Promise(resolve => {
+                window.LemonLearningReady = player => {
+                    LemonLearningReady.player = player;
+                    resolve();
+                };
+            }).then(() => {
+                console.log("Lemon learning   loaded.");
+                LemonLearningReady.player.set({
+                    projectKey: account?.projectId,
+                    user: {
+                        name: account?.userName,
+                        email: account?.userEmail,
+                        profiles: [account?.profile],
+                        tags: [],
+                    },
                 });
-                try {
-                    const script = document.createElement("script");
-                    script.src = "https://static.lemonlearning.com/player/bundle.js";
-                    script.async = true;
-                    script.defer = true;
-                    script.id = "lemonlearning-player-embed";
-                    window.document.body.appendChild(script);
-                } catch (error) {
-                    console.log(" Error in Lemon learning script.");
-                }
+            });
+            try {
+                const script = document.createElement("script");
+                script.src = "https://static.lemonlearning.com/player/bundle.js";
+                script.async = true;
+                script.defer = true;
+                script.id = "lemonlearning-player-embed";
+                window.document.body.appendChild(script);
+            } catch (error) {
+                console.log(" Error in Lemon learning script.");
             }
-        </script>
-    </body>
+        }
+    </script>
+</body>
+
 </html>
