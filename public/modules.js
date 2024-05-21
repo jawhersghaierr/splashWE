@@ -61,8 +61,8 @@ module.exports = {
         // "userMngmnt": "https://apim-dev-socle.azure-api.net/users-profiles-api/v1"
         // **********************************************************
     },
-    // switchStringForOxantis: "tprocmutuelles",
-    switchStringForOxantis: "localhost",
+    switchStringForOxantis: "tprocmutuelles",
+    // switchStringForOxantis: "localhost",
 
     apiUrlsDev: {},
     apiUrlsInt: {},

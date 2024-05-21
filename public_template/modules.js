@@ -60,5 +60,5 @@ module.exports = {
     // ********************   theme swithcer   **********************
     // **************************************************************
 
-    switchStringForOxantis: "tprocmutuelles",
+    switchStringForOxantis: "${SWITCH_STRING_FOR_OXANTIS_TEMPLATE}",
 };
