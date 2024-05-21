@@ -1,8 +1,8 @@
 module.exports = {
     clearMocks: true,
     collectCoverage: true,
-    collectCoverageFrom: ["src/components/**/*.{js,jsx,mjs}", "src/leftMenu/**/*.{js,jsx,mjs}", "src/utils/**/*.{js,jsx,mjs}"],
-    coveragePathIgnorePatterns: ["/node_modules/", "<rootDir>/src/components/mainDashboard/Home.js"],
+    collectCoverageFrom: ["src/**/*.{js,jsx}"],
+    coveragePathIgnorePatterns: ["/src/index.js", "/src/bootstrap.js", "/src/components/", "/src/leftMenu"],
     moduleDirectories: ["jest", "node_modules"],
     coverageDirectory: "coverage",
     coverageReporters: ["json", "lcov"],
