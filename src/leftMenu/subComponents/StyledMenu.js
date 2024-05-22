@@ -1,4 +1,4 @@
-import { styled } from "@mui/material/styles";
+import styled from "@mui/material/styles/styled";
 import MenuList from "@mui/material/MenuList";
 import { useWindowDimensions } from "shared_lib_ui/Lib";
 
