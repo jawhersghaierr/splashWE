@@ -1,10 +1,10 @@
 import React, { forwardRef, useRef, useState, useEffect } from "react";
 import { NavLink, useLocation, matchPath } from "react-router-dom";
 
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 import StyledMenuListItemButton from "./StyledMenuListItemButton";
 

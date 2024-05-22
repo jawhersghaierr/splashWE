@@ -1,12 +1,12 @@
-import {userProfileSmAndCommonClaims} from "shared_lib_ui/auth";
+import { userProfileSmAndCommonClaims } from "shared_lib_ui/auth";
 
-const {commonUserProfileSM, CLAIM_DEPENDENT } = userProfileSmAndCommonClaims;
+const { commonUserProfileSM, CLAIM_DEPENDENT } = userProfileSmAndCommonClaims;
 
 /**
  *
  * State Machine declaration of rules
  */
-const profileRoleState = {
+export const profileRoleState = {
     CLAIM_DEPENDENT,
     PS: {
         subTitle: ({ subTitlePS }) => subTitlePS,
@@ -17,6 +17,7 @@ const profileRoleState = {
         LeftMenu: ({ gestionnerRouters, claims }) => gestionnerRouters?.filter(({ code, name }) => name && claims.some(claim => code.includes(claim))),
     },
 };
+
 /**
  *
  * @param entity string: name of impacted object, can be component or method
@@ -25,6 +26,5 @@ const profileRoleState = {
  * @returns method or boolean depending on declaration for stateMachine actions
  */
 export const userProfileSM = ({ entity, context, props }) => {
-
     return commonUserProfileSM(profileRoleState)({ entity, context, props });
 };

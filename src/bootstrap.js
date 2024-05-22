@@ -6,7 +6,8 @@ import { Favicon } from "shared_lib_ui/assets";
 import { isOxantis } from "shared_lib_ui/Lib";
 import theme from "shared_lib_ui/MUItheme";
 
-import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import StyledEngineProvider from "@mui/styled-engine/StyledEngineProvider/StyledEngineProvider";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { CookiesProvider } from "react-cookie";
 

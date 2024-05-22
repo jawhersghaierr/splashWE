@@ -16,7 +16,7 @@ import RemoteAuthApp from "auth_ui/RemoteAuthApp";
 import Home from "./mainDashboard/Home";
 import { useDrawer } from "shared_lib_ui/Lib/layout/drawers";
 import { AlertMessage } from "shared_lib_ui/Lib/layout";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 import Footer from "./Footer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -98,7 +98,7 @@ const Routs = () => {
                 )}
                 {!codePlateform && (
                     <Typography variant="h3" noWrap component="span" sx={{ margin: 5, color: theme => theme.palette.grey.grey5 }}>
-                        Vous n'êtes pas autorisés de se connecter à la plateforme.
+                        Vous n&apos;êtes pas autorisés de se connecter à la plateforme.
                     </Typography>
                 )}
             </Box>

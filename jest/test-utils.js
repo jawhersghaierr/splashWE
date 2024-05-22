@@ -1,6 +1,6 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import { render } from "@testing-library/react";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import theme from "../public/assets/theme";
 
 const AllTheProviders = ({ children }) => {
