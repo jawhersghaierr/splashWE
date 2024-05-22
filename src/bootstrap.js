@@ -38,7 +38,7 @@ const App = () => {
             }
         });
 
-        window.document.title = isOxantis ? "Oxantis" : "Viamedis";
+        window.document.title = isOxantis ? "TP ROC Mutuelles" : "Viamedis";
         Favicon();
 
         return () => {
