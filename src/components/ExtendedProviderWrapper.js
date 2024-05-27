@@ -9,7 +9,7 @@ import { AccepterCookie } from "shared_lib_ui/Lib/layout";
 
 // Token & Claims
 import { RefreshTokenPrompt } from "shared_lib_ui/auth";
-import { getClaims, getPlatformsAndContexts } from "shared_lib_ui/host";
+import { getClaims, getPlatformsAndContexts, getBaseClaims } from "shared_lib_ui/host";
 import { GetMultiModuleClaims } from "auth_ui/RemoteAuthApp";
 import { MODULES } from "../utils/consts";
 
@@ -21,7 +21,7 @@ import Routs from "./Routs";
 
 const ExtendedProviderWrapper = () => {
     const { codePlateform } = useSelector(getPlatformsAndContexts);
-
+    const baseClaims = useSelector(getBaseClaims);
     const moduleClaims = useSelector(getClaims);
     const [cookies] = useCookies([]);
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -60,7 +60,7 @@ const ExtendedProviderWrapper = () => {
 
                         <AccepterCookie opened={openConfirmDialog} onClose={() => setOpenConfirmDialog(false)} />
 
-                        {!moduleClaims?.isSuccess && codePlateform && <GetMultiModuleClaims modules={MODULES} />}
+                        {!moduleClaims?.isSuccess && codePlateform && <GetMultiModuleClaims modules={baseClaims} />}
 
                         <Routs />
                     </IdleTimerProvider>
