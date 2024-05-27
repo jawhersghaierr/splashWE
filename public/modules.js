@@ -2,7 +2,7 @@ module.exports = {
     msalConfig: {
         auth: {
             clientId: "7f53ad13-dd05-4d1e-9239-15210825db3f",
-            authority: "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_si_email",
+            authority: "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email",
             knownAuthorities: ["integrationviamedisb2c.b2clogin.com"],
             redirectUri: "http://localhost:8030",
             postLogoutRedirectUri: "http://localhost:8030",
@@ -40,9 +40,9 @@ module.exports = {
         hospiFactures: "https://rec-api.viamedis.net/hospi-facturation-api/v1",
         beneficiaire: "https://rec-api.viamedis.net/droits-beneficiaire-api/v1",
         factureAndIntraitablesIntegration: "https://rec-api.viamedis.net/facturation-integration-api/v1",
-        // agregator: "https://rec-api.viamedis.net/service-aggregator-api/v1",
         agregator: "http://10.241.25.10:8015/api/v1",
         tpsFactures: "https://rec-api.viamedis.net/tps-facturation-api/v1",
+        // agregator: "https://rec-api.viamedis.net/service-aggregator-api/v1",
         tpAmcSelAndIdb: "https://rec-api.viamedis.net/tp-amc-api/v1",
         indus: "https://rec-api.viamedis.net/indu-api/v1",
         userMngmnt: "https://rec-api.viamedis.net/users-profiles-api/v1",
@@ -61,6 +61,8 @@ module.exports = {
         // "userMngmnt": "https://apim-dev-socle.azure-api.net/users-profiles-api/v1"
         // **********************************************************
     },
+    switchStringForOxantis: "tprocmutuelles",
+    // switchStringForOxantis: "localhost",
 
     apiUrlsDev: {},
     apiUrlsInt: {},

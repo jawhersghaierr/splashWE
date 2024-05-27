@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "shared_lib_ui/store";
+import { Favicon } from "shared_lib_ui/assets";
+import { isOxantis } from "shared_lib_ui/Lib";
 import theme from "shared_lib_ui/MUItheme";
 
-import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
+import StyledEngineProvider from "@mui/styled-engine/StyledEngineProvider/StyledEngineProvider";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { CookiesProvider } from "react-cookie";
 
@@ -35,6 +38,9 @@ const App = () => {
             }
         });
 
+        window.document.title = isOxantis ? "TP ROC Mutuelles" : "Viamedis";
+        Favicon();
+
         return () => {
             if (callbackId) msalInstance.removeEventCallback(callbackId);
         };
@@ -60,5 +66,5 @@ const root = createRoot(container);
 root.render(
     <StyledEngineProvider injectFirst>
         <App />
-    </StyledEngineProvider>
+    </StyledEngineProvider>,
 );

@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
-const modules = require(`./public/modules`);
+const modules = require("./public/modules");
 const { dependencies } = require("@viamedis/viamedis-config/package.json");
 
 module.exports = {
@@ -11,7 +11,6 @@ module.exports = {
         minimize: true,
     },
     mode: "production",
-    // devtool: "source-map",
 
     output: {
         publicPath: "auto",
@@ -96,6 +95,11 @@ module.exports = {
 
                 "lz-string": {
                     requiredVersion: dependencies["lz-string"],
+                    singleton: true,
+                },
+
+                notistack: {
+                    requiredVersion: dependencies["notistack"],
                     singleton: true,
                 },
             },

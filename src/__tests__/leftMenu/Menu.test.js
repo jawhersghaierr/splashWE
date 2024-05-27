@@ -25,6 +25,25 @@ jest.mock(
     { virtual: true },
 );
 
+// Mock the createUUID
+jest.mock(
+    "shared_lib_ui/Lib",
+    () => ({
+        __esModule: true,
+        default: {
+            // Your mocked store state goes here
+            // For example:
+            getState: jest.fn(() => ({
+                /* mocked state */
+            })),
+            dispatch: jest.fn(),
+            subscribe: jest.fn(),
+            // Add other store methods as needed
+        },
+    }),
+    { virtual: true },
+);
+
 // Mock the store
 jest.mock(
     "shared_lib_ui/store",
@@ -52,6 +71,7 @@ jest.mock(
             useWindowDimensions: jest.fn(() => ({
                 height: "400px",
             })),
+            createUUID: jest.fn(() => Math.random()),
         },
     }),
     { virtual: true },
@@ -93,6 +113,31 @@ jest.mock("react-redux", () => ({
     useDispatch: jest.fn(),
     useStore: jest.fn(),
 }));
+
+jest.mock(
+    "../../../components/indus/components/induCreate/steps",
+    () => ({
+        step1: jest.fn(() => ({ title: "Step1", label: "Step 1 label" })),
+        step2: jest.fn(() => ({ title: "Step2", label: "Step 2 label" })),
+    }),
+    { virtual: true },
+);
+
+jest.mock(
+    "../../utils/userProfileSM",
+    () => ({
+        userProfileSM: jest.fn(() => [
+            {
+                code: ["HFAC", "ROC"],
+                name: "Factures",
+                icon: null,
+                path: "/factures",
+                children: [],
+            },
+        ]),
+    }),
+    { virtual: true },
+);
 
 describe("Menu", () => {
     test("renders loading state and then renders Menu on successful data fetch", async () => {

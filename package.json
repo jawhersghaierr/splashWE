@@ -1,9 +1,13 @@
 {
     "name": "host_ui",
-    "version": "1.3.6-RUN-SNAPSHOT",
+    "version": "1.7.2",
     "private": true,
     "dependencies": {
-        "@viamedis/viamedis-config": "^1.2.0"
+        "@viamedis/viamedis-config": "latest"
+    },
+    "peerDependencies": {
+        "react": "18.2.0",
+        "react-dom": "18.2.0"
     },
     "devDependencies": {
         "@babel/core": "^7.17.5",
@@ -17,6 +21,12 @@
         "@babel/preset-react": "7.16.7",
         "@emotion/jest": "^11.11.0",
         "@rtk-query/codegen-openapi": "^1.0.0",
+        "@semantic-release/commit-analyzer": "^11.1.0",
+        "@semantic-release/exec": "^6.0.3",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/gitlab": "^12.1.1",
+        "@semantic-release/npm": "^11.0.3",
+        "@semantic-release/release-notes-generator": "^12.1.0",
         "@testing-library/jest-dom": "^6.1.5",
         "@testing-library/react": "^13.0.0",
         "autosuggest-highlight": "^3.3.4",
@@ -44,6 +54,7 @@
         "prettier": "^3.1.1",
         "prop-types": "^15.8.1",
         "sass-loader": "^13.3.2",
+        "semantic-release": "^21.1.2",
         "style-loader": "^2.0.0",
         "terser-webpack-plugin": "^4.2.3",
         "webpack": "^5.76.0",
@@ -53,7 +64,6 @@
         "webpack-merge": "^5.2.0",
         "webpack-shell-plugin-next": "^2.2.2"
     },
-
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack serve --config webpack.dev.js",
         "lint:old": "eslint src --ext .jsx --ext .js",
