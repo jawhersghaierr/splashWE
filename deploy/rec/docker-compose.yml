@@ -50,11 +50,14 @@ services:
 
       #      ***************************** AUTH *****************************************************
       - CLIENT_ID=7f53ad13-dd05-4d1e-9239-15210825db3f
-      - AUTHORITY=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/B2C_1_susi_email
+      - AUTHORITY=localhost=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; viamedis=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; tprocmutuelles=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; default=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email
       - KNOWN_AUTHORITY=integrationviamedisb2c.b2clogin.com
-      - REDIRECT_URI=https://10.241.25.21:8030
-      - POST_LOGOUT_REDIRECT_URI=https://10.241.25.21:8030
+      - REDIRECT_URI=localhost=http://localhost:8030; tprocmutuelles=https://dev-run.tprocmutuelles.fr/; viamedis=https://dev-run.viamedis.net/; default=https://viamedis.net
+      - POST_LOGOUT_REDIRECT_URI=localhost=http://localhost:8030; tprocmutuelles=https://dev-run.tprocmutuelles.fr/; viamedis=https://dev-run.viamedis.net/; default=https://viamedis.net
       - LOGIN_REQUEST_SCOPES=https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access
+
+      #      ************ url switch String For Oxantis in  **********************************
+      - SWITCH_STRING_FOR_OXANTIS_TEMPLATE=tprocmutuelles
 
       #      ***************************** LEMON LEARNING  *****************************************************
       - LEMON_PROJECT_ID=1f059b51dc8a36d740534339be24b91c
@@ -62,5 +65,3 @@ services:
       - LEMON_PROJECT_USER_EMAIL=lemontest@viamedis.fr
       - LEMON_PROFILE=4544
 
-      #      ************ url switch String For Oxantis in  **********************************
-      - SWITCH_STRING_FOR_OXANTIS_TEMPLATE=tprocmutuelles

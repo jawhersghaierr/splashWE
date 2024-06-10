@@ -1,17 +1,30 @@
 module.exports = {
     msalConfig: {
         auth: {
+            // clientId: "7f53ad13-dd05-4d1e-9239-15210825db3f",
+            // knownAuthorities: ["integrationviamedisb2c.b2clogin.com"],
+            // authority:
+            //     "localhost=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; viamedis=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; tprocmutuelles=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; default=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email",
+            // redirectUri:
+            //     "localhost=http://localhost:8030; tprocmutuelles=https://dev-run.tprocmutuelles.fr/; viamedis=https://dev-run.viamedis.net/; default=https://viamedis.net",
+            // postLogoutRedirectUri:
+            //     "localhost=http://localhost:8030; tprocmutuelles=https://dev-run.tprocmutuelles.fr/; viamedis=https://dev-run.viamedis.net/; default=https://viamedis.net",
             clientId: "7f53ad13-dd05-4d1e-9239-15210825db3f",
-            authority: "https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email",
+            authority:
+                "localhost:8030=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; dev-build.viamedis.net=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email; default=https://integrationviamedisb2c.b2clogin.com/integrationviamedisb2c.onmicrosoft.com/b2c_1_susi_email",
             knownAuthorities: ["integrationviamedisb2c.b2clogin.com"],
-            redirectUri: "http://localhost:8030",
-            postLogoutRedirectUri: "http://localhost:8030",
+            redirectUri: "localhost:8030=http://localhost:8030;dev-build.viamedis.net=https://dev-build.viamedis.net;default=https://dev-build.viamedis.net",
+            postLogoutRedirectUri:
+                "localhost:8030=http://localhost:8030;dev-build.viamedis.net=https://dev-build.viamedis.net;default=https://dev-build.viamedis.net",
         },
     },
     loginRequest: {
         scopes: ["https://integrationviamedisb2c.onmicrosoft.com/f9b81c03-1384-45d9-a8c3-14fc54959a41/hospi_facturation_api.access"],
         extraQueryParameters: { ui_locales: "fr-FR" },
     },
+    // switchStringForOxantis: "viamedis",
+    switchStringForOxantis: "localhost",
+    // switchStringForOxantis: "tprocmutuelles",
 
     // **************************************************************
     // *********************   remoteApps     ***********************
@@ -61,8 +74,6 @@ module.exports = {
         // "userMngmnt": "https://apim-dev-socle.azure-api.net/users-profiles-api/v1"
         // **********************************************************
     },
-    switchStringForOxantis: "tprocmutuelles",
-    // switchStringForOxantis: "localhost",
 
     apiUrlsDev: {},
     apiUrlsInt: {},
