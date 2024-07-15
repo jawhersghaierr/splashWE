@@ -15,12 +15,32 @@ import { CookiesProvider } from "react-cookie";
 import { MsalProvider, MsalAuthenticationTemplate } from "@azure/msal-react";
 import { InteractionType, EventType } from "@azure/msal-browser";
 import { msalInstance } from "shared_lib_ui/auth";
-
 import { setAccount } from "shared_lib_ui/host";
-
 import ExtendedProviderWrapper from "./components/ExtendedProviderWrapper";
+import { SplashScreenProvider, useSplashScreen } from "./providers/SplashScreenContext";
+import SplashScreen from "./spalshScreen/SplashScreen";
+import { useSelector } from "react-redux";
+import { getUser } from "shared_lib_ui/auth";
+
+
 
 const App = () => {
+    const { userInfo, dismissSplashScreen, startSplashScreenInterval, handleShowSplash, setHandleShowSplash, updateConsultedStatusPerUser, splashUserConetnt } = useSplashScreen();
+    useEffect(() => {
+        console.log("emailData", userInfo);
+        const userEmail = userInfo?.account?.username; // Replace with actual user email or retrieve dynamically
+        const intervalTime = 5000; // 5 minutes in milliseconds
+
+        // Start interval for fetching splash screen data
+        if (userEmail)
+            startSplashScreenInterval(userEmail, intervalTime);
+
+        // Optionally, clean up the interval on app exit or cleanup
+        return () => {
+            clearInterval(intervalTime);
+        };
+    }, [userInfo]);
+
     useEffect(() => {
         const callbackId = msalInstance.addEventCallback(event => {
             switch (event.eventType) {
@@ -48,10 +68,14 @@ const App = () => {
 
     return (
         <Provider store={store}>
+
             <ThemeProvider theme={theme}>
                 <CookiesProvider>
                     <MsalProvider instance={msalInstance}>
                         <MsalAuthenticationTemplate interactionType={InteractionType.Redirect}>
+                            {handleShowSplash && (
+                                <SplashScreen opened={handleShowSplash} onClose={() => console.log("test")} />
+                            )}
                             <ExtendedProviderWrapper />
                         </MsalAuthenticationTemplate>
                     </MsalProvider>
@@ -64,7 +88,12 @@ const App = () => {
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
-    <StyledEngineProvider injectFirst>
-        <App />
-    </StyledEngineProvider>,
+    <Provider store={store}>
+
+        <StyledEngineProvider injectFirst>
+            <SplashScreenProvider>
+                <App />
+            </SplashScreenProvider>
+        </StyledEngineProvider>
+    </Provider>
 );

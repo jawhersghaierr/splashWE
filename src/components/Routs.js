@@ -26,6 +26,7 @@ import { TermsService } from "shared_lib_ui/Lib/layout";
 
 import "./snackBar.scss";
 import { useSelector } from "react-redux";
+import AdminPage from "../spalshScreen/AdminPage";
 
 const PSremote = () => <RemotePsApp />;
 const BenefRemote = props => <RemoteBenefApp {...props} />;
@@ -35,6 +36,7 @@ const TPSRemote = () => <RemoteTPSApp />;
 const InduRemote = () => <RemoteInduApp />;
 const IntraitablesRemote = () => <RemoteIntraitablesApp />;
 const AuthRemote = () => <RemoteAuthApp />;
+const SplashConfig = () => <AdminPage/>;
 
 const Empty = () => <div></div>;
 
@@ -54,6 +56,9 @@ const Routs = () => {
                             <Route exact path="/" component={Home} />
                             <Route path={["/psdashboard", "/ps", "/ps/profile"]}>
                                 <PSremote />
+                            </Route>
+                            <Route path={["/splash-admin"]}>
+                                <SplashConfig />
                             </Route>
 
                             <Route path={["/terms", "/terms/terms-of-service", "/terms/legal-notice", "/terms/personal-data-protection-policy"]}>

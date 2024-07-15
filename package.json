@@ -3,7 +3,12 @@
     "version": "1.7.4",
     "private": true,
     "dependencies": {
-        "@viamedis/viamedis-config": "latest"
+        "@viamedis/viamedis-config": "latest",
+        "draft-js": "^0.11.7",
+        "draft-js-export-html": "^1.4.1",
+        "draftjs-to-html": "^0.9.1",
+        "jodit-react": "^4.1.2",
+        "react-draft-wysiwyg": "^1.15.0"
     },
     "peerDependencies": {
         "react": "18.2.0",
